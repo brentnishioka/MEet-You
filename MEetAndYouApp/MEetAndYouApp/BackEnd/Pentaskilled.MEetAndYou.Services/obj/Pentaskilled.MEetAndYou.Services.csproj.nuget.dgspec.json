@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\CSULB Documents\\Fall 2021\\CECS 491A\\MEet-You\\MEetAndYouApp\\MEetAndYouApp\\BackEnd\\Pentaskilled.MEetAndYou.Services\\Pentaskilled.MEetAndYou.Services.csproj": {}
+    "D:\\GitHub\\MEet-You\\MEetAndYouApp\\MEetAndYouApp\\BackEnd\\Pentaskilled.MEetAndYou.Services\\Pentaskilled.MEetAndYou.Services.csproj": {}
   },
   "projects": {
-    "D:\\CSULB Documents\\Fall 2021\\CECS 491A\\MEet-You\\MEetAndYouApp\\MEetAndYouApp\\BackEnd\\Pentaskilled.MEetAndYou.Services\\Pentaskilled.MEetAndYou.Services.csproj": {
+    "D:\\GitHub\\MEet-You\\MEetAndYouApp\\MEetAndYouApp\\BackEnd\\Pentaskilled.MEetAndYou.Services\\Pentaskilled.MEetAndYou.Services.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\CSULB Documents\\Fall 2021\\CECS 491A\\MEet-You\\MEetAndYouApp\\MEetAndYouApp\\BackEnd\\Pentaskilled.MEetAndYou.Services\\Pentaskilled.MEetAndYou.Services.csproj",
+        "projectUniqueName": "D:\\GitHub\\MEet-You\\MEetAndYouApp\\MEetAndYouApp\\BackEnd\\Pentaskilled.MEetAndYou.Services\\Pentaskilled.MEetAndYou.Services.csproj",
         "projectName": "Pentaskilled.MEetAndYou.Services",
-        "projectPath": "D:\\CSULB Documents\\Fall 2021\\CECS 491A\\MEet-You\\MEetAndYouApp\\MEetAndYouApp\\BackEnd\\Pentaskilled.MEetAndYou.Services\\Pentaskilled.MEetAndYou.Services.csproj",
-        "packagesPath": "C:\\Users\\Brent\\.nuget\\packages\\",
-        "outputPath": "D:\\CSULB Documents\\Fall 2021\\CECS 491A\\MEet-You\\MEetAndYouApp\\MEetAndYouApp\\BackEnd\\Pentaskilled.MEetAndYou.Services\\obj\\",
+        "projectPath": "D:\\GitHub\\MEet-You\\MEetAndYouApp\\MEetAndYouApp\\BackEnd\\Pentaskilled.MEetAndYou.Services\\Pentaskilled.MEetAndYou.Services.csproj",
+        "packagesPath": "C:\\Users\\jdcra\\.nuget\\packages\\",
+        "outputPath": "D:\\GitHub\\MEet-You\\MEetAndYouApp\\MEetAndYouApp\\BackEnd\\Pentaskilled.MEetAndYou.Services\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Brent\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\jdcra\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

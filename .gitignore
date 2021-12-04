@@ -339,3 +339,19 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 /.env
+MEetAndYouApp/MEetAndYouApp/BackEnd/Pentaskilled.MEetAndYou.DomainModels/obj/Pentaskilled.MEetAndYou.DomainModels.csproj.nuget.dgspec.json
+MEetAndYouApp/MEetAndYouApp/BackEnd/Pentaskilled.MEetAndYou.DomainModels/obj/Pentaskilled.MEetAndYou.DomainModels.csproj.nuget.g.props
+MEetAndYouApp/MEetAndYouApp/BackEnd/Pentaskilled.MEetAndYou.DomainModels/obj/project.assets.json
+MEetAndYouApp/MEetAndYouApp/BackEnd/Pentaskilled.MEetAndYou.DomainModels/obj/project.nuget.cache
+MEetAndYouApp/MEetAndYouApp/BackEnd/Pentaskilled.MEetAndYou.Entities/obj/Pentaskilled.MEetAndYou.Entities.csproj.nuget.dgspec.json
+MEetAndYouApp/MEetAndYouApp/BackEnd/Pentaskilled.MEetAndYou.Entities/obj/Pentaskilled.MEetAndYou.Entities.csproj.nuget.g.props
+MEetAndYouApp/MEetAndYouApp/BackEnd/Pentaskilled.MEetAndYou.Entities/obj/project.assets.json
+MEetAndYouApp/MEetAndYouApp/BackEnd/Pentaskilled.MEetAndYou.Entities/obj/project.nuget.cache
+MEetAndYouApp/MEetAndYouApp/BackEnd/Pentaskilled.MEetAndYou.Managers/obj/Pentaskilled.MEetAndYou.Managers.csproj.nuget.dgspec.json
+MEetAndYouApp/MEetAndYouApp/BackEnd/Pentaskilled.MEetAndYou.Managers/obj/Pentaskilled.MEetAndYou.Managers.csproj.nuget.g.props
+MEetAndYouApp/MEetAndYouApp/BackEnd/Pentaskilled.MEetAndYou.Managers/obj/project.assets.json
+MEetAndYouApp/MEetAndYouApp/BackEnd/Pentaskilled.MEetAndYou.Managers/obj/project.nuget.cache
+MEetAndYouApp/MEetAndYouApp/BackEnd/Pentaskilled.MEetAndYou.Services/obj/Pentaskilled.MEetAndYou.Services.csproj.nuget.dgspec.json
+MEetAndYouApp/MEetAndYouApp/BackEnd/Pentaskilled.MEetAndYou.Services/obj/Pentaskilled.MEetAndYou.Services.csproj.nuget.g.props
+MEetAndYouApp/MEetAndYouApp/BackEnd/Pentaskilled.MEetAndYou.Services/obj/project.assets.json
+MEetAndYouApp/MEetAndYouApp/BackEnd/Pentaskilled.MEetAndYou.Services/obj/project.nuget.cache

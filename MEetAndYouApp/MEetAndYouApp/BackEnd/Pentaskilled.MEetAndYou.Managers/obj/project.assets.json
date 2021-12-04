@@ -2314,19 +2314,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Brent\\.nuget\\packages\\": {}
+    "C:\\Users\\jdcra\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\CSULB Documents\\Fall 2021\\CECS 491A\\MEet-You\\MEetAndYouApp\\MEetAndYouApp\\BackEnd\\Pentaskilled.MEetAndYou.Managers\\Pentaskilled.MEetAndYou.Managers.csproj",
+      "projectUniqueName": "D:\\GitHub\\MEet-You\\MEetAndYouApp\\MEetAndYouApp\\BackEnd\\Pentaskilled.MEetAndYou.Managers\\Pentaskilled.MEetAndYou.Managers.csproj",
       "projectName": "Pentaskilled.MEetAndYou.Managers",
-      "projectPath": "D:\\CSULB Documents\\Fall 2021\\CECS 491A\\MEet-You\\MEetAndYouApp\\MEetAndYouApp\\BackEnd\\Pentaskilled.MEetAndYou.Managers\\Pentaskilled.MEetAndYou.Managers.csproj",
-      "packagesPath": "C:\\Users\\Brent\\.nuget\\packages\\",
-      "outputPath": "D:\\CSULB Documents\\Fall 2021\\CECS 491A\\MEet-You\\MEetAndYouApp\\MEetAndYouApp\\BackEnd\\Pentaskilled.MEetAndYou.Managers\\obj\\",
+      "projectPath": "D:\\GitHub\\MEet-You\\MEetAndYouApp\\MEetAndYouApp\\BackEnd\\Pentaskilled.MEetAndYou.Managers\\Pentaskilled.MEetAndYou.Managers.csproj",
+      "packagesPath": "C:\\Users\\jdcra\\.nuget\\packages\\",
+      "outputPath": "D:\\GitHub\\MEet-You\\MEetAndYouApp\\MEetAndYouApp\\BackEnd\\Pentaskilled.MEetAndYou.Managers\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Brent\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\jdcra\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -2375,13 +2375,5 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problem reading the cache file D:\\CSULB Documents\\Fall 2021\\CECS 491A\\MEet-You\\MEetAndYouApp\\MEetAndYouApp\\BackEnd\\Pentaskilled.MEetAndYou.Managers\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
-    }
-  ]
+  }
 }
