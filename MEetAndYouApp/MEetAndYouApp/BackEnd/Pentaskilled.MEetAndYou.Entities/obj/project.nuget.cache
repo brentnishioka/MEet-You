@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "HJri0ehmBM5e+0qMIDWtnpbynUWEz+A4IMgxmQVf5BzMY60nM4p7T+rqiqI5vohbhoTSCaGK7C47oIUMU2Y1ug==",
+  "dgSpecHash": "4k83RJDrSfw+K+eXl5L1PEQGy8RJHaF3icmcq0xph1Enekr51OwImst+5vryFfHj7FtylTv3Wc7uxlzH86qzyQ==",
   "success": true,
   "projectFilePath": "D:\\CSULB Documents\\Fall 2021\\CECS 491A\\MEet-You\\MEetAndYouApp\\MEetAndYouApp\\BackEnd\\Pentaskilled.MEetAndYou.Entities\\Pentaskilled.MEetAndYou.Entities.csproj",
   "expectedPackageFiles": [
@@ -36,7 +36,6 @@
     "C:\\Users\\Brent\\.nuget\\packages\\system.resources.resourcemanager\\4.3.0\\system.resources.resourcemanager.4.3.0.nupkg.sha512",
     "C:\\Users\\Brent\\.nuget\\packages\\system.runtime\\4.3.0\\system.runtime.4.3.0.nupkg.sha512",
     "C:\\Users\\Brent\\.nuget\\packages\\system.runtime.caching\\5.0.0\\system.runtime.caching.5.0.0.nupkg.sha512",
-    "C:\\Users\\Brent\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\5.0.0\\system.runtime.compilerservices.unsafe.5.0.0.nupkg.sha512",
     "C:\\Users\\Brent\\.nuget\\packages\\system.security.accesscontrol\\5.0.0\\system.security.accesscontrol.5.0.0.nupkg.sha512",
     "C:\\Users\\Brent\\.nuget\\packages\\system.security.cryptography.cng\\5.0.0\\system.security.cryptography.cng.5.0.0.nupkg.sha512",
     "C:\\Users\\Brent\\.nuget\\packages\\system.security.cryptography.protecteddata\\5.0.0\\system.security.cryptography.protecteddata.5.0.0.nupkg.sha512",
@@ -50,5 +49,12 @@
     "C:\\Users\\Brent\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.2\\system.threading.tasks.extensions.4.5.2.nupkg.sha512",
     "C:\\Users\\Brent\\.nuget\\packages\\system.windows.extensions\\5.0.0\\system.windows.extensions.5.0.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file D:\\CSULB Documents\\Fall 2021\\CECS 491A\\MEet-You\\MEetAndYouApp\\MEetAndYouApp\\BackEnd\\Pentaskilled.MEetAndYou.Entities\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }
