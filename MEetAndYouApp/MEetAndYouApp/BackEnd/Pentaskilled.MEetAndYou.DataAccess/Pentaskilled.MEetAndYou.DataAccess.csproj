@@ -12,4 +12,9 @@
     <PackageReference Include="Microsoft.Data.SqlClient" Version="4.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Pentaskilled.MEetAndYou.Entities\Pentaskilled.MEetAndYou.Entities.csproj" />
+    <ProjectReference Include="..\Pentaskilled.MEetAndYou.Logging\Pentaskilled.MEetAndYou.Logging.csproj" />
+  </ItemGroup>
+
 </Project>
