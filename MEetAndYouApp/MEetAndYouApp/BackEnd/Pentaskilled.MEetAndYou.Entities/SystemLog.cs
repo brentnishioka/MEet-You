@@ -8,7 +8,7 @@ namespace Pentaskilled.MEetAndYou.Entities
 {
     public class SystemLog
     {
-        public int logId { get; set; }
+        public int logId { get; }
         public DateTime dateTime { get; set; }
         public string category { get; set; }
         public LogLevel logLevel { get; set; }
