@@ -19,5 +19,5 @@ CREATE TABLE [MEetAndYou].[SystemEventLogs]
     [Message] VARCHAR(255) NOT NULL
 )
 
-DROP TABLE [MEetAndYou].[UserEventLogs]
-DROP TABLE [MEetAndYou].[SystemEventLogs]
+--DROP TABLE [MEetAndYou].[UserEventLogs]
+--DROP TABLE [MEetAndYou].[SystemEventLogs]
