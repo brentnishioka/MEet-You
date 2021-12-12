@@ -11,5 +11,9 @@ namespace Pentaskilled.MEetAndYou.DataAccess
     {
         bool PushLogToDB(SystemLog sysLog);
         bool PushLogToDB(UserLog userLog);
+        int GetCurrentSysIdentity();
+        int GetCurrentUserIdentity();
+        int CheckExistingLog(SystemLog sysLog);
+        int CheckExistingLog(UserLog userLog);
     }
 }

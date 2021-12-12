@@ -24,6 +24,11 @@ namespace Pentaskilled.MEetAndYou.Logging
             try
             {
                 MakeLog(dateTime, category, logLevel, message);
+                int existLogCount = _logDataAccess.CheckExistingLog(_sysLog);
+                if (existLogCount != 0)
+                {
+                    throw new Exception();
+                }
                 PushLogToDB(_sysLog);
             }
             catch (Exception ex)
@@ -35,6 +40,7 @@ namespace Pentaskilled.MEetAndYou.Logging
 
         public SystemLog MakeLog(DateTime dateTime, string category, LogLevel logLevel, string message)
         {
+            _sysLog.logId = _logDataAccess.GetCurrentSysIdentity();
             _sysLog.dateTime = dateTime;
             _sysLog.category = category;
             _sysLog.logLevel = logLevel;

@@ -3,6 +3,8 @@ using Pentaskilled.MEetAndYou.DataAccess;
 using Pentaskilled.MEetAndYou.Entities;
 using Pentaskilled.MEetAndYou.Logging;
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Pentaskilled.MEetAndYou.XUnitTests
 {
@@ -66,7 +68,10 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             LogLevel level = LogLevel.Error;
             string message = "Data not processed correctly.";
 
-            logMan.BeginLogProcess(category, level, message);
+            bool isSuccessfullyCreated = true;
+            bool actualLogProcessResult = logMan.BeginLogProcess(category, level, message);
+
+            Assert.Equal(isSuccessfullyCreated, actualLogProcessResult);
         }
 
         [Fact]
@@ -79,7 +84,97 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             int userId = 69;
             string message = "User Data not processed correctly.";
 
+            bool isSuccessfullyCreated = true;
+            bool actualLogProcessResult = logMan.BeginLogProcess(category, level, userId, message);
+
+            Assert.Equal(isSuccessfullyCreated, actualLogProcessResult);
+        }
+
+        [Fact]
+        public void SysLoggingFailCase1()
+        {
+            var reqStartTime = DateTime.UtcNow;
+
+            LoggingManager logMan = new LoggingManager();
+
+            string category = "Business";
+            LogLevel level = LogLevel.Error;
+            string message = "Business rule not implemented correctly.";
+
+            logMan.BeginLogProcess(category, level, message);
+
+            var reqEndTime = DateTime.UtcNow;
+            var timeDifference = reqEndTime - reqStartTime;
+
+            Assert.True(timeDifference.TotalSeconds < 5.0);
+        }
+
+        [Fact]
+        public void UserLoggingFailCase1()
+        {
+            var reqStartTime = DateTime.UtcNow;
+
+            LoggingManager logMan = new LoggingManager();
+
+            string category = "Data Store";
+            LogLevel level = LogLevel.Error;
+            int userId = 69;
+            string message = "User account record not inserted into the database successfully.";
+
             logMan.BeginLogProcess(category, level, userId, message);
+
+            var reqEndTime = DateTime.UtcNow;
+            var timeDifference = reqEndTime - reqStartTime;
+
+            Assert.True(timeDifference.TotalSeconds < 5.0);
+        }
+
+        [Fact]
+        public async void SysLoggingFailCase2()
+        {
+            LoggingManager logMan = new LoggingManager();
+
+            string category = "Business";
+            LogLevel level = LogLevel.Error;
+            string message = "This is a message to indicate an error in the business layer.";
+
+            Task<bool> sysTask = Task.Run(() =>
+                logMan.BeginLogProcess(category, level, message)
+            );
+            await sysTask;
+
+            Assert.True(sysTask.IsCompleted);
+        }
+
+        [Fact]
+        public async void UserLoggingFailCase2()
+        {
+            LoggingManager logMan = new LoggingManager();
+
+            string category = "View";
+            LogLevel level = LogLevel.Warning;
+            int userId = 420;
+            string message = "User unable to interact with the system.";
+
+            Task<bool> sysTask = Task.Run(() =>
+                logMan.BeginLogProcess(category, level, userId, message)
+            );
+            await sysTask;
+
+            Assert.True(sysTask.IsCompleted);
+        }
+
+        [Fact]
+        public void SysLoggingFailCase4()
+        {
+            ISystemLoggingService systemLoggingService = new SystemLoggingService();
+
+            DateTime dateTime = DateTime.UtcNow;
+            string category = "Server";
+            LogLevel logLevel = LogLevel.Error;
+            string message = "Web server crashed.";
+
+            Assert.True(systemLoggingService.CreateNewLog(dateTime, category, logLevel, message));
         }
     }
 }

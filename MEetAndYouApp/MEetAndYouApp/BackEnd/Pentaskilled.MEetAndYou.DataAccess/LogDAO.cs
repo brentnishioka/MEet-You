@@ -17,7 +17,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         // GetConnectionString() from https://docs.microsoft.com/en-us/dotnet/api/system.data.sqlclient.sqlconnection.connectionstring?view=dotnet-plat-ext-6.0
         static private string GetConnectionString()
         { 
-            return @"Data Source=DESKTOP-RM9387O;Initial Catalog=MEetAndYou-DB;Integrated Security=True";
+            return @"Data Source=DESKTOP-DBE5DM2;Initial Catalog=MEetAndYou-DB;Integrated Security=True";
         }
 
         /// <summary>
@@ -90,7 +90,67 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             return true;
         }
 
-        public List<Log> ReadLogsOlderThan30()
+        public int GetCurrentSysIdentity()
+        {
+            int lastLogId = 0;
+            _connectionString = GetConnectionString();
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    SqlCommand command = new SqlCommand("SELECT [MEetAndYou].[GetCurrentSysIdentity]()", connection);
+                    connection.Open();
+                    lastLogId = (int)command.ExecuteScalar();
+                    connection.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new NullReferenceException();
+            }
+            return lastLogId;
+        }
+
+        public int GetCurrentUserIdentity()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Checks to see if a system log exists in our database.
+        /// </summary>
+        /// <param name="sysLog"></param>
+        /// <returns></returns>
+        /// <exception cref="NullReferenceException"></exception>
+        public int CheckExistingLog(SystemLog sysLog)
+        {
+            int numRows = 0;
+            _connectionString = GetConnectionString();
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    SqlCommand command = new SqlCommand("SELECT [MEetAndYou].[CheckExistingSysLog]()", connection);
+                    command.Parameters.Add(new SqlParameter("@sysLogId", SqlDbType.Int));
+                    command.Parameters["@sysLogId"].Value = sysLog.logId;
+                    connection.Open();
+                    numRows = (int)command.ExecuteScalar();
+                    connection.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new NullReferenceException();
+            }
+            return numRows;
+        }
+
+        public int CheckExistingLog(UserLog userLog)
+        {
+            throw new NotImplementedException();
+        }
+
+/*        public List<Log> ReadLogsOlderThan30()
         {
             _connectionString = GetConnectionString();
             List<Log> logs30DayOlder;
@@ -108,6 +168,6 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             }
 
             return logs30DayOlder;
-        }
+        }*/
     }
 }

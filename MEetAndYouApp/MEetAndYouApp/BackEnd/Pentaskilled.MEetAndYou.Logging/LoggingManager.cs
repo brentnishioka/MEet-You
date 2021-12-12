@@ -31,7 +31,11 @@ namespace Pentaskilled.MEetAndYou.Logging
             try
             {
                 DateTime currentDateTime = DateTime.UtcNow;
-                _sysLogServ.CreateNewLog(currentDateTime, category, logLevel, message);
+                bool isCreateLogSuccess = _sysLogServ.CreateNewLog(currentDateTime, category, logLevel, message);
+                if (!isCreateLogSuccess)
+                {
+                    throw new Exception();
+                }
             }
             catch (Exception ex)
             {
@@ -53,7 +57,11 @@ namespace Pentaskilled.MEetAndYou.Logging
             try
             {
                 DateTime currentDateTime = DateTime.UtcNow;
-                _userLogServ.CreateNewLog(currentDateTime, category, logLevel, userId, message);
+                bool isCreateLogSuccess = _userLogServ.CreateNewLog(currentDateTime, category, logLevel, userId, message);
+                if (!isCreateLogSuccess)
+                {
+                    throw new Exception();
+                }
             }
             catch (Exception ex)
             {
