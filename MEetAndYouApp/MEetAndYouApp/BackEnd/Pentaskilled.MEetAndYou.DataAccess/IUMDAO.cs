@@ -19,6 +19,12 @@ namespace Pentaskilled.MEetAndYou.DataAccess
 
         bool UpdateAccountRole(UserAccountEntity ua);
 
+        bool DeleteAccountRecord(UserAccountEntity ua);
+
+        bool DisableAccountRecord(UserAccountEntity ua);
+
+        bool EnableAccountRecord(UserAccountEntity ua);
+
         bool VerifyUserInDB(UserAccountEntity ua);
     }
 }

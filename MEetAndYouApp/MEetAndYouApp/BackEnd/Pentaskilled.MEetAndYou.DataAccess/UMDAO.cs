@@ -38,16 +38,19 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                 using (SqlCommand command = new SqlCommand("[MEetAndYou].[CreateAccountRecord]", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.Add("@dateTime", SqlDbType.DateTime).Value = sysLog.dateTime;
-                    command.Parameters.Add("@category", SqlDbType.VarChar).Value = sysLog.category;
-                    command.Parameters.Add("@logLevel", SqlDbType.VarChar).Value = logLvl.ToString();
-                    command.Parameters.Add("@message", SqlDbType.VarChar).Value = sysLog.message;
+                    command.Parameters.Add("@email", SqlDbType.VarChar).Value = ua.Email;
+                    command.Parameters.Add("@password", SqlDbType.VarChar).Value = ua.Password;
+                    command.Parameters.Add("@phoneNum", SqlDbType.VarChar).Value = ua.PhoneNumber;
+                    command.Parameters.Add("@role", SqlDbType.VarChar).Value = ua.Role;
+                    command.Parameters.Add("@registerDate", SqlDbType.DateTime).Value = ua.RegisterDate;
+                    command.Parameters.Add("@active", SqlDbType.Bit).Value = ua.Active;
 
                     connection.Open();
                     command.ExecuteNonQuery();
                     connection.Close();
                 }
             }
+
             catch (Exception ex)
             {
                 return false;
@@ -57,27 +60,42 @@ namespace Pentaskilled.MEetAndYou.DataAccess
 
         public bool UpdateAccountEmail(UserAccountEntity ua)
         {
-
+            return true; 
         }
 
         public bool UpdateAccountPassword(UserAccountEntity ua)
         {
-
+            return true;
         }
 
         public bool UpdateAccountPhone(UserAccountEntity ua)
         {
-
+            return true;
         }
 
         public bool UpdateAccountRole(UserAccountEntity ua)
         {
+            return true;
+        }
 
+        public bool DeleteAccountRecord(UserAccountEntity ua)
+        {
+            return true;
+        }
+
+        public bool DisableAccountRecord(UserAccountEntity ua)
+        {
+            return true;
+        }
+
+        public bool EnableAccountRecord(UserAccountEntity ua)
+        {
+            return true;
         }
 
         public bool VerifyUserInDB(UserAccountEntity ua)
         {
-
+            return true;
         }
     }
 }

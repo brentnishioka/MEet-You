@@ -6,7 +6,7 @@ namespace Pentaskilled.MEetAndYou.Entities
     {
 
         // Unique identifier of user
-        public string UserID { get; set; }
+        public string UserID { get; }
 
         // The email of a registered user
         public string Email { get; set; }
@@ -15,13 +15,12 @@ namespace Pentaskilled.MEetAndYou.Entities
 
         public string PhoneNumber { get; set; }
 
-        // User's role ( Sys. Admin | Regular User)
+        // User's role ( Administrator | Regular User)
         public string Role { get; set; }
 
         // The date user account's was registered
-        public string RegisterDate { get; set; }
+        public DateTime RegisterDate { get; set; }
 
         public int Active { get; set; }
-
     }
 }
