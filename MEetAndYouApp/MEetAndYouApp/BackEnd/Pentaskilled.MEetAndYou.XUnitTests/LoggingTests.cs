@@ -43,14 +43,18 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         public void CreateSystemLogUsingServiceTest()
         {
             ISystemLoggingService systemLoggingService = new SystemLoggingService();
-            systemLoggingService.CreateNewLog(DateTime.UtcNow, "View", LogLevel.Debug, "This is a test debug log.");
+
+            bool isSuccessfullyCreated = true;
+            Assert.Equal(isSuccessfullyCreated, systemLoggingService.CreateNewLog(DateTime.UtcNow, "View", LogLevel.Debug, "This is a test debug log."));
         }
 
         [Fact]
         public void CreateUserLogUsingServiceTest()
         {
             IUserLoggingService userLoggingService = new UserLoggingService();
-            userLoggingService.CreateNewLog(DateTime.UtcNow, "Data Access", LogLevel.Debug, 592, "This is a test debug log.");
+
+            bool isSuccessfullyCreated = true;
+            Assert.Equal(isSuccessfullyCreated, userLoggingService.CreateNewLog(DateTime.UtcNow, "Data Access", LogLevel.Debug, 592, "This is a test debug log."));
         }
     }
 }
