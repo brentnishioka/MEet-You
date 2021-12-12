@@ -56,5 +56,30 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             bool isSuccessfullyCreated = true;
             Assert.Equal(isSuccessfullyCreated, userLoggingService.CreateNewLog(DateTime.UtcNow, "Data Access", LogLevel.Debug, 592, "This is a test debug log."));
         }
+
+        [Fact]
+        public void CreateSysLogFromLogManagerTest()
+        {
+            LoggingManager logMan = new LoggingManager();
+
+            string category = "Data";
+            LogLevel level = LogLevel.Error;
+            string message = "Data not processed correctly.";
+
+            logMan.BeginLogProcess(category, level, message);
+        }
+
+        [Fact]
+        public void CreateUserLogFromLogManagerTest()
+        {
+            LoggingManager logMan = new LoggingManager();
+
+            string category = "Data";
+            LogLevel level = LogLevel.Error;
+            int userId = 69;
+            string message = "User Data not processed correctly.";
+
+            logMan.BeginLogProcess(category, level, userId, message);
+        }
     }
 }
