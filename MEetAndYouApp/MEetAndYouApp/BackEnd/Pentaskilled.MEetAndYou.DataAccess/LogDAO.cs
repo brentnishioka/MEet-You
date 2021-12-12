@@ -89,5 +89,10 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             }
             return true;
         }
+
+        public List<Object> ReadLogsOlderThan30()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

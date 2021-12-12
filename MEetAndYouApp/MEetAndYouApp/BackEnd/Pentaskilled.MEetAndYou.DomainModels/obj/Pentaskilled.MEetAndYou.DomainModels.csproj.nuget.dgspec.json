@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "D:\\CSULB Documents\\Fall 2021\\CECS 491A\\MEet-You\\MEetAndYouApp\\MEetAndYouApp\\BackEnd\\Pentaskilled.MEetAndYou.DomainModels\\Pentaskilled.MEetAndYou.DomainModels.csproj": {}
+    "C:\\Users\\gowus\\Desktop\\CSULB\\Fall Semester 2021\\CECS 491A\\MeetNYou\\MEetAndYouApp\\MEetAndYouApp\\BackEnd\\Pentaskilled.MEetAndYou.DomainModels\\Pentaskilled.MEetAndYou.DomainModels.csproj": {}
   },
   "projects": {
-    "D:\\CSULB Documents\\Fall 2021\\CECS 491A\\MEet-You\\MEetAndYouApp\\MEetAndYouApp\\BackEnd\\Pentaskilled.MEetAndYou.DomainModels\\Pentaskilled.MEetAndYou.DomainModels.csproj": {
+    "C:\\Users\\gowus\\Desktop\\CSULB\\Fall Semester 2021\\CECS 491A\\MeetNYou\\MEetAndYouApp\\MEetAndYouApp\\BackEnd\\Pentaskilled.MEetAndYou.DomainModels\\Pentaskilled.MEetAndYou.DomainModels.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\CSULB Documents\\Fall 2021\\CECS 491A\\MEet-You\\MEetAndYouApp\\MEetAndYouApp\\BackEnd\\Pentaskilled.MEetAndYou.DomainModels\\Pentaskilled.MEetAndYou.DomainModels.csproj",
+        "projectUniqueName": "C:\\Users\\gowus\\Desktop\\CSULB\\Fall Semester 2021\\CECS 491A\\MeetNYou\\MEetAndYouApp\\MEetAndYouApp\\BackEnd\\Pentaskilled.MEetAndYou.DomainModels\\Pentaskilled.MEetAndYou.DomainModels.csproj",
         "projectName": "Pentaskilled.MEetAndYou.DomainModels",
-        "projectPath": "D:\\CSULB Documents\\Fall 2021\\CECS 491A\\MEet-You\\MEetAndYouApp\\MEetAndYouApp\\BackEnd\\Pentaskilled.MEetAndYou.DomainModels\\Pentaskilled.MEetAndYou.DomainModels.csproj",
-        "packagesPath": "C:\\Users\\Brent\\.nuget\\packages\\",
-        "outputPath": "D:\\CSULB Documents\\Fall 2021\\CECS 491A\\MEet-You\\MEetAndYouApp\\MEetAndYouApp\\BackEnd\\Pentaskilled.MEetAndYou.DomainModels\\obj\\",
+        "projectPath": "C:\\Users\\gowus\\Desktop\\CSULB\\Fall Semester 2021\\CECS 491A\\MeetNYou\\MEetAndYouApp\\MEetAndYouApp\\BackEnd\\Pentaskilled.MEetAndYou.DomainModels\\Pentaskilled.MEetAndYou.DomainModels.csproj",
+        "packagesPath": "C:\\Users\\gowus\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\gowus\\Desktop\\CSULB\\Fall Semester 2021\\CECS 491A\\MeetNYou\\MEetAndYouApp\\MEetAndYouApp\\BackEnd\\Pentaskilled.MEetAndYou.DomainModels\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Brent\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\gowus\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
