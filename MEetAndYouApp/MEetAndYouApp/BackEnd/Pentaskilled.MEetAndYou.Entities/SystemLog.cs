@@ -6,12 +6,8 @@ using System.Threading.Tasks;
 
 namespace Pentaskilled.MEetAndYou.Entities
 {
-    public class SystemLog
+    public class SystemLog : Log
     {
-        public int logId { get; }
-        public DateTime dateTime { get; set; }
-        public string category { get; set; }
-        public LogLevel logLevel { get; set; }
-        public string message { get; set; }
+      
     }
 }
