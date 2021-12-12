@@ -17,7 +17,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         // GetConnectionString() from https://docs.microsoft.com/en-us/dotnet/api/system.data.sqlclient.sqlconnection.connectionstring?view=dotnet-plat-ext-6.0
         static private string GetConnectionString()
         { 
-            return @"Data Source=DESKTOP-DBE5DM2;Initial Catalog=MEetAndYou-DB;Integrated Security=True";
+            return @"Data Source=DESKTOP-RM9387O;Initial Catalog=MEetAndYou-DB;Integrated Security=True";
         }
 
         /// <summary>
@@ -90,9 +90,24 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             return true;
         }
 
-        public List<Object> ReadLogsOlderThan30()
+        public List<Log> ReadLogsOlderThan30()
         {
-            throw new NotImplementedException();
+            _connectionString = GetConnectionString();
+            List<Log> logs30DayOlder;
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                using (SqlCommand command = new SqlCommand("[MEetAndYou].[sysLogs30DaysOld]", connection))
+                {
+
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
+            return logs30DayOlder;
         }
     }
 }

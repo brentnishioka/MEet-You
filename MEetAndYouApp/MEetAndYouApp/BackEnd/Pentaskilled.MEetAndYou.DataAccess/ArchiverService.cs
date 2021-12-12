@@ -8,6 +8,8 @@ namespace Pentaskilled.MEetAndYou.DataAccess
 {
     public class ArchiverService : IArchiverService
     {
+        
+        private ILogDAO _logDataAccess;
 
         public bool GetOldLogs()
         {
