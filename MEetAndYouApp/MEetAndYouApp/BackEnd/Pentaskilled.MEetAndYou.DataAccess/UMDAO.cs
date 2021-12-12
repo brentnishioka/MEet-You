@@ -21,7 +21,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         }
 
         /// <summary>
-        /// Inserts system logs into the respective table "SystemEventLogs" in the database.
+        /// Create account record into the respective table "AccountRecords" in the database.
         /// </summary>
         /// <param name="ua"></param>
         /// <returns>  
@@ -58,44 +58,233 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             return true;
         }
 
-        public bool UpdateAccountEmail(UserAccountEntity ua)
+        public bool UpdateAccountEmail(UserAccountEntity ua, string newEmail)
         {
-            return true; 
+            _connectionString = GetConnectionString();
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                using (SqlCommand command = new SqlCommand("[MEetAndYou].[UpdateAccountEmail]", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.Add("@id", SqlDbType.Int).Value = ua.UserID;
+                    command.Parameters.Add("@email", SqlDbType.VarChar).Value = newEmail;
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                }
+            }
+
+            catch (Exception ex)
+            {
+                return false;
+            }
+            return true;
         }
 
         public bool UpdateAccountPassword(UserAccountEntity ua)
         {
+            _connectionString = GetConnectionString();
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                using (SqlCommand command = new SqlCommand("[MEetAndYou].[UpdateAccountPassword]", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.Add("@id", SqlDbType.Int).Value = ua.UserID;
+                    command.Parameters.Add("@password", SqlDbType.VarChar).Value = ua.Password;
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                }
+            }
+
+            catch (Exception ex)
+            {
+                return false;
+            }
             return true;
         }
 
         public bool UpdateAccountPhone(UserAccountEntity ua)
         {
+            _connectionString = GetConnectionString();
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                using (SqlCommand command = new SqlCommand("[MEetAndYou].[UpdateAccountPhoneNum]", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.Add("@id", SqlDbType.Int).Value = ua.UserID;
+                    command.Parameters.Add("@phoneNum", SqlDbType.VarChar).Value = ua.PhoneNumber;
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                }
+            }
+
+            catch (Exception ex)
+            {
+                return false;
+            }
             return true;
         }
 
         public bool UpdateAccountRole(UserAccountEntity ua)
         {
+            _connectionString = GetConnectionString();
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                using (SqlCommand command = new SqlCommand("[MEetAndYou].[UpdateAccountRole]", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.Add("@id", SqlDbType.Int).Value = ua.UserID;
+                    command.Parameters.Add("@role", SqlDbType.VarChar).Value = ua.Role;
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                }
+            }
+
+            catch (Exception ex)
+            {
+                return false;
+            }
             return true;
         }
 
         public bool DeleteAccountRecord(UserAccountEntity ua)
         {
+            _connectionString = GetConnectionString();
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                using (SqlCommand command = new SqlCommand("[MEetAndYou].[DeleteAccountRecord]", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.Add("@id", SqlDbType.Int).Value = ua.UserID;
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                }
+            }
+
+            catch (Exception ex)
+            {
+                return false;
+            }
             return true;
         }
 
         public bool DisableAccountRecord(UserAccountEntity ua)
         {
+            _connectionString = GetConnectionString();
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                using (SqlCommand command = new SqlCommand("[MEetAndYou].[DisableAccountRecord]", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.Add("@id", SqlDbType.Int).Value = ua.UserID;
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                }
+            }
+
+            catch (Exception ex)
+            {
+                return false;
+            }
             return true;
         }
 
         public bool EnableAccountRecord(UserAccountEntity ua)
         {
+            _connectionString = GetConnectionString();
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                using (SqlCommand command = new SqlCommand("[MEetAndYou].[EnableAccountRecord]", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.Add("@id", SqlDbType.Int).Value = ua.UserID;
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                }
+            }
+
+            catch (Exception ex)
+            {
+                return false;
+            }
             return true;
         }
 
         public bool VerifyUserInDB(UserAccountEntity ua)
         {
+            _connectionString = GetConnectionString();
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                using (SqlCommand command = new SqlCommand("[MEetAndYou].[VerifyUserInDB]", connection))
+                {
+                    command.CommandType = CommandType.Text;
+                    command.Parameters.Add("@id", SqlDbType.Int).Value = ua.UserID;
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                }
+            }
+
+            catch (Exception ex)
+            {
+                return false;
+            }
             return true;
         }
+
+        //public UserAccountEntity GetAccountRecord(int id)
+        //{
+        //    _connectionString = GetConnectionString();
+
+        //    try
+        //    {
+        //        using (SqlConnection connection = new SqlConnection(_connectionString))
+        //        using (SqlCommand command = new SqlCommand("[MEetAndYou].[GetAccountRecord]", connection))
+        //        {
+        //            command.CommandType = CommandType.Text;
+        //            command.Parameters.Add("@id", SqlDbType.Int).Value = id;
+
+        //            connection.Open();
+        //            command.ExecuteNonQuery();
+        //            connection.Close();
+        //        }
+        //    }
+
+        //    catch (Exception ex)
+        //    {
+        //        return;
+        //    }
+        //    return true;
+        //}
     }
 }
