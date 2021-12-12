@@ -1,8 +1,9 @@
 ﻿using Xunit;
 using Pentaskilled.MEetAndYou.DataAccess;
 using Pentaskilled.MEetAndYou.Entities;
-using Pentaskilled.MEetAndYou.Logging;
 using System;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace Pentaskilled.MEetAndYou.XUnitTests
 {
@@ -24,6 +25,25 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             bool isSuccessfullyCreated = true;
 
             Assert.Equal(isSuccessfullyCreated, _UMDAO.CreateAccountRecord(ua));
+        }
+
+        [Fact]
+        public void GetAccountRecordTest()
+        {         
+            string _connectionString = @"Data Source=JDCRAMOS;Initial Catalog=MEetAndYouDB;Integrated Security=True";
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (SqlCommand command = new SqlCommand("[MEetAndYou].[GetAccountRecord]", connection))
+            {
+                command.CommandType = CommandType.Text;
+                command.Parameters.Add("@id", SqlDbType.Int).Value = 2;
+
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+
+            Assert.Equal(ua.Email, "John.Doe@gmail.com");
         }
     }
 }

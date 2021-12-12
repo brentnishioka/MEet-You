@@ -6,7 +6,7 @@ namespace Pentaskilled.MEetAndYou.Entities
     {
 
         // Unique identifier of user
-        public string UserID { get; }
+        public int UserID { get; set; }
 
         // The email of a registered user
         public string Email { get; set; }

@@ -11,7 +11,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
     {
         bool CreateAccountRecord(UserAccountEntity ua);
 
-        bool UpdateAccountEmail(UserAccountEntity ua);
+        bool UpdateAccountEmail(UserAccountEntity ua, string newEmail);
 
         bool UpdateAccountPassword(UserAccountEntity ua);
 
