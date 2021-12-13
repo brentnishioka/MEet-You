@@ -141,9 +141,9 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             Task<bool> sysTask = Task.Run(() =>
                 logMan.BeginLogProcess(category, level, message)
             );
-            await sysTask;
+            bool result = await sysTask;
 
-            Assert.True(sysTask.IsCompleted);
+            Assert.True(result);
         }
 
         [Fact]

@@ -2,7 +2,8 @@
 
 namespace Pentaskilled.MEetAndYou.Managers
 {
-    public class Class1
+    public class ArchiveManager
     {
+
     }
 }
