@@ -30,6 +30,11 @@ namespace Pentaskilled.MEetAndYou.Logging
                     throw new Exception();
                 }
                 PushLogToDB(_sysLog);
+                SystemLog sysLogCheck = _logDataAccess.UpdateSysLog(_sysLog);
+                if (sysLogCheck != null)
+                {
+                    throw new Exception();
+                }
             }
             catch (Exception ex)
             {

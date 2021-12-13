@@ -17,7 +17,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         // GetConnectionString() from https://docs.microsoft.com/en-us/dotnet/api/system.data.sqlclient.sqlconnection.connectionstring?view=dotnet-plat-ext-6.0
         static private string GetConnectionString()
         { 
-            return @"Data Source=DESKTOP-DBE5DM2;Initial Catalog=MEetAndYou-DB;Integrated Security=True";
+            return @"Data Source=DESKTOP-RM9387O;Initial Catalog=MEetAndYou-DB;Integrated Security=True";
         }
 
         /// <summary>
@@ -180,6 +180,30 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                 throw new NullReferenceException();
             }
             return numRows;
+        }
+
+        public SystemLog UpdateSysLog(SystemLog sysLog)
+        {
+            _connectionString = GetConnectionString();
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                using (SqlCommand command = new SqlCommand("[MEetAndYou].[UpdateSysLog]", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.Add("@sysLogId", SqlDbType.Int).Value = sysLog.logId;
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                }
+
+
+            }
+            catch (Exception ex)
+            { 
+                return null;
+            }
+            return sysLog;
         }
 
 /*        public List<Log> ReadLogsOlderThan30()
