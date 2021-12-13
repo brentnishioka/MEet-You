@@ -171,10 +171,24 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
 
             DateTime dateTime = DateTime.UtcNow;
             string category = "Server";
-            LogLevel logLevel = LogLevel.Error;
+            LogLevel level = LogLevel.Error;
             string message = "Web server crashed.";
 
-            Assert.True(systemLoggingService.CreateNewLog(dateTime, category, logLevel, message));
+            Assert.True(systemLoggingService.CreateNewLog(dateTime, category, level, message));
+        }
+
+        [Fact]
+        public void UserLoggingFailCase4()
+        {
+            IUserLoggingService userLoggingService = new UserLoggingService();
+
+            DateTime dateTime = DateTime.UtcNow;
+            string category = "View";
+            LogLevel level = LogLevel.Warning;
+            int userId = 49230;
+            string message = "User unable to interact with the system.";
+
+            Assert.True(userLoggingService.CreateNewLog(dateTime, category, level, userId, message));
         }
     }
 }

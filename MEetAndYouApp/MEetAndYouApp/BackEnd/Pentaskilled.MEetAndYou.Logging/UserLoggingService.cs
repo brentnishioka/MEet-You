@@ -24,6 +24,11 @@ namespace Pentaskilled.MEetAndYou.Logging
             try
             {
                 MakeLog(dateTime, category, logLevel, userId, message);
+                int existLogCount = _logDataAccess.CheckExistingLog(_userLog);
+                if (existLogCount != 0)
+                {
+                    throw new Exception();
+                }
                 PushLogToDB(_userLog);
             }
             catch (Exception ex)
@@ -35,9 +40,11 @@ namespace Pentaskilled.MEetAndYou.Logging
 
         public UserLog MakeLog(DateTime dateTime, string category, LogLevel logLevel, int userId, string message)
         {
+            _userLog.logId = _logDataAccess.GetCurrentUserIdentity() + 1;
             _userLog.dateTime = dateTime;
             _userLog.category = category;
             _userLog.logLevel = logLevel;
+            _userLog.userId = userId;
             _userLog.message = message;
 
             return _userLog;

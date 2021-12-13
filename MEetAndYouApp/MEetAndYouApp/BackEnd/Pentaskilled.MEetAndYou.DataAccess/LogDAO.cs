@@ -113,7 +113,23 @@ namespace Pentaskilled.MEetAndYou.DataAccess
 
         public int GetCurrentUserIdentity()
         {
-            throw new NotImplementedException();
+            int lastLogId = 0;
+            _connectionString = GetConnectionString();
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    SqlCommand command = new SqlCommand("SELECT [MEetAndYou].[GetCurrentUserIdentity]()", connection);
+                    connection.Open();
+                    lastLogId = (int)command.ExecuteScalar();
+                    connection.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new NullReferenceException();
+            }
+            return lastLogId;
         }
 
         /// <summary>
@@ -146,7 +162,24 @@ namespace Pentaskilled.MEetAndYou.DataAccess
 
         public int CheckExistingLog(UserLog userLog)
         {
-            throw new NotImplementedException();
+            int numRows = 0;
+            _connectionString = GetConnectionString();
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    SqlCommand command = new SqlCommand("SELECT [MEetAndYou].[CheckExistingUserLog](@userLogId)", connection);
+                    command.Parameters.Add("@userLogId", SqlDbType.Int).Value = userLog.logId;
+                    connection.Open();
+                    numRows = (int)command.ExecuteScalar();
+                    connection.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new NullReferenceException();
+            }
+            return numRows;
         }
 
 /*        public List<Log> ReadLogsOlderThan30()
