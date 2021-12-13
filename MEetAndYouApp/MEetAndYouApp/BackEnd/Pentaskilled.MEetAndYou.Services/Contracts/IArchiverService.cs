@@ -15,7 +15,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
 
         bool ConsolidateOldLogs(List<Log> oldLogs);
 
-        void Consolidate(List<Log> oldLogs);
+        void Consolidate(List<Log> oldLogs, string buffLocation);
 
         bool CompressOldLogs();
 

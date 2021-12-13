@@ -700,6 +700,19 @@
           "bin/placeholder/Pentaskilled.MEetAndYou.DataAccess.dll": {}
         }
       },
+      "Pentaskilled.MEetAndYou.DomainModels/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Microsoft.Data.SqlClient": "4.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Pentaskilled.MEetAndYou.DomainModels.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Pentaskilled.MEetAndYou.DomainModels.dll": {}
+        }
+      },
       "Pentaskilled.MEetAndYou.Entities/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
@@ -720,6 +733,7 @@
         "dependencies": {
           "Microsoft.Data.SqlClient": "4.0.0",
           "Pentaskilled.MEetAndYou.DataAccess": "1.0.0",
+          "Pentaskilled.MEetAndYou.DomainModels": "1.0.0",
           "Pentaskilled.MEetAndYou.Entities": "1.0.0"
         },
         "compile": {
@@ -2622,6 +2636,11 @@
       "type": "project",
       "path": "../Pentaskilled.MEetAndYou.DataAccess/Pentaskilled.MEetAndYou.DataAccess.csproj",
       "msbuildProject": "../Pentaskilled.MEetAndYou.DataAccess/Pentaskilled.MEetAndYou.DataAccess.csproj"
+    },
+    "Pentaskilled.MEetAndYou.DomainModels/1.0.0": {
+      "type": "project",
+      "path": "../Pentaskilled.MEetAndYou.DomainModels/Pentaskilled.MEetAndYou.DomainModels.csproj",
+      "msbuildProject": "../Pentaskilled.MEetAndYou.DomainModels/Pentaskilled.MEetAndYou.DomainModels.csproj"
     },
     "Pentaskilled.MEetAndYou.Entities/1.0.0": {
       "type": "project",

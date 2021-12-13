@@ -8,8 +8,8 @@ namespace Pentaskilled.MEetAndYou.DomainModels
         private const int MAX_LOG_LIFETIME = 30;
         private const string ARCHIVE_EXTENSION = "_MEetAndYouarchive.zip";
         private const string LOG_CONNECTION_STRING = "_MEetAndYoulog.json";
-        private const string BUFFER_LOCATION = @"C:\Users\Administrator\Documents\Logs\";
-        private const string ARCHIVE_LOCATION = @"C:\Users\Administrator\Documents\Archives\";
+        private const string BUFFER_LOCATION = @"C:\Users\Raymo\Music\senior-project\buffer";
+        private const string ARCHIVE_LOCATION = @"C:\Users\Raymo\Music\senior-project\archives";
         private const double MIN_BYTES = 1024 * 25;
 
 

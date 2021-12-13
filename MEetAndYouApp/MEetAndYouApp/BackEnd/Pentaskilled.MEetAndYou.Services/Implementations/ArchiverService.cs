@@ -1,10 +1,12 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Pentaskilled.MEetAndYou.Entities;
 using Pentaskilled.MEetAndYou.DataAccess;
+using Pentaskilled.MEetAndYou.DomainModels;
 
 namespace Pentaskilled.MEetAndYou.DataAccess
 {
@@ -20,14 +22,34 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             throw new NotImplementedException();
         }
 
-        public void Consolidate(List<Log> oldLogs)
+        ///<summary>
+        /// Helper Method to get the old logs from DB and append them to .csv file
+        /// NOTE: LOCATION WAS MADE ON RANDOM FOLDER ON MY MACHINE FOR 
+        /// TESTING PURPOSES change in ArchiveConfig.cs BUFFER_LOCATION 
+        /// and ARCHIVE_LOCATION
+        /// </summary>
+        /// <param name="oldLogs"></param>
+        /// <param name="buffLocation"></param>
+        /// <returns></returns>
+        public void Consolidate(List<Log> oldLogs, string buffLocation)
         {
+
             throw new NotImplementedException();
         }
 
         public bool ConsolidateOldLogs(List<Log> oldLogs)
         {
-            throw new NotImplementedException();
+            try
+            {
+                ArchiveConfig archConf = new ArchiveConfig();
+                var buffLocation = archConf.GetBufferLocation();
+                Consolidate(oldLogs, buffLocation);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
         }
 
         public bool DeleteOldLogs(List<Log> oldLogs)

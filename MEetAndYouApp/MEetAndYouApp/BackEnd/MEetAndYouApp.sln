@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pentaskilled.MEetAndYou.Dat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pentaskilled.MEetAndYou.Logging", "Pentaskilled.MEetAndYou.Logging\Pentaskilled.MEetAndYou.Logging.csproj", "{2D3C9240-D361-4656-B0D2-34983C93C514}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pentaskilled.MEetAndYou.XUnitTests", "Pentaskilled.MEetAndYou.XUnitTests\Pentaskilled.MEetAndYou.XUnitTests.csproj", "{648DA136-844F-4754-9B63-3A17963A3977}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pentaskilled.MEetAndYou.XUnitTests", "Pentaskilled.MEetAndYou.XUnitTests\Pentaskilled.MEetAndYou.XUnitTests.csproj", "{648DA136-844F-4754-9B63-3A17963A3977}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
