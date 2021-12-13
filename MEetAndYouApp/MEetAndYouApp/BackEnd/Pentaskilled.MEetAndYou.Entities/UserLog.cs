@@ -10,7 +10,6 @@ namespace Pentaskilled.MEetAndYou.Entities
     {
         public int userId { get; set; }
 
-      
 
         public override string ToString()
         {

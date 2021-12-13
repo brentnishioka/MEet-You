@@ -9,7 +9,6 @@ namespace Pentaskilled.MEetAndYou.DataAccess
 {
     public interface IArchiverService
     {
-        bool IsLogOlderThan30Days(string FileName);
 
         List<Log> GetOldLogs();
 
@@ -22,6 +21,8 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         void Compress(string buffLocation, string archiveLocation);
 
         bool DeleteOldLogs(List<Log> oldLogs);
+
+
 
     }
 }

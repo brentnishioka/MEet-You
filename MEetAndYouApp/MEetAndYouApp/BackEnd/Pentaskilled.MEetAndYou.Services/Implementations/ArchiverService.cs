@@ -74,6 +74,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             {
                 using (StreamWriter sw = File.CreateText(completePath))
                 {
+
                     sw.WriteLine(log.ToString());
                 }
             }
@@ -106,10 +107,5 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             return new LogDAO().ReadLogsOlderThan30();
         }
 
-        // Where is this method in the sequence diagram?
-        public bool IsLogOlderThan30Days(string FileName)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

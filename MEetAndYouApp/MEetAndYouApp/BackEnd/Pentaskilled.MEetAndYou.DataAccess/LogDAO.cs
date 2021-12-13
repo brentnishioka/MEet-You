@@ -17,7 +17,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         // GetConnectionString() from https://docs.microsoft.com/en-us/dotnet/api/system.data.sqlclient.sqlconnection.connectionstring?view=dotnet-plat-ext-6.0
         static private string GetConnectionString()
         { 
-            return @"Data Source=DESKTOP-RM9387O;Initial Catalog=MEetAndYou-DB;Integrated Security=True";
+            return @"Data Source=localhost;Initial Catalog=MEetAndYou-DB;Integrated Security=True";
         }
 
         /// <summary>
@@ -266,7 +266,8 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                         tempUserLog.dateTime = Convert.ToDateTime(reader[1]);
                         tempUserLog.category = Convert.ToString(reader[2]);
                         tempUserLog.logLevel = dict[Convert.ToString(reader[3])];
-                        tempUserLog.message = Convert.ToString(reader[4]);
+                        tempUserLog.userId = Convert.ToInt32(reader[4]);
+                        tempUserLog.message = Convert.ToString(reader[5]);
 
                         logs30DayOlder.Add(tempUserLog);
                     }
