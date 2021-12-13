@@ -285,10 +285,11 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         public List<Log> DeleteLogsOlderThan30()
         {
             _connectionString = GetConnectionString();
-            List<Log> logs30DayOlder = new List<Log>();
+            List<Log> logsNot30DayOlder = new List<Log>();
             SystemLog tempSysLog = new SystemLog();
             UserLog tempUserLog = new UserLog();
-
+            LogLvl logLvl = new LogLvl();
+            Dictionary<string, LogLevel> dict = logLvl._loglvl;
 
             try
             {
@@ -296,11 +297,21 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                 {
                     SqlCommand newSysLogsCommand = new SqlCommand("DELETE [MEetAndYou].[deleteLogsOlderThan30] WHERE DATETIME < GETDATE() - 30", connection);
                     SqlCommand oldSysLogsCommand = new SqlCommand("SELECT [MEetAndYou].[deleteLogsOlderThan30]", connection);
-                    
+
+
                     connection.Open();
+
                     SqlDataReader reader = oldSysLogsCommand.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        tempUserLog.logId = Convert.ToInt32(reader[0]);
+                        tempUserLog.dateTime = Convert.ToDateTime(reader[1]);
+                        tempUserLog.category = Convert.ToString(reader[2]);
+                        tempUserLog.logLevel = dict[Convert.ToString(reader[3])];
+                        tempUserLog.message = Convert.ToString(reader[4]);
 
-
+                        logsNot30DayOlder.Add(tempSysLog);
+                    }
                     connection.Close();
 
                 }
@@ -310,9 +321,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                 throw new NullReferenceException();
             }
 
-            /*DELETE FROM Table_name
-            WHERE DATETIME < GETDATE() - 30*/
-            return logs30DayOlder;
+            return logsNot30DayOlder;
         }
 
         public int GetArchiveCount()
