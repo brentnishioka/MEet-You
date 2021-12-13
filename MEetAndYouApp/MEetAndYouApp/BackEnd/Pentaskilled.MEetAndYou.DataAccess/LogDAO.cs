@@ -17,7 +17,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         // GetConnectionString() from https://docs.microsoft.com/en-us/dotnet/api/system.data.sqlclient.sqlconnection.connectionstring?view=dotnet-plat-ext-6.0
         static private string GetConnectionString()
         { 
-            return @"Data Source=LAPTOP-5VDMOIMK;Initial Catalog=Meet-N-You-DB;Integrated Security=True;Pooling=False";
+            return @"Data Source=DESKTOP-DBE5DM2;Initial Catalog=MEetAndYou-DB;Integrated Security=True";
         }
 
         /// <summary>
@@ -233,13 +233,28 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         public List<Log> ReadLogsOlderThan30()
         {
             _connectionString = GetConnectionString();
-            List<Log> logs30DayOlder;
+            List<Log> logs30DayOlder = new List<Log>();
+            SystemLog tempSysLog = new SystemLog();
+            UserLog tempUserLog = new UserLog();
             try
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
-                using (SqlCommand command = new SqlCommand("SELECT [MEetAndYou].[sysLogs30DaysOld]", connection))
                 {
+                    SqlCommand oldSysLogsCommand = new SqlCommand("SELECT [MEetAndYou].[sysLogs30DaysOld]", connection);
+                    SqlCommand oldUserLogsCommand = new SqlCommand("SELECT [MEetAndYou].[userLogs30DaysOld]", connection);
 
+                    connection.Open();
+                    SqlDataReader reader = oldSysLogsCommand.ExecuteReader();
+                    while(reader.Read())
+                    {
+                        tempSysLog.logId = Convert.ToInt32(reader[0]);
+                        tempSysLog.dateTime = Convert.ToDateTime(reader[1]);
+                        tempSysLog.category = Convert.ToString(reader[2]);
+                        tempSysLog.logLevel = Convert.ToInt32((LogLevel)reader[3]);
+                        tempSysLog.message = Convert.ToString(reader[4]);
+                    }
+
+                    connection.Close();
                 }
             }
             catch (Exception ex)
@@ -248,16 +263,62 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             }
 
             return logs30DayOlder;
+            throw new NotImplementedException();
         }
 
         public List<Log> DeleteLogsOlderThan30()
         {
-            
+            _connectionString = GetConnectionString();
+            List<Log> logs30DayOlder = new List<Log>();
+            SystemLog tempSysLog = new SystemLog();
+            UserLog tempUserLog = new UserLog();
+
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    SqlCommand newSysLogsCommand = new SqlCommand("DELETE [MEetAndYou].[deleteLogsOlderThan30] WHERE DATETIME < GETDATE() - 30", connection);
+                    SqlCommand oldSysLogsCommand = new SqlCommand("SELECT [MEetAndYou].[deleteLogsOlderThan30]", connection)
+                    
+                    connection.Open();
+                    SqlDataReader reader = oldSysLogsCommand.ExecuteReader();
+
+
+                    connection.Close();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new NullReferenceException();
+            }
+
+            /*DELETE FROM Table_name
+            WHERE DATETIME < GETDATE() - 30*/
+            return logs30DayOlder;
         }
 
         public int GetArchiveCount()
         {
             _connectionString = GetConnectionString();
+            int count;
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    SqlCommand command = new SqlCommand("SELECT [MEetAndYou].[getArchiveCount]()", connection);
+                    connection.Open();
+                    count = (int)command.ExecuteScalar();
+                    connection.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new NullReferenceException();
+
+            }
+            return count;
 
         }
 
