@@ -310,7 +310,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                         tempUserLog.logLevel = dict[Convert.ToString(reader[3])];
                         tempUserLog.message = Convert.ToString(reader[4]);
 
-                        logsNot30DayOlder.Add(tempSysLog);
+                        logsNot30DayOlder.Add(tempUserLog);
                     }
                     connection.Close();
 
