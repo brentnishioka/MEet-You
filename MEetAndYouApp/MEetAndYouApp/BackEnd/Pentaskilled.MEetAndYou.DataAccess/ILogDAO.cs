@@ -16,7 +16,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         int CheckExistingLog(SystemLog sysLog);
         int CheckExistingLog(UserLog userLog);
 
-        SystemLog UpdateSysLog(SystemLog sysLog);  
-        /*UserLog UpdateUserLog(UserLog userLog);  */  
+        SystemLog UpdateSysLog(SystemLog sysLog);
+        UserLog UpdateUserLog(UserLog userLog);
     }
 }

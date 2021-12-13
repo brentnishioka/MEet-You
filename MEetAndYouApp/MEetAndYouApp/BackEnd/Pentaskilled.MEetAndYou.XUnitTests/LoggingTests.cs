@@ -205,6 +205,22 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             Assert.True(systemLoggingService.CreateNewLog(dateTime, category, level, message));
         }
 
+        [Fact]
+        public void UserLoggingFailCase5()
+        {
+            IUserLoggingService userLoggingService = new UserLoggingService();
+
+            DateTime dateTime = DateTime.UtcNow;
+            string category = "View";
+            LogLevel level = LogLevel.Error;
+            int userId = 49230;
+            string message = "Error: user logs should not be modifiable";
+
+            Assert.True(userLoggingService.CreateNewLog(dateTime, category, level, userId, message));
+        }
+
+
+
 
     }
 }

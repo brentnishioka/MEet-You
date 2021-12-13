@@ -206,24 +206,48 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             return sysLog;
         }
 
-/*        public List<Log> ReadLogsOlderThan30()
+        public UserLog UpdateUserLog(UserLog userLog)
         {
             _connectionString = GetConnectionString();
-            List<Log> logs30DayOlder;
             try
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
-                using (SqlCommand command = new SqlCommand("[MEetAndYou].[sysLogs30DaysOld]", connection))
+                using (SqlCommand command = new SqlCommand("[MEetAndYou].[UpdateUserLog]", connection))
                 {
-
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.Add("@sysLogId", SqlDbType.Int).Value = userLog.logId;
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
                 }
+
+
             }
             catch (Exception ex)
             {
                 return null;
             }
+            return userLog;
+        }
 
-            return logs30DayOlder;
-        }*/
+        /*        public List<Log> ReadLogsOlderThan30()
+                {
+                    _connectionString = GetConnectionString();
+                    List<Log> logs30DayOlder;
+                    try
+                    {
+                        using (SqlConnection connection = new SqlConnection(_connectionString))
+                        using (SqlCommand command = new SqlCommand("[MEetAndYou].[sysLogs30DaysOld]", connection))
+                        {
+
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        return null;
+                    }
+
+                    return logs30DayOlder;
+                }*/
     }
 }
