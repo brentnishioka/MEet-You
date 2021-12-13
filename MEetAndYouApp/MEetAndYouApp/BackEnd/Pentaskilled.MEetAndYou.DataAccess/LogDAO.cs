@@ -281,46 +281,29 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             return logs30DayOlder;
         }
 
-        public List<Log> DeleteLogsOlderThan30()
+        public bool DeleteLogsOlderThan30()
         {
             _connectionString = GetConnectionString();
-            List<Log> logsNot30DayOlder = new List<Log>();
-            SystemLog tempSysLog = new SystemLog();
-            UserLog tempUserLog = new UserLog();
-            LogLvl logLvl = new LogLvl();
-            Dictionary<string, LogLevel> dict = logLvl._loglvl;
+          
 
             try
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
-                    SqlCommand newSysLogsCommand = new SqlCommand("DELETE [MEetAndYou].[deleteLogsOlderThan30] WHERE DATETIME < GETDATE() - 30", connection);
-                    SqlCommand oldSysLogsCommand = new SqlCommand("SELECT [MEetAndYou].[deleteLogsOlderThan30]", connection);
+                    SqlCommand newSysLogsCommand = new SqlCommand("SELECT [MEetAndYou].[ArchiveDelete]() ", connection);
 
-
+                
                     connection.Open();
-
-                    SqlDataReader reader = oldSysLogsCommand.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        tempUserLog.logId = Convert.ToInt32(reader[0]);
-                        tempUserLog.dateTime = Convert.ToDateTime(reader[1]);
-                        tempUserLog.category = Convert.ToString(reader[2]);
-                        tempUserLog.logLevel = dict[Convert.ToString(reader[3])];
-                        tempUserLog.message = Convert.ToString(reader[4]);
-
-                        logsNot30DayOlder.Add(tempUserLog);
-                    }
                     connection.Close();
 
                 }
             }
             catch (Exception ex)
             {
-                throw new NullReferenceException();
+                return false;
             }
 
-            return logsNot30DayOlder;
+            return true;
         }
 
         public int GetArchiveCount()

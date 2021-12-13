@@ -24,6 +24,16 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         }
 
         [Fact]
+        public void DeleteLogsOlderThan30Test()
+        {
+            ILogDAO logDAO = new LogDAO();
+            bool endCondition = logDAO.DeleteLogsOlderThan30();
+            bool isSuccessfullyDeleted = true;
+
+            Assert.Equal(isSuccessfullyDeleted, endCondition);
+        }
+
+        [Fact]
         public void ReadLogsOlderThan30Test()
         {
             ILogDAO logDAO = new LogDAO();

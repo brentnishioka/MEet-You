@@ -19,7 +19,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         UserLog UpdateUserLog(UserLog userLog);
 
         List<Log> ReadLogsOlderThan30();
-        List<Log> DeleteLogsOlderThan30();
+        bool DeleteLogsOlderThan30();
         int GetArchiveCount();
     }
 }
