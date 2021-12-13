@@ -20,7 +20,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         /// </summary>
         /// <param name="buffLocation"></param>
         /// <param name="archiveLocation"></param>
-        /// <returns></returns
+        /// <returns></returns>
         public void Compress(string buffLocation, string archiveLocation)
         {
             ArchiveConfig archConf = new ArchiveConfig();
