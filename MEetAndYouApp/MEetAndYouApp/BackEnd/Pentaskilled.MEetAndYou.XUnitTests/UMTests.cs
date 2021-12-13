@@ -28,22 +28,95 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         }
 
         [Fact]
-        public void GetAccountRecordTest()
-        {         
-            string _connectionString = @"Data Source=JDCRAMOS;Initial Catalog=MEetAndYouDB;Integrated Security=True";
+        public void UpdateAccountEmailTest()
+        {
+            int id = 2;
+            string newEmail = "gidjoshviv@gmail.com";
 
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            using (SqlCommand command = new SqlCommand("[MEetAndYou].[GetAccountRecord]", connection))
-            {
-                command.CommandType = CommandType.Text;
-                command.Parameters.Add("@id", SqlDbType.Int).Value = 2;
+            IUMDAO _UMDAO = new UMDAO();
+            bool isEmailSuccessfullyUpdated = true;
 
-                connection.Open();
-                command.ExecuteNonQuery();
-                connection.Close();
-            }
+            Assert.Equal(isEmailSuccessfullyUpdated, _UMDAO.UpdateAccountEmail(id, newEmail));
+        }
 
-            /*Assert.Equal(ua.Email, "John.Doe@gmail.com");*/
+        [Fact]
+        public void UpdateAccountPasswordTest()
+        {
+            int id = 2;
+            string newPassword = "PasSwOrD10";
+
+            IUMDAO _UMDAO = new UMDAO();
+            bool isPasswordSuccessfullyUpdated = true;
+
+            Assert.Equal(isPasswordSuccessfullyUpdated, _UMDAO.UpdateAccountPassword(id, newPassword));
+        }
+
+        [Fact]
+        public void UpdateAccountPhoneTest()
+        {
+            int id = 2;
+            string newPhone = "(516) 598-2915";
+
+            IUMDAO _UMDAO = new UMDAO();
+            bool isPhoneSuccessfullyUpdated = true;
+
+            Assert.Equal(isPhoneSuccessfullyUpdated, _UMDAO.UpdateAccountPhone(id, newPhone));
+        }
+
+        [Fact]
+        public void UpdateAccountRoleTest()
+        {
+            int id = 2;
+            string newRole = "System Administrator";
+
+            IUMDAO _UMDAO = new UMDAO();
+            bool isRoleSuccessfullyUpdated = true;
+
+            Assert.Equal(isRoleSuccessfullyUpdated, _UMDAO.UpdateAccountRole(id, newRole));
+        }
+
+        [Fact]
+        public void DeleteAccountRecordTest()
+        {
+            int id = 1;
+
+            IUMDAO _UMDAO = new UMDAO();
+            bool isSuccessfullyDeleted = true;
+
+            Assert.Equal(isSuccessfullyDeleted.ToString(), _UMDAO.DeleteAccountRecord(id).ToString());
+        }
+
+        [Fact]
+        public void DisableAccountRecordTest()
+        {
+            int id = 4;
+
+            IUMDAO _UMDAO = new UMDAO();
+            bool isSuccessfullyDisabled = true;
+
+            Assert.Equal(isSuccessfullyDisabled, _UMDAO.DisableAccountRecord(id));
+        }
+
+        [Fact]
+        public void EnableAccountRecordTest()
+        {
+            int id = 2;
+
+            IUMDAO _UMDAO = new UMDAO();
+            bool isSuccessfullyEnabled = true;
+
+            Assert.Equal(isSuccessfullyEnabled, _UMDAO.EnableAccountRecord(id));
+        }
+
+        [Fact]
+        public void VerifyUserInDBTest()
+        {
+            int id = 2;
+
+            IUMDAO _UMDAO = new UMDAO();
+            bool doesUserExist = true;
+
+            Assert.Equal(doesUserExist.ToString(), _UMDAO.VerifyUserInDB(id).ToString());
         }
     }
 }

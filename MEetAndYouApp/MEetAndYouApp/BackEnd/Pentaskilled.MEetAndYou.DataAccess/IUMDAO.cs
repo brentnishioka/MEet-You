@@ -11,20 +11,20 @@ namespace Pentaskilled.MEetAndYou.DataAccess
     {
         bool CreateAccountRecord(UserAccountEntity ua);
 
-        bool UpdateAccountEmail(UserAccountEntity ua, string newEmail);
+        bool UpdateAccountEmail(int id, string newEmail);
 
-        bool UpdateAccountPassword(UserAccountEntity ua);
+        bool UpdateAccountPassword(int id, string newPassword);
 
-        bool UpdateAccountPhone(UserAccountEntity ua);
+        bool UpdateAccountPhone(int id, string newPhoneNum);
 
-        bool UpdateAccountRole(UserAccountEntity ua);
+        bool UpdateAccountRole(int id, string newRole);
 
-        bool DeleteAccountRecord(UserAccountEntity ua);
+        bool DeleteAccountRecord(int id);
 
-        bool DisableAccountRecord(UserAccountEntity ua);
+        bool DisableAccountRecord(int id);
 
-        bool EnableAccountRecord(UserAccountEntity ua);
+        bool EnableAccountRecord(int id);
 
-        bool VerifyUserInDB(UserAccountEntity ua);
+        bool VerifyUserInDB(int id);
     }
 }
