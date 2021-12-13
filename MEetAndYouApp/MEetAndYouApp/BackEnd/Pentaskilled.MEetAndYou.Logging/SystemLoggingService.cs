@@ -40,7 +40,7 @@ namespace Pentaskilled.MEetAndYou.Logging
 
         public SystemLog MakeLog(DateTime dateTime, string category, LogLevel logLevel, string message)
         {
-            _sysLog.logId = _logDataAccess.GetCurrentSysIdentity();
+            _sysLog.logId = _logDataAccess.GetCurrentSysIdentity() + 1;
             _sysLog.dateTime = dateTime;
             _sysLog.category = category;
             _sysLog.logLevel = logLevel;

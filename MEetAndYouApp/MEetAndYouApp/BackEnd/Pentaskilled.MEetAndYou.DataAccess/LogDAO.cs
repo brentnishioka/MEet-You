@@ -130,9 +130,8 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
-                    SqlCommand command = new SqlCommand("SELECT [MEetAndYou].[CheckExistingSysLog]()", connection);
-                    command.Parameters.Add(new SqlParameter("@sysLogId", SqlDbType.Int));
-                    command.Parameters["@sysLogId"].Value = sysLog.logId;
+                    SqlCommand command = new SqlCommand("SELECT [MEetAndYou].[CheckExistingSysLog](@sysLogId)", connection);
+                    command.Parameters.Add("@sysLogId", SqlDbType.Int).Value = sysLog.logId;
                     connection.Open();
                     numRows = (int)command.ExecuteScalar();
                     connection.Close();
