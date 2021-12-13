@@ -63,5 +63,14 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
 
             Assert.True(returnValue);
         }
+
+        [Fact]
+        public void CompressOldLogsTest()
+        {
+            IArchiverService archiverService = new ArchiverService();
+            bool returnValue = archiverService.CompressOldLogs();
+
+            Assert.True(returnValue);
+        }
     }
 }

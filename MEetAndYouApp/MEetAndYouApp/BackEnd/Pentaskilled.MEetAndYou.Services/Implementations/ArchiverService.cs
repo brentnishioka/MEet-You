@@ -13,9 +13,30 @@ namespace Pentaskilled.MEetAndYou.DataAccess
 {
     public class ArchiverService : IArchiverService
     {
+
+        ///<summary>
+        /// Helper method that reads in the .csv file of logs from
+        /// buffLocation, zips the file, and stores the 
+        /// </summary>
+        /// <param name="buffLocation"></param>
+        /// <param name="archiveLocation"></param>
+        /// <returns></returns
         public void Compress(string buffLocation, string archiveLocation)
         {
-            throw new NotImplementedException();
+            ArchiveConfig archConf = new ArchiveConfig();
+            string fileName = DateTime.Now.ToString(archConf.GetDateTimeFormat()) +
+                                      archConf.GetArchiveExtension();
+            DirectoryInfo di = new DirectoryInfo(buffLocation);
+            List<FileInfo> files = di.GetFiles("*.csv").ToList();
+            string zipPath = archiveLocation + @"\" + fileName;
+
+            foreach (FileInfo file in files)
+            {
+                using (ZipArchive archive = ZipFile.Open(zipPath, ZipArchiveMode.Create))
+                {
+                    archive.CreateEntryFromFile(file.ToString(), Path.GetFileName(file.ToString()));
+                }
+            }
         }
 
         public bool CompressOldLogs()
@@ -46,7 +67,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         public void Consolidate(List<Log> oldLogs, string buffLocation)
         {
             ArchiveConfig archConf = new ArchiveConfig();
-            string fileName = DateTime.Now.ToString(archConf.GetDateTimeFormat()) + archConf.GetArchiveExtension();
+            string fileName = DateTime.Now.ToString(archConf.GetDateTimeFormat()) + archConf.GetBufferExtension();
             string completePath = $"{buffLocation}" + "\\" + $"{fileName}";
 
             foreach(Log log in oldLogs)
