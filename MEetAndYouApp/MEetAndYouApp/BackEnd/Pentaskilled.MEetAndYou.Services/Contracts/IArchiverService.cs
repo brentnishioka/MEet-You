@@ -11,7 +11,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
     {
         bool IsLogOlderThan30Days(string FileName);
 
-        bool GetOldLogs();
+        List<Log> GetOldLogs();
 
         bool ConsolidateOldLogs(List<Log> oldLogs);
 

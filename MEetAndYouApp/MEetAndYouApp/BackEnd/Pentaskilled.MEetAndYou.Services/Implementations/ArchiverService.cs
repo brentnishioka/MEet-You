@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Pentaskilled.MEetAndYou.Entities;
+using Pentaskilled.MEetAndYou.DataAccess;
 
 namespace Pentaskilled.MEetAndYou.DataAccess
 {
@@ -34,9 +35,9 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             throw new NotImplementedException();
         }
 
-        public bool GetOldLogs()
+        public List<Log> GetOldLogs()
         {
-            throw new NotImplementedException();
+            return new LogDAO().ReadLogsOlderThan30();
         }
 
         public bool IsLogOlderThan30Days(string FileName)

@@ -719,6 +719,7 @@
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
           "Microsoft.Data.SqlClient": "4.0.0",
+          "Pentaskilled.MEetAndYou.DataAccess": "1.0.0",
           "Pentaskilled.MEetAndYou.Entities": "1.0.0"
         },
         "compile": {

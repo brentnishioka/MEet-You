@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Pentaskilled.MEetAndYou.DataAccess;
 using Pentaskilled.MEetAndYou.Entities;
 using Pentaskilled.MEetAndYou.Logging;
+using Pentaskilled.MEetAndYou.Services;
 using Xunit;
 
 
@@ -38,6 +39,16 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         {
             ILogDAO logDAO = new LogDAO();
             List<Log> oldLogs = logDAO.ReadLogsOlderThan30();
+            int expectedOldLogsCount = 1;
+
+            Assert.Equal(expectedOldLogsCount, oldLogs.Count);
+        }
+
+        [Fact]
+        public void GetOldLogsTest()
+        {
+            IArchiverService archiverService = new ArchiverService();
+            List<Log> oldLogs = archiverService.GetOldLogs();
             int expectedOldLogsCount = 1;
 
             Assert.Equal(expectedOldLogsCount, oldLogs.Count);
