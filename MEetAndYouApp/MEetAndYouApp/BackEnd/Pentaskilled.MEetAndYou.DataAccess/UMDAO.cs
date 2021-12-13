@@ -17,7 +17,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         // GetConnectionString() from https://docs.microsoft.com/en-us/dotnet/api/system.data.sqlclient.sqlconnection.connectionstring?view=dotnet-plat-ext-6.0
         static private string GetConnectionString()
         {
-            return @"Data Source=LAPTOP-5VDMOIMK;Initial Catalog=MEetAndYouDB;Integrated Security=True";
+            return @"Data Source=JDCRAMOS;Initial Catalog=MEetAndYouDB;Integrated Security=True";
         }
 
         /// <summary>
@@ -31,6 +31,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         public bool CreateAccountRecord(UserAccountEntity ua)
         {
             _connectionString = GetConnectionString();
+            bool result; 
 
             try
             {
@@ -46,7 +47,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                     command.Parameters.Add("@active", SqlDbType.Bit).Value = ua.Active;
 
                     connection.Open();
-                    command.ExecuteNonQuery();
+                    result = Convert.ToBoolean(command.ExecuteNonQuery());
                     connection.Close();
                 }
             }
@@ -55,12 +56,13 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             {
                 return false;
             }
-            return true;
+            return result;
         }
 
-        public bool UpdateAccountEmail(UserAccountEntity ua, string newEmail)
+        public bool UpdateAccountEmail(int id, string newEmail)
         {
             _connectionString = GetConnectionString();
+            bool result; 
 
             try
             {
@@ -68,11 +70,11 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                 using (SqlCommand command = new SqlCommand("[MEetAndYou].[UpdateAccountEmail]", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.Add("@id", SqlDbType.Int).Value = ua.UserID;
+                    command.Parameters.Add("@id", SqlDbType.Int).Value = id;
                     command.Parameters.Add("@email", SqlDbType.VarChar).Value = newEmail;
 
                     connection.Open();
-                    command.ExecuteNonQuery();
+                    result = Convert.ToBoolean(command.ExecuteNonQuery());
                     connection.Close();
                 }
             }
@@ -81,12 +83,13 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             {
                 return false;
             }
-            return true;
+            return result;
         }
 
-        public bool UpdateAccountPassword(UserAccountEntity ua)
+        public bool UpdateAccountPassword(int id, string newPassword)
         {
             _connectionString = GetConnectionString();
+            bool result; 
 
             try
             {
@@ -94,11 +97,11 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                 using (SqlCommand command = new SqlCommand("[MEetAndYou].[UpdateAccountPassword]", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.Add("@id", SqlDbType.Int).Value = ua.UserID;
-                    command.Parameters.Add("@password", SqlDbType.VarChar).Value = ua.Password;
+                    command.Parameters.Add("@id", SqlDbType.Int).Value = id;
+                    command.Parameters.Add("@password", SqlDbType.VarChar).Value = newPassword;
 
                     connection.Open();
-                    command.ExecuteNonQuery();
+                    result = Convert.ToBoolean(command.ExecuteNonQuery());
                     connection.Close();
                 }
             }
@@ -107,12 +110,13 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             {
                 return false;
             }
-            return true;
+            return result;
         }
 
-        public bool UpdateAccountPhone(UserAccountEntity ua)
+        public bool UpdateAccountPhone(int id, string newPhoneNum)
         {
             _connectionString = GetConnectionString();
+            bool result; 
 
             try
             {
@@ -120,11 +124,11 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                 using (SqlCommand command = new SqlCommand("[MEetAndYou].[UpdateAccountPhoneNum]", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.Add("@id", SqlDbType.Int).Value = ua.UserID;
-                    command.Parameters.Add("@phoneNum", SqlDbType.VarChar).Value = ua.PhoneNumber;
+                    command.Parameters.Add("@id", SqlDbType.Int).Value = id;
+                    command.Parameters.Add("@phoneNum", SqlDbType.VarChar).Value = newPhoneNum;
 
                     connection.Open();
-                    command.ExecuteNonQuery();
+                    result = Convert.ToBoolean(command.ExecuteNonQuery());
                     connection.Close();
                 }
             }
@@ -133,12 +137,13 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             {
                 return false;
             }
-            return true;
+            return result;
         }
 
-        public bool UpdateAccountRole(UserAccountEntity ua)
+        public bool UpdateAccountRole(int id, string newRole)
         {
             _connectionString = GetConnectionString();
+            bool result;
 
             try
             {
@@ -146,11 +151,11 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                 using (SqlCommand command = new SqlCommand("[MEetAndYou].[UpdateAccountRole]", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.Add("@id", SqlDbType.Int).Value = ua.UserID;
-                    command.Parameters.Add("@role", SqlDbType.VarChar).Value = ua.Role;
+                    command.Parameters.Add("@id", SqlDbType.Int).Value = id;
+                    command.Parameters.Add("@role", SqlDbType.VarChar).Value = newRole;
 
                     connection.Open();
-                    command.ExecuteNonQuery();
+                    result = Convert.ToBoolean(command.ExecuteNonQuery());
                     connection.Close();
                 }
             }
@@ -159,12 +164,13 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             {
                 return false;
             }
-            return true;
+            return result;
         }
 
-        public bool DeleteAccountRecord(UserAccountEntity ua)
+        public bool DeleteAccountRecord(int id)
         {
             _connectionString = GetConnectionString();
+            bool result; 
 
             try
             {
@@ -172,10 +178,10 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                 using (SqlCommand command = new SqlCommand("[MEetAndYou].[DeleteAccountRecord]", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.Add("@id", SqlDbType.Int).Value = ua.UserID;
+                    command.Parameters.Add("@id", SqlDbType.Int).Value = id;
 
                     connection.Open();
-                    command.ExecuteNonQuery();
+                    result = Convert.ToBoolean(command.ExecuteNonQuery());
                     connection.Close();
                 }
             }
@@ -184,12 +190,14 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             {
                 return false;
             }
-            return true;
+
+            return result;
         }
 
-        public bool DisableAccountRecord(UserAccountEntity ua)
+        public bool DisableAccountRecord(int id)
         {
             _connectionString = GetConnectionString();
+            bool result;
 
             try
             {
@@ -197,10 +205,10 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                 using (SqlCommand command = new SqlCommand("[MEetAndYou].[DisableAccountRecord]", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.Add("@id", SqlDbType.Int).Value = ua.UserID;
+                    command.Parameters.Add("@id", SqlDbType.Int).Value = id;
 
                     connection.Open();
-                    command.ExecuteNonQuery();
+                    result = Convert.ToBoolean(command.ExecuteNonQuery());
                     connection.Close();
                 }
             }
@@ -209,12 +217,14 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             {
                 return false;
             }
-            return true;
+
+            return result;
         }
 
-        public bool EnableAccountRecord(UserAccountEntity ua)
+        public bool EnableAccountRecord(int id)
         {
             _connectionString = GetConnectionString();
+            bool result;
 
             try
             {
@@ -222,10 +232,10 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                 using (SqlCommand command = new SqlCommand("[MEetAndYou].[EnableAccountRecord]", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.Add("@id", SqlDbType.Int).Value = ua.UserID;
+                    command.Parameters.Add("@id", SqlDbType.Int).Value = id;
 
                     connection.Open();
-                    command.ExecuteNonQuery();
+                    result = Convert.ToBoolean(command.ExecuteNonQuery());
                     connection.Close();
                 }
             }
@@ -234,23 +244,24 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             {
                 return false;
             }
-            return true;
+            return result;
         }
 
-        public bool VerifyUserInDB(UserAccountEntity ua)
+        public bool VerifyUserInDB(int id)
         {
             _connectionString = GetConnectionString();
+            int result;
 
             try
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
-                using (SqlCommand command = new SqlCommand("[MEetAndYou].[VerifyUserInDB]", connection))
+                using (SqlCommand command = new SqlCommand("SELECT [MEetAndYou].[VerifyUserInDB] (@id)", connection))
                 {
                     command.CommandType = CommandType.Text;
-                    command.Parameters.Add("@id", SqlDbType.Int).Value = ua.UserID;
+                    command.Parameters.Add("@id", SqlDbType.Int).Value = id;
 
                     connection.Open();
-                    command.ExecuteNonQuery();
+                    result = (int) command.ExecuteScalar();
                     connection.Close();
                 }
             }
@@ -259,32 +270,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             {
                 return false;
             }
-            return true;
+            return Convert.ToBoolean(result);
         }
-
-        //public UserAccountEntity GetAccountRecord(int id)
-        //{
-        //    _connectionString = GetConnectionString();
-
-        //    try
-        //    {
-        //        using (SqlConnection connection = new SqlConnection(_connectionString))
-        //        using (SqlCommand command = new SqlCommand("[MEetAndYou].[GetAccountRecord]", connection))
-        //        {
-        //            command.CommandType = CommandType.Text;
-        //            command.Parameters.Add("@id", SqlDbType.Int).Value = id;
-
-        //            connection.Open();
-        //            command.ExecuteNonQuery();
-        //            connection.Close();
-        //        }
-        //    }
-
-        //    catch (Exception ex)
-        //    {
-        //        return;
-        //    }
-        //    return true;
-        //}
     }
 }
