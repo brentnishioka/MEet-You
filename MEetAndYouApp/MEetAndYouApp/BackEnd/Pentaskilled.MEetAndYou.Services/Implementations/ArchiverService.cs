@@ -15,8 +15,8 @@ namespace Pentaskilled.MEetAndYou.DataAccess
     {
 
         ///<summary>
-        /// Helper method that reads in the .csv file of logs from
-        /// buffLocation, zips the file, and stores the 
+        /// Helper method that reads in the .csv file(s) of logs from
+        /// buffLocation, zips the file(s), and stores them in archiveLocation
         /// </summary>
         /// <param name="buffLocation"></param>
         /// <param name="archiveLocation"></param>
@@ -94,9 +94,11 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             return true;
         }
 
+        // can more error handling be done?
         public bool DeleteOldLogs(List<Log> oldLogs)
         {
-            throw new NotImplementedException();
+            return new LogDAO().DeleteLogsOlderThan30();
+
         }
 
         public List<Log> GetOldLogs()
@@ -104,6 +106,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             return new LogDAO().ReadLogsOlderThan30();
         }
 
+        // Where is this method in the sequence diagram?
         public bool IsLogOlderThan30Days(string FileName)
         {
             throw new NotImplementedException();

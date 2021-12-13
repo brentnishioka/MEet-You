@@ -64,6 +64,8 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             Assert.True(returnValue);
         }
 
+        // running this test in a row might lead to an error because the file would 
+        // already exist in the directory
         [Fact]
         public void CompressOldLogsTest()
         {
@@ -72,5 +74,21 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
 
             Assert.True(returnValue);
         }
+
+
+        // Remember that this test will affect your local db and can affect other tests
+        [Fact]
+        public void DeleteOldLogsTest()
+        {
+            IArchiverService archiverService = new ArchiverService();
+            List<Log> oldLogs = archiverService.GetOldLogs();
+            archiverService.DeleteOldLogs(oldLogs); 
+            int expectedOldLogsCount = 0;
+            oldLogs = archiverService.GetOldLogs();
+
+            Assert.Equal(expectedOldLogsCount, oldLogs.Count);
+        }
+
+
     }
 }
