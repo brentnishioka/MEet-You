@@ -17,7 +17,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         // GetConnectionString() from https://docs.microsoft.com/en-us/dotnet/api/system.data.sqlclient.sqlconnection.connectionstring?view=dotnet-plat-ext-6.0
         static private string GetConnectionString()
         { 
-            return @"Data Source=DESKTOP-RM9387O;Initial Catalog=MEetAndYou-DB;Integrated Security=True";
+            return @"Data Source=DESKTOP-DBE5DM2;Initial Catalog=MEetAndYou-DB;Integrated Security=True";
         }
 
         /// <summary>
@@ -236,18 +236,18 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             List<Log> logs30DayOlder = new List<Log>();
             SystemLog tempSysLog = new SystemLog();
             UserLog tempUserLog = new UserLog();
-            LogLvl logLvl = new LogLvl();
-            Dictionary<string, LogLevel> dict = logLvl._loglvl;
+            LogLevelDict logLvl = new LogLevelDict();
+            Dictionary<string, LogLevel> dict = logLvl.logLvlDict;
             try
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
-                    SqlCommand oldSysLogsCommand = new SqlCommand("SELECT [MEetAndYou].[sysLogs30DaysOld]", connection);
-                    SqlCommand oldUserLogsCommand = new SqlCommand("SELECT [MEetAndYou].[userLogs30DaysOld]", connection);
+                    SqlCommand oldSysLogsCommand = new SqlCommand("SELECT * FROM [MEetAndYou].[sysLogs30DaysOld]()", connection);
+                    SqlCommand oldUserLogsCommand = new SqlCommand("SELECT * FROM [MEetAndYou].[userLogs30DaysOld]()", connection);
 
                     connection.Open();
                     SqlDataReader reader = oldSysLogsCommand.ExecuteReader();
-                    while(reader.Read())
+                    while (reader.Read())
                     {
                         tempSysLog.logId = Convert.ToInt32(reader[0]);
                         tempSysLog.dateTime = Convert.ToDateTime(reader[1]);
@@ -257,9 +257,10 @@ namespace Pentaskilled.MEetAndYou.DataAccess
 
                         logs30DayOlder.Add(tempSysLog);
                     }
+                    reader.Close();
 
                     reader = oldUserLogsCommand.ExecuteReader();
-                    while(reader.Read())
+                    while (reader.Read())
                     {
                         tempUserLog.logId = Convert.ToInt32(reader[0]);
                         tempUserLog.dateTime = Convert.ToDateTime(reader[1]);
@@ -269,7 +270,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
 
                         logs30DayOlder.Add(tempUserLog);
                     }
-
+                    reader.Close();
                     connection.Close();
                 }
             }
@@ -284,18 +285,16 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         public bool DeleteLogsOlderThan30()
         {
             _connectionString = GetConnectionString();
-          
-
             try
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
+                using (SqlCommand newSysLogsCommand = new SqlCommand("[MEetAndYou].[ArchiveDelete]", connection))
                 {
-                    SqlCommand newSysLogsCommand = new SqlCommand("SELECT [MEetAndYou].[ArchiveDelete]() ", connection);
-
-                
+                    newSysLogsCommand.CommandType = CommandType.StoredProcedure;
+                    
                     connection.Open();
+                    newSysLogsCommand.ExecuteNonQuery();
                     connection.Close();
-
                 }
             }
             catch (Exception ex)

@@ -14,14 +14,13 @@ namespace Pentaskilled.MEetAndYou.Entities
         Error
     }
     
-    public class LogLvl
+    public class LogLevelDict
     {
-        public Dictionary<string, LogLevel> _loglvl { get; set; }
+        public Dictionary<string, LogLevel> logLvlDict { get; set; }
 
-
-        public LogLvl()
+        public LogLevelDict()
         {
-            _loglvl = new Dictionary<string, LogLevel>()
+            logLvlDict = new Dictionary<string, LogLevel>()
             {
                 {"Info", LogLevel.Info},
                 {"Debug", LogLevel.Debug},
@@ -30,7 +29,5 @@ namespace Pentaskilled.MEetAndYou.Entities
 
             };
         }
-
-
     }
 }
