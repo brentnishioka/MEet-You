@@ -236,6 +236,9 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             List<Log> logs30DayOlder = new List<Log>();
             SystemLog tempSysLog = new SystemLog();
             UserLog tempUserLog = new UserLog();
+            LogLvl tempLogLvl = new LogLvl();
+            LogLvl logLvl = new LogLvl();
+            Dictionary<String, LogLevel> dict = logLvl._loglvl;
             try
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -250,7 +253,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                         tempSysLog.logId = Convert.ToInt32(reader[0]);
                         tempSysLog.dateTime = Convert.ToDateTime(reader[1]);
                         tempSysLog.category = Convert.ToString(reader[2]);
-                        tempSysLog.logLevel = Convert.ToInt32((LogLevel)reader[3]);
+                        tempSysLog.logLevel = dict[Convert.ToString(reader[3])];
                         tempSysLog.message = Convert.ToString(reader[4]);
                     }
 

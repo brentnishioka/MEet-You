@@ -13,4 +13,24 @@ namespace Pentaskilled.MEetAndYou.Entities
         Warning,
         Error
     }
+    
+    public class LogLvl
+    {
+        public Dictionary<string, LogLevel> _loglvl { get { return _loglvl; } set { } }
+
+
+        public LogLvl()
+        {
+            _loglvl = new Dictionary<string, LogLevel>()
+            {
+                {"Info", LogLevel.Info},
+                {"Debug", LogLevel.Debug},
+                {"Warning", LogLevel.Warning},
+                {"Error", LogLevel.Error},
+
+            };
+        }
+
+
+    }
 }
