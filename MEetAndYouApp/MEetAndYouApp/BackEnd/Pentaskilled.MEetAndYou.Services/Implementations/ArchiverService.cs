@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.IO.Compression;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,11 +20,22 @@ namespace Pentaskilled.MEetAndYou.DataAccess
 
         public bool CompressOldLogs()
         {
-            throw new NotImplementedException();
+            try
+            {
+                ArchiveConfig archConf = new ArchiveConfig();
+                var buffLocation = archConf.GetBufferLocation();
+                var archiveLocation = archConf.GetArchiveLocation();
+                Compress(buffLocation, archiveLocation);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
         }
 
         ///<summary>
-        /// Helper Method to get the old logs from DB and append them to .csv file
+        /// Helper Method that takes in old logs from DB and appends them to .csv file
         /// NOTE: LOCATION WAS MADE ON RANDOM FOLDER ON MY MACHINE FOR 
         /// TESTING PURPOSES change in ArchiveConfig.cs BUFFER_LOCATION 
         /// and ARCHIVE_LOCATION
