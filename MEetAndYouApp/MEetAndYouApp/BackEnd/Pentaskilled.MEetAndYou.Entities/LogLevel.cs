@@ -16,7 +16,7 @@ namespace Pentaskilled.MEetAndYou.Entities
     
     public class LogLvl
     {
-        public Dictionary<string, LogLevel> _loglvl { get { return _loglvl; } set { } }
+        public Dictionary<string, LogLevel> _loglvl { get; set; }
 
 
         public LogLvl()
