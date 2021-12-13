@@ -13,5 +13,11 @@ namespace Pentaskilled.MEetAndYou.Entities
         public string category { get; set; }
         public LogLevel logLevel { get; set; }
         public string message { get; set; }
+
+
+        public override string ToString()
+        {
+            return $"{logId},{dateTime},{category},{logLevel},{message}";
+        }
     }
 }

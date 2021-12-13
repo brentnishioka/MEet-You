@@ -53,5 +53,15 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
 
             Assert.Equal(expectedOldLogsCount, oldLogs.Count);
         }
+
+        [Fact]
+        public void ConsolidateOldLogsTest()
+        {
+            IArchiverService archiverService = new ArchiverService();
+            List<Log> oldLogs = archiverService.GetOldLogs();
+            bool returnValue = archiverService.ConsolidateOldLogs(oldLogs);
+
+            Assert.True(returnValue);
+        }
     }
 }

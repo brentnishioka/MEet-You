@@ -33,8 +33,17 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         /// <returns></returns>
         public void Consolidate(List<Log> oldLogs, string buffLocation)
         {
+            ArchiveConfig archConf = new ArchiveConfig();
+            string fileName = DateTime.Now.ToString(archConf.GetDateTimeFormat()) + archConf.GetArchiveExtension();
+            string completePath = $"{buffLocation}" + "\\" + $"{fileName}";
 
-            throw new NotImplementedException();
+            foreach(Log log in oldLogs)
+            {
+                using (StreamWriter sw = File.CreateText(completePath))
+                {
+                    sw.WriteLine(log.ToString());
+                }
+            }
         }
 
         public bool ConsolidateOldLogs(List<Log> oldLogs)

@@ -8,6 +8,11 @@ namespace Pentaskilled.MEetAndYou.Entities
 {
     public class SystemLog : Log
     {
-      
+
+        public override string ToString()
+        {
+            return base.ToString();
+        }
+
     }
 }

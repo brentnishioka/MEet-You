@@ -9,6 +9,13 @@ namespace Pentaskilled.MEetAndYou.Entities
     public class UserLog : Log
     {
         public int userId { get; set; }
-       
+
+      
+
+        public override string ToString()
+        {
+            return $"{logId},{dateTime},{category},{logLevel},{userId},{message}";
+        }
+
     }
 }
