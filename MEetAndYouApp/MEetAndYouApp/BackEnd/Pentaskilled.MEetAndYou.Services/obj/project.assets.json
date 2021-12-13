@@ -602,6 +602,19 @@
             "rid": "win"
           }
         }
+      },
+      "Pentaskilled.MEetAndYou.Entities/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Microsoft.Data.SqlClient": "4.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Pentaskilled.MEetAndYou.Entities.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Pentaskilled.MEetAndYou.Entities.dll": {}
+        }
       }
     }
   },
@@ -2306,27 +2319,38 @@
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
+    },
+    "Pentaskilled.MEetAndYou.Entities/1.0.0": {
+      "type": "project",
+      "path": "../Pentaskilled.MEetAndYou.Entities/Pentaskilled.MEetAndYou.Entities.csproj",
+      "msbuildProject": "../Pentaskilled.MEetAndYou.Entities/Pentaskilled.MEetAndYou.Entities.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
-      "Microsoft.Data.SqlClient >= 4.0.0"
+      "Microsoft.Data.SqlClient >= 4.0.0",
+      "Pentaskilled.MEetAndYou.Entities >= 1.0.0"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Raymo\\.nuget\\packages\\": {}
+    "C:\\Users\\gowus\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\programming\\MEet-You\\MEetAndYouApp\\MEetAndYouApp\\BackEnd\\Pentaskilled.MEetAndYou.Services\\Pentaskilled.MEetAndYou.Services.csproj",
+      "projectUniqueName": "C:\\Users\\gowus\\Desktop\\CSULB\\Fall Semester 2021\\CECS 491A\\MeetNYou\\MEetAndYouApp\\MEetAndYouApp\\BackEnd\\Pentaskilled.MEetAndYou.Services\\Pentaskilled.MEetAndYou.Services.csproj",
       "projectName": "Pentaskilled.MEetAndYou.Services",
-      "projectPath": "C:\\programming\\MEet-You\\MEetAndYouApp\\MEetAndYouApp\\BackEnd\\Pentaskilled.MEetAndYou.Services\\Pentaskilled.MEetAndYou.Services.csproj",
-      "packagesPath": "C:\\Users\\Raymo\\.nuget\\packages\\",
-      "outputPath": "C:\\programming\\MEet-You\\MEetAndYouApp\\MEetAndYouApp\\BackEnd\\Pentaskilled.MEetAndYou.Services\\obj\\",
+      "projectPath": "C:\\Users\\gowus\\Desktop\\CSULB\\Fall Semester 2021\\CECS 491A\\MeetNYou\\MEetAndYouApp\\MEetAndYouApp\\BackEnd\\Pentaskilled.MEetAndYou.Services\\Pentaskilled.MEetAndYou.Services.csproj",
+      "packagesPath": "C:\\Users\\gowus\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\gowus\\Desktop\\CSULB\\Fall Semester 2021\\CECS 491A\\MeetNYou\\MEetAndYouApp\\MEetAndYouApp\\BackEnd\\Pentaskilled.MEetAndYou.Services\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Raymo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\gowus\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -2339,7 +2363,11 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\gowus\\Desktop\\CSULB\\Fall Semester 2021\\CECS 491A\\MeetNYou\\MEetAndYouApp\\MEetAndYouApp\\BackEnd\\Pentaskilled.MEetAndYou.Entities\\Pentaskilled.MEetAndYou.Entities.csproj": {
+              "projectPath": "C:\\Users\\gowus\\Desktop\\CSULB\\Fall Semester 2021\\CECS 491A\\MeetNYou\\MEetAndYouApp\\MEetAndYouApp\\BackEnd\\Pentaskilled.MEetAndYou.Entities\\Pentaskilled.MEetAndYou.Entities.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

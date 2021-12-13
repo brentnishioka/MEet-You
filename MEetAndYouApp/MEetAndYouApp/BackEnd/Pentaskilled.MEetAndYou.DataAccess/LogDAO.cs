@@ -17,7 +17,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         // GetConnectionString() from https://docs.microsoft.com/en-us/dotnet/api/system.data.sqlclient.sqlconnection.connectionstring?view=dotnet-plat-ext-6.0
         static private string GetConnectionString()
         { 
-            return @"Data Source=DESKTOP-RM9387O;Initial Catalog=MEetAndYou-DB;Integrated Security=True";
+            return @"Data Source=LAPTOP-5VDMOIMK;Initial Catalog=Meet-N-You-DB;Integrated Security=True;Pooling=False";
         }
 
         /// <summary>
@@ -230,24 +230,37 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             return userLog;
         }
 
-        /*        public List<Log> ReadLogsOlderThan30()
+        public List<Log> ReadLogsOlderThan30()
+        {
+            _connectionString = GetConnectionString();
+            List<Log> logs30DayOlder;
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                using (SqlCommand command = new SqlCommand("SELECT [MEetAndYou].[sysLogs30DaysOld]", connection))
                 {
-                    _connectionString = GetConnectionString();
-                    List<Log> logs30DayOlder;
-                    try
-                    {
-                        using (SqlConnection connection = new SqlConnection(_connectionString))
-                        using (SqlCommand command = new SqlCommand("[MEetAndYou].[sysLogs30DaysOld]", connection))
-                        {
 
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        return null;
-                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
 
-                    return logs30DayOlder;
-                }*/
+            return logs30DayOlder;
+        }
+
+        public List<Log> DeleteLogsOlderThan30()
+        {
+            
+        }
+
+        public int GetArchiveCount()
+        {
+            _connectionString = GetConnectionString();
+
+        }
+
+        
     }
 }

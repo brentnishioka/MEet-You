@@ -15,8 +15,11 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         int GetCurrentUserIdentity();
         int CheckExistingLog(SystemLog sysLog);
         int CheckExistingLog(UserLog userLog);
-
         SystemLog UpdateSysLog(SystemLog sysLog);
         UserLog UpdateUserLog(UserLog userLog);
+
+        List<Log> ReadLogsOlderThan30();
+        List<Log> DeleteLogsOlderThan30();
+        int GetArchiveCount();
     }
 }

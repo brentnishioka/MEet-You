@@ -17,7 +17,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         // GetConnectionString() from https://docs.microsoft.com/en-us/dotnet/api/system.data.sqlclient.sqlconnection.connectionstring?view=dotnet-plat-ext-6.0
         static private string GetConnectionString()
         {
-            return @"Data Source=JDCRAMOS;Initial Catalog=MEetAndYouDB;Integrated Security=True";
+            return @"Data Source=LAPTOP-5VDMOIMK;Initial Catalog=MEetAndYouDB;Integrated Security=True";
         }
 
         /// <summary>
