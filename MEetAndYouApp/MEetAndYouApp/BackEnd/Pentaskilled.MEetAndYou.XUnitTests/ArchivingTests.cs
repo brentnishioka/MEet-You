@@ -23,6 +23,14 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             Assert.Equal(1, count);
         }
 
+        [Fact]
+        public void ReadLogsOlderThan30Test()
+        {
+            ILogDAO logDAO = new LogDAO();
+            List<Log> oldLogs = logDAO.ReadLogsOlderThan30();
+            int expectedOldLogsCount = 1;
 
+            Assert.Equal(expectedOldLogsCount, oldLogs.Count);
+        }
     }
 }

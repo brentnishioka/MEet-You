@@ -236,9 +236,8 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             List<Log> logs30DayOlder = new List<Log>();
             SystemLog tempSysLog = new SystemLog();
             UserLog tempUserLog = new UserLog();
-            LogLvl tempLogLvl = new LogLvl();
             LogLvl logLvl = new LogLvl();
-            Dictionary<String, LogLevel> dict = logLvl._loglvl;
+            Dictionary<string, LogLevel> dict = logLvl._loglvl;
             try
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -255,6 +254,20 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                         tempSysLog.category = Convert.ToString(reader[2]);
                         tempSysLog.logLevel = dict[Convert.ToString(reader[3])];
                         tempSysLog.message = Convert.ToString(reader[4]);
+
+                        logs30DayOlder.Add(tempSysLog);
+                    }
+
+                    reader = oldUserLogsCommand.ExecuteReader();
+                    while(reader.Read())
+                    {
+                        tempUserLog.logId = Convert.ToInt32(reader[0]);
+                        tempUserLog.dateTime = Convert.ToDateTime(reader[1]);
+                        tempUserLog.category = Convert.ToString(reader[2]);
+                        tempUserLog.logLevel = dict[Convert.ToString(reader[3])];
+                        tempUserLog.message = Convert.ToString(reader[4]);
+
+                        logs30DayOlder.Add(tempUserLog);
                     }
 
                     connection.Close();
@@ -282,7 +295,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                 using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
                     SqlCommand newSysLogsCommand = new SqlCommand("DELETE [MEetAndYou].[deleteLogsOlderThan30] WHERE DATETIME < GETDATE() - 30", connection);
-                    SqlCommand oldSysLogsCommand = new SqlCommand("SELECT [MEetAndYou].[deleteLogsOlderThan30]", connection)
+                    SqlCommand oldSysLogsCommand = new SqlCommand("SELECT [MEetAndYou].[deleteLogsOlderThan30]", connection);
                     
                     connection.Open();
                     SqlDataReader reader = oldSysLogsCommand.ExecuteReader();
