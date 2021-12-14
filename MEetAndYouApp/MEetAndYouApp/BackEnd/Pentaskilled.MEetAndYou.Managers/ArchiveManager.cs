@@ -14,21 +14,26 @@ namespace Pentaskilled.MEetAndYou.Managers
         {
             _archServ = new ArchiverService();
         }
-
+        
         public bool ArchiveOldLogs()
         {
-            try
+            DateTime currentDateTime = DateTime.Now;
+            if (currentDateTime.Day == 1 && currentDateTime.Hour == 0 && currentDateTime.Minute == 0 && currentDateTime.Second == 0)
             {
-                List<Log> oldLogs = _archServ.GetOldLogs();
-                bool isConsolidated = _archServ.ConsolidateOldLogs(oldLogs);
-                bool isCompressed = _archServ.CompressOldLogs();
-                bool isDeleted = _archServ.DeleteOldLogs(oldLogs);
+                try
+                {
+                    List<Log> oldLogs = _archServ.GetOldLogs();
+                    bool isConsolidated = _archServ.ConsolidateOldLogs(oldLogs);
+                    bool isCompressed = _archServ.CompressOldLogs();
+                    bool isDeleted = _archServ.DeleteOldLogs(oldLogs);
+                }
+                catch (Exception ex)
+                {
+                    return false;
+                }
+                return true;
             }
-            catch (Exception ex)
-            {
-                return false;
-            }
-            return true;
+            return false;
         }
     }
 }
