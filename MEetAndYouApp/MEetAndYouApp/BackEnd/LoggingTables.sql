@@ -1,5 +1,5 @@
 ﻿-- All user event logs in a single table.
-CREATE TABLE [MEetAndYou].[UserEventLogs]
+CREATE TABLE [MEetAndYou].[EventLogs]
 (
     [LogId] INT NOT NULL IDENTITY PRIMARY KEY,
     [DateTime] DATETIME NOT NULL,
@@ -9,15 +9,4 @@ CREATE TABLE [MEetAndYou].[UserEventLogs]
     [Message] VARCHAR(255) NOT NULL
 )
 
--- All system logs in a single table.
-CREATE TABLE [MEetAndYou].[SystemEventLogs]
-(
-    [LogId] INT NOT NULL IDENTITY PRIMARY KEY,
-    [DateTime] DATETIME NOT NULL,
-    [Category] VARCHAR(15) NOT NULL,
-    [LogLevel] VARCHAR(15) NOT NULL,
-    [Message] VARCHAR(255) NOT NULL
-)
-
---DROP TABLE [MEetAndYou].[UserEventLogs]
---DROP TABLE [MEetAndYou].[SystemEventLogs]
+--DROP TABLE [MEetAndYou].[EventLogs]
