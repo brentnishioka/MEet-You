@@ -165,6 +165,37 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         }
 
         [Fact]
+        public void SysLoggingFailCase3()
+        {
+            Log sysLog = new Log();
+            sysLog.dateTime = DateTime.UtcNow;
+            sysLog.category = "Server";
+            sysLog.logLevel = LogLevel.Error;
+            sysLog.message = "Web server crashed.";
+
+            ILogDAO logDAO = new LogDAO();
+            bool isSuccessfullyInserted = true;
+
+            Assert.Equal(isSuccessfullyInserted, logDAO.PushLogToDB(sysLog));
+        }
+
+        [Fact]
+        public void UserLoggingFailCase3()
+        {
+            Log userLog = new Log();
+            userLog.dateTime = DateTime.UtcNow;
+            userLog.category = "Debug";
+            userLog.logLevel = LogLevel.Info;
+            userLog.userId = 100;
+            userLog.message = "This is a test debug log.";
+
+            ILogDAO logDAO = new LogDAO();
+            bool isSuccessfullyInserted = true;
+
+            Assert.Equal(isSuccessfullyInserted, logDAO.PushLogToDB(userLog));
+        }
+
+        [Fact]
         public void SysLoggingFailCase4()
         {
             ILoggingService systemLoggingService = new LoggingService(new LogDAO(), new Log());
