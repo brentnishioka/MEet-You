@@ -9,14 +9,10 @@ namespace Pentaskilled.MEetAndYou.DataAccess
 {
     public interface ILogDAO
     {
-        bool PushLogToDB(SystemLog sysLog);
-        bool PushLogToDB(UserLog userLog);
-        int GetCurrentSysIdentity();
-        int GetCurrentUserIdentity();
-        int CheckExistingLog(SystemLog sysLog);
-        int CheckExistingLog(UserLog userLog);
-        SystemLog UpdateSysLog(SystemLog sysLog);
-        UserLog UpdateUserLog(UserLog userLog);
+        bool PushLogToDB(Log eventLog);
+        int GetCurrentIdentity();
+        int CheckExistingLog(Log eventLog);
+        Log UpdateLog(Log eventLog);
 
         List<Log> ReadLogsOlderThan30();
         bool DeleteLogsOlderThan30();

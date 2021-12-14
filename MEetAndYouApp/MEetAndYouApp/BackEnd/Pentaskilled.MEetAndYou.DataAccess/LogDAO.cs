@@ -21,62 +21,28 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         }
 
         /// <summary>
-        /// Inserts system logs into the respective table "SystemEventLogs" in the database.
+        /// Inserts logs into the respective table "EventLogs" in the database.
         /// </summary>
-        /// <param name="sysLog"></param>
-        /// <returns>  
-        ///     True -> the log is inserted into the database successfully.
-        ///     False -> the log is not successfully inserted into the database.</returns>
-        public bool PushLogToDB(SystemLog sysLog)
-        {
-            _connectionString = GetConnectionString();
-            Enum logLvl = sysLog.logLevel;
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(_connectionString))
-                using (SqlCommand command = new SqlCommand("[MEetAndYou].[InsertSysLog]", connection))
-                {
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.Add("@dateTime", SqlDbType.DateTime).Value = sysLog.dateTime;
-                    command.Parameters.Add("@category", SqlDbType.VarChar).Value = sysLog.category;
-                    command.Parameters.Add("@logLevel", SqlDbType.VarChar).Value = logLvl.ToString();
-                    command.Parameters.Add("@message", SqlDbType.VarChar).Value = sysLog.message;
-
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                    connection.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
-            return true;
-        }
-
-        /// <summary>
-        /// Inserts user logs into the respective table "UserEventLogs" in the database.
-        /// </summary>
-        /// <param name="userLog"> The data transfer object (DTO) of all our user log information. </param>
+        /// <param name="userLog"> The data transfer object (DTO) of all our log information. </param>
         /// <returns>
         ///     True -> the log is inserted into the database successfully.
         ///     False -> the log is not successfully inserted into the database.
         /// </returns>
-        public bool PushLogToDB(UserLog userLog)
+        public bool PushLogToDB(Log eventLog)
         {
             _connectionString = GetConnectionString();
-            Enum logLvl = userLog.logLevel;
+            Enum logLvl = eventLog.logLevel;
             try
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
-                using (SqlCommand command = new SqlCommand("[MEetAndYou].[InsertUserLog]", connection))
+                using (SqlCommand command = new SqlCommand("[MEetAndYou].[InsertLog]", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.Add("@dateTime", SqlDbType.DateTime).Value = userLog.dateTime;
-                    command.Parameters.Add("@category", SqlDbType.VarChar).Value = userLog.category;
+                    command.Parameters.Add("@dateTime", SqlDbType.DateTime).Value = eventLog.dateTime;
+                    command.Parameters.Add("@category", SqlDbType.VarChar).Value = eventLog.category;
                     command.Parameters.Add("@logLevel", SqlDbType.VarChar).Value = logLvl.ToString();
-                    command.Parameters.Add("@userId", SqlDbType.Int).Value = userLog.userId;
-                    command.Parameters.Add("@message", SqlDbType.VarChar).Value = userLog.message;
+                    command.Parameters.Add("@userId", SqlDbType.Int).Value = eventLog.userId;
+                    command.Parameters.Add("@message", SqlDbType.VarChar).Value = eventLog.message;
 
                     connection.Open();
                     command.ExecuteNonQuery();
@@ -90,7 +56,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             return true;
         }
 
-        public int GetCurrentSysIdentity()
+        public int GetCurrentIdentity()
         {
             int lastLogId = 0;
             _connectionString = GetConnectionString();
@@ -98,7 +64,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
-                    SqlCommand command = new SqlCommand("SELECT [MEetAndYou].[GetCurrentSysIdentity]()", connection);
+                    SqlCommand command = new SqlCommand("SELECT [MEetAndYou].[GetCurrentIdentity]()", connection);
                     connection.Open();
                     lastLogId = (int)command.ExecuteScalar();
                     connection.Close();
@@ -111,34 +77,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             return lastLogId;
         }
 
-        public int GetCurrentUserIdentity()
-        {
-            int lastLogId = 0;
-            _connectionString = GetConnectionString();
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(_connectionString))
-                {
-                    SqlCommand command = new SqlCommand("SELECT [MEetAndYou].[GetCurrentUserIdentity]()", connection);
-                    connection.Open();
-                    lastLogId = (int)command.ExecuteScalar();
-                    connection.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new NullReferenceException();
-            }
-            return lastLogId;
-        }
-
-        /// <summary>
-        /// Checks to see if a system log exists in our database.
-        /// </summary>
-        /// <param name="sysLog"></param>
-        /// <returns></returns>
-        /// <exception cref="NullReferenceException"></exception>
-        public int CheckExistingLog(SystemLog sysLog)
+        public int CheckExistingLog(Log eventLog)
         {
             int numRows = 0;
             _connectionString = GetConnectionString();
@@ -146,8 +85,8 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
-                    SqlCommand command = new SqlCommand("SELECT [MEetAndYou].[CheckExistingSysLog](@sysLogId)", connection);
-                    command.Parameters.Add("@sysLogId", SqlDbType.Int).Value = sysLog.logId;
+                    SqlCommand command = new SqlCommand("SELECT [MEetAndYou].[CheckExistingLog](@logId)", connection);
+                    command.Parameters.Add("@logId", SqlDbType.Int).Value = eventLog.logId;
                     connection.Open();
                     numRows = (int)command.ExecuteScalar();
                     connection.Close();
@@ -160,116 +99,53 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             return numRows;
         }
 
-        public int CheckExistingLog(UserLog userLog)
-        {
-            int numRows = 0;
-            _connectionString = GetConnectionString();
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(_connectionString))
-                {
-                    SqlCommand command = new SqlCommand("SELECT [MEetAndYou].[CheckExistingUserLog](@userLogId)", connection);
-                    command.Parameters.Add("@userLogId", SqlDbType.Int).Value = userLog.logId;
-                    connection.Open();
-                    numRows = (int)command.ExecuteScalar();
-                    connection.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new NullReferenceException();
-            }
-            return numRows;
-        }
-
-        public SystemLog UpdateSysLog(SystemLog sysLog)
+        public Log UpdateLog(Log eventLog)
         {
             _connectionString = GetConnectionString();
             try
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
-                using (SqlCommand command = new SqlCommand("[MEetAndYou].[UpdateSysLog]", connection))
+                using (SqlCommand command = new SqlCommand("[MEetAndYou].[UpdateLog]", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.Add("@sysLogId", SqlDbType.Int).Value = sysLog.logId;
+                    command.Parameters.Add("@sysLogId", SqlDbType.Int).Value = eventLog.logId;
                     connection.Open();
                     command.ExecuteNonQuery();
                     connection.Close();
                 }
-
-
-            }
-            catch (Exception ex)
-            { 
-                return null;
-            }
-            return sysLog;
-        }
-
-        public UserLog UpdateUserLog(UserLog userLog)
-        {
-            _connectionString = GetConnectionString();
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(_connectionString))
-                using (SqlCommand command = new SqlCommand("[MEetAndYou].[UpdateUserLog]", connection))
-                {
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.Add("@sysLogId", SqlDbType.Int).Value = userLog.logId;
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                    connection.Close();
-                }
-
-
             }
             catch (Exception ex)
             {
                 return null;
             }
-            return userLog;
+            return eventLog;
         }
 
         public List<Log> ReadLogsOlderThan30()
         {
             _connectionString = GetConnectionString();
             List<Log> logs30DayOlder = new List<Log>();
-            SystemLog tempSysLog = new SystemLog();
-            UserLog tempUserLog = new UserLog();
+            Log tempEventLog = new Log();
             LogLevelDict logLvl = new LogLevelDict();
             Dictionary<string, LogLevel> dict = logLvl.logLvlDict;
             try
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
-                    SqlCommand oldSysLogsCommand = new SqlCommand("SELECT * FROM [MEetAndYou].[sysLogs30DaysOld]()", connection);
-                    SqlCommand oldUserLogsCommand = new SqlCommand("SELECT * FROM [MEetAndYou].[userLogs30DaysOld]()", connection);
+                    SqlCommand oldEventLogsCommand = new SqlCommand("SELECT * FROM [MEetAndYou].[Logs30DaysOld]()", connection);
 
                     connection.Open();
-                    SqlDataReader reader = oldSysLogsCommand.ExecuteReader();
+                    SqlDataReader reader = oldEventLogsCommand.ExecuteReader();
                     while (reader.Read())
                     {
-                        tempSysLog.logId = Convert.ToInt32(reader[0]);
-                        tempSysLog.dateTime = Convert.ToDateTime(reader[1]);
-                        tempSysLog.category = Convert.ToString(reader[2]);
-                        tempSysLog.logLevel = dict[Convert.ToString(reader[3])];
-                        tempSysLog.message = Convert.ToString(reader[4]);
+                        tempEventLog.logId = Convert.ToInt32(reader[0]);
+                        tempEventLog.dateTime = Convert.ToDateTime(reader[1]);
+                        tempEventLog.category = Convert.ToString(reader[2]);
+                        tempEventLog.logLevel = dict[Convert.ToString(reader[3])];
+                        tempEventLog.userId = Convert.ToInt32(reader[4]);
+                        tempEventLog.message = Convert.ToString(reader[5]);
 
-                        logs30DayOlder.Add(tempSysLog);
-                    }
-                    reader.Close();
-
-                    reader = oldUserLogsCommand.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        tempUserLog.logId = Convert.ToInt32(reader[0]);
-                        tempUserLog.dateTime = Convert.ToDateTime(reader[1]);
-                        tempUserLog.category = Convert.ToString(reader[2]);
-                        tempUserLog.logLevel = dict[Convert.ToString(reader[3])];
-                        tempUserLog.userId = Convert.ToInt32(reader[4]);
-                        tempUserLog.message = Convert.ToString(reader[5]);
-
-                        logs30DayOlder.Add(tempUserLog);
+                        logs30DayOlder.Add(tempEventLog);
                     }
                     reader.Close();
                     connection.Close();
@@ -314,7 +190,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
-                    SqlCommand command = new SqlCommand("SELECT [MEetAndYou].[getArchiveCount]()", connection);
+                    SqlCommand command = new SqlCommand("SELECT [MEetAndYou].[GetArchiveCount]()", connection);
                     connection.Open();
                     count = (int)command.ExecuteScalar();
                     connection.Close();

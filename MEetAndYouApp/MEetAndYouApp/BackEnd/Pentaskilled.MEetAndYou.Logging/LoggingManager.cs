@@ -10,17 +10,15 @@ namespace Pentaskilled.MEetAndYou.Logging
 {
     public class LoggingManager
     {
-        private readonly ISystemLoggingService _sysLogServ;
-        private readonly IUserLoggingService _userLogServ;
+        private readonly ILoggingService _eventLogServ;
 
         public LoggingManager()
         {
-            _sysLogServ = new SystemLoggingService();
-            _userLogServ = new UserLoggingService();
+            _eventLogServ = new LoggingService();
         }
 
         /// <summary>
-        /// Begins the process to create a system log.
+        /// Begins the process to create a system event log.
         /// </summary>
         /// <param name="category"></param>
         /// <param name="logLevel"></param>
@@ -31,7 +29,7 @@ namespace Pentaskilled.MEetAndYou.Logging
             try
             {
                 DateTime currentDateTime = DateTime.UtcNow;
-                bool isCreateLogSuccess = _sysLogServ.CreateNewLog(currentDateTime, category, logLevel, message);
+                bool isCreateLogSuccess = _eventLogServ.CreateNewLog(currentDateTime, category, logLevel, message);
                 if (!isCreateLogSuccess)
                 {
                     throw new Exception();
@@ -57,7 +55,7 @@ namespace Pentaskilled.MEetAndYou.Logging
             try
             {
                 DateTime currentDateTime = DateTime.UtcNow;
-                bool isCreateLogSuccess = _userLogServ.CreateNewLog(currentDateTime, category, logLevel, userId, message);
+                bool isCreateLogSuccess = _eventLogServ.CreateNewLog(currentDateTime, category, logLevel, userId, message);
                 if (!isCreateLogSuccess)
                 {
                     throw new Exception();

@@ -13,7 +13,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         [Fact]
         public void InsertSysLogIntoDBTest()
         {
-            SystemLog sysLog = new SystemLog();
+            Log sysLog = new Log();
             sysLog.dateTime = DateTime.UtcNow;
             sysLog.category = "Server";
             sysLog.logLevel = LogLevel.Error;
@@ -28,12 +28,12 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         [Fact]
         public void InsertUserLogIntoDBTest()
         {
-            UserLog userLog = new UserLog();
+            Log userLog = new Log();
             userLog.dateTime = DateTime.UtcNow;
-            userLog.category = "View";
+            userLog.category = "Debug";
             userLog.logLevel = LogLevel.Info;
             userLog.userId = 100;
-            userLog.message = "ERROR 252";
+            userLog.message = "This is a test debug log.";
 
             ILogDAO logDAO = new LogDAO();
             bool isSuccessfullyInserted = true;
@@ -44,7 +44,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         [Fact]
         public void CreateSystemLogUsingServiceTest()
         {
-            ISystemLoggingService systemLoggingService = new SystemLoggingService();
+            ILoggingService systemLoggingService = new LoggingService();
 
             bool isSuccessfullyCreated = true;
             Assert.Equal(isSuccessfullyCreated, systemLoggingService.CreateNewLog(DateTime.UtcNow, "View", LogLevel.Debug, "This is a test debug log."));
@@ -53,7 +53,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         [Fact]
         public void CreateUserLogUsingServiceTest()
         {
-            IUserLoggingService userLoggingService = new UserLoggingService();
+            ILoggingService userLoggingService = new LoggingService();
 
             bool isSuccessfullyCreated = true;
             Assert.Equal(isSuccessfullyCreated, userLoggingService.CreateNewLog(DateTime.UtcNow, "Data Access", LogLevel.Debug, 592, "This is a test debug log."));
@@ -167,7 +167,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         [Fact]
         public void SysLoggingFailCase4()
         {
-            ISystemLoggingService systemLoggingService = new SystemLoggingService();
+            ILoggingService systemLoggingService = new LoggingService();
 
             DateTime dateTime = DateTime.UtcNow;
             string category = "Server";
@@ -180,7 +180,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         [Fact]
         public void UserLoggingFailCase4()
         {
-            IUserLoggingService userLoggingService = new UserLoggingService();
+            ILoggingService userLoggingService = new LoggingService();
 
             DateTime dateTime = DateTime.UtcNow;
             string category = "View";
@@ -195,7 +195,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         [Fact]
         public void SysLoggingFailCase5()
         {
-            ISystemLoggingService systemLoggingService = new SystemLoggingService();
+            ILoggingService systemLoggingService = new LoggingService();
 
             DateTime dateTime = DateTime.UtcNow;
             string category = "View";
@@ -208,7 +208,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         [Fact]
         public void UserLoggingFailCase5()
         {
-            IUserLoggingService userLoggingService = new UserLoggingService();
+            ILoggingService userLoggingService = new LoggingService();
 
             DateTime dateTime = DateTime.UtcNow;
             string category = "View";
