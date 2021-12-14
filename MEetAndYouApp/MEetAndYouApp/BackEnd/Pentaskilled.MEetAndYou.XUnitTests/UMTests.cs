@@ -27,7 +27,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         }
 
         [Fact]
-        public void UpdateAccountEmailTest()
+        public void UpdateUserAccountEmailTest()
         {
             int id = 2;
             string newEmail = "gidjoshviv@gmail.com";
@@ -39,7 +39,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         }
 
         [Fact]
-        public void UpdateAccountPasswordTest()
+        public void UpdateUserAccountPasswordTest()
         {
             int id = 2;
             string newPassword = "PasSwOrD10";
@@ -51,7 +51,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         }
 
         [Fact]
-        public void UpdateAccountPhoneTest()
+        public void UpdateUserccountPhoneTest()
         {
             int id = 2;
             string newPhone = "(516) 598-2915";
@@ -63,7 +63,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         }
 
         [Fact]
-        public void DeleteAccountRecordTest()
+        public void DeleteUserAccountRecordTest()
         {
             int id = 1;
 
@@ -74,7 +74,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         }
 
         [Fact]
-        public void DisableAccountRecordTest()
+        public void DisableUserAccountRecordTest()
         {
             int id = 2;
 
@@ -85,7 +85,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         }
 
         [Fact]
-        public void EnableAccountRecordTest()
+        public void EnableUserAccountRecordTest()
         {
             int id = 2;
 
@@ -136,6 +136,41 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             bool doesRecordExist = true;
 
             Assert.Equal(doesRecordExist.ToString(), _UMDAO.VerifyAdminRecordInDB(email, password).ToString());
+        }
+
+        [Fact]
+        public void UpdateAdminAccountEmailTest()
+        {
+            int id = 1;
+            string newEmail = "Best.Admin@gmail.com";
+
+            IUMDAO _UMDAO = new UMDAO();
+            bool isEmailSuccessfullyUpdated = true;
+
+            Assert.Equal(isEmailSuccessfullyUpdated, _UMDAO.UpdateAdminAccountEmail(id, newEmail));
+        }
+
+        [Fact]
+        public void UpdateAdminAccountPasswordTest()
+        {
+            int id = 1;
+            string newPassword = "AdMiN10";
+
+            IUMDAO _UMDAO = new UMDAO();
+            bool isPasswordSuccessfullyUpdated = true;
+
+            Assert.Equal(isPasswordSuccessfullyUpdated, _UMDAO.UpdateAdminAccountPassword(id, newPassword));
+        }
+
+        [Fact]
+        public void DeleteAdminAccountRecordTest()
+        {
+            int id = 1;
+
+            IUMDAO _UMDAO = new UMDAO();
+            bool isSuccessfullyDeleted = true;
+
+            Assert.Equal(isSuccessfullyDeleted.ToString(), _UMDAO.DeleteAdminAccountRecord(id).ToString());
         }
     }
 }
