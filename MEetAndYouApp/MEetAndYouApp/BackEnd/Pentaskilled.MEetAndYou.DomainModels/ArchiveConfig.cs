@@ -11,13 +11,15 @@ namespace Pentaskilled.MEetAndYou.DomainModels
         static string secondDir = System.IO.Directory.GetParent(firstDir).ToString();
 
         static string thirdDir = System.IO.Directory.GetParent(secondDir).ToString();
-        static string l = System.IO.Directory.GetParent(thirdDir).ToString();
+        static string fourthDir = System.IO.Directory.GetParent(thirdDir).ToString();
+
+        static string fifthDir = System.IO.Directory.GetParent(fourthDir).ToString();
+
+        static string buffLocation = System.IO.Path.Combine(fifthDir, "senior-project-buffer");
+        static string archiveLocation = System.IO.Path.Combine(fifthDir, "senior-project-archives");
 
 
-        static string buffLocation = System.IO.Path.Combine(l, "senior-project-buffer");
-        static string archiveLocation = System.IO.Path.Combine(l, "senior-project-archives");
 
-    
 
         private const string DATE_TIME_FORMAT = "yyyy_MM_dd";
         private const string BUFFER_EXTENSION = "_MEetAndYouarchive.csv";

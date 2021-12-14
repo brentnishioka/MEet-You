@@ -31,6 +31,16 @@ namespace Pentaskilled.MEetAndYou.Services.Implementations
             List<FileInfo> files = di.GetFiles("*.csv").ToList();
             string zipPath = archiveLocation + @"\" + fileName;
 
+            if (!Directory.Exists(buffLocation))
+            {
+                Directory.CreateDirectory(buffLocation);
+            }
+
+            if (!Directory.Exists(archiveLocation))
+            {
+                Directory.CreateDirectory(archiveLocation);
+            }
+
             foreach (FileInfo file in files)
             {
                 using (ZipArchive archive = ZipFile.Open(zipPath, ZipArchiveMode.Create))
@@ -47,6 +57,17 @@ namespace Pentaskilled.MEetAndYou.Services.Implementations
                 ArchiveConfig archConf = new ArchiveConfig();
                 var buffLocation = archConf.GetBufferLocation();
                 var archiveLocation = archConf.GetArchiveLocation();
+
+                if (!Directory.Exists(buffLocation))
+                {
+                    Directory.CreateDirectory(buffLocation);
+                }
+
+                if (!Directory.Exists(archiveLocation))
+                {
+                    Directory.CreateDirectory(archiveLocation);
+                }
+
                 Compress(buffLocation, archiveLocation);
             }
             catch (Exception)
@@ -72,6 +93,11 @@ namespace Pentaskilled.MEetAndYou.Services.Implementations
             string completePath = $"{buffLocation}" + "\\" + $"{fileName}";
 
 
+            if (!Directory.Exists(buffLocation))
+            {
+                Directory.CreateDirectory(buffLocation);
+            }
+
             using (StreamWriter sw = File.CreateText(completePath))
             {
                 foreach (Log log in oldLogs)
@@ -85,6 +111,12 @@ namespace Pentaskilled.MEetAndYou.Services.Implementations
             {
                 ArchiveConfig archConf = new ArchiveConfig();
                 var buffLocation = archConf.GetBufferLocation();
+
+                if (!Directory.Exists(buffLocation))
+                {
+                    Directory.CreateDirectory(buffLocation);
+                }
+
                 Consolidate(oldLogs, buffLocation);
             }
             catch (Exception)
