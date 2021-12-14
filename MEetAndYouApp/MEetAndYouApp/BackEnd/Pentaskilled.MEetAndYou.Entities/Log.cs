@@ -15,6 +15,21 @@ namespace Pentaskilled.MEetAndYou.Entities
         public int userId { get; set; }
         public string message { get; set; }
 
+        private List<string> validCategories;
+
+        public Log()
+        {
+            validCategories = new List<string>()
+            {
+                "View", "Business", "Server", "Data", "Data Store"
+            };
+        }
+
+        public List<string> GetValidCategories()
+        {
+            return validCategories;
+        }
+
 
         public override string ToString()
         {

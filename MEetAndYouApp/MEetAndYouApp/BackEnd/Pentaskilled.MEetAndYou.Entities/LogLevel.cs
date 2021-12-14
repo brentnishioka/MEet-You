@@ -25,8 +25,7 @@ namespace Pentaskilled.MEetAndYou.Entities
                 {"Info", LogLevel.Info},
                 {"Debug", LogLevel.Debug},
                 {"Warning", LogLevel.Warning},
-                {"Error", LogLevel.Error},
-
+                {"Error", LogLevel.Error}
             };
         }
     }

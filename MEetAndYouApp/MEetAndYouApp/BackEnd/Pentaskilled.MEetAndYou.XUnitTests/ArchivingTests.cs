@@ -18,8 +18,6 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
     public class ArchivingTests
     {
 
-
-
         [Fact]
         public void GetArchiveCountTest()
         { 

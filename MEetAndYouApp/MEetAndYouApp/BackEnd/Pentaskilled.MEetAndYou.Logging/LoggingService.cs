@@ -72,6 +72,10 @@ namespace Pentaskilled.MEetAndYou.Logging
         {
             _eventLog.logId = _logDataAccess.GetCurrentIdentity() + 1;
             _eventLog.dateTime = dateTime;
+            if (!_eventLog.GetValidCategories().Contains(category))
+            {
+                throw new Exception();
+            }
             _eventLog.category = category;
             _eventLog.logLevel = logLevel;
             _eventLog.userId = 0;   // System logs have a userId of 0
@@ -85,6 +89,10 @@ namespace Pentaskilled.MEetAndYou.Logging
         {
             _eventLog.logId = _logDataAccess.GetCurrentIdentity() + 1;
             _eventLog.dateTime = dateTime;
+            if (!_eventLog.GetValidCategories().Contains(category))
+            {
+                throw new Exception();
+            }
             _eventLog.category = category;
             _eventLog.logLevel = logLevel;
             _eventLog.userId = userId;
