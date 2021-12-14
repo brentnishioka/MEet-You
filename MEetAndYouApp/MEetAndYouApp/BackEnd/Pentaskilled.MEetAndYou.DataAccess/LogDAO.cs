@@ -23,7 +23,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         /// <summary>
         /// Inserts logs into the respective table "EventLogs" in the database.
         /// </summary>
-        /// <param name="userLog"> The data transfer object (DTO) of all our log information. </param>
+        /// <param name="eventLog"> The data transfer object (DTO) of all our log information. </param>
         /// <returns>
         ///     True -> the log is inserted into the database successfully.
         ///     False -> the log is not successfully inserted into the database.

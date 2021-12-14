@@ -18,23 +18,31 @@ namespace Pentaskilled.MEetAndYou.Managers
         
         public bool ArchiveOldLogs()
         {
+            var reqStartTime = DateTime.Now;
             DateTime currentDateTime = DateTime.Now;
-            /*if (currentDateTime.Day == 1 && currentDateTime.Hour == 0 && currentDateTime.Minute == 0 && currentDateTime.Second == 0)
-            {*/
-            try
-            {
-                List<Log> oldLogs = _archServ.GetOldLogs();
-                bool isConsolidated = _archServ.ConsolidateOldLogs(oldLogs);
-                bool isCompressed = _archServ.CompressOldLogs();
-                bool isDeleted = _archServ.DeleteOldLogs(oldLogs);
-            }
-            catch (Exception ex)
-            {
+            //if (currentDateTime.Day == 1 && currentDateTime.Hour == 0 && currentDateTime.Minute == 0 && currentDateTime.Second == 0)
+            //{
+                try
+                {
+                    List<Log> oldLogs = _archServ.GetOldLogs();
+                    bool isConsolidated = _archServ.ConsolidateOldLogs(oldLogs);
+                    bool isCompressed = _archServ.CompressOldLogs();
+                    bool isDeleted = _archServ.DeleteOldLogs(oldLogs);
+                }
+                catch (Exception ex)
+                {
+                    return false;
+                }
+
+                var reqEndTime = DateTime.Now;
+                var timeDifference = reqEndTime - reqStartTime;
+                if (timeDifference.TotalSeconds <= 60.0)
+                {
+                    return true;
+                }
                 return false;
-            }
-            return true;
-/*            }
-            return false;*/
+            //}
+            //return false;
         }
     }
 }
