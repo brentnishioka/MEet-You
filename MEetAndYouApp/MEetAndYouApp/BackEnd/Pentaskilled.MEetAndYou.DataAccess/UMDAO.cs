@@ -28,7 +28,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         ///     True -> the UserAccount is inserted into the database successfully.
         ///     False -> the UserAccount is not successfully inserted into the database.
         /// </returns>
-        public bool CreateAccountRecord(UserAccountEntity ua)
+        public bool CreateUserAccountRecord(UserAccountEntity user)
         {
             _connectionString = GetConnectionString();
             bool result; 
@@ -36,15 +36,14 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             try
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
-                using (SqlCommand command = new SqlCommand("[MEetAndYou].[CreateAccountRecord]", connection))
+                using (SqlCommand command = new SqlCommand("[MEetAndYou].[CreateUserAccountRecord]", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.Add("@email", SqlDbType.VarChar).Value = ua.Email;
-                    command.Parameters.Add("@password", SqlDbType.VarChar).Value = ua.Password;
-                    command.Parameters.Add("@phoneNum", SqlDbType.VarChar).Value = ua.PhoneNumber;
-                    command.Parameters.Add("@role", SqlDbType.VarChar).Value = ua.Role;
-                    command.Parameters.Add("@registerDate", SqlDbType.DateTime).Value = ua.RegisterDate;
-                    command.Parameters.Add("@active", SqlDbType.Bit).Value = ua.Active;
+                    command.Parameters.Add("@email", SqlDbType.VarChar).Value = user.Email;
+                    command.Parameters.Add("@password", SqlDbType.VarChar).Value = user.Password;
+                    command.Parameters.Add("@phoneNum", SqlDbType.VarChar).Value = user.PhoneNumber;
+                    command.Parameters.Add("@registerDate", SqlDbType.DateTime).Value = user.RegisterDate;
+                    command.Parameters.Add("@active", SqlDbType.Bit).Value = user.Active;
 
                     connection.Open();
                     result = Convert.ToBoolean(command.ExecuteNonQuery());
@@ -52,14 +51,14 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                 }
             }
 
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
             return result;
         }
 
-        public bool UpdateAccountEmail(int id, string newEmail)
+        public bool UpdateUserAccountEmail(int id, string newEmail)
         {
             _connectionString = GetConnectionString();
             bool result; 
@@ -67,7 +66,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             try
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
-                using (SqlCommand command = new SqlCommand("[MEetAndYou].[UpdateAccountEmail]", connection))
+                using (SqlCommand command = new SqlCommand("[MEetAndYou].[UpdateUserAccountEmail]", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.Add("@id", SqlDbType.Int).Value = id;
@@ -79,14 +78,14 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                 }
             }
 
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
             return result;
         }
 
-        public bool UpdateAccountPassword(int id, string newPassword)
+        public bool UpdateUserAccountPassword(int id, string newPassword)
         {
             _connectionString = GetConnectionString();
             bool result; 
@@ -94,7 +93,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             try
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
-                using (SqlCommand command = new SqlCommand("[MEetAndYou].[UpdateAccountPassword]", connection))
+                using (SqlCommand command = new SqlCommand("[MEetAndYou].[UpdateUserAccountPassword]", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.Add("@id", SqlDbType.Int).Value = id;
@@ -106,14 +105,14 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                 }
             }
 
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
             return result;
         }
 
-        public bool UpdateAccountPhone(int id, string newPhoneNum)
+        public bool UpdateUserAccountPhone(int id, string newPhoneNum)
         {
             _connectionString = GetConnectionString();
             bool result; 
@@ -121,7 +120,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             try
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
-                using (SqlCommand command = new SqlCommand("[MEetAndYou].[UpdateAccountPhoneNum]", connection))
+                using (SqlCommand command = new SqlCommand("[MEetAndYou].[UpdateUserAccountPhoneNum]", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.Add("@id", SqlDbType.Int).Value = id;
@@ -133,41 +132,14 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                 }
             }
 
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
             return result;
         }
 
-        public bool UpdateAccountRole(int id, string newRole)
-        {
-            _connectionString = GetConnectionString();
-            bool result;
-
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(_connectionString))
-                using (SqlCommand command = new SqlCommand("[MEetAndYou].[UpdateAccountRole]", connection))
-                {
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.Add("@id", SqlDbType.Int).Value = id;
-                    command.Parameters.Add("@role", SqlDbType.VarChar).Value = newRole;
-
-                    connection.Open();
-                    result = Convert.ToBoolean(command.ExecuteNonQuery());
-                    connection.Close();
-                }
-            }
-
-            catch (Exception ex)
-            {
-                return false;
-            }
-            return result;
-        }
-
-        public bool DeleteAccountRecord(int id)
+        public bool DeleteUserAccountRecord(int id)
         {
             _connectionString = GetConnectionString();
             bool result; 
@@ -175,7 +147,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             try
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
-                using (SqlCommand command = new SqlCommand("[MEetAndYou].[DeleteAccountRecord]", connection))
+                using (SqlCommand command = new SqlCommand("[MEetAndYou].[DeleteUserAccountRecord]", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.Add("@id", SqlDbType.Int).Value = id;
@@ -186,7 +158,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                 }
             }
 
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -194,7 +166,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             return result;
         }
 
-        public bool DisableAccountRecord(int id)
+        public bool DisableUserAccountRecord(int id)
         {
             _connectionString = GetConnectionString();
             bool result;
@@ -202,7 +174,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             try
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
-                using (SqlCommand command = new SqlCommand("[MEetAndYou].[DisableAccountRecord]", connection))
+                using (SqlCommand command = new SqlCommand("[MEetAndYou].[DisableUserAccountRecord]", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.Add("@id", SqlDbType.Int).Value = id;
@@ -213,7 +185,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                 }
             }
 
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -221,7 +193,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             return result;
         }
 
-        public bool EnableAccountRecord(int id)
+        public bool EnableUserAccountRecord(int id)
         {
             _connectionString = GetConnectionString();
             bool result;
@@ -229,7 +201,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             try
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
-                using (SqlCommand command = new SqlCommand("[MEetAndYou].[EnableAccountRecord]", connection))
+                using (SqlCommand command = new SqlCommand("[MEetAndYou].[EnableUserAccountRecord]", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.Add("@id", SqlDbType.Int).Value = id;
@@ -240,14 +212,123 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                 }
             }
 
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
             return result;
         }
 
-        public bool VerifyUserInDB(int id)
+        public bool CreateAdminAccountRecord(AdminAccountEntity admin)
+        {
+            _connectionString = GetConnectionString();
+            bool result;
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                using (SqlCommand command = new SqlCommand("[MEetAndYou].[CreateAdminAccountRecord]", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.Add("@email", SqlDbType.VarChar).Value = admin.Email;
+                    command.Parameters.Add("@password", SqlDbType.VarChar).Value = admin.Password;
+
+                    connection.Open();
+                    result = Convert.ToBoolean(command.ExecuteNonQuery());
+                    connection.Close();
+                }
+            }
+
+            catch (Exception)
+            {
+                return false;
+            }
+            return result;
+        }
+
+        public bool UpdateAdminAccountEmail(int id, string newEmail)
+        {
+            _connectionString = GetConnectionString();
+            bool result;
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                using (SqlCommand command = new SqlCommand("[MEetAndYou].[UpdateAdminAccountEmail]", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.Add("@id", SqlDbType.Int).Value = id;
+                    command.Parameters.Add("@email", SqlDbType.VarChar).Value = newEmail;
+
+                    connection.Open();
+                    result = Convert.ToBoolean(command.ExecuteNonQuery());
+                    connection.Close();
+                }
+            }
+
+            catch (Exception)
+            {
+                return false;
+            }
+            return result;
+        }
+
+        public bool UpdateAdminAccountPassword(int id, string newPassword)
+        {
+            _connectionString = GetConnectionString();
+            bool result;
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                using (SqlCommand command = new SqlCommand("[MEetAndYou].[UpdateAdminAccountPassword]", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.Add("@id", SqlDbType.Int).Value = id;
+                    command.Parameters.Add("@password", SqlDbType.VarChar).Value = newPassword;
+
+                    connection.Open();
+                    result = Convert.ToBoolean(command.ExecuteNonQuery());
+                    connection.Close();
+                }
+            }
+
+            catch (Exception)
+            {
+                return false;
+            }
+            return result;
+        }
+
+        public bool DeleteAdminAccountRecord(int id)
+        {
+            _connectionString = GetConnectionString();
+            bool result;
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                using (SqlCommand command = new SqlCommand("[MEetAndYou].[DeleteAdminAccountRecord]", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.Add("@id", SqlDbType.Int).Value = id;
+
+                    connection.Open();
+                    result = Convert.ToBoolean(command.ExecuteNonQuery());
+                    connection.Close();
+                }
+            }
+
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return result;
+        }
+
+
+        public bool VerifyRecordInDB(int id, string role)
         {
             _connectionString = GetConnectionString();
             int result;
@@ -255,10 +336,11 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             try
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
-                using (SqlCommand command = new SqlCommand("SELECT [MEetAndYou].[VerifyUserInDB] (@id)", connection))
+                using (SqlCommand command = new SqlCommand("SELECT [MEetAndYou].[VerifyRecordInDB] (@id, @role)", connection))
                 {
                     command.CommandType = CommandType.Text;
                     command.Parameters.Add("@id", SqlDbType.Int).Value = id;
+                    command.Parameters.Add("@role", SqlDbType.NVarChar).Value = role;
 
                     connection.Open();
                     result = (int) command.ExecuteScalar();
@@ -266,7 +348,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                 }
             }
 
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
