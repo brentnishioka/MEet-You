@@ -5,11 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Pentaskilled.MEetAndYou.Services.Contracts;
 using Pentaskilled.MEetAndYou.Entities;
 using Pentaskilled.MEetAndYou.DataAccess;
 using Pentaskilled.MEetAndYou.DomainModels;
 
-namespace Pentaskilled.MEetAndYou.DataAccess
+namespace Pentaskilled.MEetAndYou.Services.Implementations
 {
     public class ArchiverService : IArchiverService
     {

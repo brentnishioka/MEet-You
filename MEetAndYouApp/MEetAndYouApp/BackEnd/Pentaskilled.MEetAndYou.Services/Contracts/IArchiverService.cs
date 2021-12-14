@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Pentaskilled.MEetAndYou.Entities;
 
-namespace Pentaskilled.MEetAndYou.DataAccess
+namespace Pentaskilled.MEetAndYou.Services.Contracts
 {
     public interface IArchiverService
     {

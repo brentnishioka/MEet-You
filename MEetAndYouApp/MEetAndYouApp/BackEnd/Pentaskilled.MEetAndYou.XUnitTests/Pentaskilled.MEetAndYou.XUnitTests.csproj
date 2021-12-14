@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -22,8 +22,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Pentaskilled.MEetAndYou.DataAccess\Pentaskilled.MEetAndYou.DataAccess.csproj" />
+    <ProjectReference Include="..\Pentaskilled.MEetAndYou.DomainModels\Pentaskilled.MEetAndYou.DomainModels.csproj" />
     <ProjectReference Include="..\Pentaskilled.MEetAndYou.Entities\Pentaskilled.MEetAndYou.Entities.csproj" />
     <ProjectReference Include="..\Pentaskilled.MEetAndYou.Logging\Pentaskilled.MEetAndYou.Logging.csproj" />
+    <ProjectReference Include="..\Pentaskilled.MEetAndYou.Managers\Pentaskilled.MEetAndYou.Managers.csproj" />
     <ProjectReference Include="..\Pentaskilled.MEetAndYou.Services\Pentaskilled.MEetAndYou.Services.csproj" />
   </ItemGroup>
 
