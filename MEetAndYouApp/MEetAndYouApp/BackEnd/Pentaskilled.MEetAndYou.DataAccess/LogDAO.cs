@@ -49,7 +49,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                     connection.Close();
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }

@@ -13,10 +13,10 @@ namespace Pentaskilled.MEetAndYou.Logging
         private readonly ILogDAO _logDataAccess;
         private readonly Log _eventLog;
 
-        public LoggingService()
+        public LoggingService(ILogDAO _logDataAccess, Log _eventLog)
         {
-            _logDataAccess = new LogDAO();
-            _eventLog = new Log();
+            this._logDataAccess = _logDataAccess;
+            this._eventLog = _eventLog;
         }
 
         // System event log

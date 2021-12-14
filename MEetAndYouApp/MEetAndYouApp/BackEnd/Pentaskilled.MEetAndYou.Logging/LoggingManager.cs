@@ -12,9 +12,9 @@ namespace Pentaskilled.MEetAndYou.Logging
     {
         private readonly ILoggingService _eventLogServ;
 
-        public LoggingManager()
+        public LoggingManager(ILoggingService _eventLogServ) 
         {
-            _eventLogServ = new LoggingService();
+            this._eventLogServ = _eventLogServ;
         }
 
         /// <summary>

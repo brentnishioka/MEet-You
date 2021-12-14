@@ -44,7 +44,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         [Fact]
         public void CreateSystemLogUsingServiceTest()
         {
-            ILoggingService systemLoggingService = new LoggingService();
+            ILoggingService systemLoggingService = new LoggingService(new LogDAO(), new Log());
 
             bool isSuccessfullyCreated = true;
             Assert.Equal(isSuccessfullyCreated, systemLoggingService.CreateNewLog(DateTime.UtcNow, "View", LogLevel.Debug, "This is a test debug log."));
@@ -53,7 +53,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         [Fact]
         public void CreateUserLogUsingServiceTest()
         {
-            ILoggingService userLoggingService = new LoggingService();
+            ILoggingService userLoggingService = new LoggingService(new LogDAO(), new Log());
 
             bool isSuccessfullyCreated = true;
             Assert.Equal(isSuccessfullyCreated, userLoggingService.CreateNewLog(DateTime.UtcNow, "Data Access", LogLevel.Debug, 592, "This is a test debug log."));
@@ -62,7 +62,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         [Fact]
         public void CreateSysLogFromLogManagerTest()
         {
-            LoggingManager logMan = new LoggingManager();
+            LoggingManager logMan = new LoggingManager(new LoggingService(new LogDAO(), new Log()));
 
             string category = "Data";
             LogLevel level = LogLevel.Error;
@@ -77,7 +77,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         [Fact]
         public void CreateUserLogFromLogManagerTest()
         {
-            LoggingManager logMan = new LoggingManager();
+            LoggingManager logMan = new LoggingManager(new LoggingService(new LogDAO(), new Log()));
 
             string category = "Data";
             LogLevel level = LogLevel.Error;
@@ -95,7 +95,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         {
             var reqStartTime = DateTime.UtcNow;
 
-            LoggingManager logMan = new LoggingManager();
+            LoggingManager logMan = new LoggingManager(new LoggingService(new LogDAO(), new Log()));
 
             string category = "Business";
             LogLevel level = LogLevel.Error;
@@ -114,7 +114,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         {
             var reqStartTime = DateTime.UtcNow;
 
-            LoggingManager logMan = new LoggingManager();
+            LoggingManager logMan = new LoggingManager(new LoggingService(new LogDAO(), new Log()));
 
             string category = "Data Store";
             LogLevel level = LogLevel.Error;
@@ -132,7 +132,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         [Fact]
         public async void SysLoggingFailCase2()
         {
-            LoggingManager logMan = new LoggingManager();
+            LoggingManager logMan = new LoggingManager(new LoggingService(new LogDAO(), new Log()));
 
             string category = "Business";
             LogLevel level = LogLevel.Error;
@@ -149,7 +149,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         [Fact]
         public async void UserLoggingFailCase2()
         {
-            LoggingManager logMan = new LoggingManager();
+            LoggingManager logMan = new LoggingManager(new LoggingService(new LogDAO(), new Log()));
 
             string category = "View";
             LogLevel level = LogLevel.Warning;
@@ -167,7 +167,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         [Fact]
         public void SysLoggingFailCase4()
         {
-            ILoggingService systemLoggingService = new LoggingService();
+            ILoggingService systemLoggingService = new LoggingService(new LogDAO(), new Log());
 
             DateTime dateTime = DateTime.UtcNow;
             string category = "Server";
@@ -180,7 +180,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         [Fact]
         public void UserLoggingFailCase4()
         {
-            ILoggingService userLoggingService = new LoggingService();
+            ILoggingService userLoggingService = new LoggingService(new LogDAO(), new Log());
 
             DateTime dateTime = DateTime.UtcNow;
             string category = "View";
@@ -195,7 +195,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         [Fact]
         public void SysLoggingFailCase5()
         {
-            ILoggingService systemLoggingService = new LoggingService();
+            ILoggingService systemLoggingService = new LoggingService(new LogDAO(), new Log());
 
             DateTime dateTime = DateTime.UtcNow;
             string category = "View";
@@ -208,7 +208,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         [Fact]
         public void UserLoggingFailCase5()
         {
-            ILoggingService userLoggingService = new LoggingService();
+            ILoggingService userLoggingService = new LoggingService(new LogDAO(), new Log());
 
             DateTime dateTime = DateTime.UtcNow;
             string category = "View";
