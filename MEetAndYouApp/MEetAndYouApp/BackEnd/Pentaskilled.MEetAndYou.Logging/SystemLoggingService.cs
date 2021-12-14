@@ -10,7 +10,7 @@ namespace Pentaskilled.MEetAndYou.Logging
 {
     public class SystemLoggingService : ISystemLoggingService
     {
-        private ILogDAO _logDataAccess;
+        private readonly ILogDAO _logDataAccess;
         private SystemLog _sysLog;
 
         public SystemLoggingService()

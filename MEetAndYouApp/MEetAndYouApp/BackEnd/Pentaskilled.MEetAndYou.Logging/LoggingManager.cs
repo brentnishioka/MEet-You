@@ -10,8 +10,8 @@ namespace Pentaskilled.MEetAndYou.Logging
 {
     public class LoggingManager
     {
-        private ISystemLoggingService _sysLogServ;
-        private IUserLoggingService _userLogServ;
+        private readonly ISystemLoggingService _sysLogServ;
+        private readonly IUserLoggingService _userLogServ;
 
         public LoggingManager()
         {
