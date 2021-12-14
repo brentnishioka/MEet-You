@@ -21,13 +21,14 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         }
 
         /// <summary>
-        /// Create account record into the respective table "AccountRecords" in the database.
+        /// Creates a user account record "UserAccountRecords" database.
         /// </summary>
-        /// <param name="ua"></param>
+        /// <param name="user"></param>
         /// <returns>  
         ///     True -> the UserAccount is inserted into the database successfully.
         ///     False -> the UserAccount is not successfully inserted into the database.
         /// </returns>
+       
         public bool CreateUserAccountRecord(UserAccountEntity user)
         {
             _connectionString = GetConnectionString();
@@ -58,6 +59,15 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             return result;
         }
 
+        /// <summary>
+        /// Updates a user email in the "UserAccountRecords" database.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="newEmail"></param>
+        /// <returns>  
+        ///     True -> The email is successfully updated in the database.
+        ///     False -> The email is not successfully updated in the database.
+        /// </returns>
         public bool UpdateUserAccountEmail(int id, string newEmail)
         {
             _connectionString = GetConnectionString();
@@ -85,6 +95,17 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             return result;
         }
 
+
+
+        /// <summary>
+        /// Updates a user's password in the "UserAccountRecords" in the database.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="newPassword"></param>
+        /// <returns>  
+        ///     True -> The password is successfully updated in the database.
+        ///     False -> The password is not successfully updated in the database.
+        /// </returns>
         public bool UpdateUserAccountPassword(int id, string newPassword)
         {
             _connectionString = GetConnectionString();
@@ -112,6 +133,15 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             return result;
         }
 
+        /// <summary>
+        /// Updates a user's phone number in the "UserAccountRecords" in the database.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="newPhoneNum"></param>
+        /// <returns>  
+        ///     True -> The phone number is successfully updated in the database.
+        ///     False -> The phone number is not successfully updated in the database.
+        /// </returns>
         public bool UpdateUserAccountPhone(int id, string newPhoneNum)
         {
             _connectionString = GetConnectionString();
@@ -139,6 +169,14 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             return result;
         }
 
+        /// <summary>
+        /// Deletes a user in the "UserAccountRecords" in the database.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>  
+        ///     True -> The user is successfully deleted in the database.
+        ///     False -> The user is not successfully deleted in the database.
+        /// </returns>
         public bool DeleteUserAccountRecord(int id)
         {
             _connectionString = GetConnectionString();
@@ -166,6 +204,14 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             return result;
         }
 
+        /// <summary>
+        /// Disables a user in the "UserAccountRecords" in the database.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>  
+        ///     True -> The user is successfully disabled.
+        ///     False -> The user is not successfully disabled.
+        /// </returns>
         public bool DisableUserAccountRecord(int id)
         {
             _connectionString = GetConnectionString();
@@ -193,6 +239,14 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             return result;
         }
 
+        /// <summary>
+        /// Enables a user in the "UserAccountRecords" in the database.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>  
+        ///     True -> The user is successfully enabled.
+        ///     False -> The user is not successfully enabled.
+        /// </returns>
         public bool EnableUserAccountRecord(int id)
         {
             _connectionString = GetConnectionString();
@@ -219,6 +273,14 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             return result;
         }
 
+        /// <summary>
+        /// Creates an admin account record "AdminAccountRecords" database.
+        /// </summary>
+        /// <param name="admin"></param>
+        /// <returns>  
+        ///     True -> the AdminAccount is inserted into the database successfully.
+        ///     False -> the AdminAccount is not successfully inserted into the database.
+        /// </returns>
         public bool CreateAdminAccountRecord(AdminAccountEntity admin)
         {
             _connectionString = GetConnectionString();
@@ -246,6 +308,15 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             return result;
         }
 
+        /// <summary>
+        /// Updates an admin's email in the "AdminAccountRecords" database.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="newEmail"></param>
+        /// <returns>  
+        ///     True -> The admin's email is successfully updated.
+        ///     False -> The admin's email is successfully not updated.
+        /// </returns>
         public bool UpdateAdminAccountEmail(int id, string newEmail)
         {
             _connectionString = GetConnectionString();
@@ -273,6 +344,15 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             return result;
         }
 
+        /// <summary>
+        /// Updates an admin's email in the "AdminAccountRecords" database.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="newPassword"></param>
+        /// <returns>  
+        ///     True -> The admin's password is successfully updated.
+        ///     False -> The admin's password is successfully not updated.
+        /// </returns>
         public bool UpdateAdminAccountPassword(int id, string newPassword)
         {
             _connectionString = GetConnectionString();
@@ -300,6 +380,14 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             return result;
         }
 
+        /// <summary>
+        /// Deletes an admin in the "AdminAccountRecords" database.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>  
+        ///     True -> The admin is successfully deleted.
+        ///     False -> The admin is not successfully deleted.
+        /// </returns>
         public bool DeleteAdminAccountRecord(int id)
         {
             _connectionString = GetConnectionString();
@@ -327,7 +415,14 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             return result;
         }
 
-
+        /// <summary>
+        /// Verifies a user exists in the "UserAccountRecords" database.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns>  
+        ///     True -> The user exists in the database.
+        ///     False -> The user does not exist in the database.
+        /// </returns>
         public bool VerifyUserRecordInDB(UserAccountEntity user)
         {
             _connectionString = GetConnectionString();
@@ -358,6 +453,15 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             return Convert.ToBoolean(result);
         }
 
+        /// <summary>
+        /// Verifies an admin exists in the "UserAccountRecords" database.
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
+        /// <returns>  
+        ///     True -> The admin exists in the database.
+        ///     False -> The admin does not exist in the database.
+        /// </returns>
         public bool VerifyAdminRecordInDB(string email, string password)
         {
             _connectionString = GetConnectionString();
