@@ -15,9 +15,6 @@ namespace Pentaskilled.MEetAndYou.Entities
 
         public string PhoneNumber { get; set; }
 
-        // User's role ( Administrator | Regular User)
-        public string Role { get; set; }
-
         // The date user account's was registered
         public DateTime RegisterDate { get; set; }
 
