@@ -10,21 +10,20 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
     public class UMTests
     {
         [Fact]
-        public void CreateAccountRecordTest()
+        public void CreateUserAccountRecordTest()
         {
-            UserAccountEntity ua = new UserAccountEntity();
+            UserAccountEntity user = new UserAccountEntity();
 
-            ua.Email = "viviand2465@gmail.com";
-            ua.Password = "joshishandsome1";
-            ua.PhoneNumber = "4084802185";
-            ua.Role = "Regular User";
-            ua.RegisterDate = DateTime.UtcNow;
-            ua.Active = 1;
+            user.Email = "viviand2465@gmail.com";
+            user.Password = "joshiscool!";
+            user.PhoneNumber = "4084802185";
+            user.RegisterDate = DateTime.UtcNow;
+            user.Active = 1;
 
             IUMDAO _UMDAO = new UMDAO();
             bool isSuccessfullyCreated = true;
 
-            Assert.Equal(isSuccessfullyCreated, _UMDAO.CreateAccountRecord(ua));
+            Assert.Equal(isSuccessfullyCreated, _UMDAO.CreateUserAccountRecord(user));
         }
 
         [Fact]
@@ -36,7 +35,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             IUMDAO _UMDAO = new UMDAO();
             bool isEmailSuccessfullyUpdated = true;
 
-            Assert.Equal(isEmailSuccessfullyUpdated, _UMDAO.UpdateAccountEmail(id, newEmail));
+            Assert.Equal(isEmailSuccessfullyUpdated, _UMDAO.UpdateUserAccountEmail(id, newEmail));
         }
 
         [Fact]
@@ -48,7 +47,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             IUMDAO _UMDAO = new UMDAO();
             bool isPasswordSuccessfullyUpdated = true;
 
-            Assert.Equal(isPasswordSuccessfullyUpdated, _UMDAO.UpdateAccountPassword(id, newPassword));
+            Assert.Equal(isPasswordSuccessfullyUpdated, _UMDAO.UpdateUserAccountPassword(id, newPassword));
         }
 
         [Fact]
@@ -60,19 +59,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             IUMDAO _UMDAO = new UMDAO();
             bool isPhoneSuccessfullyUpdated = true;
 
-            Assert.Equal(isPhoneSuccessfullyUpdated, _UMDAO.UpdateAccountPhone(id, newPhone));
-        }
-
-        [Fact]
-        public void UpdateAccountRoleTest()
-        {
-            int id = 2;
-            string newRole = "System Administrator";
-
-            IUMDAO _UMDAO = new UMDAO();
-            bool isRoleSuccessfullyUpdated = true;
-
-            Assert.Equal(isRoleSuccessfullyUpdated, _UMDAO.UpdateAccountRole(id, newRole));
+            Assert.Equal(isPhoneSuccessfullyUpdated, _UMDAO.UpdateUserAccountPhone(id, newPhone));
         }
 
         [Fact]
@@ -83,18 +70,18 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             IUMDAO _UMDAO = new UMDAO();
             bool isSuccessfullyDeleted = true;
 
-            Assert.Equal(isSuccessfullyDeleted.ToString(), _UMDAO.DeleteAccountRecord(id).ToString());
+            Assert.Equal(isSuccessfullyDeleted.ToString(), _UMDAO.DeleteUserAccountRecord(id).ToString());
         }
 
         [Fact]
         public void DisableAccountRecordTest()
         {
-            int id = 4;
+            int id = 2;
 
             IUMDAO _UMDAO = new UMDAO();
             bool isSuccessfullyDisabled = true;
 
-            Assert.Equal(isSuccessfullyDisabled, _UMDAO.DisableAccountRecord(id));
+            Assert.Equal(isSuccessfullyDisabled, _UMDAO.DisableUserAccountRecord(id));
         }
 
         [Fact]
@@ -105,18 +92,50 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             IUMDAO _UMDAO = new UMDAO();
             bool isSuccessfullyEnabled = true;
 
-            Assert.Equal(isSuccessfullyEnabled, _UMDAO.EnableAccountRecord(id));
+            Assert.Equal(isSuccessfullyEnabled, _UMDAO.EnableUserAccountRecord(id));
         }
 
         [Fact]
-        public void VerifyUserInDBTest()
+        public void CreateAdminAccountRecordTest()
         {
-            int id = 2;
+            AdminAccountEntity admin = new AdminAccountEntity();
+
+            admin.Email = "sysadmin@gmail.com";
+            admin.Password = "password";
 
             IUMDAO _UMDAO = new UMDAO();
-            bool doesUserExist = true;
+            bool isSuccessfullyCreated = true;
 
-            Assert.Equal(doesUserExist.ToString(), _UMDAO.VerifyUserInDB(id).ToString());
+            Assert.Equal(isSuccessfullyCreated, _UMDAO.CreateAdminAccountRecord(admin));
+        }
+
+        [Fact]
+        public void VerifyUserRecordInDBTest()
+        {
+            UserAccountEntity user = new UserAccountEntity();
+
+            user.Email = "viviand2465@gmail.com";
+            user.Password = "joshiscool!";
+            user.PhoneNumber = "4084802185";
+            user.RegisterDate = DateTime.UtcNow;
+            user.Active = 1;
+
+            IUMDAO _UMDAO = new UMDAO();
+            bool doesRecordExist = true;
+
+            Assert.Equal(doesRecordExist.ToString(), _UMDAO.VerifyUserRecordInDB(user).ToString());
+        }
+
+        [Fact]
+        public void VerifyAdminRecordInDBTest()
+        {
+            string email = "sysadmin@gmail.com";
+            string password = "password";
+
+            IUMDAO _UMDAO = new UMDAO();
+            bool doesRecordExist = true;
+
+            Assert.Equal(doesRecordExist.ToString(), _UMDAO.VerifyAdminRecordInDB(email, password).ToString());
         }
     }
 }
