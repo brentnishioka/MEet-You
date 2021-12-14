@@ -9,22 +9,28 @@ namespace Pentaskilled.MEetAndYou.DataAccess
 {
     public interface IUMDAO
     {
-        bool CreateAccountRecord(UserAccountEntity ua);
+        bool CreateUserAccountRecord(UserAccountEntity user);
 
-        bool UpdateAccountEmail(int id, string newEmail);
+        bool UpdateUserAccountEmail(int id, string newEmail);
 
-        bool UpdateAccountPassword(int id, string newPassword);
+        bool UpdateUserAccountPassword(int id, string newPassword);
 
-        bool UpdateAccountPhone(int id, string newPhoneNum);
+        bool UpdateUserAccountPhone(int id, string newPhoneNum);
 
-        bool UpdateAccountRole(int id, string newRole);
+        bool DeleteUserAccountRecord(int id);
 
-        bool DeleteAccountRecord(int id);
+        bool DisableUserAccountRecord(int id);
 
-        bool DisableAccountRecord(int id);
+        bool EnableUserAccountRecord(int id);
 
-        bool EnableAccountRecord(int id);
+        bool CreateAdminAccountRecord(AdminAccountEntity admin);
 
-        bool VerifyUserInDB(int id);
+        bool UpdateAdminAccountEmail(int id, string newEmail);
+
+        bool UpdateAdminAccountPassword(int id, string newPassword);
+
+        bool DeleteAdminAccountRecord(int id);
+
+        bool VerifyRecordInDB(int id, string role);
     }
 }
