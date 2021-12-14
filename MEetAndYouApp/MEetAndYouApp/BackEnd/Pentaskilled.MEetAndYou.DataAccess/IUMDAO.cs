@@ -31,6 +31,8 @@ namespace Pentaskilled.MEetAndYou.DataAccess
 
         bool DeleteAdminAccountRecord(int id);
 
-        bool VerifyRecordInDB(int id, string role);
+        bool VerifyUserRecordInDB(UserAccountEntity user);
+
+        bool VerifyAdminRecordInDB(string email, string password);
     }
 }

@@ -328,7 +328,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         }
 
 
-        public bool VerifyRecordInDB(int id, string role)
+        public bool VerifyUserRecordInDB(UserAccountEntity user)
         {
             _connectionString = GetConnectionString();
             int result;
@@ -336,14 +336,44 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             try
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
-                using (SqlCommand command = new SqlCommand("SELECT [MEetAndYou].[VerifyRecordInDB] (@id, @role)", connection))
+                using (SqlCommand command = new SqlCommand("SELECT [MEetAndYou].[VerifyUserRecordInDB] (@id, @email, @password, @phoneNum, @registerDate, @active)", connection))
                 {
                     command.CommandType = CommandType.Text;
-                    command.Parameters.Add("@id", SqlDbType.Int).Value = id;
-                    command.Parameters.Add("@role", SqlDbType.NVarChar).Value = role;
+                    command.Parameters.Add("@email", SqlDbType.VarChar).Value = user.Email;
+                    command.Parameters.Add("@password", SqlDbType.VarChar).Value = user.Password;
+                    command.Parameters.Add("@phoneNum", SqlDbType.VarChar).Value = user.PhoneNumber;
+                    command.Parameters.Add("@registerDate", SqlDbType.DateTime).Value = user.RegisterDate;
+                    command.Parameters.Add("@active", SqlDbType.Bit).Value = user.Active;
 
                     connection.Open();
                     result = (int) command.ExecuteScalar();
+                    connection.Close();
+                }
+            }
+
+            catch (Exception)
+            {
+                return false;
+            }
+            return Convert.ToBoolean(result);
+        }
+
+        public bool VerifyAdminRecordInDB(string email, string password)
+        {
+            _connectionString = GetConnectionString();
+            int result;
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                using (SqlCommand command = new SqlCommand("SELECT [MEetAndYou].[VerifyAdminRecordInDB] (@email, @password)", connection))
+                {
+                    command.CommandType = CommandType.Text;
+                    command.Parameters.Add("@email", SqlDbType.NVarChar).Value = email;
+                    command.Parameters.Add("@password", SqlDbType.NVarChar).Value = password;
+
+                    connection.Open();
+                    result = (int)command.ExecuteScalar();
                     connection.Close();
                 }
             }
