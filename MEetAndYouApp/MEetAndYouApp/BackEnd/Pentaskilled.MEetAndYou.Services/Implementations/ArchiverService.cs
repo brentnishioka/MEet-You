@@ -15,7 +15,7 @@ namespace Pentaskilled.MEetAndYou.Services.Implementations
     public class ArchiverService : IArchiverService
     {
 
-        ILogDAO _logDataAccess;
+        private ILogDAO _logDataAccess;
 
 
         public ArchiverService(ILogDAO logDAO)
@@ -77,6 +77,12 @@ namespace Pentaskilled.MEetAndYou.Services.Implementations
                 }
 
                 Compress(buffLocation, archiveLocation);
+                string archiveFileExt = DateTime.Now.ToString(archConf.GetDateTimeFormat()) +
+                          archConf.GetArchiveExtension();
+                if (!File.Exists(archiveFileExt))
+                {
+                    throw new Exception();
+                }
             }
             catch (Exception)
             {
@@ -147,8 +153,13 @@ namespace Pentaskilled.MEetAndYou.Services.Implementations
         // can more error handling be done?
         public bool DeleteOldLogs(List<Log> oldLogs)
         {
-            return new LogDAO().DeleteLogsOlderThan30();
-
+            _logDataAccess = new LogDAO();
+            int deleteCount = _logDataAccess.GetArchiveCount();
+            if (oldLogs.Count != deleteCount)
+            {
+                return false;
+            }
+            return _logDataAccess.DeleteLogsOlderThan30();
         }
 
         public List<Log> GetOldLogs()
