@@ -93,29 +93,6 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         }
 
         [Fact]
-        public void polymorphismTest()
-        {
-            Log log1 = new SystemLog();
-            log1.logId = 1;
-            log1.dateTime = DateTime.Now;
-            log1.category = "hello";
-            log1.logLevel = LogLevel.Debug;
-            log1.message = "I want to kms";
-            Log log2 = new UserLog();
-            log2.logId = 1;
-            log2.dateTime = DateTime.Now;
-            log2.category = "hello";
-            log2.logLevel = LogLevel.Debug;
-            log2.message = "I want to kms";
-            
-
-            string string1 = log1.ToString();
-            string string2 = log2.ToString();
-        
-            Assert.False(log1.ToString().Equals(log2.ToString()));
-        }
-
-        [Fact]
         public void ArchiveOldLogsTest()
         {
             ArchiveManager archMan = new ArchiveManager();
