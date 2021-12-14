@@ -70,14 +70,12 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             string fileName = DateTime.Now.ToString(archConf.GetDateTimeFormat()) + archConf.GetBufferExtension();
             string completePath = $"{buffLocation}" + "\\" + $"{fileName}";
 
-            foreach(Log log in oldLogs)
-            {
-                using (StreamWriter sw = File.CreateText(completePath))
-                {
 
+            using (StreamWriter sw = File.CreateText(completePath))
+            {
+                foreach (Log log in oldLogs)
                     sw.WriteLine(log.ToString());
-                }
-            }
+            }   
         }
 
         public bool ConsolidateOldLogs(List<Log> oldLogs)
