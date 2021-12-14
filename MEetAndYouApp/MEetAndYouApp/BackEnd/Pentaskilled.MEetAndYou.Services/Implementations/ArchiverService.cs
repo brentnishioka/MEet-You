@@ -15,6 +15,14 @@ namespace Pentaskilled.MEetAndYou.Services.Implementations
     public class ArchiverService : IArchiverService
     {
 
+        ILogDAO _logDataAccess;
+
+
+        public ArchiverService(ILogDAO logDAO)
+        {
+            _logDataAccess = logDAO;
+        }
+
         ///<summary>
         /// Helper method that reads in the .csv file(s) of logs from
         /// buffLocation, zips the file(s), and stores them in archiveLocation
@@ -118,6 +126,16 @@ namespace Pentaskilled.MEetAndYou.Services.Implementations
                 }
 
                 Consolidate(oldLogs, buffLocation);
+                string fileName = DateTime.Now.ToString(archConf.GetDateTimeFormat()) + archConf.GetBufferExtension();
+                string completePath = $"{buffLocation}" + "\\" + $"{fileName}";
+                int csvRowCount = 0;
+                string line;
+                StreamReader file = new StreamReader(completePath); 
+                while ((line = file.ReadLine()) != null)
+                        csvRowCount++;
+                file.Close();
+                if (oldLogs.Count != csvRowCount)
+                    throw new Exception();
             }
             catch (Exception)
             {
@@ -135,7 +153,20 @@ namespace Pentaskilled.MEetAndYou.Services.Implementations
 
         public List<Log> GetOldLogs()
         {
-            return new LogDAO().ReadLogsOlderThan30();
+            List<Log> oldLogs = _logDataAccess.ReadLogsOlderThan30();
+            bool isEmpty = oldLogs?.Any() != true;
+            if (isEmpty)
+            {
+                return null;
+            }
+            else
+            {
+                int archiveCount = _logDataAccess.GetArchiveCount();
+                if (archiveCount != oldLogs.Count)
+                    return null;
+                return oldLogs;
+            }
+
         }
 
     }

@@ -17,6 +17,9 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
 {
     public class ArchivingTests
     {
+
+
+
         [Fact]
         public void GetArchiveCountTest()
         { 
@@ -24,7 +27,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             ILogDAO logDAO = new LogDAO();
             int count = logDAO.GetArchiveCount();
            
-            Assert.Equal(1, count);
+            Assert.Equal(2, count);
         }
 
         [Fact]
@@ -42,7 +45,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         {
             ILogDAO logDAO = new LogDAO();
             List<Log> oldLogs = logDAO.ReadLogsOlderThan30();
-            int expectedOldLogsCount = 1;
+            int expectedOldLogsCount = 2;
 
             Assert.Equal(expectedOldLogsCount, oldLogs.Count);
         }
@@ -50,9 +53,9 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         [Fact]
         public void GetOldLogsTest()
         {
-            IArchiverService archiverService = new ArchiverService();
+            IArchiverService archiverService = new ArchiverService(new LogDAO());
             List<Log> oldLogs = archiverService.GetOldLogs();
-            int expectedOldLogsCount = 1;
+            int expectedOldLogsCount = 2;
 
             Assert.Equal(expectedOldLogsCount, oldLogs.Count);
         }
@@ -60,7 +63,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         [Fact]
         public void ConsolidateOldLogsTest()
         {
-            IArchiverService archiverService = new ArchiverService();
+            IArchiverService archiverService = new ArchiverService(new LogDAO());
             List<Log> oldLogs = archiverService.GetOldLogs();
             bool returnValue = archiverService.ConsolidateOldLogs(oldLogs);
 
@@ -72,7 +75,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         [Fact]
         public void CompressOldLogsTest()
         {
-            IArchiverService archiverService = new ArchiverService();
+            IArchiverService archiverService = new ArchiverService(new LogDAO());
             bool returnValue = archiverService.CompressOldLogs();
 
             Assert.True(returnValue);
@@ -83,7 +86,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         [Fact]
         public void DeleteOldLogsTest()
         {
-            IArchiverService archiverService = new ArchiverService();
+            IArchiverService archiverService = new ArchiverService(new LogDAO());
             List<Log> oldLogs = archiverService.GetOldLogs();
             archiverService.DeleteOldLogs(oldLogs); 
             int expectedOldLogsCount = 0;
