@@ -18,12 +18,12 @@ namespace Pentaskilled.MEetAndYou.Logging
         }
 
         /// <summary>
-        /// Begins the process to create a system event log.
+        /// Begins & serves as the control flow for the process to create a system event log asynchronously.
         /// </summary>
-        /// <param name="category"></param>
-        /// <param name="logLevel"></param>
-        /// <param name="message"></param>
-        /// <returns></returns>
+        /// <param name="category"> The category of the log. </param>
+        /// <param name="logLevel"> The level of the log. </param>
+        /// <param name="message"> A message associated with the log. </param>
+        /// <returns> Returns true if the logging process executed successfully false if otherwise. </returns>
         public async Task<bool> BeginLogProcess(string category, LogLevel logLevel, string message)
         {
             return await Task.Run(async () =>
@@ -46,13 +46,13 @@ namespace Pentaskilled.MEetAndYou.Logging
         }
 
         /// <summary>
-        /// Begins the process to create a user log.
+        /// Begins & serves as the control flow for the process to create a system event log asynchronously.
         /// </summary>
-        /// <param name="category"></param>
-        /// <param name="logLevel"></param>
-        /// <param name="userId"></param>
-        /// <param name="message"></param>
-        /// <returns></returns>
+        /// <param name="category"> The category of the log. </param>
+        /// <param name="logLevel"> The level of the log. </param>
+        /// <param name="userId"> The ID of the user performing the operation. </param>
+        /// <param name="message"> A message associated with the log. </param>
+        /// <returns> Returns true if the logging process executed successfully false if otherwise. </returns>
         public async Task<bool> BeginLogProcess(string category, LogLevel logLevel, int userId, string message)
         {
             return await Task.Run(async () =>

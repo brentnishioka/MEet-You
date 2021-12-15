@@ -19,7 +19,14 @@ namespace Pentaskilled.MEetAndYou.Logging
             this._eventLog = _eventLog;
         }
 
-        // System event log
+        /// <summary>
+        /// Executes the flow of control for the system logging process asynchronously.
+        /// </summary>
+        /// <param name="dateTime"> The UTC date & time the log process is invoked. </param>
+        /// <param name="category"> The category of the log. </param>
+        /// <param name="logLevel"> The level of the log. </param>
+        /// <param name="message"> A message associated with the log. </param>
+        /// <returns> Returns true if the system logging process is successful, false if unsuccessful. </returns>
         public async Task<bool> CreateNewLogAsync(DateTime dateTime, string category, LogLevel logLevel, string message)
         {
             return await Task.Run(async () =>
@@ -32,6 +39,7 @@ namespace Pentaskilled.MEetAndYou.Logging
                     {
                         throw new Exception();
                     }
+
                     await PushLogToDBAsync(_eventLog);
                     Log sysLogCheck = await Task.Run (() => _logDataAccess.UpdateLogAsync(_eventLog));
                     if (sysLogCheck != null)
@@ -47,7 +55,15 @@ namespace Pentaskilled.MEetAndYou.Logging
             });
         }
 
-        // User event log
+        /// <summary>
+        /// Executes the flow of control for the user logging process asynchronously.
+        /// </summary>
+        /// <param name="dateTime"> The UTC date & time the log process is invoked. </param>
+        /// <param name="category"> The category of the log. </param>
+        /// <param name="logLevel"> The level of the log. </param>
+        /// <param name="userId"> The ID of the user performing the operation. </param>
+        /// <param name="message"> A message associated with the log. </param>
+        /// <returns> Returns true if the user logging process is successful, false if unsuccessful. </returns>
         public async Task<bool> CreateNewLogAsync(DateTime dateTime, string category, LogLevel logLevel, int userId, string message)
         {
             return await Task.Run(async () =>
@@ -60,10 +76,13 @@ namespace Pentaskilled.MEetAndYou.Logging
                     {
                         throw new Exception();
                     }
+
                     await PushLogToDBAsync(_eventLog);
                     Log eventLog = await Task.Run(() => _logDataAccess.UpdateLogAsync(_eventLog));
                     if (eventLog != null)
+                    {
                         throw new Exception();
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -73,7 +92,15 @@ namespace Pentaskilled.MEetAndYou.Logging
             });
         }
 
-        // System event log
+        /// <summary>
+        /// Instantiates the fields of the _eventLog instance for system logs asynchronously.
+        /// </summary>
+        /// <param name="dateTime"> The UTC date & time the log process is invoked. </param>
+        /// <param name="category"> The category of the log. </param>
+        /// <param name="logLevel"> The level of the log. </param>
+        /// <param name="message"> A message associated with the log. </param>
+        /// <returns> Returns true if the log is made successfully, false if otherwise. </returns>
+        /// <exception cref="Exception"> Exception if an invalid category is thrown. </exception>
         public async Task<Log> MakeLogAsync(DateTime dateTime, string category, LogLevel logLevel, string message)
         {
             _eventLog.logId = await Task.Run(() => _logDataAccess.GetCurrentIdentityAsync()) + 1;
@@ -90,7 +117,16 @@ namespace Pentaskilled.MEetAndYou.Logging
             return _eventLog;
         }
 
-        // User event log
+        /// <summary>
+        /// Instantiates the fields of the _eventLog instance for user logs asynchronously.
+        /// </summary>
+        /// <param name="dateTime"> The UTC date & time the log process is invoked. </param>
+        /// <param name="category"> The category of the log. </param>
+        /// <param name="logLevel"> The level of the log. </param>
+        /// <param name="userId"> The ID of the user performing the operation. </param>
+        /// <param name="message"> A message associated with the log. </param>
+        /// <returns> Returns true if the log is made successfully, false if otherwise. </returns>
+        /// <exception cref="Exception"> Exception if an invalid category is thrown. </exception>
         public async Task<Log> MakeLogAsync(DateTime dateTime, string category, LogLevel logLevel, int userId, string message)
         {
             _eventLog.logId = await Task.Run(() => _logDataAccess.GetCurrentIdentityAsync()) + 1;
@@ -107,6 +143,11 @@ namespace Pentaskilled.MEetAndYou.Logging
             return _eventLog;
         }
 
+        /// <summary>
+        /// Helper method to push our created event log to the data access layer asynchronously.
+        /// </summary>
+        /// <param name="eventLog"> The log object to be transferred to the data access layer. </param>
+        /// <returns> Returns true if log is pushed successfully, false if otherwise. </returns>
         public async Task<bool> PushLogToDBAsync(Log eventLog)
         {
             return await Task.Run(() =>

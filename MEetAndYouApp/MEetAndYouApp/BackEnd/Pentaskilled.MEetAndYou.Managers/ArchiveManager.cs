@@ -22,8 +22,10 @@ namespace Pentaskilled.MEetAndYou.Managers
         public bool ArchiveOldLogs()
         {
             var reqStartTime = DateTime.Now;
+
             // currentDateTime should be DateTime.Now, but it's defined like this for testing.
             DateTime currentDateTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1, 0, 0, 0);
+
             if (currentDateTime.Day == 1 && currentDateTime.Hour == 0 && currentDateTime.Minute == 0 && currentDateTime.Second == 0)
             {
                 try
