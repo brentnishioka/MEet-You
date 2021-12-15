@@ -17,11 +17,11 @@ namespace Pentaskilled.MEetAndYou.Services
             _UMDAO = new UMDAO();
         }
 
-        public bool isUserAccountCreated(UserAccountEntity user)
+        public bool isUserCreated(UserAccountEntity user)
         {
             try
             {
-                return _UMDAO.isUserAccountCreated(user);
+                return _UMDAO.isUserCreated(user);
             }
             catch (Exception)
             {
@@ -29,11 +29,11 @@ namespace Pentaskilled.MEetAndYou.Services
             }
         }
 
-        public bool isUserAccountEmailUpdated(int id, string newEmail)
+        public bool isUserEmailUpdated(int id, string newEmail)
         {
             try
             {
-                return _UMDAO.isUserAccountEmailUpdated(id, newEmail);
+                return _UMDAO.isUserEmailUpdated(id, newEmail);
             }
             catch (Exception)
             {
@@ -41,11 +41,11 @@ namespace Pentaskilled.MEetAndYou.Services
             }
         }
 
-        public bool isUserAccountPasswordUpdated(int id, string newPassword)
+        public bool isUserPasswordUpdated(int id, string newPassword)
         {
             try
             {
-                return _UMDAO.isUserAccountPasswordUpdated(id, newPassword);
+                return _UMDAO.isUserPasswordUpdated(id, newPassword);
             }
             catch (Exception)
             {
@@ -53,11 +53,11 @@ namespace Pentaskilled.MEetAndYou.Services
             }
         }
 
-        public bool isUserAccountPhoneUpdated(int id, string newPhoneNum)
+        public bool isUserPhoneUpdated(int id, string newPhoneNum)
         {
             try
             {
-                return _UMDAO.isUserAccountPhoneUpdated(id, newPhoneNum);
+                return _UMDAO.isUserPhoneUpdated(id, newPhoneNum);
             }
             catch (Exception)
             {
@@ -65,11 +65,11 @@ namespace Pentaskilled.MEetAndYou.Services
             }
         }
 
-        public bool isUserAccountDeleted(int id)
+        public bool isUserDeleted(int id)
         {
             try
             {
-                return _UMDAO.isUserAccountDeleted(id);
+                return _UMDAO.isUserDeleted(id);
             }
             catch (Exception ex)
             {
@@ -77,11 +77,11 @@ namespace Pentaskilled.MEetAndYou.Services
             }
         }
 
-        public bool isUserAccountDisabled(int id)
+        public bool isUserDisabled(int id)
         {
             try
             {
-                return _UMDAO.isUserAccountDisabled(id);
+                return _UMDAO.isUserDisabled(id);
             }
             catch (Exception)
             {
@@ -89,11 +89,11 @@ namespace Pentaskilled.MEetAndYou.Services
             }
         }
 
-        public bool isUserAccountEnabled(int id)
+        public bool isUserEnabled(int id)
         {
             try
             {
-                return _UMDAO.isUserAccountEnabled(id);
+                return _UMDAO.isUserEnabled(id);
             }
             catch (Exception)
             {
@@ -101,11 +101,11 @@ namespace Pentaskilled.MEetAndYou.Services
             }
         }
 
-        public bool isAdminAccountCreated(AdminAccountEntity admin)
+        public bool isAdminCreated(AdminAccountEntity admin)
         {
             try
             {
-                return _UMDAO.isAdminAccountCreated(admin);
+                return _UMDAO.isAdminCreated(admin);
             }
             catch (Exception)
             {

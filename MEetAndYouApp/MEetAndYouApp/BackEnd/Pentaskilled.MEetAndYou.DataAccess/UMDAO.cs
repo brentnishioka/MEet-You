@@ -29,7 +29,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         ///     False -> the UserAccount is not successfully inserted into the database.
         /// </returns>
        
-        public bool isUserAccountCreated(UserAccountEntity user)
+        public bool isUserCreated(UserAccountEntity user)
         {
             _connectionString = GetConnectionString();
             bool isSuccessfullyCreated; 
@@ -68,7 +68,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         ///     True -> The email is successfully updated in the database.
         ///     False -> The email is not successfully updated in the database.
         /// </returns>
-        public bool isUserAccountEmailUpdated(int id, string newEmail)
+        public bool isUserEmailUpdated(int id, string newEmail)
         {
             _connectionString = GetConnectionString();
             bool isSuccessfullyUpdated; 
@@ -105,7 +105,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         ///     True -> The password is successfully updated in the database.
         ///     False -> The password is not successfully updated in the database.
         /// </returns>
-        public bool isUserAccountPasswordUpdated(int id, string newPassword)
+        public bool isUserPasswordUpdated(int id, string newPassword)
         {
             _connectionString = GetConnectionString();
             bool isSuccessfullyUpdated; 
@@ -141,7 +141,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         ///     True -> The phone number is successfully updated in the database.
         ///     False -> The phone number is not successfully updated in the database.
         /// </returns>
-        public bool isUserAccountPhoneUpdated(int id, string newPhoneNum)
+        public bool isUserPhoneUpdated(int id, string newPhoneNum)
         {
             _connectionString = GetConnectionString();
             bool isSuccessfullyUpdated; 
@@ -176,7 +176,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         ///     True -> The user is successfully deleted in the database.
         ///     False -> The user is not successfully deleted in the database.
         /// </returns>
-        public bool isUserAccountDeleted(int id)
+        public bool isUserDeleted(int id)
         {
             _connectionString = GetConnectionString();
             bool isSuccessfullyDeleted; 
@@ -211,7 +211,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         ///     True -> The user is successfully disabled.
         ///     False -> The user is not successfully disabled.
         /// </returns>
-        public bool isUserAccountDisabled(int id)
+        public bool isUserDisabled(int id)
         {
             _connectionString = GetConnectionString();
             bool isSuccessfullyDisabled;
@@ -246,7 +246,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         ///     True -> The user is successfully enabled.
         ///     False -> The user is not successfully enabled.
         /// </returns>
-        public bool isUserAccountEnabled(int id)
+        public bool isUserEnabled(int id)
         {
             _connectionString = GetConnectionString();
             bool isSuccessfullyEnabled;
@@ -280,7 +280,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         ///     True -> the AdminAccount is inserted into the database successfully.
         ///     False -> the AdminAccount is not successfully inserted into the database.
         /// </returns>
-        public bool isAdminAccountCreated(AdminAccountEntity admin)
+        public bool isAdminCreated(AdminAccountEntity admin)
         {
             _connectionString = GetConnectionString();
             bool isSuccessfullyCreated;

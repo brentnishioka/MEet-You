@@ -35,7 +35,7 @@ namespace Pentaskilled.MEetAndYou.Managers
                     return VerifyUserInfo(email, password, phoneNumber);
                 }
 
-                if (!_UMService.isUserAccountCreated(user))
+                if (!_UMService.isUserCreated(user))
                 {
                     return "User account was not successfully created";
                 }
@@ -57,7 +57,7 @@ namespace Pentaskilled.MEetAndYou.Managers
                     return "Invalid email";
                 }
 
-                if (!_UMService.isUserAccountEmailUpdated(id, email))
+                if (!_UMService.isUserEmailUpdated(id, email))
                 {
                     return "User email was not successfully updated";
                 }
@@ -79,7 +79,7 @@ namespace Pentaskilled.MEetAndYou.Managers
                     return "Invalid password";
                 }
 
-                if (!_UMService.isUserAccountPasswordUpdated(id, password))
+                if (!_UMService.isUserPasswordUpdated(id, password))
                 {
                     return "User email was not successfully updated";
                 }
@@ -101,7 +101,7 @@ namespace Pentaskilled.MEetAndYou.Managers
                     return "Invalid phone number";
                 }
 
-                if (!_UMService.isUserAccountPhoneUpdated(id, phoneNum))
+                if (!_UMService.isUserPhoneUpdated(id, phoneNum))
                 {
                     return "User phone number was not successfully updated";
                 }
@@ -118,7 +118,7 @@ namespace Pentaskilled.MEetAndYou.Managers
         {
             try
             {
-                if (!_UMService.isUserAccountDeleted(id))
+                if (!_UMService.isUserDeleted(id))
                 {
                     return "User account was not successfully deleted";
                 }
@@ -135,7 +135,7 @@ namespace Pentaskilled.MEetAndYou.Managers
         {
             try
             {
-                if (!_UMService.isUserAccountDisabled(id))
+                if (!_UMService.isUserDisabled(id))
                 {
                     return "User account was not successfully disabled";
                 }
@@ -152,7 +152,7 @@ namespace Pentaskilled.MEetAndYou.Managers
         {
             try
             {
-                if (!_UMService.isUserAccountEnabled(id))
+                if (!_UMService.isUserEnabled(id))
                 {
                     return "User account was not successfully enabled";
                 }
@@ -184,7 +184,7 @@ namespace Pentaskilled.MEetAndYou.Managers
                     return "Invalid password.";
                 }
 
-                if (!_UMService.isAdminAccountCreated(admin))
+                if (!_UMService.isAdminCreated(admin))
                 {
                     return "Admin account was not successfully created";
                 }

@@ -10,21 +10,21 @@ namespace Pentaskilled.MEetAndYou.Services
 {
     public interface IUMService
     {
-        bool isUserAccountCreated(UserAccountEntity user);
+        bool isUserCreated(UserAccountEntity user);
 
-        bool isUserAccountEmailUpdated(int id, string newEmail);
+        bool isUserEmailUpdated(int id, string newEmail);
 
-        bool isUserAccountPasswordUpdated(int id, string newPassword);
+        bool isUserPasswordUpdated(int id, string newPassword);
 
-        bool isUserAccountPhoneUpdated(int id, string newPhoneNum);
+        bool isUserPhoneUpdated(int id, string newPhoneNum);
 
-        bool isUserAccountDeleted(int id);
+        bool isUserDeleted(int id);
 
-        bool isUserAccountDisabled(int id);
+        bool isUserDisabled(int id);
 
-        bool isUserAccountEnabled(int id);
+        bool isUserEnabled(int id);
 
-        bool isAdminAccountCreated(AdminAccountEntity admin);
+        bool isAdminCreated(AdminAccountEntity admin);
 
         bool isAdminEmailUpdated(int id, string newEmail);
 
