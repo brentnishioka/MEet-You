@@ -83,7 +83,8 @@ namespace Pentaskilled.MEetAndYou.Services.Implementations
                 Compress(buffLocation, archiveLocation);
                 string archiveFileExt = DateTime.Now.ToString(archConf.GetDateTimeFormat()) +
                           archConf.GetArchiveExtension();
-                if (!File.Exists(archiveFileExt))
+                string completeArchivePath = Path.Combine(archiveLocation, archiveFileExt);
+                if (!File.Exists(completeArchivePath))
                 {
                     throw new Exception();
                 }
