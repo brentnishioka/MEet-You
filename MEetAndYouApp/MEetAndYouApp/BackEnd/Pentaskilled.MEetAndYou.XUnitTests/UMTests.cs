@@ -1,6 +1,7 @@
 ﻿using Xunit;
 using Pentaskilled.MEetAndYou.DataAccess;
 using Pentaskilled.MEetAndYou.Entities;
+using Pentaskilled.MEetAndYou.Managers;
 using System;
 using System.Data.SqlClient;
 using System.Data;
@@ -132,10 +133,10 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             string email = "sysadmin@gmail.com";
             string password = "password";
 
-            IUMDAO _UMDAO = new UMDAO();
+            UMManager _UMManager = new UMManager();
             bool doesRecordExist = true;
 
-            Assert.Equal(doesRecordExist.ToString(), _UMDAO.VerifyAdminRecordInDB(email, password).ToString());
+            Assert.Equal(doesRecordExist.ToString(), _UMManager.verifyAdmin(email, password).ToString());
         }
 
         [Fact]

@@ -10,26 +10,28 @@ namespace Pentaskilled.MEetAndYou.Services
 {
     public interface IUMService
     {
-        string CreateUserAccountRecord(UserAccountEntity user);
+        bool CreateUserAccountRecord(UserAccountEntity user);
 
-        string UpdateUserAccountEmail(int id, string newEmail);
+        bool UpdateUserAccountEmail(int id, string newEmail);
 
-        string UpdateUserAccountPassword(int id, string newPassword);
+        bool UpdateUserAccountPassword(int id, string newPassword);
 
-        string UpdateUserAccountPhone(int id, string newPhoneNum);
+        bool UpdateUserAccountPhone(int id, string newPhoneNum);
 
-        string DeleteUserAccountRecord(int id);
+        bool DeleteUserAccountRecord(int id);
 
-        string DisableUserAccountRecord(int id);
+        bool DisableUserAccountRecord(int id);
 
-        string EnableUserAccountRecord(int id);
+        bool EnableUserAccountRecord(int id);
 
-        string CreateAdminAccountRecord(AdminAccountEntity admin);
+        bool CreateAdminAccountRecord(AdminAccountEntity admin);
 
-        string UpdateAdminAccountEmail(int id, string newEmail);
+        bool UpdateAdminAccountEmail(int id, string newEmail);
 
-        string UpdateAdminAccountPassword(int id, string newPassword);
+        bool UpdateAdminAccountPassword(int id, string newPassword);
 
-        string DeleteAdminAccountRecord(int id);
+        bool DeleteAdminAccountRecord(int id);
+
+        bool VerifyAdminRecordInDB(string email, string password);
     }
 }

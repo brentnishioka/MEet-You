@@ -17,147 +17,148 @@ namespace Pentaskilled.MEetAndYou.Services
             _UMDAO = new UMDAO();
         }
 
-        public string CreateUserAccountRecord(UserAccountEntity user)
+        public bool CreateUserAccountRecord(UserAccountEntity user)
         {
             try
             {
-                _UMDAO.CreateUserAccountRecord(user);
+                return _UMDAO.CreateUserAccountRecord(user);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return ex.Message;
+                throw new Exception(); 
             }
-            return "User Account successfully created";
         }
 
-        public string UpdateUserAccountEmail(int id, string newEmail)
+        public bool UpdateUserAccountEmail(int id, string newEmail)
         {
             try
             {
-                _UMDAO.UpdateUserAccountEmail(id, newEmail);
+                return _UMDAO.UpdateUserAccountEmail(id, newEmail);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return ex.Message;
+                throw new Exception();
             }
-            return "User Account successfully updated";
         }
 
-        public string UpdateUserAccountPassword(int id, string newPassword)
+        public bool UpdateUserAccountPassword(int id, string newPassword)
         {
             try
             {
-                _UMDAO.UpdateUserAccountPassword(id, newPassword);
+                return _UMDAO.UpdateUserAccountPassword(id, newPassword);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return ex.Message;
+                throw new Exception();
             }
-            return "User Account successfully updated";
         }
 
-        public string UpdateUserAccountPhone(int id, string newPhoneNum)
+        public bool UpdateUserAccountPhone(int id, string newPhoneNum)
         {
             try
             {
-                _UMDAO.UpdateUserAccountPhone(id, newPhoneNum);
+                return _UMDAO.UpdateUserAccountPhone(id, newPhoneNum);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return ex.Message;
+                throw new Exception();
             }
-            return "User Account successfully updated";
         }
 
-        public string DeleteUserAccountRecord(int id)
+        public bool DeleteUserAccountRecord(int id)
         {
             try
             {
-                _UMDAO.DeleteUserAccountRecord(id);
+                return _UMDAO.DeleteUserAccountRecord(id);
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                throw new Exception();
             }
-            return "User Account successfully deleted";
         }
 
-        public string DisableUserAccountRecord(int id)
+        public bool DisableUserAccountRecord(int id)
         {
             try
             {
-                _UMDAO.DisableUserAccountRecord(id);
+                return _UMDAO.DisableUserAccountRecord(id);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return ex.Message;
+                throw new Exception();
             }
-            return "User Account successfully disabled";
         }
 
-        public string EnableUserAccountRecord(int id)
+        public bool EnableUserAccountRecord(int id)
         {
             try
             {
-                _UMDAO.EnableUserAccountRecord(id);
+                return _UMDAO.EnableUserAccountRecord(id);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return ex.Message;
+                throw new Exception();
             }
-            return "User Account successfully enabled";
         }
 
-        public string CreateAdminAccountRecord(AdminAccountEntity admin)
+        public bool CreateAdminAccountRecord(AdminAccountEntity admin)
         {
             try
             {
-                _UMDAO.CreateAdminAccountRecord(admin);
+                return _UMDAO.CreateAdminAccountRecord(admin);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return ex.Message;
+                throw new Exception();
             }
-            return "Admin Account successfully created";
         }
 
-        public string UpdateAdminAccountEmail(int id, string newEmail)
+        public bool UpdateAdminAccountEmail(int id, string newEmail)
         {
             try
             {
-                _UMDAO.UpdateAdminAccountEmail(id, newEmail);
+                return _UMDAO.UpdateAdminAccountEmail(id, newEmail);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return ex.Message;
+                throw new Exception();
             }
-            return "Admin Account successfully updated";
         }
 
-        public string UpdateAdminAccountPassword(int id, string newPassword)
+        public bool UpdateAdminAccountPassword(int id, string newPassword)
         {
             try
             {
-                _UMDAO.UpdateAdminAccountPassword(id, newPassword);
+                return _UMDAO.UpdateAdminAccountPassword(id, newPassword);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return ex.Message;
+                throw new Exception();
             }
-            return "Admin Account successfully updated";
         }
 
-        public string DeleteAdminAccountRecord(int id)
+        public bool DeleteAdminAccountRecord(int id)
         {
             try
             {
-                _UMDAO.DeleteAdminAccountRecord(id);
+                return _UMDAO.DeleteAdminAccountRecord(id);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return ex.Message;
+                throw new Exception();
             }
-            return "Admin Account successfully deleted";
+        }
+
+        public bool VerifyAdminRecordInDB(string email, string password)
+        {
+            try
+            {
+                return _UMDAO.VerifyAdminRecordInDB(email, password);
+            }
+            catch (Exception)
+            {
+                throw new Exception();
+            }
         }
     }
 }
