@@ -11,7 +11,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
     public class UMTests
     {
         [Fact]
-        public void BeginCreateUserProcessTest()
+        public void CreateUserTest()
         {
             UserAccountEntity user = new UserAccountEntity();
 
@@ -25,67 +25,82 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
 
             _UMManager.IsAdminVerified("rupak@gmail.com", "198@2f.aw!fj");
 
-            string isSuccessfullyCreated = "User Account was successfully created";
+            string isSuccessfullyCreated = "User account was successfully created";
 
-            Assert.Equal(isSuccessfullyCreated, _UMManager.BeginCreateUserProcess(email, password, phoneNumber, registerDate, active));
+            Assert.Equal(isSuccessfullyCreated, _UMManager.BeginCreateUser(email, password, phoneNumber, registerDate, active));
         }
 
         [Fact]
-        public void UpdateUserAccountEmailTest()
+        public void UpdateUserEmailTest()
         {
             int id = 1;
             string newEmail = "gidjoshviv@gmail.com";
 
-            IUMDAO _UMDAO = new UMDAO();
-            bool isEmailSuccessfullyUpdated = true;
+            UMManager _UMManager = new UMManager();
 
-            Assert.Equal(isEmailSuccessfullyUpdated, _UMDAO.isUserAccountEmailUpdated(id, newEmail));
+            _UMManager.IsAdminVerified("rupak@gmail.com", "198@2f.aw!fj");
+
+            string isSuccessfullyUpdated = "User email was successfully updated";
+
+            Assert.Equal(isSuccessfullyUpdated, _UMManager.BeginUpdateUserEmail(id, newEmail));
         }
 
         [Fact]
-        public void UpdateUserAccountPasswordTest()
+        public void UpdateUserPasswordTest()
         {
             int id = 1;
             string newPassword = "PasSwOrD10";
 
-            IUMDAO _UMDAO = new UMDAO();
-            bool isPasswordSuccessfullyUpdated = true;
+            UMManager _UMManager = new UMManager();
 
-            Assert.Equal(isPasswordSuccessfullyUpdated, _UMDAO.isUserAccountPasswordUpdated(id, newPassword));
+            _UMManager.IsAdminVerified("rupak@gmail.com", "198@2f.aw!fj");
+
+            string isSuccessfullyUpdated = "User password was successfully updated";
+
+            Assert.Equal(isSuccessfullyUpdated, _UMManager.BeginUpdateUserPassword(id, newPassword));
         }
 
         [Fact]
-        public void UpdateUserccountPhoneTest()
+        public void UpdateUserPhoneTest()
         {
             int id = 1;
             string newPhone = "(516)598-2915";
 
-            IUMDAO _UMDAO = new UMDAO();
-            bool isPhoneSuccessfullyUpdated = true;
+            UMManager _UMManager = new UMManager();
 
-            Assert.Equal(isPhoneSuccessfullyUpdated, _UMDAO.isUserAccountPhoneUpdated(id, newPhone));
+            _UMManager.IsAdminVerified("rupak@gmail.com", "198@2f.aw!fj");
+
+            string isSuccessfullyUpdated = "User phone number was successfully updated";
+
+            Assert.Equal(isSuccessfullyUpdated, _UMManager.BeginUpdateUserPhone(id, newPhone));
         }
 
         [Fact]
-        public void DeleteUserAccountRecordTest()
+        public void DeleteUserAccountTest()
         {
             int id = 6;
 
-            IUMDAO _UMDAO = new UMDAO();
-            bool isSuccessfullyDeleted = true;
+            UMManager _UMManager = new UMManager();
 
-            Assert.Equal(isSuccessfullyDeleted.ToString(), _UMDAO.isUserAccountDeleted(id).ToString());
+            _UMManager.IsAdminVerified("rupak@gmail.com", "198@2f.aw!fj");
+
+            string isSuccessfullyDeleted = "User account was successfully deleted";
+
+            Assert.Equal(isSuccessfullyDeleted, _UMManager.BeginDeleteUserAccount(id));
         }
 
         [Fact]
-        public void DisableUserAccountRecordTest()
+        public void DisableUserAccountTest()
         {
             int id = 1;
 
-            IUMDAO _UMDAO = new UMDAO();
-            bool isSuccessfullyDisabled = true;
+            UMManager _UMManager = new UMManager();
 
-            Assert.Equal(isSuccessfullyDisabled, _UMDAO.isUserAccountDisabled(id));
+            _UMManager.IsAdminVerified("rupak@gmail.com", "198@2f.aw!fj");
+
+            string isSuccessfullyDisabled = "User account was successfully disabled";
+
+            Assert.Equal(isSuccessfullyDisabled, _UMManager.BeginDisableUserAccount(id));
         }
 
         [Fact]
@@ -93,48 +108,60 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         {
             int id = 3;
 
-            IUMDAO _UMDAO = new UMDAO();
-            bool isSuccessfullyEnabled = true;
+            UMManager _UMManager = new UMManager();
 
-            Assert.Equal(isSuccessfullyEnabled, _UMDAO.isUserAccountEnabled(id));
+            _UMManager.IsAdminVerified("rupak@gmail.com", "198@2f.aw!fj");
+
+            string isSuccessfullyEnabled = "User account was successfully enabled";
+
+            Assert.Equal(isSuccessfullyEnabled, _UMManager.BeginEnableUserAccount(id));
         }
 
         [Fact]
-        public void CreateAdminAccountRecordTest()
+        public void CreateAdminTest()
         {
             AdminAccountEntity admin = new AdminAccountEntity();
 
             admin.Email = "sysadmin@gmail.com";
             admin.Password = "password";
 
-            IUMDAO _UMDAO = new UMDAO();
-            bool isSuccessfullyCreated = true;
+            UMManager _UMManager = new UMManager();
 
-            Assert.Equal(isSuccessfullyCreated, _UMDAO.isAdminAccountCreated(admin));
+            _UMManager.IsAdminVerified("rupak@gmail.com", "198@2f.aw!fj");
+
+            string isSuccessfullyCreated = "Admin account was successfully created";
+
+            Assert.Equal(isSuccessfullyCreated, _UMManager.BeginCreateAdmin(admin.Email, admin.Password));
         }
 
         [Fact]
-        public void UpdateAdminAccountEmailTest()
+        public void UpdateAdminEmailTest()
         {
             int id = 1;
             string newEmail = "Best.Admin@gmail.com";
 
-            IUMDAO _UMDAO = new UMDAO();
-            bool isEmailSuccessfullyUpdated = true;
+            UMManager _UMManager = new UMManager();
 
-            Assert.Equal(isEmailSuccessfullyUpdated, _UMDAO.isAdminEmailUpdated(id, newEmail));
+            _UMManager.IsAdminVerified("rupak@gmail.com", "198@2f.aw!fj");
+
+            string isSuccessfullyUpdated = "Admin email was successfully updated";
+
+            Assert.Equal(isSuccessfullyUpdated, _UMManager.BeginUpdateAdminEmail(id, newEmail));
         }
 
         [Fact]
         public void UpdateAdminAccountPasswordTest()
         {
             int id = 1;
-            string newPassword = "AdMiN10";
+            string newPassword = "AdMiN100";
 
-            IUMDAO _UMDAO = new UMDAO();
-            bool isPasswordSuccessfullyUpdated = true;
+            UMManager _UMManager = new UMManager();
 
-            Assert.Equal(isPasswordSuccessfullyUpdated, _UMDAO.isAdminPasswordUpdated(id, newPassword));
+            _UMManager.IsAdminVerified("rupak@gmail.com", "198@2f.aw!fj");
+
+            string isSuccessfullyUpdated = "Admin password was successfully updated";
+
+            Assert.Equal(isSuccessfullyUpdated, _UMManager.BeginUpdateAdminPassword(id, newPassword));
         }
 
         [Fact]
@@ -142,10 +169,13 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         {
             int id = 4;
 
-            IUMDAO _UMDAO = new UMDAO();
-            bool isSuccessfullyDeleted = true;
+            UMManager _UMManager = new UMManager();
 
-            Assert.Equal(isSuccessfullyDeleted.ToString(), _UMDAO.isAdminDeleted(id).ToString());
+            _UMManager.IsAdminVerified("rupak@gmail.com", "198@2f.aw!fj");
+
+            string isSuccessfullyDeleted = "Admin account was successfully deleted";
+
+            Assert.Equal(isSuccessfullyDeleted, _UMManager.BeginDeleteAdminAccount(id));
         }
 
         [Fact]

@@ -18,7 +18,7 @@ namespace Pentaskilled.MEetAndYou.Managers
             _UMService = new UMService();
         }
 
-        public string BeginCreateUserProcess(string email, string password, string phoneNumber, string registerDate, int active)
+        public string BeginCreateUser(string email, string password, string phoneNumber, string registerDate, int active)
         {
             try
             {
@@ -37,7 +37,7 @@ namespace Pentaskilled.MEetAndYou.Managers
 
                 if (!_UMService.isUserAccountCreated(user))
                 {
-                    return "User Account was not successfully created";
+                    return "User account was not successfully created";
                 }
             }
             catch (Exception)
@@ -45,21 +45,21 @@ namespace Pentaskilled.MEetAndYou.Managers
                 throw new Exception();
             }
 
-            return "User Account was successfully created";
+            return "User account was successfully created";
         }
 
-        public string BeginUpdateUserEmailProcess(int id, string email)
+        public string BeginUpdateUserEmail(int id, string email)
         {
             try
             {
-                if (!IsUserEmailVerified(email))
+                if (!IsEmailVerified(email))
                 {
                     return "Invalid email";
                 }
 
                 if (!_UMService.isUserAccountEmailUpdated(id, email))
                 {
-                    return "User Account was not successfully created";
+                    return "User email was not successfully updated";
                 }
             }
             catch (Exception)
@@ -67,7 +67,193 @@ namespace Pentaskilled.MEetAndYou.Managers
                 throw new Exception();
             }
 
-            return "User Account was successfully created";
+            return "User email was successfully updated";
+        }
+
+        public string BeginUpdateUserPassword(int id, string password)
+        {
+            try
+            {
+                if (!IsPasswordVerified(password))
+                {
+                    return "Invalid password";
+                }
+
+                if (!_UMService.isUserAccountPasswordUpdated(id, password))
+                {
+                    return "User email was not successfully updated";
+                }
+            }
+            catch (Exception)
+            {
+                throw new Exception();
+            }
+
+            return "User password was successfully updated";
+        }
+
+        public string BeginUpdateUserPhone(int id, string phoneNum)
+        {
+            try
+            {
+                if (!IsPhoneNumVerified(phoneNum))
+                {
+                    return "Invalid phone number";
+                }
+
+                if (!_UMService.isUserAccountPhoneUpdated(id, phoneNum))
+                {
+                    return "User phone number was not successfully updated";
+                }
+            }
+            catch (Exception)
+            {
+                throw new Exception();
+            }
+
+            return "User phone number was successfully updated"; 
+        }
+
+        public string BeginDeleteUserAccount(int id)
+        {
+            try
+            {
+                if (!_UMService.isUserAccountDeleted(id))
+                {
+                    return "User account was not successfully deleted";
+                }
+            }
+            catch (Exception)
+            {
+                throw new Exception();
+            }
+
+            return "User account was successfully deleted";
+        }
+
+        public string BeginDisableUserAccount(int id)
+        {
+            try
+            {
+                if (!_UMService.isUserAccountDisabled(id))
+                {
+                    return "User account was not successfully disabled";
+                }
+            }
+            catch (Exception)
+            {
+                throw new Exception();
+            }
+
+            return "User account was successfully disabled";
+        }
+
+        public string BeginEnableUserAccount(int id)
+        {
+            try
+            {
+                if (!_UMService.isUserAccountEnabled(id))
+                {
+                    return "User account was not successfully enabled";
+                }
+            }
+            catch (Exception)
+            {
+                throw new Exception();
+            }
+
+            return "User account was successfully enabled";
+        }
+
+        public string BeginCreateAdmin(string email, string password)
+        {
+            try
+            {
+                AdminAccountEntity admin = new AdminAccountEntity();
+
+                admin.Email = email;
+                admin.Password = password;
+
+                if (!IsEmailVerified(email))
+                {
+                    return "Invalid email.";
+                }
+
+                if (!(IsPasswordVerified(password)))
+                {
+                    return "Invalid password.";
+                }
+
+                if (!_UMService.isAdminAccountCreated(admin))
+                {
+                    return "Admin account was not successfully created";
+                }
+            }
+            catch (Exception)
+            {
+                throw new Exception();
+            }
+            return "Admin account was successfully created";
+        }
+
+        public string BeginUpdateAdminEmail(int id, string email)
+        {
+            try
+            {
+                if (!IsEmailVerified(email))
+                {
+                    return "Invalid email";
+                }
+                if (!_UMService.isAdminEmailUpdated(id, email))
+                {
+                    return "Admin email was not successfully updated";
+                }
+            }
+            catch (Exception)
+            {
+                throw new Exception();
+            }
+
+            return "Admin email was successfully updated";
+        }
+
+        public string BeginUpdateAdminPassword(int id, string password)
+        {
+            try
+            {
+                if (!IsPasswordVerified(password))
+                {
+                    return "Invalid password";
+                }
+
+                if (!_UMService.isAdminEmailUpdated(id, password))
+                {
+                    return "Admin email was not successfully updated";
+                }
+            }
+            catch (Exception)
+            {
+                throw new Exception();
+            }
+
+            return "Admin password was successfully updated";
+        }
+
+        public string BeginDeleteAdminAccount(int id)
+        {
+            try
+            {
+                if (!_UMService.isAdminDeleted(id))
+                {
+                    return "Admin account was not successfully deleted";
+                }
+            }
+            catch (Exception)
+            {
+                throw new Exception();
+            }
+
+            return "Admin account was successfully deleted";
         }
 
         public bool IsAdminVerified(string adminEmail, string adminPassword)
@@ -92,21 +278,21 @@ namespace Pentaskilled.MEetAndYou.Managers
             try
             {
                 string invalidParameters = "Invalid parameter(s): ";
-                if (IsUserEmailVerified(email) && IsUserPasswordVerified(password) && IsUserPhoneNumVerified(phoneNumber))
+                if (IsEmailVerified(email) && IsPasswordVerified(password) && IsPhoneNumVerified(phoneNumber))
                 {
                     return "User info is successfully verified.";
                 }
                 else
                 {
-                    if (!IsUserEmailVerified(email))
+                    if (!IsEmailVerified(email))
                     {
                         invalidParameters += "email  ";
                     }
-                    if (!IsUserPasswordVerified(password))
+                    if (!IsPasswordVerified(password))
                     {
                         invalidParameters += "password  ";
                     }
-                    if (!IsUserPhoneNumVerified(phoneNumber))
+                    if (!IsPhoneNumVerified(phoneNumber))
                     {
                         invalidParameters += "phone number  ";
                     }
@@ -119,13 +305,13 @@ namespace Pentaskilled.MEetAndYou.Managers
             }
         }
 
-        public bool IsUserEmailVerified(string email)
+        public bool IsEmailVerified(string email)
         {
             var validEmail = new Regex(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
             return validEmail.IsMatch(email);
         }
 
-        public bool IsUserPasswordVerified(string password)
+        public bool IsPasswordVerified(string password)
         {
             var hasMinimum8Char = new Regex(@".{8,}");
             var hasValidChars = new Regex(@"[A-Za-z0-9\s.,@!]");
@@ -133,7 +319,7 @@ namespace Pentaskilled.MEetAndYou.Managers
             return (hasMinimum8Char.IsMatch(password) && hasValidChars.IsMatch(password));
         }
 
-        public bool IsUserPhoneNumVerified(string phoneNum)
+        public bool IsPhoneNumVerified(string phoneNum)
         {
             var validPhoneNum = new Regex(@"^(\(?\+?[0-9]*\)?)?[0-9_\- \(\)]*$");
             return validPhoneNum.IsMatch(phoneNum);
