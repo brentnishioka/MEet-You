@@ -20,57 +20,63 @@ namespace Pentaskilled.MEetAndYou.Logging
         }
 
         // System event log
-        public bool CreateNewLog(DateTime dateTime, string category, LogLevel logLevel, string message)
+        public async Task<bool> CreateNewLogAsync(DateTime dateTime, string category, LogLevel logLevel, string message)
         {
-            try
+            return await Task.Run(async () =>
             {
-                MakeLog(dateTime, category, logLevel, message);
-                int existLogCount = _logDataAccess.CheckExistingLog(_eventLog);
-                if (existLogCount != 0)
+                try
                 {
-                    throw new Exception();
+                    await MakeLogAsync(dateTime, category, logLevel, message);
+                    int existLogCount = await Task.Run(() => _logDataAccess.CheckExistingLogAsync(_eventLog));
+                    if (existLogCount != 0)
+                    {
+                        throw new Exception();
+                    }
+                    await PushLogToDBAsync(_eventLog);
+                    Log sysLogCheck = await Task.Run (() => _logDataAccess.UpdateLogAsync(_eventLog));
+                    if (sysLogCheck != null)
+                    {
+                        throw new Exception();
+                    }
                 }
-                PushLogToDB(_eventLog);
-                Log sysLogCheck = _logDataAccess.UpdateLog(_eventLog);
-                if (sysLogCheck != null)
+                catch (Exception ex)
                 {
-                    throw new Exception();
+                    return false;
                 }
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
-            return true;
+                return true;
+            });
         }
 
         // User event log
-        public bool CreateNewLog(DateTime dateTime, string category, LogLevel logLevel, int userId, string message)
+        public async Task<bool> CreateNewLogAsync(DateTime dateTime, string category, LogLevel logLevel, int userId, string message)
         {
-            try
+            return await Task.Run(async () =>
             {
-                MakeLog(dateTime, category, logLevel, userId, message);
-                int existLogCount = _logDataAccess.CheckExistingLog(_eventLog);
-                if (existLogCount != 0)
+                try
                 {
-                    throw new Exception();
+                    await MakeLogAsync(dateTime, category, logLevel, userId, message);
+                    int existLogCount = await Task.Run(() => _logDataAccess.CheckExistingLogAsync(_eventLog));
+                    if (existLogCount != 0)
+                    {
+                        throw new Exception();
+                    }
+                    await PushLogToDBAsync(_eventLog);
+                    Log eventLog = await Task.Run(() => _logDataAccess.UpdateLogAsync(_eventLog));
+                    if (eventLog != null)
+                        throw new Exception();
                 }
-                PushLogToDB(_eventLog);
-                Log eventLog = _logDataAccess.UpdateLog(_eventLog);
-                if (eventLog != null)
-                    throw new Exception();
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
-            return true;
+                catch (Exception ex)
+                {
+                    return false;
+                }
+                return true;
+            });
         }
 
         // System event log
-        public Log MakeLog(DateTime dateTime, string category, LogLevel logLevel, string message)
+        public async Task<Log> MakeLogAsync(DateTime dateTime, string category, LogLevel logLevel, string message)
         {
-            _eventLog.logId = _logDataAccess.GetCurrentIdentity() + 1;
+            _eventLog.logId = await Task.Run(() => _logDataAccess.GetCurrentIdentityAsync()) + 1;
             _eventLog.dateTime = dateTime;
             if (!_eventLog.GetValidCategories().Contains(category))
             {
@@ -85,9 +91,9 @@ namespace Pentaskilled.MEetAndYou.Logging
         }
 
         // User event log
-        public Log MakeLog(DateTime dateTime, string category, LogLevel logLevel, int userId, string message)
+        public async Task<Log> MakeLogAsync(DateTime dateTime, string category, LogLevel logLevel, int userId, string message)
         {
-            _eventLog.logId = _logDataAccess.GetCurrentIdentity() + 1;
+            _eventLog.logId = await Task.Run(() => _logDataAccess.GetCurrentIdentityAsync()) + 1;
             _eventLog.dateTime = dateTime;
             if (!_eventLog.GetValidCategories().Contains(category))
             {
@@ -101,17 +107,20 @@ namespace Pentaskilled.MEetAndYou.Logging
             return _eventLog;
         }
 
-        public bool PushLogToDB(Log eventLog)
+        public async Task<bool> PushLogToDBAsync(Log eventLog)
         {
-            try
+            return await Task.Run(() =>
             {
-                _logDataAccess.PushLogToDB(eventLog);
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
-            return true;
+                try
+                {
+                    _logDataAccess.PushLogToDBAsync(eventLog);
+                }
+                catch (Exception ex)
+                {
+                    return false;
+                }
+                return true;
+            });
         }
     }
 }

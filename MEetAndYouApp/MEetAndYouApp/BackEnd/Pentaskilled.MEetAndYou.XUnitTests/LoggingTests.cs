@@ -22,7 +22,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             ILogDAO logDAO = new LogDAO();
             bool isSuccessfullyInserted = true;
 
-            Assert.Equal(isSuccessfullyInserted, logDAO.PushLogToDB(sysLog));
+            Assert.Equal(isSuccessfullyInserted, logDAO.PushLogToDBAsync(sysLog).Result);
         }
 
         [Fact]
@@ -38,7 +38,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             ILogDAO logDAO = new LogDAO();
             bool isSuccessfullyInserted = true;
 
-            Assert.Equal(isSuccessfullyInserted, logDAO.PushLogToDB(userLog));
+            Assert.Equal(isSuccessfullyInserted, logDAO.PushLogToDBAsync(userLog).Result);
         }
 
         [Fact]
@@ -47,7 +47,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             ILoggingService systemLoggingService = new LoggingService(new LogDAO(), new Log());
 
             bool isSuccessfullyCreated = true;
-            Assert.Equal(isSuccessfullyCreated, systemLoggingService.CreateNewLog(DateTime.UtcNow, "View", LogLevel.Debug, "This is a test debug log."));
+            Assert.Equal(isSuccessfullyCreated, systemLoggingService.CreateNewLogAsync(DateTime.UtcNow, "View", LogLevel.Debug, "This is a test debug log.").Result);
         }
 
         [Fact]
@@ -56,7 +56,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             ILoggingService userLoggingService = new LoggingService(new LogDAO(), new Log());
 
             bool isSuccessfullyCreated = true;
-            Assert.Equal(isSuccessfullyCreated, userLoggingService.CreateNewLog(DateTime.UtcNow, "Data Access", LogLevel.Debug, 592, "This is a test debug log."));
+            Assert.Equal(isSuccessfullyCreated, userLoggingService.CreateNewLogAsync(DateTime.UtcNow, "Data Store", LogLevel.Debug, 592, "This is a test debug log.").Result);
         }
 
         [Fact]
@@ -69,7 +69,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             string message = "Data not processed correctly.";
 
             bool isSuccessfullyCreated = true;
-            bool actualLogProcessResult = logMan.BeginLogProcess(category, level, message);
+            bool actualLogProcessResult = logMan.BeginLogProcess(category, level, message).Result;
 
             Assert.Equal(isSuccessfullyCreated, actualLogProcessResult);
         }
@@ -85,7 +85,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             string message = "User Data not processed correctly.";
 
             bool isSuccessfullyCreated = true;
-            bool actualLogProcessResult = logMan.BeginLogProcess(category, level, userId, message);
+            bool actualLogProcessResult = logMan.BeginLogProcess(category, level, userId, message).Result;
 
             Assert.Equal(isSuccessfullyCreated, actualLogProcessResult);
         }
@@ -176,7 +176,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             ILogDAO logDAO = new LogDAO();
             bool isSuccessfullyInserted = true;
 
-            Assert.Equal(isSuccessfullyInserted, logDAO.PushLogToDB(sysLog));
+            Assert.Equal(isSuccessfullyInserted, logDAO.PushLogToDBAsync(sysLog).Result);
         }
 
         [Fact]
@@ -192,7 +192,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             ILogDAO logDAO = new LogDAO();
             bool isSuccessfullyInserted = true;
 
-            Assert.Equal(isSuccessfullyInserted, logDAO.PushLogToDB(userLog));
+            Assert.Equal(isSuccessfullyInserted, logDAO.PushLogToDBAsync(userLog).Result);
         }
 
         [Fact]
@@ -205,7 +205,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             LogLevel level = LogLevel.Error;
             string message = "Web server crashed.";
 
-            Assert.True(systemLoggingService.CreateNewLog(dateTime, category, level, message));
+            Assert.True(systemLoggingService.CreateNewLogAsync(dateTime, category, level, message).Result);
         }
 
         [Fact]
@@ -219,7 +219,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             int userId = 49230;
             string message = "User unable to interact with the system.";
 
-            Assert.True(userLoggingService.CreateNewLog(dateTime, category, level, userId, message));
+            Assert.True(userLoggingService.CreateNewLogAsync(dateTime, category, level, userId, message).Result);
         }
 
 
@@ -233,7 +233,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             LogLevel level = LogLevel.Error;
             string message = "Error: system logs should not be modifiable";
 
-            Assert.True(systemLoggingService.CreateNewLog(dateTime, category, level, message));
+            Assert.True(systemLoggingService.CreateNewLogAsync(dateTime, category, level, message).Result);
         }
 
         [Fact]
@@ -247,7 +247,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             int userId = 49230;
             string message = "Error: user logs should not be modifiable";
 
-            Assert.True(userLoggingService.CreateNewLog(dateTime, category, level, userId, message));
+            Assert.True(userLoggingService.CreateNewLogAsync(dateTime, category, level, userId, message).Result);
         }
 
 

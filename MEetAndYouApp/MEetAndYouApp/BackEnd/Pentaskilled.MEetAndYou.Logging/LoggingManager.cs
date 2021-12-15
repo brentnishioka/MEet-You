@@ -24,22 +24,25 @@ namespace Pentaskilled.MEetAndYou.Logging
         /// <param name="logLevel"></param>
         /// <param name="message"></param>
         /// <returns></returns>
-        public bool BeginLogProcess(string category, LogLevel logLevel, string message)
+        public async Task<bool> BeginLogProcess(string category, LogLevel logLevel, string message)
         {
-            try
+            return await Task.Run(async () =>
             {
-                DateTime currentDateTime = DateTime.UtcNow;
-                bool isCreateLogSuccess = _eventLogServ.CreateNewLog(currentDateTime, category, logLevel, message);
-                if (!isCreateLogSuccess)
+                try
                 {
-                    throw new Exception();
+                    DateTime currentDateTime = DateTime.UtcNow;
+                    bool isCreateLogSuccess = await Task.Run(() => _eventLogServ.CreateNewLogAsync(currentDateTime, category, logLevel, message));
+                    if (!isCreateLogSuccess)
+                    {
+                        throw new Exception();
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
-            return true;
+                catch (Exception ex)
+                {
+                    return false;
+                }
+                return true;
+            });
         }
 
         /// <summary>
@@ -50,22 +53,25 @@ namespace Pentaskilled.MEetAndYou.Logging
         /// <param name="userId"></param>
         /// <param name="message"></param>
         /// <returns></returns>
-        public bool BeginLogProcess(string category, LogLevel logLevel, int userId, string message)
+        public async Task<bool> BeginLogProcess(string category, LogLevel logLevel, int userId, string message)
         {
-            try
+            return await Task.Run(async () =>
             {
-                DateTime currentDateTime = DateTime.UtcNow;
-                bool isCreateLogSuccess = _eventLogServ.CreateNewLog(currentDateTime, category, logLevel, userId, message);
-                if (!isCreateLogSuccess)
+                try
                 {
-                    throw new Exception();
+                    DateTime currentDateTime = DateTime.UtcNow;
+                    bool isCreateLogSuccess = await Task.Run(() => _eventLogServ.CreateNewLogAsync(currentDateTime, category, logLevel, userId, message));
+                    if (!isCreateLogSuccess)
+                    {
+                        throw new Exception();
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
-            return true;
+                catch (Exception ex)
+                {
+                    return false;
+                }
+                return true;
+            });
         }
     }
 }

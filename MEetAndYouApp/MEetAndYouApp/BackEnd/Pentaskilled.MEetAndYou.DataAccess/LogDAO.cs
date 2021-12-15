@@ -28,97 +28,105 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         ///     True -> the log is inserted into the database successfully.
         ///     False -> the log is not successfully inserted into the database.
         /// </returns>
-        public bool PushLogToDB(Log eventLog)
+        public async Task<bool> PushLogToDBAsync(Log eventLog)
         {
-            _connectionString = GetConnectionString();
-            Enum logLvl = eventLog.logLevel;
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(_connectionString))
-                using (SqlCommand command = new SqlCommand("[MEetAndYou].[InsertLog]", connection))
+            return await Task.Run(() => {
+                _connectionString = GetConnectionString();
+                Enum logLvl = eventLog.logLevel;
+                try
                 {
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.Add("@dateTime", SqlDbType.DateTime).Value = eventLog.dateTime;
-                    command.Parameters.Add("@category", SqlDbType.VarChar).Value = eventLog.category;
-                    command.Parameters.Add("@logLevel", SqlDbType.VarChar).Value = logLvl.ToString();
-                    command.Parameters.Add("@userId", SqlDbType.Int).Value = eventLog.userId;
-                    command.Parameters.Add("@message", SqlDbType.VarChar).Value = eventLog.message;
+                    using (SqlConnection connection = new SqlConnection(_connectionString))
+                    using (SqlCommand command = new SqlCommand("[MEetAndYou].[InsertLog]", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.Add("@dateTime", SqlDbType.DateTime).Value = eventLog.dateTime;
+                        command.Parameters.Add("@category", SqlDbType.VarChar).Value = eventLog.category;
+                        command.Parameters.Add("@logLevel", SqlDbType.VarChar).Value = logLvl.ToString();
+                        command.Parameters.Add("@userId", SqlDbType.Int).Value = eventLog.userId;
+                        command.Parameters.Add("@message", SqlDbType.VarChar).Value = eventLog.message;
 
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                    connection.Close();
+                        connection.Open();
+                        command.ExecuteNonQuery();
+                        connection.Close();
+                    }
                 }
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-            return true;
+                catch (Exception)
+                {
+                    return false;
+                }
+                return true;
+            });
         }
 
-        public int GetCurrentIdentity()
+        public async Task<int> GetCurrentIdentityAsync()
         {
-            int lastLogId = 0;
-            _connectionString = GetConnectionString();
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(_connectionString))
+            return await Task.Run(() => {
+                int lastLogId = 0;
+                _connectionString = GetConnectionString();
+                try
                 {
-                    SqlCommand command = new SqlCommand("SELECT [MEetAndYou].[GetCurrentIdentity]()", connection);
-                    connection.Open();
-                    lastLogId = (int)command.ExecuteScalar();
-                    connection.Close();
+                    using (SqlConnection connection = new SqlConnection(_connectionString))
+                    {
+                        SqlCommand command = new SqlCommand("SELECT [MEetAndYou].[GetCurrentIdentity]()", connection);
+                        connection.Open();
+                        lastLogId = (int)command.ExecuteScalar();
+                        connection.Close();
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                throw new NullReferenceException();
-            }
-            return lastLogId;
+                catch (Exception ex)
+                {
+                    throw new NullReferenceException();
+                }
+                return lastLogId;
+            });
         }
 
-        public int CheckExistingLog(Log eventLog)
+        public async Task<int> CheckExistingLogAsync(Log eventLog)
         {
-            int numRows = 0;
-            _connectionString = GetConnectionString();
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(_connectionString))
+            return await Task.Run(() => {
+                int numRows = 0;
+                _connectionString = GetConnectionString();
+                try
                 {
-                    SqlCommand command = new SqlCommand("SELECT [MEetAndYou].[CheckExistingLog](@logId)", connection);
-                    command.Parameters.Add("@logId", SqlDbType.Int).Value = eventLog.logId;
-                    connection.Open();
-                    numRows = (int)command.ExecuteScalar();
-                    connection.Close();
+                    using (SqlConnection connection = new SqlConnection(_connectionString))
+                    {
+                        SqlCommand command = new SqlCommand("SELECT [MEetAndYou].[CheckExistingLog](@logId)", connection);
+                        command.Parameters.Add("@logId", SqlDbType.Int).Value = eventLog.logId;
+                        connection.Open();
+                        numRows = (int)command.ExecuteScalar();
+                        connection.Close();
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                throw new NullReferenceException();
-            }
-            return numRows;
+                catch (Exception ex)
+                {
+                    throw new NullReferenceException();
+                }
+                return numRows;
+            });
         }
 
-        public Log UpdateLog(Log eventLog)
+        public async Task<Log> UpdateLogAsync(Log eventLog)
         {
-            _connectionString = GetConnectionString();
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(_connectionString))
-                using (SqlCommand command = new SqlCommand("[MEetAndYou].[UpdateLog]", connection))
+            return await Task.Run(() => {
+                _connectionString = GetConnectionString();
+                try
                 {
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.Add("@sysLogId", SqlDbType.Int).Value = eventLog.logId;
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                    connection.Close();
+                    using (SqlConnection connection = new SqlConnection(_connectionString))
+                    using (SqlCommand command = new SqlCommand("[MEetAndYou].[UpdateLog]", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.Add("@sysLogId", SqlDbType.Int).Value = eventLog.logId;
+                        connection.Open();
+                        command.ExecuteNonQuery();
+                        connection.Close();
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
-            return eventLog;
+                catch (Exception ex)
+                {
+                    return null;
+                }
+                return eventLog;
+            });
         }
 
         public List<Log> ReadLogsOlderThan30()
