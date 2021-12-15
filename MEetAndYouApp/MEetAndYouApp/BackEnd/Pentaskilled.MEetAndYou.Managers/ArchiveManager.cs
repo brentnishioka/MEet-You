@@ -19,9 +19,10 @@ namespace Pentaskilled.MEetAndYou.Managers
         public bool ArchiveOldLogs()
         {
             var reqStartTime = DateTime.Now;
-            DateTime currentDateTime = DateTime.Now;
-            //if (currentDateTime.Day == 1 && currentDateTime.Hour == 0 && currentDateTime.Minute == 0 && currentDateTime.Second == 0)
-            //{
+            // currentDateTime should be DateTime.Now, but it's defined like this for testing.
+            DateTime currentDateTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1, 0, 0, 0);
+            if (currentDateTime.Day == 1 && currentDateTime.Hour == 0 && currentDateTime.Minute == 0 && currentDateTime.Second == 0)
+            {
                 try
                 {
                     List<Log> oldLogs = _archServ.GetOldLogs();
@@ -41,8 +42,8 @@ namespace Pentaskilled.MEetAndYou.Managers
                     return true;
                 }
                 return false;
-            //}
-            //return false;
+            }
+            return false;
         }
     }
 }
