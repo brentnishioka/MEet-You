@@ -15,7 +15,10 @@ namespace Pentaskilled.MEetAndYou.Managers
         {
             _archServ = new ArchiverService(new LogDAO());
         }
-        
+        ///<summary>
+        /// Method with the control flow for the whole archival process: consolidate, compress, and delete.
+        /// </summary>
+        /// <returns>boolean value pertaining to the success of the archival process</returns>
         public bool ArchiveOldLogs()
         {
             var reqStartTime = DateTime.Now;
@@ -30,7 +33,7 @@ namespace Pentaskilled.MEetAndYou.Managers
                     bool isCompressed = _archServ.CompressOldLogs();
                     bool isDeleted = _archServ.DeleteOldLogs(oldLogs);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     return false;
                 }
