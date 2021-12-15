@@ -29,15 +29,15 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         ///     False -> the UserAccount is not successfully inserted into the database.
         /// </returns>
        
-        public bool CreateUserAccountRecord(UserAccountEntity user)
+        public bool isUserAccountCreated(UserAccountEntity user)
         {
             _connectionString = GetConnectionString();
-            bool result; 
+            bool isSuccessfullyCreated; 
 
             try
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
-                using (SqlCommand command = new SqlCommand("[MEetAndYou].[CreateUserAccountRecord]", connection))
+                using (SqlCommand command = new SqlCommand("[MEetAndYou].[CreateUserAccount]", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.Add("@email", SqlDbType.VarChar).Value = user.Email;
@@ -47,7 +47,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                     command.Parameters.Add("@active", SqlDbType.Bit).Value = user.Active;
 
                     connection.Open();
-                    result = Convert.ToBoolean(command.ExecuteNonQuery());
+                    isSuccessfullyCreated = Convert.ToBoolean(command.ExecuteNonQuery());
                     connection.Close();
                 }
             }
@@ -56,7 +56,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             {
                 return false;
             }
-            return result;
+            return isSuccessfullyCreated;
         }
 
         /// <summary>
@@ -68,10 +68,10 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         ///     True -> The email is successfully updated in the database.
         ///     False -> The email is not successfully updated in the database.
         /// </returns>
-        public bool UpdateUserAccountEmail(int id, string newEmail)
+        public bool isUserAccountEmailUpdated(int id, string newEmail)
         {
             _connectionString = GetConnectionString();
-            bool result; 
+            bool isSuccessfullyUpdated; 
 
             try
             {
@@ -83,7 +83,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                     command.Parameters.Add("@email", SqlDbType.VarChar).Value = newEmail;
 
                     connection.Open();
-                    result = Convert.ToBoolean(command.ExecuteNonQuery());
+                    isSuccessfullyUpdated = Convert.ToBoolean(command.ExecuteNonQuery());
                     connection.Close();
                 }
             }
@@ -92,9 +92,8 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             {
                 return false;
             }
-            return result;
+            return isSuccessfullyUpdated;
         }
-
 
 
         /// <summary>
@@ -106,10 +105,10 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         ///     True -> The password is successfully updated in the database.
         ///     False -> The password is not successfully updated in the database.
         /// </returns>
-        public bool UpdateUserAccountPassword(int id, string newPassword)
+        public bool isUserAccountPasswordUpdated(int id, string newPassword)
         {
             _connectionString = GetConnectionString();
-            bool result; 
+            bool isSuccessfullyUpdated; 
 
             try
             {
@@ -121,7 +120,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                     command.Parameters.Add("@password", SqlDbType.VarChar).Value = newPassword;
 
                     connection.Open();
-                    result = Convert.ToBoolean(command.ExecuteNonQuery());
+                    isSuccessfullyUpdated = Convert.ToBoolean(command.ExecuteNonQuery());
                     connection.Close();
                 }
             }
@@ -130,7 +129,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             {
                 return false;
             }
-            return result;
+            return isSuccessfullyUpdated;
         }
 
         /// <summary>
@@ -142,10 +141,10 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         ///     True -> The phone number is successfully updated in the database.
         ///     False -> The phone number is not successfully updated in the database.
         /// </returns>
-        public bool UpdateUserAccountPhone(int id, string newPhoneNum)
+        public bool isUserAccountPhoneUpdated(int id, string newPhoneNum)
         {
             _connectionString = GetConnectionString();
-            bool result; 
+            bool isSuccessfullyUpdated; 
 
             try
             {
@@ -157,7 +156,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                     command.Parameters.Add("@phoneNum", SqlDbType.VarChar).Value = newPhoneNum;
 
                     connection.Open();
-                    result = Convert.ToBoolean(command.ExecuteNonQuery());
+                    isSuccessfullyUpdated = Convert.ToBoolean(command.ExecuteNonQuery());
                     connection.Close();
                 }
             }
@@ -166,7 +165,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             {
                 return false;
             }
-            return result;
+            return isSuccessfullyUpdated;
         }
 
         /// <summary>
@@ -177,10 +176,10 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         ///     True -> The user is successfully deleted in the database.
         ///     False -> The user is not successfully deleted in the database.
         /// </returns>
-        public bool DeleteUserAccountRecord(int id)
+        public bool isUserAccountDeleted(int id)
         {
             _connectionString = GetConnectionString();
-            bool result; 
+            bool isSuccessfullyDeleted; 
 
             try
             {
@@ -191,7 +190,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                     command.Parameters.Add("@id", SqlDbType.Int).Value = id;
 
                     connection.Open();
-                    result = Convert.ToBoolean(command.ExecuteNonQuery());
+                    isSuccessfullyDeleted = Convert.ToBoolean(command.ExecuteNonQuery());
                     connection.Close();
                 }
             }
@@ -201,7 +200,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                 return false;
             }
 
-            return result;
+            return isSuccessfullyDeleted;
         }
 
         /// <summary>
@@ -212,10 +211,10 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         ///     True -> The user is successfully disabled.
         ///     False -> The user is not successfully disabled.
         /// </returns>
-        public bool DisableUserAccountRecord(int id)
+        public bool isUserAccountDisabled(int id)
         {
             _connectionString = GetConnectionString();
-            bool result;
+            bool isSuccessfullyDisabled;
 
             try
             {
@@ -226,7 +225,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                     command.Parameters.Add("@id", SqlDbType.Int).Value = id;
 
                     connection.Open();
-                    result = Convert.ToBoolean(command.ExecuteNonQuery());
+                    isSuccessfullyDisabled = Convert.ToBoolean(command.ExecuteNonQuery());
                     connection.Close();
                 }
             }
@@ -236,7 +235,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                 return false;
             }
 
-            return result;
+            return isSuccessfullyDisabled;
         }
 
         /// <summary>
@@ -247,10 +246,10 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         ///     True -> The user is successfully enabled.
         ///     False -> The user is not successfully enabled.
         /// </returns>
-        public bool EnableUserAccountRecord(int id)
+        public bool isUserAccountEnabled(int id)
         {
             _connectionString = GetConnectionString();
-            bool result;
+            bool isSuccessfullyEnabled;
 
             try
             {
@@ -261,7 +260,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                     command.Parameters.Add("@id", SqlDbType.Int).Value = id;
 
                     connection.Open();
-                    result = Convert.ToBoolean(command.ExecuteNonQuery());
+                    isSuccessfullyEnabled = Convert.ToBoolean(command.ExecuteNonQuery());
                     connection.Close();
                 }
             }
@@ -270,7 +269,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             {
                 return false;
             }
-            return result;
+            return isSuccessfullyEnabled;
         }
 
         /// <summary>
@@ -281,10 +280,10 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         ///     True -> the AdminAccount is inserted into the database successfully.
         ///     False -> the AdminAccount is not successfully inserted into the database.
         /// </returns>
-        public bool CreateAdminAccountRecord(AdminAccountEntity admin)
+        public bool isAdminAccountCreated(AdminAccountEntity admin)
         {
             _connectionString = GetConnectionString();
-            bool result;
+            bool isSuccessfullyCreated;
 
             try
             {
@@ -296,7 +295,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                     command.Parameters.Add("@password", SqlDbType.VarChar).Value = admin.Password;
 
                     connection.Open();
-                    result = Convert.ToBoolean(command.ExecuteNonQuery());
+                    isSuccessfullyCreated = Convert.ToBoolean(command.ExecuteNonQuery());
                     connection.Close();
                 }
             }
@@ -305,7 +304,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             {
                 return false;
             }
-            return result;
+            return isSuccessfullyCreated;
         }
 
         /// <summary>
@@ -317,10 +316,10 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         ///     True -> The admin's email is successfully updated.
         ///     False -> The admin's email is successfully not updated.
         /// </returns>
-        public bool UpdateAdminAccountEmail(int id, string newEmail)
+        public bool isAdminEmailUpdated(int id, string newEmail)
         {
             _connectionString = GetConnectionString();
-            bool result;
+            bool isSuccessfullyUpdated;
 
             try
             {
@@ -332,7 +331,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                     command.Parameters.Add("@email", SqlDbType.VarChar).Value = newEmail;
 
                     connection.Open();
-                    result = Convert.ToBoolean(command.ExecuteNonQuery());
+                    isSuccessfullyUpdated = Convert.ToBoolean(command.ExecuteNonQuery());
                     connection.Close();
                 }
             }
@@ -341,7 +340,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             {
                 return false;
             }
-            return result;
+            return isSuccessfullyUpdated;
         }
 
         /// <summary>
@@ -353,10 +352,10 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         ///     True -> The admin's password is successfully updated.
         ///     False -> The admin's password is successfully not updated.
         /// </returns>
-        public bool UpdateAdminAccountPassword(int id, string newPassword)
+        public bool isAdminPasswordUpdated(int id, string newPassword)
         {
             _connectionString = GetConnectionString();
-            bool result;
+            bool isSuccessfullyUpdated;
 
             try
             {
@@ -368,7 +367,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                     command.Parameters.Add("@password", SqlDbType.VarChar).Value = newPassword;
 
                     connection.Open();
-                    result = Convert.ToBoolean(command.ExecuteNonQuery());
+                    isSuccessfullyUpdated = Convert.ToBoolean(command.ExecuteNonQuery());
                     connection.Close();
                 }
             }
@@ -377,7 +376,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             {
                 return false;
             }
-            return result;
+            return isSuccessfullyUpdated;
         }
 
         /// <summary>
@@ -388,10 +387,10 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         ///     True -> The admin is successfully deleted.
         ///     False -> The admin is not successfully deleted.
         /// </returns>
-        public bool DeleteAdminAccountRecord(int id)
+        public bool isAdminDeleted(int id)
         {
             _connectionString = GetConnectionString();
-            bool result;
+            bool isSuccessfullyDeleted;
 
             try
             {
@@ -402,7 +401,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                     command.Parameters.Add("@id", SqlDbType.Int).Value = id;
 
                     connection.Open();
-                    result = Convert.ToBoolean(command.ExecuteNonQuery());
+                    isSuccessfullyDeleted = Convert.ToBoolean(command.ExecuteNonQuery());
                     connection.Close();
                 }
             }
@@ -412,7 +411,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                 return false;
             }
 
-            return result;
+            return isSuccessfullyDeleted;
         }
 
         /// <summary>
@@ -423,10 +422,10 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         ///     True -> The user exists in the database.
         ///     False -> The user does not exist in the database.
         /// </returns>
-        public bool VerifyUserRecordInDB(UserAccountEntity user)
+        public bool isUserInDBVerified(UserAccountEntity user)
         {
             _connectionString = GetConnectionString();
-            int result;
+            int rowsAffected;
 
             try
             {
@@ -442,7 +441,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                     command.Parameters.Add("@active", SqlDbType.Bit).Value = user.Active;
 
                     connection.Open();
-                    result = (int) command.ExecuteScalar();
+                    rowsAffected = (int) command.ExecuteScalar();
                     connection.Close();
                 }
             }
@@ -451,7 +450,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             {
                 return false;
             }
-            return Convert.ToBoolean(result);
+            return Convert.ToBoolean(rowsAffected);
         }
 
         /// <summary>
@@ -463,10 +462,10 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         ///     True -> The admin exists in the database.
         ///     False -> The admin does not exist in the database.
         /// </returns>
-        public bool VerifyAdminRecordInDB(string email, string password)
+        public bool isAdminInDBVerified(string email, string password)
         {
             _connectionString = GetConnectionString();
-            int result;
+            int isAdminVerified;
 
             try
             {
@@ -478,7 +477,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                     command.Parameters.Add("@password", SqlDbType.NVarChar).Value = password;
 
                     connection.Open();
-                    result = (int)command.ExecuteScalar();
+                    isAdminVerified = (int)command.ExecuteScalar();
                     connection.Close();
                 }
             }
@@ -487,7 +486,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             {
                 return false;
             }
-            return Convert.ToBoolean(result);
+            return Convert.ToBoolean(isAdminVerified);
         }
     }
 }

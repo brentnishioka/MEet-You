@@ -30,11 +30,7 @@ namespace Pentaskilled.MEetAndYou.Managers
                 user.RegisterDate = registerDate;
                 user.Active = active;
 
-                if (!IsUserInfoVerified(email, password, phoneNumber)) {
-                    return "User Info is not verified."
-                }
-
-                bool isUserSuccessfullyCreated = _UMService.CreateUserAccountRecord(user);
+                bool isUserSuccessfullyCreated = _UMService.isUserAccountCreated(user);
 
                 if (!isUserSuccessfullyCreated)
                 {
@@ -61,7 +57,7 @@ namespace Pentaskilled.MEetAndYou.Managers
                 user.RegisterDate = registerDate;
                 user.Active = active;
 
-                bool isUserSuccessfullyCreated = _UMService.CreateUserAccountRecord(user);
+                bool isUserSuccessfullyCreated = _UMService.isUserAccountCreated(user);
 
                 if (!isUserSuccessfullyCreated)
                 {
@@ -80,7 +76,7 @@ namespace Pentaskilled.MEetAndYou.Managers
         {
             try
             {
-                bool isAdminVerified = _UMService.VerifyAdminRecordInDB(adminEmail, adminPassword);
+                bool isAdminVerified = _UMService.isAdminInDBVerified(adminEmail, adminPassword);
                 if (!isAdminVerified)
                 {
                     throw new Exception();
@@ -93,13 +89,11 @@ namespace Pentaskilled.MEetAndYou.Managers
             return true;
         }
 
-        public bool IsUserInfoVerified(string email, string password, string phoneNum)
+        public bool VerifyUserInfo(string email, string password, string phoneBn)
         {
             try
             {
-                return (VerifyUserEmail(email) && VerifyUserPassword(password) && VerifyUserPhoneNum(phoneNum));
-                
-
+                return (VerifyUserEmail(user.Email) && VerifyUserPassword(user.Password) && VerifyUserPhoneNum(user.PhoneNumber));
             }
             catch (Exception)
             {
@@ -107,7 +101,7 @@ namespace Pentaskilled.MEetAndYou.Managers
             }
         }
 
-        public bool IsUserEmailVerified(string email)
+        public bool VerifyUserEmail(string email)
         {
             var validEmail = new Regex(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
             return validEmail.IsMatch(email);

@@ -40,7 +40,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             IUMDAO _UMDAO = new UMDAO();
             bool isEmailSuccessfullyUpdated = true;
 
-            Assert.Equal(isEmailSuccessfullyUpdated, _UMDAO.UpdateUserAccountEmail(id, newEmail));
+            Assert.Equal(isEmailSuccessfullyUpdated, _UMDAO.isUserAccountEmailUpdated(id, newEmail));
         }
 
         [Fact]
@@ -52,7 +52,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             IUMDAO _UMDAO = new UMDAO();
             bool isPasswordSuccessfullyUpdated = true;
 
-            Assert.Equal(isPasswordSuccessfullyUpdated, _UMDAO.UpdateUserAccountPassword(id, newPassword));
+            Assert.Equal(isPasswordSuccessfullyUpdated, _UMDAO.isUserAccountPasswordUpdated(id, newPassword));
         }
 
         [Fact]
@@ -64,7 +64,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             IUMDAO _UMDAO = new UMDAO();
             bool isPhoneSuccessfullyUpdated = true;
 
-            Assert.Equal(isPhoneSuccessfullyUpdated, _UMDAO.UpdateUserAccountPhone(id, newPhone));
+            Assert.Equal(isPhoneSuccessfullyUpdated, _UMDAO.isUserAccountPhoneUpdated(id, newPhone));
         }
 
         [Fact]
@@ -75,7 +75,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             IUMDAO _UMDAO = new UMDAO();
             bool isSuccessfullyDeleted = true;
 
-            Assert.Equal(isSuccessfullyDeleted.ToString(), _UMDAO.DeleteUserAccountRecord(id).ToString());
+            Assert.Equal(isSuccessfullyDeleted.ToString(), _UMDAO.isUserAccountDeleted(id).ToString());
         }
 
         [Fact]
@@ -86,7 +86,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             IUMDAO _UMDAO = new UMDAO();
             bool isSuccessfullyDisabled = true;
 
-            Assert.Equal(isSuccessfullyDisabled, _UMDAO.DisableUserAccountRecord(id));
+            Assert.Equal(isSuccessfullyDisabled, _UMDAO.isUserAccountDisabled(id));
         }
 
         [Fact]
@@ -97,7 +97,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             IUMDAO _UMDAO = new UMDAO();
             bool isSuccessfullyEnabled = true;
 
-            Assert.Equal(isSuccessfullyEnabled, _UMDAO.EnableUserAccountRecord(id));
+            Assert.Equal(isSuccessfullyEnabled, _UMDAO.isUserAccountEnabled(id));
         }
 
         [Fact]
@@ -111,7 +111,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             IUMDAO _UMDAO = new UMDAO();
             bool isSuccessfullyCreated = true;
 
-            Assert.Equal(isSuccessfullyCreated, _UMDAO.CreateAdminAccountRecord(admin));
+            Assert.Equal(isSuccessfullyCreated, _UMDAO.isAdminAccountCreated(admin));
         }
 
         [Fact]
@@ -129,7 +129,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             IUMDAO _UMDAO = new UMDAO();
             bool doesRecordExist = true;
 
-            Assert.Equal(doesRecordExist.ToString(), _UMDAO.VerifyUserRecordInDB(user).ToString());
+            Assert.Equal(doesRecordExist.ToString(), _UMDAO.isUserInDBVerified(user).ToString());
         }
 
         [Fact]
@@ -153,7 +153,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             IUMDAO _UMDAO = new UMDAO();
             bool isEmailSuccessfullyUpdated = true;
 
-            Assert.Equal(isEmailSuccessfullyUpdated, _UMDAO.UpdateAdminAccountEmail(id, newEmail));
+            Assert.Equal(isEmailSuccessfullyUpdated, _UMDAO.isAdminEmailUpdated(id, newEmail));
         }
 
         [Fact]
@@ -165,7 +165,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             IUMDAO _UMDAO = new UMDAO();
             bool isPasswordSuccessfullyUpdated = true;
 
-            Assert.Equal(isPasswordSuccessfullyUpdated, _UMDAO.UpdateAdminAccountPassword(id, newPassword));
+            Assert.Equal(isPasswordSuccessfullyUpdated, _UMDAO.isAdminPasswordUpdated(id, newPassword));
         }
 
         [Fact]
@@ -176,7 +176,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             IUMDAO _UMDAO = new UMDAO();
             bool isSuccessfullyDeleted = true;
 
-            Assert.Equal(isSuccessfullyDeleted.ToString(), _UMDAO.DeleteAdminAccountRecord(id).ToString());
+            Assert.Equal(isSuccessfullyDeleted.ToString(), _UMDAO.isAdminDeleted(id).ToString());
         }
 
         [Fact]
