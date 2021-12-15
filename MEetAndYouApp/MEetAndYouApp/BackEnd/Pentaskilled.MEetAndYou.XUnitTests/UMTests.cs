@@ -18,7 +18,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             user.Email = "viviand2465@gmail.com";
             user.Password = "joshiscool!";
             user.PhoneNumber = "4084802185";
-            user.RegisterDate = DateTime.UtcNow;
+            user.RegisterDate = DateTime.UtcNow.ToString();
             user.Active = 1;
 
             IUMDAO _UMDAO = new UMDAO();
@@ -30,7 +30,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         [Fact]
         public void UpdateUserAccountEmailTest()
         {
-            int id = 2;
+            int id = 1;
             string newEmail = "gidjoshviv@gmail.com";
 
             IUMDAO _UMDAO = new UMDAO();
@@ -42,7 +42,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         [Fact]
         public void UpdateUserAccountPasswordTest()
         {
-            int id = 2;
+            int id = 1;
             string newPassword = "PasSwOrD10";
 
             IUMDAO _UMDAO = new UMDAO();
@@ -54,7 +54,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         [Fact]
         public void UpdateUserccountPhoneTest()
         {
-            int id = 2;
+            int id = 1;
             string newPhone = "(516) 598-2915";
 
             IUMDAO _UMDAO = new UMDAO();
@@ -66,7 +66,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         [Fact]
         public void DeleteUserAccountRecordTest()
         {
-            int id = 1;
+            int id = 2;
 
             IUMDAO _UMDAO = new UMDAO();
             bool isSuccessfullyDeleted = true;
@@ -77,7 +77,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         [Fact]
         public void DisableUserAccountRecordTest()
         {
-            int id = 2;
+            int id = 1;
 
             IUMDAO _UMDAO = new UMDAO();
             bool isSuccessfullyDisabled = true;
@@ -115,19 +115,20 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         {
             UserAccountEntity user = new UserAccountEntity();
 
+            user.UserID = 1;
             user.Email = "viviand2465@gmail.com";
             user.Password = "joshiscool!";
             user.PhoneNumber = "4084802185";
-            user.RegisterDate = DateTime.UtcNow;
-            user.Active = 1;
+            user.RegisterDate = "12/15/2021 2:23:44 AM";
+            user.Active = 1; 
 
-            IUMDAO _UMDAO = new UMDAO();
+                IUMDAO _UMDAO = new UMDAO();
             bool doesRecordExist = true;
 
             Assert.Equal(doesRecordExist.ToString(), _UMDAO.VerifyUserRecordInDB(user).ToString());
         }
 
-/*        [Fact]
+        [Fact]
         public void VerifyAdminRecordInDBTest()
         {
             string email = "sysadmin@gmail.com";
@@ -137,7 +138,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             bool doesRecordExist = true;
 
             Assert.Equal(doesRecordExist.ToString(), _UMManager.verifyAdmin(email, password).ToString());
-        }*/
+        }
 
         [Fact]
         public void UpdateAdminAccountEmailTest()
@@ -154,7 +155,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         [Fact]
         public void UpdateAdminAccountPasswordTest()
         {
-            int id = 1;
+            int id = 4;
             string newPassword = "AdMiN10";
 
             IUMDAO _UMDAO = new UMDAO();
@@ -166,7 +167,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         [Fact]
         public void DeleteAdminAccountRecordTest()
         {
-            int id = 1;
+            int id = 4;
 
             IUMDAO _UMDAO = new UMDAO();
             bool isSuccessfullyDeleted = true;

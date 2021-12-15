@@ -43,7 +43,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                     command.Parameters.Add("@email", SqlDbType.VarChar).Value = user.Email;
                     command.Parameters.Add("@password", SqlDbType.VarChar).Value = user.Password;
                     command.Parameters.Add("@phoneNum", SqlDbType.VarChar).Value = user.PhoneNumber;
-                    command.Parameters.Add("@registerDate", SqlDbType.DateTime).Value = user.RegisterDate;
+                    command.Parameters.Add("@registerDate", SqlDbType.VarChar).Value = user.RegisterDate;
                     command.Parameters.Add("@active", SqlDbType.Bit).Value = user.Active;
 
                     connection.Open();
@@ -434,6 +434,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                 using (SqlCommand command = new SqlCommand("SELECT [MEetAndYou].[VerifyUserRecordInDB] (@id, @email, @password, @phoneNum, @registerDate, @active)", connection))
                 {
                     command.CommandType = CommandType.Text;
+                    command.Parameters.Add("@id", SqlDbType.Int).Value = user.UserID;
                     command.Parameters.Add("@email", SqlDbType.VarChar).Value = user.Email;
                     command.Parameters.Add("@password", SqlDbType.VarChar).Value = user.Password;
                     command.Parameters.Add("@phoneNum", SqlDbType.VarChar).Value = user.PhoneNumber;

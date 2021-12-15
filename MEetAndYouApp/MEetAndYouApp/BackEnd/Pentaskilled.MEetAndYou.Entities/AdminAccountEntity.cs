@@ -4,7 +4,6 @@ namespace Pentaskilled.MEetAndYou.Entities
 {
     public class AdminAccountEntity
     {
-
         // Unique identifier of user
         public int AdminID { get; set; }
 

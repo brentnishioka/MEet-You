@@ -17,7 +17,7 @@ namespace Pentaskilled.MEetAndYou.Managers
             _UMService = new UMService();
         }
 
-        public string beginCreateProcess (string email, string password, string phoneNumber, DateTime registerDate, int active)
+        public string beginCreateProcess (string email, string password, string phoneNumber, string registerDate, int active)
         {
             try
             {

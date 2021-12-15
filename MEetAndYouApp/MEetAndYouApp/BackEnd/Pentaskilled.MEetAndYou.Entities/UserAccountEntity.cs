@@ -4,7 +4,6 @@ namespace Pentaskilled.MEetAndYou.Entities
 {
     public class UserAccountEntity
     {
-
         // Unique identifier of user
         public int UserID { get; set; }
 
@@ -16,7 +15,7 @@ namespace Pentaskilled.MEetAndYou.Entities
         public string PhoneNumber { get; set; }
 
         // The date user account's was registered
-        public DateTime RegisterDate { get; set; }
+        public string RegisterDate { get; set; }
 
         public int Active { get; set; }
     }
