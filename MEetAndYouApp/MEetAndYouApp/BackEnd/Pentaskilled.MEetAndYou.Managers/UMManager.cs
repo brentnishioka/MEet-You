@@ -18,7 +18,7 @@ namespace Pentaskilled.MEetAndYou.Managers
             _UMService = new UMService();
         }
 
-        public string BeginCreateUserAccountProcess (string email, string password, string phoneNumber, string registerDate, int active)
+        public string BeginCreateUserProcess (string email, string password, string phoneNumber, string registerDate, int active)
         {
             try
             {
@@ -30,6 +30,7 @@ namespace Pentaskilled.MEetAndYou.Managers
                 user.RegisterDate = registerDate;
                 user.Active = active;
 
+                VerifyUserInfo(email, password, phoneNumber);
                 bool isUserSuccessfullyCreated = _UMService.isUserAccountCreated(user);
 
                 if (!isUserSuccessfullyCreated)
@@ -45,18 +46,13 @@ namespace Pentaskilled.MEetAndYou.Managers
             return "User Account successfully created";
         }
 
-        public string BeginUpdateUserAccountEmailProcess(string email)
+        public string BeginUpdateUserEmailProcess(string email)
         {
             try
             {
                 UserAccountEntity user = new UserAccountEntity();
 
-                user.Email = email;
-                user.Password = password;
-                user.PhoneNumber = phoneNumber;
-                user.RegisterDate = registerDate;
-                user.Active = active;
-
+                VerifyUserEmail(email);
                 bool isUserSuccessfullyCreated = _UMService.isUserAccountCreated(user);
 
                 if (!isUserSuccessfullyCreated)
@@ -89,11 +85,11 @@ namespace Pentaskilled.MEetAndYou.Managers
             return true;
         }
 
-        public bool VerifyUserInfo(string email, string password, string phoneBn)
+        public bool VerifyUserInfo(string email, string password, string phoneNumber)
         {
             try
             {
-                return (VerifyUserEmail(user.Email) && VerifyUserPassword(user.Password) && VerifyUserPhoneNum(user.PhoneNumber));
+                return (VerifyUserEmail(email) && VerifyUserPassword(password) && VerifyUserPhoneNum(phoneNumber));
             }
             catch (Exception)
             {
