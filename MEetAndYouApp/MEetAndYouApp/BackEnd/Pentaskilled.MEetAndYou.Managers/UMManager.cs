@@ -18,7 +18,7 @@ namespace Pentaskilled.MEetAndYou.Managers
             _UMService = new UMService();
         }
 
-        public string BeginCreateUserProcess (string email, string password, string phoneNumber, string registerDate, int active)
+        public string BeginCreateUserProcess(string email, string password, string phoneNumber, string registerDate, int active)
         {
             try
             {
@@ -30,12 +30,14 @@ namespace Pentaskilled.MEetAndYou.Managers
                 user.RegisterDate = registerDate;
                 user.Active = active;
 
-                VerifyUserInfo(email, password, phoneNumber);
-                bool isUserSuccessfullyCreated = _UMService.isUserAccountCreated(user);
-
-                if (!isUserSuccessfullyCreated)
+                if (VerifyUserInfo(email, password, phoneNumber) != "User info is successfully verified.")
                 {
-                    throw new Exception();
+                    return VerifyUserInfo(email, password, phoneNumber);
+                }
+
+                if (!_UMService.isUserAccountCreated(user))
+                {
+                    return "User Account was not successfully created";
                 }
             }
             catch (Exception)
@@ -43,21 +45,21 @@ namespace Pentaskilled.MEetAndYou.Managers
                 throw new Exception();
             }
 
-            return "User Account successfully created";
+            return "User Account was successfully created";
         }
 
-        public string BeginUpdateUserEmailProcess(string email)
+        public string BeginUpdateUserEmailProcess(int id, string email)
         {
             try
             {
-                UserAccountEntity user = new UserAccountEntity();
-
-                VerifyUserEmail(email);
-                bool isUserSuccessfullyCreated = _UMService.isUserAccountCreated(user);
-
-                if (!isUserSuccessfullyCreated)
+                if (!IsUserEmailVerified(email))
                 {
-                    throw new Exception();
+                    return "Invalid email";
+                }
+
+                if (!_UMService.isUserAccountEmailUpdated(id, email))
+                {
+                    return "User Account was not successfully created";
                 }
             }
             catch (Exception)
@@ -65,10 +67,10 @@ namespace Pentaskilled.MEetAndYou.Managers
                 throw new Exception();
             }
 
-            return "User Account successfully created";
+            return "User Account was successfully created";
         }
 
-        public bool VerifyAdmin(string adminEmail, string adminPassword)
+        public bool IsAdminVerified(string adminEmail, string adminPassword)
         {
             try
             {
@@ -85,11 +87,31 @@ namespace Pentaskilled.MEetAndYou.Managers
             return true;
         }
 
-        public bool VerifyUserInfo(string email, string password, string phoneNumber)
+        public string VerifyUserInfo(string email, string password, string phoneNumber)
         {
             try
             {
-                return (VerifyUserEmail(email) && VerifyUserPassword(password) && VerifyUserPhoneNum(phoneNumber));
+                string invalidParameters = "Invalid parameter(s): ";
+                if (IsUserEmailVerified(email) && IsUserPasswordVerified(password) && IsUserPhoneNumVerified(phoneNumber))
+                {
+                    return "User info is successfully verified.";
+                }
+                else
+                {
+                    if (!IsUserEmailVerified(email))
+                    {
+                        invalidParameters += "email  ";
+                    }
+                    if (!IsUserPasswordVerified(password))
+                    {
+                        invalidParameters += "password  ";
+                    }
+                    if (!IsUserPhoneNumVerified(phoneNumber))
+                    {
+                        invalidParameters += "phone number  ";
+                    }
+                    return invalidParameters;
+                }
             }
             catch (Exception)
             {
@@ -97,21 +119,21 @@ namespace Pentaskilled.MEetAndYou.Managers
             }
         }
 
-        public bool VerifyUserEmail(string email)
+        public bool IsUserEmailVerified(string email)
         {
             var validEmail = new Regex(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
             return validEmail.IsMatch(email);
         }
 
-        public bool VerifyUserPassword(string password)
+        public bool IsUserPasswordVerified(string password)
         {
             var hasMinimum8Char = new Regex(@".{8,}");
             var hasValidChars = new Regex(@"[A-Za-z0-9\s.,@!]");
 
-            return (hasMinimum8Char.IsMatch(password) && hasValidChars.IsMatch(password)); 
+            return (hasMinimum8Char.IsMatch(password) && hasValidChars.IsMatch(password));
         }
 
-        public bool VerifyUserPhoneNum(string phoneNum)
+        public bool IsUserPhoneNumVerified(string phoneNum)
         {
             var validPhoneNum = new Regex(@"^(\(?\+?[0-9]*\)?)?[0-9_\- \(\)]*$");
             return validPhoneNum.IsMatch(phoneNum);
