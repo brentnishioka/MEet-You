@@ -56,14 +56,22 @@ namespace Pentaskilled.MEetAndYou.Managers
             }
             catch (Exception)
             {
-                return false;
+                return new Exception();
             }
             return true;
         }
 
         public bool verifyUserInfo(UserAccountEntity user)
         {
-            return (verifyUserEmail(user.Email) && verifyUserPassword(user.Password) && verifyUserPhoneNum(user.PhoneNumber));
+            try
+            {
+                return (verifyUserEmail(user.Email) && verifyUserPassword(user.Password) && verifyUserPhoneNum(user.PhoneNumber));
+            }
+            catch (Exception)
+            {
+                return new Exception();
+            }
+            
         }
 
         public bool verifyUserEmail(string email)
@@ -84,6 +92,7 @@ namespace Pentaskilled.MEetAndYou.Managers
         {
             var validPhoneNum = new Regex(@"^(\(?\+?[0-9]*\)?)?[0-9_\- \(\)]*$");
             return validPhoneNum.IsMatch(phoneNum);
+            
         }
     }
 }
