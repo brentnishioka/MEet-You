@@ -33,7 +33,7 @@ namespace Pentaskilled.MEetAndYou.Entities
 
         public override string ToString()
         {
-            return $"{logId},{dateTime},{category},{logLevel},{message}";
+            return $"{logId},{dateTime},{category},{logLevel},{userId},{message}";
         }
     }
 }

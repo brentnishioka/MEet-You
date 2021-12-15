@@ -24,8 +24,9 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
 
             ILogDAO logDAO = new LogDAO();
             int count = logDAO.GetArchiveCount();
+            int expectedArchCount = 1;
            
-            Assert.Equal(4, count);
+            Assert.Equal(expectedArchCount, count);
         }
 
         [Fact]
@@ -43,7 +44,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         {
             ILogDAO logDAO = new LogDAO();
             List<Log> oldLogs = logDAO.ReadLogsOlderThan30();
-            int expectedOldLogsCount = 4;
+            int expectedOldLogsCount = 1;
 
             Assert.Equal(expectedOldLogsCount, oldLogs.Count);
         }
@@ -53,7 +54,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         {
             IArchiverService archiverService = new ArchiverService(new LogDAO());
             List<Log> oldLogs = archiverService.GetOldLogs();
-            int expectedOldLogsCount = 4;
+            int expectedOldLogsCount = 1;
 
             Assert.Equal(expectedOldLogsCount, oldLogs.Count);
         }

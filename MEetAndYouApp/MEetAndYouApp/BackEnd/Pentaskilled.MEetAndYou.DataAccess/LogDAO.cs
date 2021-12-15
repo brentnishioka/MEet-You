@@ -168,7 +168,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         {
             _connectionString = GetConnectionString();
             List<Log> logs30DayOlder = new List<Log>();
-            Log tempEventLog = new Log();
+            Log tempEventLog;
             LogLevelDict logLvl = new LogLevelDict();
             Dictionary<string, LogLevel> dict = logLvl.logLvlDict;
             try
@@ -181,6 +181,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                     SqlDataReader reader = oldEventLogsCommand.ExecuteReader();
                     while (reader.Read())
                     {
+                        tempEventLog = new Log();
                         tempEventLog.logId = Convert.ToInt32(reader[0]);
                         tempEventLog.dateTime = Convert.ToDateTime(reader[1]);
                         tempEventLog.category = Convert.ToString(reader[2]);
