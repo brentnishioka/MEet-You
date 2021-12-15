@@ -58,6 +58,10 @@ namespace Pentaskilled.MEetAndYou.Services.Implementations
             }
         }
 
+        ///<summary>
+        /// compresses logs and checks to see .csv were successfully compressed
+        /// </summary
+        /// <returns></returns>
         public bool CompressOldLogs()
         {
             try
@@ -93,9 +97,6 @@ namespace Pentaskilled.MEetAndYou.Services.Implementations
 
         ///<summary>
         /// Helper Method that takes in old logs from DB and appends them to .csv file
-        /// NOTE: LOCATION WAS MADE ON RANDOM FOLDER ON MY MACHINE FOR 
-        /// TESTING PURPOSES change in ArchiveConfig.cs BUFFER_LOCATION 
-        /// and ARCHIVE_LOCATION
         /// </summary>
         /// <param name="oldLogs"></param>
         /// <param name="buffLocation"></param>
@@ -119,6 +120,11 @@ namespace Pentaskilled.MEetAndYou.Services.Implementations
             }   
         }
 
+        ///<summary>
+        /// converts oldLogs into a .csv file and checks to see if all logs are recorded
+        /// </summary>
+        /// <param name="oldLogs"></param>
+        /// <returns></returns>
         public bool ConsolidateOldLogs(List<Log> oldLogs)
         {
             try
@@ -150,7 +156,11 @@ namespace Pentaskilled.MEetAndYou.Services.Implementations
             return true;
         }
 
-        // can more error handling be done?
+        ///<summary>
+        /// Deletes logs that are 30 or more days old from the db
+        /// </summary>
+        /// <param name="oldLogs"></param
+        /// <returns></returns>
         public bool DeleteOldLogs(List<Log> oldLogs)
         {
             _logDataAccess = new LogDAO();
@@ -162,6 +172,10 @@ namespace Pentaskilled.MEetAndYou.Services.Implementations
             return _logDataAccess.DeleteLogsOlderThan30();
         }
 
+        ///<summary>
+        /// Method to get the logs that are 30 or more days old from the DB as a List
+        /// </summary>
+        /// <param name="oldLogs"></param
         public List<Log> GetOldLogs()
         {
             List<Log> oldLogs = _logDataAccess.ReadLogsOlderThan30();

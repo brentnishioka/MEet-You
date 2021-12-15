@@ -250,8 +250,5 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             Assert.True(userLoggingService.CreateNewLogAsync(dateTime, category, level, userId, message).Result);
         }
 
-
-
-
     }
 }

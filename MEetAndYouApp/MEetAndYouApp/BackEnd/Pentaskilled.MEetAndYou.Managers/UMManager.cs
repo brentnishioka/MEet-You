@@ -44,7 +44,7 @@ namespace Pentaskilled.MEetAndYou.Managers
             return "User Account successfully created";
         }
 
-        public bool verifyAdmin(string adminEmail, string adminPassword)
+/*        public bool verifyAdmin(string adminEmail, string adminPassword)
         {
             try
             {
@@ -59,9 +59,9 @@ namespace Pentaskilled.MEetAndYou.Managers
                 return new Exception();
             }
             return true;
-        }
+        }*/
 
-        public bool verifyUserInfo(UserAccountEntity user)
+/*        public bool verifyUserInfo(UserAccountEntity user)
         {
             try
             {
@@ -72,9 +72,9 @@ namespace Pentaskilled.MEetAndYou.Managers
                 return new Exception();
             }
             
-        }
+        }*/
 
-        public bool verifyUserEmail(string email)
+/*        public bool verifyUserEmail(string email)
         {
             var validEmail = new Regex(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
             return validEmail.IsMatch(email);
@@ -93,6 +93,6 @@ namespace Pentaskilled.MEetAndYou.Managers
             var validPhoneNum = new Regex(@"^(\(?\+?[0-9]*\)?)?[0-9_\- \(\)]*$");
             return validPhoneNum.IsMatch(phoneNum);
             
-        }
+        }*/
     }
 }

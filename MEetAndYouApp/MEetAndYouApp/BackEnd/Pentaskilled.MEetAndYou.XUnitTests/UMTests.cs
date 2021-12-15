@@ -127,7 +127,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             Assert.Equal(doesRecordExist.ToString(), _UMDAO.VerifyUserRecordInDB(user).ToString());
         }
 
-        [Fact]
+/*        [Fact]
         public void VerifyAdminRecordInDBTest()
         {
             string email = "sysadmin@gmail.com";
@@ -137,7 +137,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             bool doesRecordExist = true;
 
             Assert.Equal(doesRecordExist.ToString(), _UMManager.verifyAdmin(email, password).ToString());
-        }
+        }*/
 
         [Fact]
         public void UpdateAdminAccountEmailTest()
