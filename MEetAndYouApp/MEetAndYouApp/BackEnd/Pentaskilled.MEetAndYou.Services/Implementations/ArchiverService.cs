@@ -61,7 +61,7 @@ namespace Pentaskilled.MEetAndYou.Services.Implementations
         ///<summary>
         /// compresses logs and checks to see .csv were successfully compressed
         /// </summary
-        /// <returns></returns>
+        /// <returns>boolean value pertaining to success of compression</returns>
         public bool CompressOldLogs()
         {
             try
@@ -124,7 +124,7 @@ namespace Pentaskilled.MEetAndYou.Services.Implementations
         /// converts oldLogs into a .csv file and checks to see if all logs are recorded
         /// </summary>
         /// <param name="oldLogs"></param>
-        /// <returns></returns>
+        /// <returns>boolean value pertaining to success of consolidation process</returns>
         public bool ConsolidateOldLogs(List<Log> oldLogs)
         {
             try
@@ -160,7 +160,7 @@ namespace Pentaskilled.MEetAndYou.Services.Implementations
         /// Deletes logs that are 30 or more days old from the db
         /// </summary>
         /// <param name="oldLogs"></param
-        /// <returns></returns>
+        /// <returns>boolean value pertaining to success of delete process</returns>
         public bool DeleteOldLogs(List<Log> oldLogs)
         {
             _logDataAccess = new LogDAO();
@@ -176,6 +176,7 @@ namespace Pentaskilled.MEetAndYou.Services.Implementations
         /// Method to get the logs that are 30 or more days old from the DB as a List
         /// </summary>
         /// <param name="oldLogs"></param
+        /// <returns>List of Logs older than 30 days</returns>
         public List<Log> GetOldLogs()
         {
             List<Log> oldLogs = _logDataAccess.ReadLogsOlderThan30();
@@ -191,7 +192,6 @@ namespace Pentaskilled.MEetAndYou.Services.Implementations
                     return null;
                 return oldLogs;
             }
-
         }
 
     }
