@@ -63,17 +63,27 @@ namespace Pentaskilled.MEetAndYou.Managers
 
         public bool verifyUserInfo(UserAccountEntity user)
         {
-            
+            return (verifyUserEmail(user.Email) && verifyUserPassword(user.Password) && verifyUserPhoneNum(user.PhoneNumber));
         }
 
         public bool verifyUserEmail(string email)
         {
-           
+            var validEmail = new Regex(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
+            return validEmail.IsMatch(email);
         }
 
         public bool verifyUserPassword(string password)
         {
-            
+            var hasMinimum8Char = new Regex(@".{8,}");
+            var hasValidChars = new Regex(@"[A-Za-z0-9\s.,@!]{8,}");
+
+            return (hasMinimum8Char.IsMatch(password) && hasValidChars.IsMatch(password)); 
+        }
+
+        public bool verifyUserPhoneNum(string phoneNum)
+        {
+            var validPhoneNum = new Regex(@"^(\(?\+?[0-9]*\)?)?[0-9_\- \(\)]*$");
+            return validPhoneNum.IsMatch(phoneNum);
         }
     }
 }
