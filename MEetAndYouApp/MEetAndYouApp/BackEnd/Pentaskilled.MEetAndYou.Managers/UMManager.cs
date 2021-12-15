@@ -268,7 +268,7 @@ namespace Pentaskilled.MEetAndYou.Managers
             }
             catch (Exception)
             {
-                throw new Exception();
+                throw new Exception("Error: Unauthorized user");
             }
             return true;
         }
