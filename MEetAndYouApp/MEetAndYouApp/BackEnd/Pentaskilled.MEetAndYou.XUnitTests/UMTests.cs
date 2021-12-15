@@ -11,20 +11,24 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
     public class UMTests
     {
         [Fact]
-        public void CreateUserAccountRecordTest()
+        public void BeginCreateUserAccountProcessTest()
         {
             UserAccountEntity user = new UserAccountEntity();
 
-            user.Email = "viviand2465@gmail.com";
-            user.Password = "joshiscool!";
-            user.PhoneNumber = "4084802185";
-            user.RegisterDate = DateTime.UtcNow.ToString();
-            user.Active = 1;
+            string email = "viviand2465@gmail.com";
+            string password = "joshiscool!";
+            string phoneNumber = "4084802185";
+            string registerDate = DateTime.UtcNow.ToString();
+            int active = 1;
 
-            IUMDAO _UMDAO = new UMDAO();
-            bool isSuccessfullyCreated = true;
+            UMManager _UMManager = new UMManager();
 
-            Assert.Equal(isSuccessfullyCreated, _UMDAO.CreateUserAccountRecord(user));
+            _UMManager.VerifyUserInfo(email, password, phoneNumber);
+            _UMManager.VerifyAdmin("rupak@gmail.com", "198@2f.aw!fj");
+
+            string isSuccessfullyCreated = "User Account successfully created";
+
+            Assert.Equal(isSuccessfullyCreated, _UMManager.BeginCreateUserAccountProcess(email, password, phoneNumber, registerDate, active));
         }
 
         [Fact]
@@ -122,7 +126,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             user.RegisterDate = "12/15/2021 2:23:44 AM";
             user.Active = 1; 
 
-                IUMDAO _UMDAO = new UMDAO();
+            IUMDAO _UMDAO = new UMDAO();
             bool doesRecordExist = true;
 
             Assert.Equal(doesRecordExist.ToString(), _UMDAO.VerifyUserRecordInDB(user).ToString());
@@ -137,7 +141,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             UMManager _UMManager = new UMManager();
             bool doesRecordExist = true;
 
-            Assert.Equal(doesRecordExist.ToString(), _UMManager.verifyAdmin(email, password).ToString());
+            Assert.Equal(doesRecordExist.ToString(), _UMManager.VerifyAdmin(email, password).ToString());
         }
 
         [Fact]
@@ -173,6 +177,24 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             bool isSuccessfullyDeleted = true;
 
             Assert.Equal(isSuccessfullyDeleted.ToString(), _UMDAO.DeleteAdminAccountRecord(id).ToString());
+        }
+
+        [Fact]
+        public void VerifyUserInfoTest()
+        {
+            UserAccountEntity user = new UserAccountEntity();
+
+            user.UserID = 1;
+            user.Email = "viviand2465@gmail.com";
+            user.Password = "joshiscool!";
+            user.PhoneNumber = "4084802185";
+            user.RegisterDate = "12/15/2021 2:23:44 AM";
+            user.Active = 1;
+
+            UMManager _UMManager= new UMManager();
+            bool isValidEmail = true;
+
+            Assert.Equal(isValidEmail.ToString(), _UMManager.VerifyUserInfo(user.Email, user.Password, user.PhoneNumber).ToString());
         }
     }
 }
