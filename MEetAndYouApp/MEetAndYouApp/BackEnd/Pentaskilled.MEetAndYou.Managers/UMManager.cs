@@ -35,7 +35,7 @@ namespace Pentaskilled.MEetAndYou.Managers
                     return VerifyUserInfo(email, password, phoneNumber);
                 }
 
-                if (!_UMService.isUserCreated(user))
+                if (!_UMService.IsUserCreated(user))
                 {
                     return "User account was not successfully created";
                 }
@@ -57,7 +57,7 @@ namespace Pentaskilled.MEetAndYou.Managers
                     return "Invalid email";
                 }
 
-                if (!_UMService.isUserEmailUpdated(id, email))
+                if (!_UMService.IsUserEmailUpdated(id, email))
                 {
                     return "User email was not successfully updated";
                 }
@@ -79,7 +79,7 @@ namespace Pentaskilled.MEetAndYou.Managers
                     return "Invalid password";
                 }
 
-                if (!_UMService.isUserPasswordUpdated(id, password))
+                if (!_UMService.IsUserPasswordUpdated(id, password))
                 {
                     return "User email was not successfully updated";
                 }
@@ -101,7 +101,7 @@ namespace Pentaskilled.MEetAndYou.Managers
                     return "Invalid phone number";
                 }
 
-                if (!_UMService.isUserPhoneUpdated(id, phoneNum))
+                if (!_UMService.IsUserPhoneUpdated(id, phoneNum))
                 {
                     return "User phone number was not successfully updated";
                 }
@@ -118,7 +118,7 @@ namespace Pentaskilled.MEetAndYou.Managers
         {
             try
             {
-                if (!_UMService.isUserDeleted(id))
+                if (!_UMService.IsUserDeleted(id))
                 {
                     return "User account was not successfully deleted";
                 }
@@ -135,7 +135,7 @@ namespace Pentaskilled.MEetAndYou.Managers
         {
             try
             {
-                if (!_UMService.isUserDisabled(id))
+                if (!_UMService.IsUserDisabled(id))
                 {
                     return "User account was not successfully disabled";
                 }
@@ -152,7 +152,7 @@ namespace Pentaskilled.MEetAndYou.Managers
         {
             try
             {
-                if (!_UMService.isUserEnabled(id))
+                if (!_UMService.IsUserEnabled(id))
                 {
                     return "User account was not successfully enabled";
                 }
@@ -184,7 +184,7 @@ namespace Pentaskilled.MEetAndYou.Managers
                     return "Invalid password.";
                 }
 
-                if (!_UMService.isAdminCreated(admin))
+                if (!_UMService.IsAdminCreated(admin))
                 {
                     return "Admin account was not successfully created";
                 }
@@ -204,7 +204,7 @@ namespace Pentaskilled.MEetAndYou.Managers
                 {
                     return "Invalid email";
                 }
-                if (!_UMService.isAdminEmailUpdated(id, email))
+                if (!_UMService.IsAdminEmailUpdated(id, email))
                 {
                     return "Admin email was not successfully updated";
                 }
@@ -226,7 +226,7 @@ namespace Pentaskilled.MEetAndYou.Managers
                     return "Invalid password";
                 }
 
-                if (!_UMService.isAdminEmailUpdated(id, password))
+                if (!_UMService.IsAdminEmailUpdated(id, password))
                 {
                     return "Admin email was not successfully updated";
                 }
@@ -243,7 +243,7 @@ namespace Pentaskilled.MEetAndYou.Managers
         {
             try
             {
-                if (!_UMService.isAdminDeleted(id))
+                if (!_UMService.IsAdminDeleted(id))
                 {
                     return "Admin account was not successfully deleted";
                 }
@@ -260,7 +260,7 @@ namespace Pentaskilled.MEetAndYou.Managers
         {
             try
             {
-                bool isAdminVerified = _UMService.isAdminInDBVerified(adminEmail, adminPassword);
+                bool isAdminVerified = _UMService.IsAdminInDBVerified(adminEmail, adminPassword);
                 if (!isAdminVerified)
                 {
                     throw new Exception();

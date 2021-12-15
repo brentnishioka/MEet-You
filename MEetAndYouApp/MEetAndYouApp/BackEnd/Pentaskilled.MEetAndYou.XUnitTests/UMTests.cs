@@ -193,7 +193,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             IUMDAO _UMDAO = new UMDAO();
             bool doesRecordExist = true;
 
-            Assert.Equal(doesRecordExist.ToString(), _UMDAO.isUserInDBVerified(user).ToString());
+            Assert.Equal(doesRecordExist.ToString(), _UMDAO.IsUserInDBVerified(user).ToString());
         }
 
         [Fact]
@@ -216,6 +216,18 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             string phoneNumber = "(800)813-5420";
 
             UMManager _UMManager= new UMManager();
+
+            Assert.Equal("User info is successfully verified.", _UMManager.VerifyUserInfo(email, password, phoneNumber));
+        }
+
+        [Fact]
+        public void CreateFailCase1Test()
+        {
+            string email = "jdcramos@gmail.com";
+            string password = "jimothy235!!";
+            string phoneNumber = "(800)813-5420";
+
+            UMManager _UMManager = new UMManager();
 
             Assert.Equal("User info is successfully verified.", _UMManager.VerifyUserInfo(email, password, phoneNumber));
         }
