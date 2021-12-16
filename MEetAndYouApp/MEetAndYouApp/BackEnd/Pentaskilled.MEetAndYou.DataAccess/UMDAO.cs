@@ -17,7 +17,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         // GetConnectionString() from https://docs.microsoft.com/en-us/dotnet/api/system.data.sqlclient.sqlconnection.connectionstring?view=dotnet-plat-ext-6.0
         static private string GetConnectionString()
         {
-            return @"Data Source=localhost;Initial Catalog=MEetAndYouDB;Integrated Security=True";
+            return new ConnectionString().ToString();
         }
 
         /// <summary>
@@ -452,34 +452,6 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             }
             return Convert.ToBoolean(rowsAffected);
         }
-
-
-        public bool IsUserVerifiedByIDInDB(int id)
-        {
-            _connectionString = GetConnectionString();
-            int rowsAffected;
-
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(_connectionString))
-                using (SqlCommand command = new SqlCommand("SELECT [MEetAndYou].[VerifyUserRecordInDB] (@id)", connection))
-                {
-                    command.CommandType = CommandType.Text;
-                    command.Parameters.Add("@id", SqlDbType.Int).Value = id;
-
-                    connection.Open();
-                    rowsAffected = (int)command.ExecuteScalar();
-                    connection.Close();
-                }
-            }
-
-            catch (Exception)
-            {
-                return false;
-            }
-            return Convert.ToBoolean(rowsAffected);
-        }
-
 
         /// <summary>
         /// Verifies an admin exists in the "UserAccountRecords" database.
