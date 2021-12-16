@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using Pentaskilled.MEetAndYou.Entities;
 using Pentaskilled.MEetAndYou.Services;
 using System.Text.RegularExpressions;
+using System.IO;
+using System.IO.Compression;
+using System.Reflection;
 
 namespace Pentaskilled.MEetAndYou.Managers
 {
@@ -18,7 +21,7 @@ namespace Pentaskilled.MEetAndYou.Managers
             _UMService = new UMService();
         }
 
-        public string BeginCreateUser(string email, string password, string phoneNumber, string registerDate, int active)
+        public string BeginCreateUser(string email, string password, string phoneNumber, string registerDate, string active)
         {
             try
             {
@@ -28,7 +31,7 @@ namespace Pentaskilled.MEetAndYou.Managers
                 user.Password = password;
                 user.PhoneNumber = phoneNumber;
                 user.RegisterDate = registerDate;
-                user.Active = active;
+                user.Active = Convert.ToInt32(active);
 
                 if (VerifyUserInfo(email, password, phoneNumber) != "User info is successfully verified.")
                 {
@@ -48,7 +51,7 @@ namespace Pentaskilled.MEetAndYou.Managers
             return "User account was successfully created";
         }
 
-        public string BeginUpdateUserEmail(int id, string email)
+        public string BeginUpdateUserEmail(string id, string email)
         {
             try
             {
@@ -57,7 +60,7 @@ namespace Pentaskilled.MEetAndYou.Managers
                     return "Invalid email";
                 }
 
-                if (!_UMService.IsUserEmailUpdated(id, email))
+                if (!_UMService.IsUserEmailUpdated(Convert.ToInt32(id), email))
                 {
                     return "User email was not successfully updated";
                 }
@@ -70,7 +73,7 @@ namespace Pentaskilled.MEetAndYou.Managers
             return "User email was successfully updated";
         }
 
-        public string BeginUpdateUserPassword(int id, string password)
+        public string BeginUpdateUserPassword(string id, string password)
         {
             try
             {
@@ -79,7 +82,7 @@ namespace Pentaskilled.MEetAndYou.Managers
                     return "Invalid password";
                 }
 
-                if (!_UMService.IsUserPasswordUpdated(id, password))
+                if (!_UMService.IsUserPasswordUpdated(Convert.ToInt32(id), password))
                 {
                     return "User email was not successfully updated";
                 }
@@ -92,7 +95,7 @@ namespace Pentaskilled.MEetAndYou.Managers
             return "User password was successfully updated";
         }
 
-        public string BeginUpdateUserPhone(int id, string phoneNum)
+        public string BeginUpdateUserPhone(string id, string phoneNum)
         {
             try
             {
@@ -101,7 +104,7 @@ namespace Pentaskilled.MEetAndYou.Managers
                     return "Invalid phone number";
                 }
 
-                if (!_UMService.IsUserPhoneUpdated(id, phoneNum))
+                if (!_UMService.IsUserPhoneUpdated(Convert.ToInt32(id), phoneNum))
                 {
                     return "User phone number was not successfully updated";
                 }
@@ -114,11 +117,11 @@ namespace Pentaskilled.MEetAndYou.Managers
             return "User phone number was successfully updated"; 
         }
 
-        public string BeginDeleteUserAccount(int id)
+        public string BeginDeleteUserAccount(string id)
         {
             try
             {
-                if (!_UMService.IsUserDeleted(id))
+                if (!_UMService.IsUserDeleted(Convert.ToInt32(id)))
                 {
                     return "User account was not successfully deleted";
                 }
@@ -131,11 +134,11 @@ namespace Pentaskilled.MEetAndYou.Managers
             return "User account was successfully deleted";
         }
 
-        public string BeginDisableUserAccount(int id)
+        public string BeginDisableUserAccount(string id)
         {
             try
             {
-                if (!_UMService.IsUserDisabled(id))
+                if (!_UMService.IsUserDisabled(Convert.ToInt32(id)))
                 {
                     return "User account was not successfully disabled";
                 }
@@ -148,11 +151,11 @@ namespace Pentaskilled.MEetAndYou.Managers
             return "User account was successfully disabled";
         }
 
-        public string BeginEnableUserAccount(int id)
+        public string BeginEnableUserAccount(string id)
         {
             try
             {
-                if (!_UMService.IsUserEnabled(id))
+                if (!_UMService.IsUserEnabled(Convert.ToInt32(id)))
                 {
                     return "User account was not successfully enabled";
                 }
@@ -196,7 +199,7 @@ namespace Pentaskilled.MEetAndYou.Managers
             return "Admin account was successfully created";
         }
 
-        public string BeginUpdateAdminEmail(int id, string email)
+        public string BeginUpdateAdminEmail(string id, string email)
         {
             try
             {
@@ -204,7 +207,7 @@ namespace Pentaskilled.MEetAndYou.Managers
                 {
                     return "Invalid email";
                 }
-                if (!_UMService.IsAdminEmailUpdated(id, email))
+                if (!_UMService.IsAdminEmailUpdated(Convert.ToInt32(id), email))
                 {
                     return "Admin email was not successfully updated";
                 }
@@ -217,7 +220,7 @@ namespace Pentaskilled.MEetAndYou.Managers
             return "Admin email was successfully updated";
         }
 
-        public string BeginUpdateAdminPassword(int id, string password)
+        public string BeginUpdateAdminPassword(string id, string password)
         {
             try
             {
@@ -226,7 +229,7 @@ namespace Pentaskilled.MEetAndYou.Managers
                     return "Invalid password";
                 }
 
-                if (!_UMService.IsAdminEmailUpdated(id, password))
+                if (!_UMService.IsAdminEmailUpdated(Convert.ToInt32(id), password))
                 {
                     return "Admin email was not successfully updated";
                 }
@@ -239,11 +242,11 @@ namespace Pentaskilled.MEetAndYou.Managers
             return "Admin password was successfully updated";
         }
 
-        public string BeginDeleteAdminAccount(int id)
+        public string BeginDeleteAdminAccount(string id)
         {
             try
             {
-                if (!_UMService.IsAdminDeleted(id))
+                if (!_UMService.IsAdminDeleted(Convert.ToInt32(id)))
                 {
                     return "Admin account was not successfully deleted";
                 }
@@ -323,6 +326,53 @@ namespace Pentaskilled.MEetAndYou.Managers
         {
             var validPhoneNum = new Regex(@"^(\(?\+?[0-9]*\)?)?[0-9_\- \(\)]*$");
             return validPhoneNum.IsMatch(phoneNum);
+        }
+
+        public string BulkOperation(string filePath, string extractedFilePath)
+        {
+            ZipFile.ExtractToDirectory(filePath, extractedFilePath);
+            string path = extractedFilePath + "/request.txt";
+
+            if (!IsFileValid(path)) //checks if file is valid before proceeding w/ bulk operation
+            {
+                return "File is not valid. It either too big or has too many lines.";
+            }
+
+            foreach (string line in File.ReadLines(path))
+            {
+                string[] array = line.Split(','); //Splitting line into necessary components
+                string method = array[0];
+                string parameters = array[1].Split('(', ')')[1];
+                object[] splitParams = parameters.Split('|');
+
+                Type type = typeof(UMManager); //Dynamically calling functions 
+                MethodInfo methodInfo = type.GetMethod(method);
+                methodInfo.Invoke(method, splitParams);
+            }
+            return "Request successful";
+        }
+
+        public bool IsFileValid(string filePath)
+        {
+            long length = new FileInfo(filePath).Length; //checks size of file 
+            if (length > 2147483648) //2gb = 2147483648 bytes 
+            {
+                return false;
+            }
+
+            int lineCount = 0;
+            using (var reader = File.OpenText(filePath)) //checks if the file has > 10k lines 
+            {
+                while (reader.ReadLine() != null)
+                {
+                    lineCount++;
+                }
+                if (lineCount > 10000)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

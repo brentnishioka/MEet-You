@@ -3,8 +3,6 @@ using Pentaskilled.MEetAndYou.DataAccess;
 using Pentaskilled.MEetAndYou.Entities;
 using Pentaskilled.MEetAndYou.Managers;
 using System;
-using System.Data.SqlClient;
-using System.Data;
 using System.Diagnostics;
 
 namespace Pentaskilled.MEetAndYou.XUnitTests
@@ -21,7 +19,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             string password = "joshiscool!";
             string phoneNumber = "4084802185";
             string registerDate = DateTime.UtcNow.ToString();
-            int active = 1;
+            string active = "1";
 
             stopWatch.Start();
             bool isAdmin = _UMManager.IsAdminVerified("rupak@gmail.com", "198@2f.aw!fj");
@@ -39,7 +37,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             Stopwatch stopWatch = new();
             int expectedTime = 5;
             UMManager _UMManager = new UMManager();
-            int id = 1;
+            string id = "1";
             string newEmail = "gidjoshviv@gmail.com";
 
             stopWatch.Start();
@@ -58,7 +56,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             Stopwatch stopWatch = new();
             int expectedTime = 5;
             UMManager _UMManager = new UMManager();
-            int id = 1;
+            string id = "1";
             string newPassword = "PasSwOrD10";
 
             stopWatch.Start();
@@ -77,7 +75,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             Stopwatch stopWatch = new();
             int expectedTime = 5;
             UMManager _UMManager = new UMManager();
-            int id = 1;
+            string id = "1";
             string newPhone = "(516)598-2915";
 
             stopWatch.Start();
@@ -96,7 +94,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             Stopwatch stopWatch = new();
             int expectedTime = 5;
             UMManager _UMManager = new UMManager();
-            int id = 6;
+            string id = "6";
 
             stopWatch.Start();
             bool isAdmin = _UMManager.IsAdminVerified("rupak@gmail.com", "198@2f.aw!fj");
@@ -114,7 +112,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             Stopwatch stopWatch = new();
             int expectedTime = 5;
             UMManager _UMManager = new UMManager();
-            int id = 1;
+            string id = "1";
 
             stopWatch.Start();
             bool isAdmin = _UMManager.IsAdminVerified("rupak@gmail.com", "198@2f.aw!fj");
@@ -132,7 +130,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             Stopwatch stopWatch = new();
             int expectedTime = 5;
             UMManager _UMManager = new UMManager();
-            int id = 3;
+            string id = "3";
 
             stopWatch.Start();
             bool isAdmin = _UMManager.IsAdminVerified("rupak@gmail.com", "198@2f.aw!fj");
@@ -169,7 +167,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             Stopwatch stopWatch = new();
             int expectedTime = 5;
             UMManager _UMManager = new UMManager();
-            int id = 1;
+            string id = "1";
             string newEmail = "Best.Admin@gmail.com";
 
             stopWatch.Start();
@@ -188,7 +186,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             Stopwatch stopWatch = new();
             int expectedTime = 5;
             UMManager _UMManager = new UMManager();
-            int id = 1;
+            string id = "1";
             string newPassword = "AdMiN100";
 
             stopWatch.Start();
@@ -207,7 +205,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             Stopwatch stopWatch = new();
             int expectedTime = 5;
             UMManager _UMManager = new UMManager();
-            int id = 4;
+            string id = "4";
 
             stopWatch.Start();
             bool isAdmin = _UMManager.IsAdminVerified("rupak@gmail.com", "198@2f.aw!fj");
@@ -259,6 +257,18 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             string verifyResult = _UMManager.VerifyUserInfo(email, password, phoneNumber);
 
             Assert.Equal("User info is successfully verified.", verifyResult);
+        }
+
+        [Fact]
+        public void BulkOperationTest()
+        {
+            UMManager _UMManager = new UMManager();
+            string filePath = "C:/Users/jdcra/Downloads/request.zip";
+            string extractedFilePath = "C:/Users/jdcra/Downloads";
+
+            string bulkResult = _UMManager.BulkOperation(filePath, extractedFilePath);
+
+            Assert.Equal("Request successful", bulkResult);
         }
     }
 }
