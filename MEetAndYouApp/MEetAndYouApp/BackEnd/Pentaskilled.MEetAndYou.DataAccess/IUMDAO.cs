@@ -33,8 +33,6 @@ namespace Pentaskilled.MEetAndYou.DataAccess
 
         bool IsUserInDBVerified(UserAccountEntity user);
 
-        bool IsUserVerifiedByIDInDB(int id);
-
         bool IsAdminInDBVerified(string email, string password);
     }
 }

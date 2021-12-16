@@ -21,11 +21,13 @@ namespace Pentaskilled.MEetAndYou.Managers
             _UMService = new UMService();
         }
 
-        public string BeginCreateUser(string email, string password, string phoneNumber, string registerDate, string active)
+        public static string BeginCreateUser(string email, string password, string phoneNumber, string registerDate, string active)
         {
             try
             {
                 UserAccountEntity user = new UserAccountEntity();
+
+                UMManager _UMManager = new UMManager();
 
                 user.Email = email;
                 user.Password = password;
@@ -33,12 +35,12 @@ namespace Pentaskilled.MEetAndYou.Managers
                 user.RegisterDate = registerDate;
                 user.Active = Convert.ToInt32(active);
 
-                if (VerifyUserInfo(email, password, phoneNumber) != "User info is successfully verified.")
+                if (_UMManager.VerifyUserInfo(email, password, phoneNumber) != "User info is successfully verified.")
                 {
-                    return VerifyUserInfo(email, password, phoneNumber);
+                    return _UMManager.VerifyUserInfo(email, password, phoneNumber);
                 }
 
-                if (!_UMService.IsUserCreated(user))
+                if (!_UMManager._UMService.IsUserCreated(user))
                 {
                     return "User account was not successfully created";
                 }
@@ -342,7 +344,8 @@ namespace Pentaskilled.MEetAndYou.Managers
             {
                 string[] array = line.Split(','); //Splitting line into necessary components
                 string method = array[0];
-                string parameters = array[1].Split('(', ')')[1];
+                string parenthesis = array[1];
+                string parameters = parenthesis.Split('(', ')')[1];
                 object[] splitParams = parameters.Split('|');
 
                 Type type = typeof(UMManager); //Dynamically calling functions 

@@ -23,7 +23,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
 
             stopWatch.Start();
             bool isAdmin = _UMManager.IsAdminVerified("rupak@gmail.com", "198@2f.aw!fj");
-            string createResult = _UMManager.BeginCreateUser(email, password, phoneNumber, registerDate, active);
+            string createResult = UMManager.BeginCreateUser(email, password, phoneNumber, registerDate, active);
             stopWatch.Stop();
 
             Assert.True(isAdmin);
@@ -263,8 +263,8 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         public void BulkOperationTest()
         {
             UMManager _UMManager = new UMManager();
-            string filePath = "C:/Users/jdcra/Downloads/request.zip";
-            string extractedFilePath = "C:/Users/jdcra/Downloads";
+            string filePath = "C:/Users/Brent/Downloads/request.zip";
+            string extractedFilePath = "C:/Users/Brent/Downloads";
 
             string bulkResult = _UMManager.BulkOperation(filePath, extractedFilePath);
 
