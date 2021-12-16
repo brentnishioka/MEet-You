@@ -4,7 +4,7 @@ using Pentaskilled.MEetAndYou.Entities;
 using Pentaskilled.MEetAndYou.Managers;
 using System;
 using System.Diagnostics;
-
+using System.IO;
 namespace Pentaskilled.MEetAndYou.XUnitTests
 {
     public class UMTests
@@ -263,8 +263,8 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         public void BulkOperationTest()
         {
             UMManager _UMManager = new UMManager();
-            string filePath = "C:/Users/Brent/Downloads/request.zip";
-            string extractedFilePath = "C:/Users/Brent/Downloads";
+            string filePath = Path.Combine(Directory.GetCurrentDirectory(), "request.zip");
+            string extractedFilePath = Directory.GetCurrentDirectory();
 
             string bulkResult = _UMManager.BulkOperation(filePath, extractedFilePath);
 

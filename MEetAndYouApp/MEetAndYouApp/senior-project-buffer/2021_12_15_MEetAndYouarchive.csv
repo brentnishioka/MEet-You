@@ -1,4 +1,14 @@
-240,10/23/2021 12:00:00 AM,View,Info,0,System tracked user clicking on update profile button.
-241,10/23/2021 12:00:00 AM,View,Info,69,User clicked on update profile button.
-242,10/23/2021 12:00:00 AM,View,Info,0,System tracked user clicking on update profile button.
-243,10/23/2021 12:00:00 AM,View,Info,69,User clicked on update profile button.
+258,8/15/2021 6:58:36 AM,View,Warning,49230,User unable to interact with the system.
+259,9/12/2021 6:58:36 AM,Debug,Info,100,This is a test debug log.
+260,9/13/2021 6:58:36 AM,View,Warning,420,User unable to interact with the system.
+261,9/14/2021 6:58:36 AM,View,Error,49230,Error: user logs should not be modifiable
+262,9/15/2021 7:00:11 AM,View,Debug,0,This is a test debug log.
+263,10/15/2021 7:00:41 AM,Data Store,Error,69,User account record not inserted into the database successfully.
+264,10/10/2021 7:00:41 AM,Data Store,Debug,592,This is a test debug log.
+265,10/14/2021 7:00:41 AM,View,Debug,0,This is a test debug log.
+266,11/12/2021 7:00:41 AM,Data,Error,69,User Data not processed correctly.
+267,11/12/2021 7:00:41 AM,Business,Error,0,This is a message to indicate an error in the business layer.
+268,11/13/2021 7:00:41 AM,Debug,Info,100,This is a test debug log.
+269,11/14/2021 7:00:41 AM,View,Error,0,Error: system logs should not be modifiable
+270,11/14/2021 7:00:41 AM,Server,Error,0,Web server crashed.
+271,11/15/2021 7:00:41 AM,Server,Error,0,Web server crashed.
