@@ -10,6 +10,8 @@ namespace Pentaskilled.MEetAndYou.Services.Implementations
 {
     public class AuthnService : IAuthnService
     {
+        private string otp;
+
         private string getRandString(int n)
         {
             char[] az = Enumerable.Range('a', 'z' - 'a' + 1).Select(i => (Char)i).ToArray();
@@ -31,7 +33,8 @@ namespace Pentaskilled.MEetAndYou.Services.Implementations
 
         public string generateOTP()
         {
-            return getRandString(8);
+            this.otp = getRandString(8);
+            return this.otp;
         }
 
         public string generateToken()
@@ -41,8 +44,7 @@ namespace Pentaskilled.MEetAndYou.Services.Implementations
 
         public bool validateOTP(string OTP)
         {
-            Regex regexOTP = new Regex("^[a-zA-Z0-9]{8,8}$");
-            return regexOTP.IsMatch(OTP);
+            return this.otp.Equals(OTP);
         }
 
         public bool validateUserInput(string email, string password)
