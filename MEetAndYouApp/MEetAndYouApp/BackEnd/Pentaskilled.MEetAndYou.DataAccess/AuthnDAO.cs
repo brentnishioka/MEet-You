@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Pentaskilled.MEetAndYou.DataAccess
 {
-    internal class AuthnDAO
+    public class AuthnDAO : IAuthnDAO
     {
+        public bool validateCredentials(string email, string password)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
