@@ -2,7 +2,7 @@ title Copy Itinerary Low Level Design Failure Case 1
 
 actor User
 participant CopyItinernaries.js #Cyan
-participant Copycontroller.cs #Coral
+participant CopyManager.cs #Coral
 participant Itinerary #Blue
 participant Event #Bisque
 participant MemoryAlbum #Magenta
@@ -10,7 +10,7 @@ participant CopyItinerariesDAO #Deepskyblue
 participant MicrosoftSQLServer #Forestgreen
 
 activecolor CopyItinernaries.js #Cyan
-activecolor Copycontroller.cs #Coral
+activecolor CopyManager.cs #Coral
 activecolor Itinerary #Blue
 activecolor Event #Bisque
 activecolor MemoryAlbum #Magenta
@@ -26,47 +26,47 @@ CopyItinernaries.js->CopyItinernaries.js:string GetIterName()
 User->CopyItinernaries.js: string iterName
 CopyItinernaries.js->CopyItinernaries.js: string GetIterName()
 User->CopyItinernaries.js:string events
-CopyItinernaries.js->Copycontroller.cs:string[ ] information
+CopyItinernaries.js->CopyManager.cs:string[ ] information
 
 //From copy controller
-Copycontroller.cs->Copycontroller.cs:bool LoadItinerariesInfo(string iterName, List<string> eventNames)
-Copycontroller.cs->CopyItinerariesDAO: new CopyItinerariesDAO()
+CopyManager.cs->CopyManager.cs:bool LoadItinerariesInfo(string iterName, List<string> eventNames)
+CopyManager.cs->CopyItinerariesDAO: new CopyItinerariesDAO()
 CopyItinerariesDAO->CopyItinerariesDAO:new CopyItinerariesDAO()
-CopyItinerariesDAO-->Copycontroller.cs:return CopyItineriresDAO copyDAO
+CopyItinerariesDAO-->CopyManager.cs:return CopyItineriresDAO copyDAO
 
-Copycontroller.cs->MicrosoftSQLServer:copyDAO.FindItineraries(iterName)
+CopyManager.cs->MicrosoftSQLServer:copyDAO.FindItineraries(iterName)
 MicrosoftSQLServer->MicrosoftSQLServer:Select * from iteraries inner join IterEvent on iterName where iterName == iterName
-MicrosoftSQLServer-->Copycontroller.cs: return Itinerary itinerary
+MicrosoftSQLServer-->CopyManager.cs: return Itinerary itinerary
 
 
-Copycontroller.cs->Copycontroller.cs:List<Events> CopyEvents(List<Events> eventList)
+CopyManager.cs->CopyManager.cs:List<Events> CopyEvents(List<Events> eventList)
 group foreach Event e in eventList
-Copycontroller.cs->Event:e.DeepCopy( )
+CopyManager.cs->Event:e.DeepCopy( )
 Event->Event:new Event( )
-Event-->Copycontroller.cs:return Event event
+Event-->CopyManager.cs:return Event event
 end
 
-Copycontroller.cs->Copycontroller.cs:MemoryAlbum CopyMemoryAlbum(Itineraries itinerary)
-Copycontroller.cs->MemoryAlbum:itinerary.MemoryAlbum.DeepCopy( )
+CopyManager.cs->CopyManager.cs:MemoryAlbum CopyMemoryAlbum(Itineraries itinerary)
+CopyManager.cs->MemoryAlbum:itinerary.MemoryAlbum.DeepCopy( )
 MemoryAlbum->MemoryAlbum: new MemoryAlbum( )
-MemoryAlbum-->Copycontroller.cs:return MemoryAlbum memoryAlbum
-Copycontroller.cs->Itinerary:new Itinerary(itinerary.Rating, itinerary.Owner, List<Event> eventList, memoryAlbum)
+MemoryAlbum-->CopyManager.cs:return MemoryAlbum memoryAlbum
+CopyManager.cs->Itinerary:new Itinerary(itinerary.Rating, itinerary.Owner, List<Event> eventList, memoryAlbum)
 Itinerary->Itinerary:Itinerary(itinerary.Rating, itinerary.Owner, List<Event> eventList, memoryAlbum)
-Itinerary-->Copycontroller.cs:return Itinerary duplicateItinerary
+Itinerary-->CopyManager.cs:return Itinerary duplicateItinerary
 
 
-Copycontroller.cs->Copycontroller.cs:bool  SaveCopy(Itinerary intinerary)
+CopyManager.cs->CopyManager.cs:bool  SaveCopy(Itinerary intinerary)
 alt #red Saving Itinerary fails
-Copycontroller.cs->MicrosoftSQLServer:bool  copyDAO.SaveItinerary(Itinerary intinerary)
+CopyManager.cs->MicrosoftSQLServer:bool  copyDAO.SaveItinerary(Itinerary intinerary)
 MicrosoftSQLServer->MicrosoftSQLServer:INSERT INTO Itinerary values (itinerary.Rating, itinerary.Owner)
-MicrosoftSQLServer-->Copycontroller.cs:return SQLException("Inserting Itinerary failed)
+MicrosoftSQLServer-->CopyManager.cs:return SQLException("Inserting Itinerary failed)
 
 
 
 
 end 
 
-Copycontroller.cs-->CopyItinernaries.js:return false
+CopyManager.cs-->CopyItinernaries.js:return false
 CopyItinernaries.js-->User:return Copy Itinerary Failed
 
 
