@@ -27,7 +27,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             try
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
-                using (SqlCommand command = new SqlCommand("[MEetAndYou].[ValidateCredentialsInDB]", connection))
+                using (SqlCommand command = new SqlCommand("SELECT [MEetAndYou].[ValidateCredentialsInDB](@email, @password)", connection))
                 {
                     command.CommandType = CommandType.Text;
                     command.Parameters.Add("@email", SqlDbType.VarChar).Value = email;
@@ -41,7 +41,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             }
             catch(Exception ex)
             {
-                Task.FromResult(false);  
+                return Task.FromResult(false);  
             }
 
             return Task.FromResult(Convert.ToBoolean(rowsReturned)); 
