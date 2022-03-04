@@ -29,7 +29,7 @@ namespace Pentaskilled.MEetAndYou.Managers
             try
             {
                 isInputValid = _authnService.validateUserInput(userID, userPassword);
-                isCredsValid = Convert.ToBoolean(_authnDAO.ValidateCredentials(userID, userPassword));
+                isCredsValid = _authnDAO.ValidateCredentials(userID, userPassword).Result;
                 string oneTimePw = _authnService.generateOTP();
                 isOTPValid = _authnService.validateOTP(oneTimePw);
                 userToken = _authnService.generateToken();
