@@ -30,5 +30,16 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             Assert.NotNull(returnVal);
             
         }
+
+        [Fact]
+        public void GetPhoneNumberTest()
+        {
+            IAuthnDAO _AuthnDAO = new AuthnDAO();
+            string email = "jdcramos@gmail.com";
+            string password = "jimothy235!!";
+            string phoneNum = "(801)813-5420";
+
+            Assert.Equal(phoneNum, _AuthnDAO.GetPhoneNum(email, password).Result);
+        }
     }
 }

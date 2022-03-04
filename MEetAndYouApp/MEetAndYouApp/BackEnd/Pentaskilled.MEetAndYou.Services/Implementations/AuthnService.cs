@@ -5,6 +5,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Pentaskilled.MEetAndYou.Services.Contracts;
+using Twilio;
+using Twilio.Rest.Api.V2010.Account;
 
 namespace Pentaskilled.MEetAndYou.Services.Implementations
 {
@@ -52,6 +54,22 @@ namespace Pentaskilled.MEetAndYou.Services.Implementations
             Regex regexEmail = new Regex("^[a-z0-9.,@!]+$");
             Regex regexPassword = new Regex("^[a-zA-Z0-9.,@! ]+$");
             return regexEmail.IsMatch(email) && regexPassword.IsMatch(password); 
+        }
+
+        public void sendOTP(string otp)
+        {
+            string accountSid = Environment.GetEnvironmentVariable("TWILIO_ACCOUNT_SID");
+            string authToken = Environment.GetEnvironmentVariable("TWILIO_AUTH_TOKEN");
+
+            TwilioClient.Init(accountSid, authToken);
+            string messageBody = "Your MEet And You security code is" + otp; 
+
+            var message = MessageResource.Create(
+                body: messageBody,
+                from: new Twilio.Types.PhoneNumber("+15017122661"),
+                to: new Twilio.Types.PhoneNumber("+15558675310")
+            );
+
         }
     }
 }
