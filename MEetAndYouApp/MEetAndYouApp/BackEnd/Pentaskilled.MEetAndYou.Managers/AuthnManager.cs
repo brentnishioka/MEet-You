@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace Pentaskilled.MEetAndYou.Managers
 {
-    internal class AuthnManager
+    public class AuthnManager
     {
+
+
+
+
+
+
+
     }
 }

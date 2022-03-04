@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Pentaskilled.MEetAndYou.Services.Contracts
 {
-    internal class IAuthnService
+    internal interface IAuthnService
     {
     }
 }
