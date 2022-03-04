@@ -12,7 +12,22 @@ namespace Pentaskilled.MEetAndYou.Services.Implementations
     {
         public string generateOTP()
         {
-            throw new NotImplementedException();
+            char[] az = Enumerable.Range('a', 'z' - 'a' + 1).Select(i => (Char)i).ToArray();
+            char[] AZ = Enumerable.Range('A', 'Z' - 'A' + 1).Select(i => (Char)i).ToArray();
+            char[] zeroNine = Enumerable.Range('0', '9' - '0' + 1).Select(i => (Char)i).ToArray();
+
+            char[][] passwordChoices = { az, AZ, zeroNine };
+            char[] otp = new char[8];
+
+            for (int i = 0; i < 8; i++)
+            {
+                Random rangeChoice = new Random();
+                int index = rangeChoice.Next(0, 3);
+                char otpChar = passwordChoices[index][rangeChoice.Next(0, passwordChoices[index].Length)];
+                otp[i] = otpChar;
+            }
+
+            return new string(otp);
         }
 
         public string generateToken()
@@ -22,7 +37,7 @@ namespace Pentaskilled.MEetAndYou.Services.Implementations
 
         public bool validateOTP(string OTP)
         {
-            Regex regexOTP = new Regex("^[a-zA-Z0-9]+$");
+            Regex regexOTP = new Regex("^[a-zA-Z0-9]{8,8}$");
             return regexOTP.IsMatch(OTP);
         }
 
