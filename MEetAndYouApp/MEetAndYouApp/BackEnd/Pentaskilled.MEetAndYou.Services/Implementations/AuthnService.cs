@@ -10,29 +10,33 @@ namespace Pentaskilled.MEetAndYou.Services.Implementations
 {
     public class AuthnService : IAuthnService
     {
-        public string generateOTP()
+        private string getRandString(int n)
         {
             char[] az = Enumerable.Range('a', 'z' - 'a' + 1).Select(i => (Char)i).ToArray();
             char[] AZ = Enumerable.Range('A', 'Z' - 'A' + 1).Select(i => (Char)i).ToArray();
             char[] zeroNine = Enumerable.Range('0', '9' - '0' + 1).Select(i => (Char)i).ToArray();
+            char[][] choiceArr = { az, AZ, zeroNine };
+            char[] randString = new char[n];
 
-            char[][] passwordChoices = { az, AZ, zeroNine };
-            char[] otp = new char[8];
-
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < randString.Length; i++)
             {
                 Random rangeChoice = new Random();
                 int index = rangeChoice.Next(0, 3);
-                char otpChar = passwordChoices[index][rangeChoice.Next(0, passwordChoices[index].Length)];
-                otp[i] = otpChar;
+                char randChar = choiceArr[index][rangeChoice.Next(0, choiceArr[index].Length)];
+                randString[i] = randChar;
             }
 
-            return new string(otp);
+            return new string(randString);
+        }
+
+        public string generateOTP()
+        {
+            return getRandString(8);
         }
 
         public string generateToken()
         {
-            throw new NotImplementedException();
+            return getRandString(25);
         }
 
         public bool validateOTP(string OTP)
