@@ -20,7 +20,7 @@ namespace Pentaskilled.MEetAndYou.Managers
             _authnDAO = new AuthnDAO();
         }
 
-        public string AuthenticateUser(string userID, string userPassword)
+        public string AuthenticateUser(string userEmail, string userPassword)
         {
             string userToken;
             bool isInputValid = true;
@@ -28,10 +28,12 @@ namespace Pentaskilled.MEetAndYou.Managers
             bool isOTPValid = true;
             try
             {
-                isInputValid = _authnService.validateUserInput(userID, userPassword);
-                isCredsValid = _authnDAO.ValidateCredentials(userID, userPassword).Result;
+                isInputValid = _authnService.validateUserInput(userEmail, userPassword);
+                isCredsValid = _authnDAO.ValidateCredentials(userEmail, userPassword).Result;
                 string oneTimePw = _authnService.generateOTP();
+                string phoneNum = _authnDAO.GetPhoneNum(userEmail, userPassword).Result;
                 isOTPValid = _authnService.validateOTP(oneTimePw);
+
                 userToken = _authnService.generateToken();
 
             }
