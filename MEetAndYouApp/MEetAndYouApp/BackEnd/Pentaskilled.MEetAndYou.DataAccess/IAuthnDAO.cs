@@ -8,6 +8,6 @@ namespace Pentaskilled.MEetAndYou.DataAccess
 {
     public interface IAuthnDAO
     {
-        bool validateCredentials(string email, string password);
+        Task<bool> ValidateCredentials(string email, string password);
     }
 }
