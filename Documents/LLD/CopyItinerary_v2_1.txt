@@ -1,4 +1,4 @@
-title This is a title
+title Copy Itinerary Low Level Design
 
 actor User
 participant CopyItinernaries.js #Cyan
@@ -11,11 +11,11 @@ participant MicrosoftSQLServer #Forestgreen
 
 activecolor CopyItinernaries.js #Cyan
 activecolor Copycontroller.cs #Coral
-activecolor Itineraries #Blue
+activecolor Itinerary #Blue
 activecolor Event #Bisque
 activecolor MemoryAlbum #Magenta
 activecolor MicrosoftSQLServer #Forestgreen
-
+activecolor CopyItinerariesDAO #Deepskyblue
 
 autoactivation on
 
