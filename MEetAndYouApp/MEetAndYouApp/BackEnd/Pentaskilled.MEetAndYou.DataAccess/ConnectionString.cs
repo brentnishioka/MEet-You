@@ -7,7 +7,7 @@
 
         public ConnectionString()
         {
-            _connectionString = @"Data Source=localhost;Initial Catalog=MEetAndYou-DB;User Id=MEetAndYouDBUser;Password=ray";
+            _connectionString = @"Data Source=DESKTOP-RM9387O;Initial Catalog=MEetAndYou-DB;Integrated Security=True";
         }
 
 

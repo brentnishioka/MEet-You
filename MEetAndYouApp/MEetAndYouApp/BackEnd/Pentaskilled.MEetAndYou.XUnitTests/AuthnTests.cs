@@ -6,9 +6,10 @@ using System;
 using System.Diagnostics;
 using System.IO;
 
+
 namespace Pentaskilled.MEetAndYou.XUnitTests
 {   
-    public class AuthnDAOTest
+    public class AuthnTests
     {
         [Fact]
         public void VerifyCredentialsInDBTest()
@@ -20,5 +21,14 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
 
             Assert.Equal(accountExists, _AuthnDAO.ValidateCredentials(email, password).Result); 
         } 
+
+        [Fact]
+        public void verifyAuthnManager()
+        {
+            AuthnManager authnManager = new AuthnManager();
+            string returnVal = authnManager.AuthenticateUser("jdcramos@gmail.com", "jimothy235!!");
+            Assert.NotNull(returnVal);
+            
+        }
     }
 }
