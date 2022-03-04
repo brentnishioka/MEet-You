@@ -2,6 +2,8 @@
 using Pentaskilled.MEetAndYou.DataAccess;
 using Pentaskilled.MEetAndYou.Entities;
 using Pentaskilled.MEetAndYou.Managers;
+using Pentaskilled.MEetAndYou.Services.Contracts;
+using Pentaskilled.MEetAndYou.Services.Implementations;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -40,6 +42,17 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             string phoneNum = "(800)813-5420";
 
             Assert.Equal(phoneNum, _AuthnDAO.GetPhoneNum(email, password).Result);
+        }
+
+        [Fact]
+        public void SendOTPTest()
+        {
+            IAuthnService _authnService = new AuthnService();
+            string phoneNum = "(408)480-2185";
+
+            string otp = _authnService.generateOTP();
+            Console.WriteLine(otp);
+            _authnService.sendOTP(phoneNum, otp);
         }
     }
 }
