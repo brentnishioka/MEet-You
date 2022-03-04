@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace Pentaskilled.MEetAndYou.Services.Contracts
 {
-    internal interface IAuthnService
+    public interface IAuthnService
     {
+        bool validateUserInput(string email, string password);
+        string generateOTP();
+        bool validateOTP();
+
+        // Not sure if the token should b a string or other datatype
+        string generateToken();
+
     }
 }

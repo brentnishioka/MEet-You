@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Pentaskilled.MEetAndYou.Services.Implementations
 {
-    internal class AuthnService
+    public class AuthnService
     {
+        
     }
 }
