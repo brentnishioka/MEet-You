@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Pentaskilled.MEetAndYou.Services.Contracts;
 
@@ -21,12 +22,15 @@ namespace Pentaskilled.MEetAndYou.Services.Implementations
 
         public bool validateOTP(string OTP)
         {
-            throw new NotImplementedException();
+            Regex regexOTP = new Regex("^[a-zA-Z0-9]+$");
+            return regexOTP.IsMatch(OTP);
         }
 
         public bool validateUserInput(string email, string password)
         {
-            throw new NotImplementedException();
+            Regex regexEmail = new Regex("^[a-z0-9.,@!]+$");
+            Regex regexPassword = new Regex("^[a-zA-Z0-9.,@! ]+$");
+            return regexEmail.IsMatch(email) && regexPassword.IsMatch(password); 
         }
     }
 }
