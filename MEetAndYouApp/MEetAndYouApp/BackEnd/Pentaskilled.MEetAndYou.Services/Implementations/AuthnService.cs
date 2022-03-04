@@ -19,7 +19,7 @@ namespace Pentaskilled.MEetAndYou.Services.Implementations
             throw new NotImplementedException();
         }
 
-        public bool validateOTP()
+        public bool validateOTP(string OTP)
         {
             throw new NotImplementedException();
         }
