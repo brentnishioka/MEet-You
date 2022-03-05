@@ -56,20 +56,19 @@ namespace Pentaskilled.MEetAndYou.Services.Implementations
             return regexEmail.IsMatch(email) && regexPassword.IsMatch(password); 
         }
 
-        public void sendOTP(string otp)
+        public void sendOTP(string phoneNum, string otp)
         {
             string accountSid = Environment.GetEnvironmentVariable("TWILIO_ACCOUNT_SID");
             string authToken = Environment.GetEnvironmentVariable("TWILIO_AUTH_TOKEN");
 
             TwilioClient.Init(accountSid, authToken);
-            string messageBody = "Your MEet And You security code is" + otp; 
+            string messageBody = "Your MEet And You security code is " + otp; 
 
             var message = MessageResource.Create(
                 body: messageBody,
-                from: new Twilio.Types.PhoneNumber("+15017122661"),
-                to: new Twilio.Types.PhoneNumber("+15558675310")
+                from: new Twilio.Types.PhoneNumber("+17655601587"),
+                to: new Twilio.Types.PhoneNumber(phoneNum)
             );
-
         }
     }
 }

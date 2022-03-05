@@ -13,6 +13,8 @@ namespace Pentaskilled.MEetAndYou.Services.Contracts
         bool validateOTP(string OTP);
 
         // Not sure if the token should b a string or other datatype
+
+        void sendOTP(string phoneNum, string otp);
         string generateToken();
 
     }
