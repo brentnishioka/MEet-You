@@ -23,9 +23,6 @@ namespace PentaSkilled.MEetAndYou.Authorization.Implmentation
             return principal.IsInRole(role);
 
         }
-        int VerifyToken(string token) { 
-            throw new NotImplementedException(); 
-        }
 
     }
 }
