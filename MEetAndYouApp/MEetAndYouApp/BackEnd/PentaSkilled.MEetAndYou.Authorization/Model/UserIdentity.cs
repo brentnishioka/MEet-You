@@ -9,17 +9,14 @@ namespace PentaSkilled.MEetAndYou.Authorization.Model
 {
     public class UserIdentity : IIdentity
     {
-        private string? _name;
-        private bool _isAuthenticated;
-        private string? _authicationType;
 
         public string? AuthenticationType {
-           get;
+            get;
         }
 
-        public bool IsAuthenticated { get;}
+        public bool IsAuthenticated { get; } 
 
-        public string? Name { get;}
+        public string? Name { get; }
 
         public UserIdentity()
         {

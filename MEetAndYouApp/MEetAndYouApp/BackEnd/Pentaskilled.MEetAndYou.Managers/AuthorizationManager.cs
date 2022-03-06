@@ -6,30 +6,52 @@ using System.Threading.Tasks;
 using System.Security.Principal;
 using System.Security.Permissions;
 using System.Threading;
+using Pentaskilled.MEetAndYou.Services.Implementations;
+using Pentaskilled.MEetAndYou.DataAccess;
+using Pentaskilled.MEetAndYou.DataAccess.Contracts;
+using PentaSkilled.MEetAndYou.Authorization.Contracts;
+using PentaSkilled.MEetAndYou.Authorization.Model;
+using System.Data.SqlClient;
+using PentaSkilled.MEetAndYou.Authorization.Implementation;
 
 namespace Pentaskilled.MEetAndYou.Managers
 {
     public class AuthorizationManager
     {
-        //public static void main()
-        //{
-        //    // Create generic identity and generic principal objects
-        //    System.Security.Principal.GenericIdentity gid = new GenericIdentity("yazan", "developer");
-        //    string[] roles = { "developer", "manager" };
-        //    System.Security.Principal.GenericPrincipal gpn = new GenericPrincipal(gid, roles);
+        private  IAuthorizeService _authzService;
+        private  IAuthorizationDAO _authzDAO;
 
-        //    // Now make this new generic principal the current one
-        //    Thread.CurrentPrincipal = gpn;
+        public AuthorizationManager()
+        {
+            _authzService = new AuthorizationService();
+            _authzDAO = new AuthorizationDAO();
+        }
 
-        //    // Now call a method that needs to make checks based on the current principal (which, in this
-        //    // case is 'yazan' in the role of 'developer')
-        //    PrintHello();
-        //}
+        public bool IsAuthorized(string userToken, string role) {
 
-        //[PrincipalPermission(SecurityAction.Demand, Role = "SupremeCommander")]
-        //public static void PrintHello()
-        //{
-        //    Console.WriteLine("Hello World");
-        //}
+            try
+            {
+                int userID = _authzDAO.VerifyToken(userToken).Result;
+
+                //Create User Identity object
+                UserIdentity userIdentity = new UserIdentity(userID.ToString());
+                List<string> roleList = _authzDAO.GetRoles(userToken).Result;
+
+                // Create the User Principle object
+                UserPrincipal userPrincipal = new UserPrincipal(userIdentity, roleList);
+
+                bool isAuthorized = _authzService.IsAuthorized(userPrincipal, role);
+
+                return isAuthorized;
+            }
+            catch (SqlException ex)
+            {
+                return false;
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }

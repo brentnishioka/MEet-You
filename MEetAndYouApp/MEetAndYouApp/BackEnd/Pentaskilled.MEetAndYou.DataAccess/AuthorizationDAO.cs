@@ -29,7 +29,8 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             try
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
-                using (SqlCommand command = new SqlCommand("Select * from AccountRecords WHERE @token == HashToken", connection))
+                // Call a procedure in the DB to compare the unhashed token with a hashed token. 
+                using (SqlCommand command = new SqlCommand("Select * from [MEetAndYou].[UserToken] WHERE @token == token", connection))
                 {
                     command.CommandType = CommandType.Text;
                     command.Parameters.Add("@token", SqlDbType.VarChar).Value = token;
@@ -49,6 +50,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             return Task.FromResult(userID);
         }
 
+        // <params> token is not hashed, the DB will hashed this string to compare with the one in the database. 
         Task<List<string>> GetRoles(string token)
         {
             //throw new NotImplementedException();
@@ -60,7 +62,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             try
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
-                using (SqlCommand command = new SqlCommand("Select * from UserRole WHERE @userID == userID", connection))
+                using (SqlCommand command = new SqlCommand("Select * from [MEetAndYou].[UserRole] WHERE @userID == userID", connection))
                 {
                     command.CommandType = CommandType.Text;
                     command.Parameters.Add("@userID", SqlDbType.VarChar).Value = token;

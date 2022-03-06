@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using PentaSkilled.MEetAndYou.Authorization.Contracts;
 using PentaSkilled.MEetAndYou.Authorization.Model;
 
-namespace PentaSkilled.MEetAndYou.Authorization.Implmentation
+namespace PentaSkilled.MEetAndYou.Authorization.Implementation
 {
     public class AuthorizationService : IAuthorizeService
     {

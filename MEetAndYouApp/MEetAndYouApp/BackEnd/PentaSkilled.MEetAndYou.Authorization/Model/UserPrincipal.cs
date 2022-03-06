@@ -7,7 +7,7 @@ namespace PentaSkilled.MEetAndYou.Authorization.Model
         private IIdentity? _identity;
         private string[]? _roles;
         public IIdentity? Identity { get; set; }
-        public string[]? Roles { get; set; }
+        public List<string>? Roles { get; set; }
 
         //Constructor
         public UserPrincipal(UserIdentity userIdentity)
@@ -15,7 +15,7 @@ namespace PentaSkilled.MEetAndYou.Authorization.Model
             Identity = userIdentity;
         }
 
-        public UserPrincipal(UserIdentity userIdentity, string[] roleList)
+        public UserPrincipal(UserIdentity userIdentity, List<string> roleList)
         {
             Identity = userIdentity;
             Roles = roleList;
