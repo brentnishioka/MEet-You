@@ -2314,19 +2314,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Brent\\.nuget\\packages\\": {}
+    "C:\\Users\\Viv\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\CSULB Documents\\Fall 2021\\CECS 491A\\MEet-You\\MEetAndYouApp\\MEetAndYouApp\\BackEnd\\Pentaskilled.MEetAndYou.DomainModels\\Pentaskilled.MEetAndYou.DomainModels.csproj",
+      "projectUniqueName": "C:\\CSULB\\Fall2021\\CECS491A\\MEet-You\\MEetAndYouApp\\MEetAndYouApp\\BackEnd\\Pentaskilled.MEetAndYou.DomainModels\\Pentaskilled.MEetAndYou.DomainModels.csproj",
       "projectName": "Pentaskilled.MEetAndYou.DomainModels",
-      "projectPath": "D:\\CSULB Documents\\Fall 2021\\CECS 491A\\MEet-You\\MEetAndYouApp\\MEetAndYouApp\\BackEnd\\Pentaskilled.MEetAndYou.DomainModels\\Pentaskilled.MEetAndYou.DomainModels.csproj",
-      "packagesPath": "C:\\Users\\Brent\\.nuget\\packages\\",
-      "outputPath": "D:\\CSULB Documents\\Fall 2021\\CECS 491A\\MEet-You\\MEetAndYouApp\\MEetAndYouApp\\BackEnd\\Pentaskilled.MEetAndYou.DomainModels\\obj\\",
+      "projectPath": "C:\\CSULB\\Fall2021\\CECS491A\\MEet-You\\MEetAndYouApp\\MEetAndYouApp\\BackEnd\\Pentaskilled.MEetAndYou.DomainModels\\Pentaskilled.MEetAndYou.DomainModels.csproj",
+      "packagesPath": "C:\\Users\\Viv\\.nuget\\packages\\",
+      "outputPath": "C:\\CSULB\\Fall2021\\CECS491A\\MEet-You\\MEetAndYouApp\\MEetAndYouApp\\BackEnd\\Pentaskilled.MEetAndYou.DomainModels\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Brent\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Viv\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
