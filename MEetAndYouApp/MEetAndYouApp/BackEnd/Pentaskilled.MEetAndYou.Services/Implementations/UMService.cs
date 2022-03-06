@@ -5,8 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Pentaskilled.MEetAndYou.DataAccess;
 using Pentaskilled.MEetAndYou.Entities;
+using Pentaskilled.MEetAndYou.Services.Contracts;
 
-namespace Pentaskilled.MEetAndYou.Services
+namespace Pentaskilled.MEetAndYou.Services.Implementations
 {
     public class UMService : IUMService
     {
