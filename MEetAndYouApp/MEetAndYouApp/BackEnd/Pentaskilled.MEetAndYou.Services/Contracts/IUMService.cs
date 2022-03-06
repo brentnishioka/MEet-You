@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Pentaskilled.MEetAndYou.Entities;
 
 
-namespace Pentaskilled.MEetAndYou.Services
+namespace Pentaskilled.MEetAndYou.Services.Contracts
 {
     public interface IUMService
     {
