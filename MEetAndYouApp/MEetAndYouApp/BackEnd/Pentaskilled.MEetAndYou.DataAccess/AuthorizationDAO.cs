@@ -51,7 +51,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         }
 
         // <params> token is not hashed, the DB will hashed this string to compare with the one in the database. 
-        Task<List<string>> GetRoles(string token)
+        Task<List<string>> IAuthorizationDAO.GetRoles(string token)
         {
             //throw new NotImplementedException();
             _connectionString = GetConnectionString();
@@ -84,5 +84,6 @@ namespace Pentaskilled.MEetAndYou.DataAccess
 
             return Task.FromResult(roles);
         }
+
     }
 }
