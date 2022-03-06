@@ -49,6 +49,7 @@ namespace Pentaskilled.MEetAndYou.Services.Implementations
                 Directory.CreateDirectory(archiveLocation);
             }
 
+
             foreach (FileInfo file in files)
             {
                 using (ZipArchive archive = ZipFile.Open(zipPath, ZipArchiveMode.Create))
