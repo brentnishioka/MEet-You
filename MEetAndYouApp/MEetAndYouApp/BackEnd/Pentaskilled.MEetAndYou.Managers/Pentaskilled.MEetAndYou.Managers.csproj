@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PentaSkilled.MEetAndYou.Authorization\PentaSkilled.MEetAndYou.Authorization.csproj" />
     <ProjectReference Include="..\Pentaskilled.MEetAndYou.DataAccess\Pentaskilled.MEetAndYou.DataAccess.csproj" />
     <ProjectReference Include="..\Pentaskilled.MEetAndYou.Entities\Pentaskilled.MEetAndYou.Entities.csproj" />
     <ProjectReference Include="..\Pentaskilled.MEetAndYou.Services\Pentaskilled.MEetAndYou.Services.csproj" />
