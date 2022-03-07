@@ -9,7 +9,7 @@ using Pentaskilled.MEetAndYou.Services.Contracts;
 using Pentaskilled.MEetAndYou.Entities;
 using System.Text.Json;
 
-namespace Pentaskilled.MEetAndYou.Services.Implementations
+namespace Pentaskilled.MEetAndYou.Services.Implementation
 {
     public class WeatherService : IWeatherService
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Pentaskilled.MEetAndYou.Entities;
-using Pentaskilled.MEetAndYou.Services.Implementations;
+using Pentaskilled.MEetAndYou.Services.Implementation;
 using Pentaskilled.MEetAndYou.Services.Contracts;
 using System.Text.RegularExpressions;
 using System.IO;
