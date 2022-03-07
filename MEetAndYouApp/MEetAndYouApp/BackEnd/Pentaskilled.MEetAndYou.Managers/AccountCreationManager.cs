@@ -14,13 +14,13 @@ namespace Pentaskilled.MEetAndYou.Managers
     public class AccountCreationManager
     {
         private IUMService _UMService;
-        
+
         /// <summary>
-        /// 
+        /// Checks for user account in the database
         /// </summary>
-        /// <param name="email"></param>
-        /// <param name="password"></param>
-        /// <param name="phoneNumber"></param>
+        /// <param name="email">User given email</param>
+        /// <param name="password">User generated password</param>
+        /// <param name="phoneNumber">User given phone number</param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
         public string CheckAccountAvailability(string email, string password, string phoneNumber)
@@ -62,7 +62,7 @@ namespace Pentaskilled.MEetAndYou.Managers
        /// </summary>
        /// <param name="email">User given email</param>
        /// <param name="password">User generated password</param>
-       /// <param name="phoneNumber">U</param>
+       /// <param name="phoneNumber">User given phone number</param>
        /// <returns>Successful account creation</returns>
        /// <exception cref="Exception"></exception>
         public string BeginAccountCreation(string email, string password, string phoneNumber)
@@ -73,7 +73,7 @@ namespace Pentaskilled.MEetAndYou.Managers
                 UserAccountEntity user = new UserAccountEntity();
                 IAuthnService _authnService = new AuthnService();
                 UMManager _UMManager = new UMManager();
-                AccountCreationDAO _accountCreation = new AccountCreationDAO;
+                AccountCreationDAO _accountCreation = new AccountCreationDAO();
 
                 user.Email = email;
                 user.Password = password;
@@ -82,8 +82,8 @@ namespace Pentaskilled.MEetAndYou.Managers
                 user.Active = Convert.ToInt32("0");
                 string accountCreated = "";
                 string userOTP = _authnService.generateOTP();
-               
 
+                bool isUnActivated = false;
 
                 
 
@@ -104,13 +104,13 @@ namespace Pentaskilled.MEetAndYou.Managers
                     string OTP = Console.ReadLine();
 
                     _accountCreation.UpdateAccountActivity(user);
-                    if (userOTP.Equals(OTP) && !_accountCreation.RemoveUnActivedAccount(user))
+                    if (userOTP.Equals(OTP) && !(isUnActivated = _accountCreation.RemoveUnActivatedAccount(user).Result))
                     {
                         return "Registration successful";
                     }
                     else
                     {
-                        _accountCreation.RemoveUnActivedAccount(user);
+                        _accountCreation.RemoveUnActivatedAccount(user);
                         return "Account creation timed out. Please try again";
                     }
                 }
@@ -124,9 +124,6 @@ namespace Pentaskilled.MEetAndYou.Managers
         }
 
 
-        public void RemoveInActiveAccount(UserAccountEntity user)
-        {
-
-        }
+        
     }
 }

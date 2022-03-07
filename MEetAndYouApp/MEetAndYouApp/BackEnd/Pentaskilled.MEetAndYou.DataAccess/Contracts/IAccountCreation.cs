@@ -9,9 +9,9 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Contracts
 {
     public interface IAccountCreation
     {
-        bool DoesEmailExist(UserAccountEntity user);
-        bool UpdateAccountActivity(UserAccountEntity user);
+        Task <bool> DoesEmailExist(UserAccountEntity user);
+        Task<bool> UpdateAccountActivity(UserAccountEntity user);
 
-        bool RemoveUnActivedAccount(UserAccountEntity user);
+        Task<bool> RemoveUnActivatedAccount(UserAccountEntity user);
     }
 }

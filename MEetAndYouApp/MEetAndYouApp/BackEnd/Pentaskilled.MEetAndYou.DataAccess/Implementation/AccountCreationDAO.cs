@@ -21,8 +21,8 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
         {
             return new ConnectionString().ToString();
         }
-
-        public bool DoesEmailExist(UserAccountEntity user)
+        
+        public Task<bool> DoesEmailExist(UserAccountEntity user)
         {
             _connectionString = GetConnectionString();
             bool result;
@@ -43,12 +43,17 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
 
             catch (Exception)
             {
-                return false;
+                return Task.FromResult(false);
             }
-            return result;
+            return Task.FromResult(result);
         }
 
-        public bool UpdateAccountActivity(UserAccountEntity user)
+        /// <summary>
+        /// Set account to activated
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public Task<bool> UpdateAccountActivity(UserAccountEntity user)
         {
             _connectionString = GetConnectionString();
             bool result;
@@ -69,12 +74,17 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
 
             catch (Exception)
             {
-                return false;
+                return Task.FromResult(false);
             }
-            return result;
+            return Task.FromResult(result);
         }
 
-        public bool RemoveUnActivedAccount(UserAccountEntity user)
+        /// <summary>
+        /// Remove account unactivated account after certain period
+        /// </summary>
+        /// <param name="user">User object</param>
+        /// <returns></returns>
+        public Task<bool> RemoveUnActivatedAccount(UserAccountEntity user)
         {
              _connectionString = GetConnectionString();
             bool isSuccessfullyDeleted; 
@@ -96,10 +106,10 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
 
             catch (Exception)
             {
-                return false;
+                return Task.FromResult(false);
             }
 
-            return isSuccessfullyDeleted;
+            return Task.FromResult(isSuccessfullyDeleted);
         
         }
     }
