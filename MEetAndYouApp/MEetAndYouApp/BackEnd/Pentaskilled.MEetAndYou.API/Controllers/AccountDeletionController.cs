@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Pentaskilled.MEetAndYou.Managers;
+using Pentaskilled.MEetAndYou.Entities;
+using System.IO;
 
 namespace Pentaskilled.MEetAndYou.API.Controllers
 {
@@ -15,11 +17,13 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
             _accDelManager = new AccountDeletionManager();
         }
 
-        [HttpDelete("self")]
-        public IActionResult DeleteUserAccount(IFormCollection formCollection)
+        [HttpDelete("delaccount")]
+        public bool DeleteUserAccount()
         {
-            // calls DeleteUser from UMmanager
-            return Ok(_accDelManager.SelfDeleteUser());
+            Stream req = Request.Body;
+            req.Seek(0, SeekOrigin.Begin);
+            string json = new StreamReader(req).ReadToEnd();
+            return _accDelManager.DeleteUser(json);
         }
     }
 }
