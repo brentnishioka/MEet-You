@@ -13,6 +13,7 @@ namespace Pentaskilled.MEetAndYou.Entities
         public string Name { get; set; }
         public string Description { get; set; }
         public string Address { get; set; }
+        public List<string> Category { get; set; }
         public float Price {
             get { return _price; }
             set {
