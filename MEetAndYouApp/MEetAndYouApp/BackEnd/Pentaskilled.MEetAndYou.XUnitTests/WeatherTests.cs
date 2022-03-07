@@ -7,17 +7,16 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
     public class WeatherTests
     {
         [Fact]
-        public void GetLatLonTest()
+        public void DAOLatLonTest()
         {
             WeatherDAO weatherDAO = new WeatherDAO();
             string cityName = "London";
             string countryName = "KY";
-            string[] coordinates;
+            string geoJsonString;
 
-            coordinates = weatherDAO.GeoCoderAPI(cityName, countryName);
+            geoJsonString = weatherDAO.GeoCoderAPI(cityName, countryName);
 
-            Assert.Equal("37.12898", coordinates[0]);
-            Assert.Equal("-84.08327", coordinates[1]);
+            Assert.Equal("{\"name\":\"London\",\"lat\":37.1289771,\"lon\":-84.0832646,\"country\":\"US\",\"state\":\"Kentucky\"}", geoJsonString);
         }
     }
 }
