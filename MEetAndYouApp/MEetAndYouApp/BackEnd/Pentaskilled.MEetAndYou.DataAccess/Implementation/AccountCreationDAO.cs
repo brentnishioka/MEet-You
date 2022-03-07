@@ -52,7 +52,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
         {
             _connectionString = GetConnectionString();
             bool result;
-
+            user.Active = 1;
             try
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -73,5 +73,35 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             }
             return result;
         }
+
+        public bool RemoveUnActivedAccount(UserAccountEntity user)
+        {
+             _connectionString = GetConnectionString();
+            bool isSuccessfullyDeleted; 
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                using (SqlCommand command = new SqlCommand("[MEetAndYou].[RemoveUnactivatedAccount]", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.Add("@email", SqlDbType.VarChar).Value = user.Email;
+                    command.Parameters.Add("@active", SqlDbType.Int).Value = user.Active;
+
+                    connection.Open();
+                    isSuccessfullyDeleted = Convert.ToBoolean(command.ExecuteNonQuery());
+                    connection.Close();
+                }
+            }
+
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return isSuccessfullyDeleted;
+        
+        }
     }
 }
+

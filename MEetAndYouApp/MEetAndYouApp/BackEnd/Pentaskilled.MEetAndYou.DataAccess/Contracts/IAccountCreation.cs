@@ -11,5 +11,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Contracts
     {
         bool DoesEmailExist(UserAccountEntity user);
         bool UpdateAccountActivity(UserAccountEntity user);
+
+        bool RemoveUnActivedAccount(UserAccountEntity user);
     }
 }
