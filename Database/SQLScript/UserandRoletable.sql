@@ -65,4 +65,58 @@ INSERT INTO MEetAndYou.UserRole (UserID, role) values
 
 DROP TABLE MEetAndYou.UserRole;
 DROP TABLE MEetAndYou.UserToken;
+
+DROP TABLE MEetAndYou.Event;
+DROP TABLE MEetAndYou.Category;
+
 SELECT * from MEetAndYou.UserAccountRecords;
+
+  CREATE TABLE [MEetAndYou].[Category] (
+		categoryName varchar (50) not null,
+
+		constraint category_pk primary key (categoryName)
+  );
+
+  CREATE TABLE [MEetAndYou].[Event] (
+		eventID int IDENTITY(1,1), 
+		eventName varchar (35),
+		description varchar (350),
+		address varchar (50),
+		price float, 
+		eventDate DateTime
+
+		constraint event_pk PRIMARY KEY (eventID)
+
+  );
+
+  CREATE TABLE MEetAndYou.EventCategory (
+		eventID int, 
+		categoryName varchar (50) not null
+
+		constraint eventID_fk FOREIGN KEY (eventID) references MEetAndYou.Event (eventID),
+		constraint category_fk FOREIGN KEY (categoryName) references MEetAndYou.Category (categoryName),
+		constraint eventCategory_pk PRIMARY KEY (eventID, categoryName)
+  );
+
+  Drop table MEetAndYou.Itinerary;
+
+  CREATE TABLE [MEetAndYou].[Itinerary] (
+		itineraryID int IDENTITY(1,1), 
+		itineraryName varchar (35) not null,
+		rating int not null, 
+		itineraryOwner int not null, 
+
+		constraint itinOwner_fk FOREIGN KEY (itineraryOwner) references MEetAndYou.UserAccountRecords (UserID), 
+		constraint itinerary_PK PRIMARY KEY (itineraryID)
+  );
+
+  CREATE TABLE [MEetAndYou].[UserItinerary] (
+		itineraryID int not null, 
+		UserID int not null, 
+
+		constraint itineraryID_fk FOREIGN KEY (itineraryID) references MEetAndYou.Itinerary (itineraryID),
+		constraint userIDitinerary_fk FOREIGN KEY (UserID) references MEetAndYou.UserAccountRecords (UserID), 
+		constraint userItinerary_pk PRIMARY KEY (itineraryID, UserID)
+  );
+
+  SELECT * from MEetAndYou.UserItinerary;
