@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Pentaskilled.MEetAndYou.DataAccess;
 using Pentaskilled.MEetAndYou.Entities;
+using 
 
 namespace Pentaskilled.MEetAndYou.Managers
 {
@@ -23,6 +24,9 @@ namespace Pentaskilled.MEetAndYou.Managers
         {
             try
             {
+                var userEmail = json[0];
+                var userToken = json[1];
+                uAcc.Email = Convert.ToString(userEmail);
                 _umDAO.DeleteAcc(uAcc);
             }
             catch (Exception ex)
