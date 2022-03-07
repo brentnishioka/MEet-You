@@ -54,6 +54,83 @@ namespace Pentaskilled.MEetAndYou.Managers
             return "User account was successfully created";
         }
 
+        public string CheckAccountAvailaibilty(string email, string password, string phoneNumber)
+        {
+            try
+            {
+                UserAccountEntity user = new UserAccountEntity();
+
+                UMManager _UMManager = new UMManager();
+
+                user.Email = email;
+                user.Password = password;
+                user.PhoneNumber = phoneNumber;
+                user.RegisterDate = DateTime.UtcNow.ToString();
+                user.Active = Convert.ToInt32("0");
+
+                if (_UMManager.VerifyUserInfo(email, password, phoneNumber) != "User info is successfully verified.")
+                {
+                    return _UMManager.VerifyUserInfo(email, password, phoneNumber);
+                }
+
+                if (!_UMManager._UMService.IsUserInDBVerified(user))
+                {
+                    return "";
+                }
+            }
+            catch (Exception)
+            {
+                throw new Exception();
+            }
+
+            return "Username is available";
+        }
+
+        public static string BeginAccountCreation(string email, string password, string phoneNumber)
+        {
+
+            try
+            {
+                UserAccountEntity user = new UserAccountEntity();
+
+                UMManager _UMManager = new UMManager();
+
+                user.Email = email;
+                user.Password = password;
+                user.PhoneNumber = phoneNumber;
+                user.RegisterDate = DateTime.UtcNow.ToString();
+                user.Active = Convert.ToInt32("0");
+                string accountCreated = "";
+
+                if (_UMManager.CheckAccountAvailaibilty(email, password, phoneNumber) == "Username is available.")
+                {
+                    accountCreated = _UMManager.BeginCreateUser(user.Email, user.Password, user.PhoneNumber, user.RegisterDate, user.Active.ToString());
+                }
+                else
+                {
+                    return "Username is not available";
+                }
+
+                if()
+            }
+            catch (Exception)
+            {
+                throw new Exception();
+            }
+
+            return "Account Creation Successful";
+        }
+    
+        public void ConfirmOTP(UserAccountEntity user, string OTP)
+        {
+            try
+            {
+
+            }catch (Exception)
+            {
+
+            }
+        }
         public string BeginUpdateUserEmail(string id, string email)
         {
             try
