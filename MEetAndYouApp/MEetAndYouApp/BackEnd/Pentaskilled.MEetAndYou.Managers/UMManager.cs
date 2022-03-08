@@ -16,6 +16,7 @@ namespace Pentaskilled.MEetAndYou.Managers
     public class UMManager
     {
         private IUMService _UMService;
+        private AuthnManager _authnService;
 
         public UMManager()
         {
