@@ -203,6 +203,67 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             return isSuccessfullyDeleted;
         }
 
+        public Task<bool> DeleteAcc(UserAccountEntity userAcc)
+        {
+            _connectionString = GetConnectionString();
+            int userID;
+            bool isUserDel;
+            bool isRemovedFromUserRoles;
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                // First, need to get the user's ID from the DB using their email.
+                using (SqlCommand command = new SqlCommand("SELECT [MEetAndYou].[GetUserID](@email)", connection))
+                {
+                    command.CommandType = CommandType.Text;
+                    command.Parameters.Add("@email", SqlDbType.VarChar).Value = userAcc.Email;
+
+                    connection.Open();
+                    userID = (int)command.ExecuteScalar();
+                    connection.Close();
+                }
+
+                if (userID == null)
+                {
+                    throw new Exception();
+                }
+
+                // Then, we need to delete it from our UserRoles table.
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                using (SqlCommand command = new SqlCommand("[MEetAndYou].[DeleteUserFromUserRoles]", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.Add("@id", SqlDbType.Int).Value = userID;
+
+                    connection.Open();
+                    isRemovedFromUserRoles = Convert.ToBoolean(command.ExecuteNonQuery());
+                    connection.Close();
+                }
+
+                // Error check to see if the user was successfully removed from the roles table.
+                if (!isRemovedFromUserRoles)
+                {
+                    throw new Exception();
+                }
+
+                // Then, take that ID and delete from the database.
+                isUserDel = IsUserDeleted(userID);
+
+                // Error check to see if the user was successfully removed from the user accounts table.
+                if (!isUserDel)
+                {
+                    throw new Exception();
+                }
+            }
+            catch (Exception ex)
+            {
+                return Task.FromResult(false);
+            }
+
+            return Task.FromResult(Convert.ToBoolean(isUserDel));
+        }
+
         /// <summary>
         /// Disables a user in the "UserAccountRecords" in the database.
         /// </summary>

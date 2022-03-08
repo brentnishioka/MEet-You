@@ -10,7 +10,7 @@ using Pentaskilled.MEetAndYou.Entities;
 using Pentaskilled.MEetAndYou.DataAccess;
 using Pentaskilled.MEetAndYou.DomainModels;
 
-namespace Pentaskilled.MEetAndYou.Services.Implementations
+namespace Pentaskilled.MEetAndYou.Services.Implementation
 {
     public class ArchiverService : IArchiverService
     {
