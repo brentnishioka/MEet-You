@@ -21,7 +21,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
 
         bool IsUserDisabled(int id);
 
-        bool DeleteAcc(UserAccountEntity uAcc);
+        Task<bool> DeleteAcc(UserAccountEntity uAcc);
 
         bool IsUserEnabled(int id);
 
