@@ -30,7 +30,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
                     await connection.OpenAsync();
                     using (SqlCommand command = new SqlCommand("[MEetAndYou].[GetEvent](@eventID)", connection))
                     {
-                        command.Parameters.Add("@id", SqlDbType.Int).Value = eventID;
+                        command.Parameters.Add("@eventid", SqlDbType.Int).Value = eventID;
                         Task<SqlDataReader> sqlTaskReader = command.ExecuteReaderAsync();
                         SqlDataReader sqlReader = sqlTaskReader.Result;
 
@@ -53,5 +53,38 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
 
             return resultEvent;
         }
-    }
+
+        public async Task<List<string>> GetEventCategoryAsync(int eventID)
+        {
+            _connectionString = GetConnectionString();
+            List<string> categoryList =  new List<string>();
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString)) {
+                    await connection.OpenAsync();
+                    using (SqlCommand command = new SqlCommand("[MEetAndYou].[GetEventCategory](@eventID)", connection))
+                    {
+                        CommandType commandType = command.CommandType;
+
+                        // Suplly the argument
+                        command.Parameters.Add("@eventID", SqlDbType.Int).Value = eventID;
+                        Task<SqlDataReader> sqlTaskReader = command.ExecuteReaderAsync();
+                        SqlDataReader sqlReader = sqlTaskReader.Result;
+
+                        while (sqlReader.Read())
+                        {
+                            IDataRecord dataRecord = (IDataRecord)sqlReader;
+
+                            categoryList.Add(dataRecord[1].ToString());
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+            return categoryList;
+            }
+        }
 }
