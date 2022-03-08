@@ -31,7 +31,7 @@ namespace Pentaskilled.MEetAndYou.Managers
 
                 UMManager _UMManager = new UMManager();
 
-                UMDAO _UMDAO = new UMDAO();
+                AccountCreationDAO ACManager =  new AccountCreationDAO();   
 
                 user.Email = email;
                 user.Password = password;
@@ -39,22 +39,23 @@ namespace Pentaskilled.MEetAndYou.Managers
                 user.RegisterDate = DateTime.UtcNow.ToString();
                 user.Active = Convert.ToInt32("0");
 
-                if (_UMManager.VerifyUserInfo(email, password, phoneNumber) != "User info is successfully verified.")
+                if (_UMManager.VerifyUserInfo(user.Email, user.Password, user.PhoneNumber) == "User info is successfully verified.")
                 {
-                    return _UMManager.VerifyUserInfo(email, password, phoneNumber);
-                }
+                    if (!ACManager.DoesEmailExist(user).Result)
+                    {
+                        return "Username is available.";
+                    }
 
-                if (!_UMDAO.IsUserInDBVerified(user))
-                {
-                    return "";
                 }
+             
+
+               
             }
             catch (Exception)
             {
                 throw new Exception();
             }
-
-            return "Username is available";
+            return "Username is not available.";
         }
 
        /// <summary>
@@ -74,6 +75,7 @@ namespace Pentaskilled.MEetAndYou.Managers
                 IAuthnService _authnService = new AuthnService();
                 UMManager _UMManager = new UMManager();
                 AccountCreationDAO _accountCreation = new AccountCreationDAO();
+                UMDAO uMDAO = new UMDAO();
 
                 user.Email = email;
                 user.Password = password;
@@ -84,27 +86,35 @@ namespace Pentaskilled.MEetAndYou.Managers
                 string userOTP = _authnService.generateOTP();
 
                 bool isUnActivated = false;
+                string result = "";
 
-                
+                bool IsAccountCreated = false;
 
-                if(CheckAccountAvailability(email, password, phoneNumber) == "Username is available.")
+                if (CheckAccountAvailability(email, password, phoneNumber) == "Username is available.")
                 {
-                    accountCreated =  UMManager.BeginCreateUser(user.Email, user.Password, user.PhoneNumber, user.RegisterDate, user.Active.ToString());
+                    accountCreated = UMManager.BeginCreateUser(email, password, phoneNumber, user.RegisterDate, user.Active.ToString());
+
+                    if (accountCreated != "User account was successfully created")
+                    {
+                        IsAccountCreated = uMDAO.IsUserCreated(user);
+                    }
                 }
-                else
+                else if (CheckAccountAvailability(email, password, phoneNumber) == "Username is not available.")
                 {
-                    return "Username is not available";
+                    return "Username not available";
+
                 }
 
-                if (accountCreated == "User account was successfully created")
+                //_UMManager._UMService.IsUserCreated(user);
+                if (IsAccountCreated)
                 {
-
+                        
                     _authnService.sendOTP(user.PhoneNumber, userOTP);
 
                     string OTP = Console.ReadLine();
 
                     _accountCreation.UpdateAccountActivity(user);
-                    if (userOTP.Equals(OTP) && !(isUnActivated = _accountCreation.RemoveUnActivatedAccount(user).Result))
+                    if (userOTP.Equals(OTP)) ///&& !(isUnActivated = _accountCreation.RemoveUnActivatedAccount(user).Result))
                     {
                         return "Registration successful";
                     }
@@ -114,6 +124,8 @@ namespace Pentaskilled.MEetAndYou.Managers
                         return "Account creation timed out. Please try again";
                     }
                 }
+
+              
             }
             catch (Exception)
             {
