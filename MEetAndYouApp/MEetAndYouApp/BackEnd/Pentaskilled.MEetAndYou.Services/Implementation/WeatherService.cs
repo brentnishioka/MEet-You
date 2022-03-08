@@ -26,6 +26,8 @@ namespace Pentaskilled.MEetAndYou.Services.Implementation
         {
             string geoJsonString = _weatherDAO.GeoCoderAPI(cityName, stateName);
 
+            _coordinates = ParseLatLong(geoJsonString);
+
             return _weatherData;
         }
 
