@@ -5,6 +5,7 @@ using Pentaskilled.MEetAndYou.Managers;
 using System;
 using System.Diagnostics;
 using System.IO;
+using Pentaskilled.MEetAndYou.DataAccess.Implementation;
 
 namespace Pentaskilled.MEetAndYou.XUnitTests
 {
@@ -31,7 +32,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         }
 
         [Fact]
-        public void UnavailableUserName()
+        public void AvailableUserName()
         {
  
                 Stopwatch stopWatch = new();
@@ -46,9 +47,30 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
                 string createResult = _ACManager.CheckAccountAvailability(email, password, phoneNumber);
                 stopWatch.Stop();
 
-                Assert.Equal("Username is not available.", createResult);
+                Assert.Equal("Username is available.", createResult);
                 //Assert.True(stopWatch.Elapsed.TotalSeconds <= expectedTime);
             
+        }
+
+        [Fact]
+
+        public void AccountIsUnactivated()
+        {
+            AccountCreationDAO _accountCreation = new AccountCreationDAO();
+            UserAccountEntity user = new UserAccountEntity();
+
+            Stopwatch stopWatch = new();
+            int expectedTime = 15;
+           
+
+            user.Active = Convert.ToInt32("0");
+
+            stopWatch.Start();
+
+            bool createResult = _accountCreation.RemoveUnActivatedAccount(user).Result;
+            stopWatch.Stop();
+
+            Assert.False(createResult);
         }
     }
 }
