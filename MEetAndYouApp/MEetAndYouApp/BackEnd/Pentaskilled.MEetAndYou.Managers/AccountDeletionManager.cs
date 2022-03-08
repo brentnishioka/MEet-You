@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Pentaskilled.MEetAndYou.DataAccess;
 using Pentaskilled.MEetAndYou.Entities;
-using 
 
 namespace Pentaskilled.MEetAndYou.Managers
 {
@@ -24,9 +24,13 @@ namespace Pentaskilled.MEetAndYou.Managers
         {
             try
             {
-                var userEmail = json[0];
-                var userToken = json[1];
-                uAcc.Email = Convert.ToString(userEmail);
+                char[] delimiters = { ':', ',', '{', '}' };
+                string jsonNoWS = Regex.Replace(json, @"\s+", "");
+                String[] result = jsonNoWS.Split(delimiters);
+
+                string userEmail = Convert.ToString(result[2]);
+                string userToken = Convert.ToString(result[4]);
+                uAcc.Email = userEmail;
                 _umDAO.DeleteAcc(uAcc);
             }
             catch (Exception ex)

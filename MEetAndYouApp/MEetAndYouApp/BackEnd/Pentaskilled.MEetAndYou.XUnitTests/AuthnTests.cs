@@ -3,7 +3,7 @@ using Pentaskilled.MEetAndYou.DataAccess;
 using Pentaskilled.MEetAndYou.Entities;
 using Pentaskilled.MEetAndYou.Managers;
 using Pentaskilled.MEetAndYou.Services.Contracts;
-using Pentaskilled.MEetAndYou.Services.Implementations;
+using Pentaskilled.MEetAndYou.Services.Implementation;
 using System;
 using System.Diagnostics;
 using System.IO;

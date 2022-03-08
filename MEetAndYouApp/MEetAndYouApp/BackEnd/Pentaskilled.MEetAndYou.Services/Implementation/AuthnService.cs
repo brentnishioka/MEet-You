@@ -8,7 +8,7 @@ using Pentaskilled.MEetAndYou.Services.Contracts;
 using Twilio;
 using Twilio.Rest.Api.V2010.Account;
 
-namespace Pentaskilled.MEetAndYou.Services.Implementations
+namespace Pentaskilled.MEetAndYou.Services.Implementation
 {
     public class AuthnService : IAuthnService
     {
