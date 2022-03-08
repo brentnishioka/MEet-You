@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Pentaskilled.MEetAndYou.Services.Contracts;
-using Pentaskilled.MEetAndYou.Services.Implementations;
+using Pentaskilled.MEetAndYou.Services.Implementation;
 using Pentaskilled.MEetAndYou.DataAccess;
 
 namespace Pentaskilled.MEetAndYou.Managers

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Security.Principal;
 using System.Security.Permissions;
 using System.Threading;
-using Pentaskilled.MEetAndYou.Services.Implementations;
+using Pentaskilled.MEetAndYou.Services.Implementation;
 using Pentaskilled.MEetAndYou.DataAccess;
 using Pentaskilled.MEetAndYou.DataAccess.Contracts;
 using PentaSkilled.MEetAndYou.Authorization.Contracts;
