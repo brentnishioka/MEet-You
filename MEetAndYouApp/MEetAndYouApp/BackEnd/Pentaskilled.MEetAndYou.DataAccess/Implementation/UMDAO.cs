@@ -203,6 +203,37 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             return isSuccessfullyDeleted;
         }
 
+        public Task<bool> DeleteAcc(UserAccountEntity userAcc)
+        {
+            _connectionString = GetConnectionString();
+            int userID;
+            bool isUserDel;
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                // First, need to get the user's ID from the DB using their email.
+                using (SqlCommand command = new SqlCommand("SELECT [MEetAndYou].[GetUserID](@email)", connection))
+                {
+                    command.CommandType = CommandType.Text;
+                    command.Parameters.Add("@email", SqlDbType.VarChar).Value = userAcc.Email;
+
+                    connection.Open();
+                    userID = (int)command.ExecuteScalar();
+                    connection.Close();
+                }
+
+                // Then, take that ID and delete from the database.
+                isUserDel = IsUserDeleted(userID);
+            }
+            catch (Exception ex)
+            {
+                return Task.FromResult(false);
+            }
+
+            return Task.FromResult(Convert.ToBoolean(isUserDel));
+        }
+
         /// <summary>
         /// Disables a user in the "UserAccountRecords" in the database.
         /// </summary>

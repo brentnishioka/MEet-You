@@ -1,0 +1,72 @@
+title Copy Itinerary Low Level Design Failure Case 4
+
+actor User
+participant CopyItinernaries.js #Cyan
+participant CopyManager.cs #Coral
+participant Itinerary #Blue
+participant Event #Bisque
+participant MemoryAlbum #Magenta
+participant CopyItinerariesDAO #Deepskyblue
+participant MicrosoftSQLServer #Forestgreen
+
+activecolor CopyItinernaries.js #Cyan
+activecolor CopyManager.cs #Coral
+activecolor Itinerary #Blue
+activecolor Event #Bisque
+activecolor MemoryAlbum #Magenta
+activecolor MicrosoftSQLServer #Forestgreen
+activecolor CopyItinerariesDAO #Deepskyblue
+
+autoactivation on
+
+//From user
+User->CopyItinernaries.js: copy Iteraries
+CopyItinernaries.js->CopyItinernaries.js:bool CopyIterariesName( )
+CopyItinernaries.js->CopyItinernaries.js:string GetIterName()
+User->CopyItinernaries.js: string iterName
+CopyItinernaries.js->CopyItinernaries.js: string GetIterName()
+User->CopyItinernaries.js:string events
+CopyItinernaries.js->CopyManager.cs:string[ ] information
+
+//From copy controller
+CopyManager.cs->CopyManager.cs:bool LoadItinerariesInfo(string iterName, List<string> eventNames)
+CopyManager.cs->CopyItinerariesDAO: new CopyItinerariesDAO()
+CopyItinerariesDAO->CopyItinerariesDAO:new CopyItinerariesDAO()
+CopyItinerariesDAO-->CopyManager.cs:return CopyItineriresDAO copyDAO
+
+CopyManager.cs->MicrosoftSQLServer:copyDAO.FindItineraries(iterName)
+MicrosoftSQLServer->MicrosoftSQLServer:Select * from iteraries inner join IterEvent on iterName where iterName == iterName
+MicrosoftSQLServer-->CopyManager.cs: return Itinerary itinerary
+
+
+CopyManager.cs->CopyManager.cs:List<Events> CopyEvents(List<Events> eventList)
+group foreach Event e in eventList
+CopyManager.cs->Event:e.DeepCopy( )
+Event->Event:new Event( )
+Event-->CopyManager.cs:return Event event
+end
+
+CopyManager.cs->CopyManager.cs:MemoryAlbum CopyMemoryAlbum(Itineraries itinerary)
+CopyManager.cs->MemoryAlbum:itinerary.MemoryAlbum.DeepCopy( )
+MemoryAlbum->MemoryAlbum: new MemoryAlbum( )
+MemoryAlbum-->CopyManager.cs:return MemoryAlbum memoryAlbum
+CopyManager.cs->Itinerary:new Itinerary(itinerary.Rating, itinerary.Owner, List<Event> eventList, memoryAlbum)
+Itinerary->Itinerary:Itinerary(itinerary.Rating, itinerary.Owner, List<Event> eventList, memoryAlbum)
+Itinerary-->CopyManager.cs:return Itinerary duplicateItinerary
+
+
+CopyManager.cs->CopyManager.cs:bool  SaveCopy(Itinerary intinerary)
+
+alt #red Saving Itinerary fails
+CopyManager.cs->MicrosoftSQLServer:bool SaveMemoryAlbum(MemoryAlbum album, Itinerary itinerary)
+MicrosoftSQLServer->MicrosoftSQLServer:INSERT INTO ItineraryAlbum values (itinerary.itineraryID, bin image)
+MicrosoftSQLServer-->CopyManager.cs:return SQLException("Inserting Album failed")
+
+end 
+
+CopyManager.cs-->CopyItinernaries.js:return false
+CopyItinernaries.js-->User:return Copy Itinerary Failed
+
+
+
+autoactivation off
