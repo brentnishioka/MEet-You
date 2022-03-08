@@ -11,5 +11,7 @@ namespace Pentaskilled.MEetAndYou.Services.Contracts
         List<string> BeginWeatherProcess(string cityName, string stateName, DateTime dateTime);
 
         string[] ParseLatLong(string jsonString);
+
+        List<string> ParseWeatherInfo(string jsonString, DateTime dateTime);
     }
 }
