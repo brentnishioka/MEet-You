@@ -208,6 +208,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             _connectionString = GetConnectionString();
             int userID;
             bool isUserDel;
+            bool isRemovedFromUserRoles;
 
             try
             {
@@ -223,8 +224,37 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                     connection.Close();
                 }
 
+                if (userID == null)
+                {
+                    throw new Exception();
+                }
+
+                // Then, we need to delete it from our UserRoles table.
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                using (SqlCommand command = new SqlCommand("[MEetAndYou].[DeleteUserFromUserRoles]", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.Add("@id", SqlDbType.Int).Value = userID;
+
+                    connection.Open();
+                    isRemovedFromUserRoles = Convert.ToBoolean(command.ExecuteNonQuery());
+                    connection.Close();
+                }
+
+                // Error check to see if the user was successfully removed from the roles table.
+                if (!isRemovedFromUserRoles)
+                {
+                    throw new Exception();
+                }
+
                 // Then, take that ID and delete from the database.
                 isUserDel = IsUserDeleted(userID);
+
+                // Error check to see if the user was successfully removed from the user accounts table.
+                if (!isUserDel)
+                {
+                    throw new Exception();
+                }
             }
             catch (Exception ex)
             {
