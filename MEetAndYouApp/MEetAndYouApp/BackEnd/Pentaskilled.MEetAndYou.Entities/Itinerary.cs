@@ -11,7 +11,7 @@ namespace Pentaskilled.MEetAndYou.Entities
         private float _rating;
         public int ItineraryID { get; set; }
         public string Name { get; set; }
-        public float Rating { 
+        public float Rating {
             get { return _rating; }
             set {
                 if (value >= 0)
@@ -20,5 +20,6 @@ namespace Pentaskilled.MEetAndYou.Entities
                 }
             }
         }
+        public ICollection<Event> Events { get; set; }
     }
 }
