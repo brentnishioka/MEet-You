@@ -30,7 +30,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
                 // Call a procedure in the DB to compare the unhashed token with a hashed token. 
-                using (SqlCommand command = new SqlCommand("Select * from [MEetAndYou].[UserToken] WHERE @token == token", connection))
+                using (SqlCommand command = new SqlCommand("Select * from [MEetAndYou].[UserSesssion] WHERE @token == token", connection))
                 {
                     command.CommandType = CommandType.Text;
                     command.Parameters.Add("@token", SqlDbType.VarChar).Value = token;
