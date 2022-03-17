@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PentaSkilled.MEetAndYou.Aut
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pentaskilled.MEetAndYou.API", "Pentaskilled.MEetAndYou.API\Pentaskilled.MEetAndYou.API.csproj", "{C5DBD495-ED0B-4548-9CA1-3EF0C4D3E164}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherDemo", "WeatherDemo\WeatherDemo.csproj", "{4932BC78-5531-437E-B6B1-6ED94998A3EA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{C5DBD495-ED0B-4548-9CA1-3EF0C4D3E164}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5DBD495-ED0B-4548-9CA1-3EF0C4D3E164}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C5DBD495-ED0B-4548-9CA1-3EF0C4D3E164}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4932BC78-5531-437E-B6B1-6ED94998A3EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4932BC78-5531-437E-B6B1-6ED94998A3EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4932BC78-5531-437E-B6B1-6ED94998A3EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4932BC78-5531-437E-B6B1-6ED94998A3EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
