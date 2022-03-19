@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Pentaskilled.MEetAndYou.Entities;
 using Pentaskilled.MEetAndYou.DataAccess;
 using Pentaskilled.MEetAndYou.Services.Contracts;
-using Pentaskilled.MEetAndYou.Services.Implementations;
+using Pentaskilled.MEetAndYou.Services.Implementation;
 using Pentaskilled.MEetAndYou.DataAccess.Implementation;
 
 namespace Pentaskilled.MEetAndYou.Managers

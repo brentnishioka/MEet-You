@@ -77,7 +77,7 @@ SELECT * from MEetAndYou.UserAccountRecords;
 		constraint category_pk primary key (categoryName)
   );
 
-  CREATE TABLE [MEetAndYou].[Event] (
+  CREATE TABLE [MEetAndYou].[Events] (
 		eventID int IDENTITY(1,1), 
 		eventName varchar (35),
 		description varchar (350),
@@ -93,7 +93,7 @@ SELECT * from MEetAndYou.UserAccountRecords;
 		eventID int, 
 		categoryName varchar (50) not null
 
-		constraint eventID_fk FOREIGN KEY (eventID) references MEetAndYou.Event (eventID),
+		constraint eventID_fk FOREIGN KEY (eventID) references MEetAndYou.Events (eventID),
 		constraint category_fk FOREIGN KEY (categoryName) references MEetAndYou.Category (categoryName),
 		constraint eventCategory_pk PRIMARY KEY (eventID, categoryName)
   );
@@ -120,3 +120,49 @@ SELECT * from MEetAndYou.UserAccountRecords;
   );
 
   SELECT * from MEetAndYou.UserItinerary;
+  SELECT * from MEetAndYou.Events
+  SELECT * from MEetAndYou.EventCategory;
+  SELECT * from MEetAndYou.Category;
+  SELECT * from MEetAndYou.Roles;
+  
+  -- Dummy Data for Database 
+
+  -- Data for Roles table
+    INSERT INTO MEetAndYou.Roles(categoryName) values 
+	('User'), 
+	('Admin');
+
+  -- Dummy Data for Category Table
+  INSERT INTO MEetAndYou.Category (categoryName) values 
+	('Sports'), 
+	('Conferences'),
+	('Expo'),
+	('Concert'),
+	('Festivals'), 
+	('Performing Arts'), 
+	('Workshop'), 
+	('Food and Drink'),
+	('Networking');
+
+	DELETE FROM MEetAndYou.Events WHERE eventID = 3;
+  -- Dummy Data for Events Table
+  INSERT INTO MEetAndYou.Events (eventName, description, address, price, eventDate) values 
+    ('KBBQ', 'eat the sadness away', '123 Garden Grove blvd, Garden Grove', 5, '2022-01-30'),
+	('Canes chicken', 'not the best of chicken', '123 Cirle st, Long Beach', 8, '2022-02-18'),
+	('Wings Stop', 'abomination of fried chicken', '234 Second st, Long Beach', 5, '2022-03-21'),
+	('In and Out Burgers', 'bank for the buck', '123 Third st, Long Beach', 5, '2022-03-15'),
+	('Popeyes Fried Chicken', 'decent for what the price is', '123 Valley st, Long Beach', 7.50, '2022-03-25'),
+	('Rainbow Six Gamenight', 'Ash main goes brrrrrrrrt', '123 Chalet st, Long Beach', 0, '2022-03-18'),
+	('League of Legends night', 'Burst damage goes brrrrrt', '123 Riot st, Long Beach', 0, '2022-03-19'),
+	('Consolation boba', 'drink the sadness away', '123 Main st, Long Beach', 5, '2022-02-05');
+
+  -- Dummy Data for EventCatogy Table
+    INSERT INTO MEetAndYou.EventCategory (eventID, categoryName) values 
+	( 4, 'Food and Drink'),
+	( 5, 'Food and Drink'),
+	( 6, 'Food and Drink'),
+	( 7, 'Food and Drink'),
+	( 8, 'Food and Drink'),
+	( 9, 'Networking'),
+	( 10, 'Networking'),
+	( 11, 'Food and Drink');
