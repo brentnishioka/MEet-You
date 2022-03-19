@@ -121,6 +121,7 @@ SELECT * from MEetAndYou.UserAccountRecords;
 
   SELECT * from MEetAndYou.UserItinerary;
   SELECT * from MEetAndYou.Events
+  SELECT * from MEetAndYou.EventCategory;
   SELECT * from MEetAndYou.Category;
   SELECT * from MEetAndYou.Roles;
   
@@ -143,7 +144,7 @@ SELECT * from MEetAndYou.UserAccountRecords;
 	('Food and Drink'),
 	('Networking');
 
-	DELETE FROM MEetAndYou.Events WHERE eventID = 1;
+	DELETE FROM MEetAndYou.Events WHERE eventID = 3;
   -- Dummy Data for Events Table
   INSERT INTO MEetAndYou.Events (eventName, description, address, price, eventDate) values 
     ('KBBQ', 'eat the sadness away', '123 Garden Grove blvd, Garden Grove', 5, '2022-01-30'),
@@ -156,3 +157,12 @@ SELECT * from MEetAndYou.UserAccountRecords;
 	('Consolation boba', 'drink the sadness away', '123 Main st, Long Beach', 5, '2022-02-05');
 
   -- Dummy Data for EventCatogy Table
+    INSERT INTO MEetAndYou.EventCategory (eventID, categoryName) values 
+	( 4, 'Food and Drink'),
+	( 5, 'Food and Drink'),
+	( 6, 'Food and Drink'),
+	( 7, 'Food and Drink'),
+	( 8, 'Food and Drink'),
+	( 9, 'Networking'),
+	( 10, 'Networking'),
+	( 11, 'Food and Drink');
