@@ -17,13 +17,18 @@ namespace Pentaskilled.MEetAndYou.Entities
         // The date user account's was registered
         public string RegisterDate { get; set; }
 
-        public UserAccountEntity(int userID, string email, string password, string phoneNumber, string registerDate)
+        public int Active { get; set; }
+
+        public UserAccountEntity()
         {
-            UserID = userID;
+
+        }
+
+        public UserAccountEntity(string email, string password, string phoneNumber)
+        {
             Email = email;
             Password = password;
             PhoneNumber = phoneNumber;
-            RegisterDate = registerDate;
         }
 
     }
