@@ -48,3 +48,65 @@ AS
 		(@eventName, @eventDescription, @eventAddress, @price, @eventDate)
 
 GO
+
+USE [MEetAndYou-DB]
+-- Procedure for Updating an existing event
+--Updateing an event name knowing the eventID
+GO
+CREATE PROCEDURE  MEetAndYou.UpdateEventName
+	@eventID int,
+    @neweventName varchar(35)
+
+AS   
+	UPDATE MEetAndYou.Events
+	SET eventName = @neweventName
+	where eventID = @eventID
+GO
+
+-- Procedure for updating event description using the eventID
+GO
+CREATE PROCEDURE  MEetAndYou.UpdateEventDescription
+	@eventID int,
+    @eventDescription varchar(350)
+
+AS   
+	UPDATE MEetAndYou.Events
+	SET description = @eventDescription
+	where eventID = @eventID
+GO
+
+-- Procedure for updating event address using the eventID
+GO
+CREATE PROCEDURE  MEetAndYou.UpdateEventAddress
+	@eventID int,
+    @eventAddress varchar(50)
+
+AS   
+	UPDATE MEetAndYou.Events
+	SET address = @eventAddress
+	where eventID = @eventID
+GO
+
+-- Procedure for updating event price using the eventID
+GO
+CREATE PROCEDURE  MEetAndYou.UpdateEventPrice
+	@eventID int,
+    @eventPrice float
+
+AS   
+	UPDATE MEetAndYou.Events
+	SET price = @eventPrice
+	where eventID = @eventID
+GO
+
+-- Procedure for updating event date using the eventID
+GO
+CREATE PROCEDURE  MEetAndYou.UpdateEventDate
+	@eventID int,
+    @eventDate float
+
+AS   
+	UPDATE MEetAndYou.Events
+	SET eventDate = @eventDate
+	where eventID = @eventID
+GO
