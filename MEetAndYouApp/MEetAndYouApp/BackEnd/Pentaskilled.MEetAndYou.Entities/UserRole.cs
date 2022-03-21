@@ -1,5 +1,6 @@
 
 using System;
+using System.Collections.Generic;
 
 namespace Pentaskilled.MEetAndYou.Entities
 {
@@ -10,10 +11,11 @@ namespace Pentaskilled.MEetAndYou.Entities
 
         // The email of a registered user
         public IEnumerable<string> Roles { get; set; }
-    }
 
-    public UserAccountEntity (int userID, IEnumerable<string> roles){
-        UserID = userID;
-        Roles = roles; 
+        public UserRole(int userID, IEnumerable<string> roles)
+        {
+            UserID = userID;
+            Roles = roles;
+        }
     }
 }
