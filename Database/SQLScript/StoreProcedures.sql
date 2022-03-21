@@ -102,10 +102,11 @@ AS
 GO
 
 -- Procedure for updating event date using the eventID
+USE [MEetAndYou-DB]
 GO
 CREATE PROCEDURE  MEetAndYou.UpdateEventDate
 	@eventID int,
-    @eventDate float
+    @eventDate datetime
 
 AS   
 	UPDATE MEetAndYou.Events
@@ -152,10 +153,12 @@ AS
 GO
 
 --Procedures for removing an EventCategory
+USE [MEetAndYou-DB]
 GO
 CREATE PROCEDURE MEetAndYou.DeleteEventCategory
-    @eventID int   
+    @eventID int,
+	@categoryName varchar(50)
 AS   
-	DELETE FROM MEetAndYou.EventCategory where eventID = @eventID
+	DELETE FROM MEetAndYou.EventCategory where eventID = @eventID and categoryName = @categoryName
 
 GO
