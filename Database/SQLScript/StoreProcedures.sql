@@ -3,8 +3,9 @@ select * from MEetAndYou.Category
 
 -- Store Procedures for Category table
 -- Add procedure for Adding category
+USE [MEetAndYou-DB]
 GO
-CREATE PROCEDURE  MEetAndYou.AddCategory
+CREATE PROCEDURE  MEetAndYou.CreateCategory
     @categoryName varchar(50)    
 AS   
 	INSERT INTO MEetAndYou.Category (categoryName) values
@@ -14,7 +15,7 @@ GO
 
 -- Add procedure for removing 
 GO
-CREATE PROCEDURE MEetAndYou.RemoveCategory
+CREATE PROCEDURE MEetAndYou.DeleteCategory
     @categoryName varchar(50)    
 AS   
 	DELETE FROM MEetAndYou.Category where categoryName = @categoryName
@@ -35,8 +36,9 @@ GO
 
 -- Store Procedures for Events Table
 -- Procedure for adding a new event to the database
+USE [MEetAndYou-DB]
 GO
-CREATE PROCEDURE  MEetAndYou.AddEvent
+CREATE PROCEDURE  MEetAndYou.CreateEvent
     @eventName varchar(35), 
 	@eventDescription varchar(350),
 	@eventAddress varchar (50), 
@@ -109,4 +111,51 @@ AS
 	UPDATE MEetAndYou.Events
 	SET eventDate = @eventDate
 	where eventID = @eventID
+GO
+
+-- Procedures for removing an Event from the Events table 
+-- Remove an event using eventID
+USE [MEetAndYou-DB]
+GO
+CREATE PROCEDURE MEetAndYou.DeleteEvent
+    @eventID int   
+AS   
+	DELETE FROM MEetAndYou.Events where eventID = @eventID
+
+GO
+
+--Procedures for EventCategory Table
+--Procedures for creating new eventCategory 
+
+USE [MEetAndYou-DB]
+GO
+CREATE PROCEDURE  MEetAndYou.CreateEventCategory
+    @eventID int, 
+	@categoryName varchar(50)
+
+AS   
+	INSERT INTO MEetAndYou.EventCategory(eventID, categoryName) values
+		(@eventID, @categoryName)
+
+GO
+
+--Procedure for Updating an EventCategory
+GO
+CREATE PROCEDURE  MEetAndYou.UpdateEventCategory
+    @eventID int, 
+	@categoryName varchar(50)
+
+AS   
+	UPDATE MEetAndYou.EventCategory
+	SET categoryName = @categoryName
+	where eventID = @eventID
+GO
+
+--Procedures for removing an EventCategory
+GO
+CREATE PROCEDURE MEetAndYou.DeleteEventCategory
+    @eventID int   
+AS   
+	DELETE FROM MEetAndYou.EventCategory where eventID = @eventID
+
 GO
