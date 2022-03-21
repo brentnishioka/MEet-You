@@ -6,8 +6,8 @@ using Newtonsoft.Json.Linq;
 
 namespace Pentaskilled.MEetAndYou.API.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("[controller]")]
     public class LoginController : ControllerBase
     {
         private AuthnManager _authnManager;
@@ -17,7 +17,7 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
             _authnManager = new AuthnManager();
         }
 
-        [HttpPost("/login")]
+        [HttpPost("Login")]
         public string Login([FromBody] JObject userInfo)
         {
             var email = userInfo["email"].ToString();
