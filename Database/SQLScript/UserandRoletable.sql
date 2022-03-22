@@ -53,6 +53,7 @@ INSERT INTO MEetAndYou.Roles values
 ('User');
 
 INSERT INTO MEetAndYou.UserRole (UserID, role) values 
+(2, 'Admin'),
 (2, 'User'),
 (3, 'User'),
 (4, 'User'),
@@ -62,6 +63,8 @@ INSERT INTO MEetAndYou.UserRole (UserID, role) values
 
 INSERT INTO MEetAndYou.UserRole (UserID, role) values 
 (1, 'User');
+INSERT INTO MEetAndYou.UserRole (UserID, role) values 
+(7, 'Admin');
 
 DROP TABLE MEetAndYou.UserRole;
 DROP TABLE MEetAndYou.UserToken;

@@ -18,6 +18,8 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             return new ConnectionString().ToString();
         }
 
+        public string ConnectionString { get { return _connectionString; } set { _connectionString = value; } }
+
         // Fix this please, the commands does not know the correct table and columns
         /// <summary>
         /// Enter description for method anotherMethod.
@@ -110,7 +112,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         }
 
         // <params> token is not hashed, the DB will hashed this string to compare with the one in the database. 
-        public Task<List<string>> GetRoles(string token)
+        public Task<List<string>> GetRoles(int userID)
         {
             //throw new NotImplementedException();
             _connectionString = GetConnectionString();
@@ -121,19 +123,67 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             try
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
-                using (SqlCommand command = new SqlCommand("Select * from [MEetAndYou].[UserRole] WHERE @userID == userID", connection))
+                using (SqlCommand command = new SqlCommand("select * from MEetAndYou.GetRolesByID(@UserID)", connection))
                 {
                     command.CommandType = CommandType.Text;
-                    command.Parameters.Add("@userID", SqlDbType.VarChar).Value = token;
+                    command.Parameters.Add("@UserID", SqlDbType.VarChar).Value = userID;
 
                     connection.Open();
                     reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        string role = reader.GetString(0);
+                        roles.Add(role);
+                    }
+                    connection.Close();
+
+                }
+            }
+            // Change this so that it signify a failure
+            catch (SqlException ex)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            return Task.FromResult(roles);
+        }
+
+        public Task<List<string>> GetAllRoles()
+        {
+            //throw new NotImplementedException();
+            _connectionString = GetConnectionString();
+            SqlDataReader reader;
+            int userIDCol = 1;      // User ID column to be read from    
+            List<string> roles = new List<string>();
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                using (SqlCommand command = new SqlCommand("select * from MEetAndYou.UserRole;", connection))
+                {
+                    //command.CommandType = CommandType.Text;
+                    //command.Parameters.Add("@UserID", SqlDbType.VarChar).Value = userID;
+                    Console.WriteLine("We got here at least");
+                    connection.Open();
+                    reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Console.WriteLine(reader.GetValue(0));
+                        Console.WriteLine("role" + reader.GetValue(1));
+                        string role = (string)reader.GetString(1);
+                        roles.Add(role);
+                    }
                     connection.Close();
                 }
-                while (reader.Read())
-                {
-                    roles.Append(reader.GetString(userIDCol));
-                }
+
+            }
+            catch (SqlException ex)
+            {
+                throw;
             }
             // Change this so that it signify a failure
             catch (Exception ex)

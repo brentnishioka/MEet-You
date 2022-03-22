@@ -8,7 +8,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Contracts
 {
     public interface IAuthorizationDAO
     {
-        Task<List<string>> GetRoles(string token);
+        Task<List<string>> GetRoles(int userID);
 
         bool VerifyToken(int userID, string token);
     }

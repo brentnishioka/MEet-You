@@ -6,20 +6,36 @@ using System.Threading.Tasks;
 using Pentaskilled.MEetAndYou.DataAccess;
 using Pentaskilled.MEetAndYou.DataAccess.Contracts;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Pentaskilled.MEetAndYou.XUnitTests
 {
     public class AuthorizationTests
     {
-        [Fact]
-        public void VerifyCredentialsInDBTest()
+        private readonly ITestOutputHelper _output;
+        public AuthorizationTests(ITestOutputHelper output)
         {
-            IAuthorizationDAO _AuthnDAO = new AuthnDAO();
-            string email = "jdcramos@gmail.com";
-            string password = "jimothy235!!";
-            bool accountExists = true;
+            this._output = output;
+        }
+        [Fact]
+        public void GetUserRolesTest()
+        {
+            //Arrange
+            AuthorizationDAO AuthzDAO = new AuthorizationDAO();
+            AuthzDAO.ConnectionString = new ConnectionString().ToString();
+            int expectedRoleCount = 2;
 
-            Assert.Equal(accountExists, _AuthnDAO.ValidateCredentials(email, password).Result);
+            //Act
+            _output.WriteLine("result " + AuthzDAO.ConnectionString);
+            List<string> result = AuthzDAO.GetRoles(2).Result;
+            _output.WriteLine("Resulting roles: ");
+            _output.WriteLine("count: " + result.Count);
+            foreach (string r in result) {
+                _output.WriteLine(r);
+            }
+
+            //Assert
+            Assert.Equal(expectedRoleCount, result.Count);
         }
     }
 }
