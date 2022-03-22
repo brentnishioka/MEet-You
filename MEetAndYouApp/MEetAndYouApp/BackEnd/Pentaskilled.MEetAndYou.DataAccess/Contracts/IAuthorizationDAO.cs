@@ -10,6 +10,6 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Contracts
     {
         Task<List<string>> GetRoles(string token);
 
-        Task<int> VerifyToken(string token);
+        Task<bool> VerifyToken(int userID, string token);
     }
 }
