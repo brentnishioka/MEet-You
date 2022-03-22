@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Pentaskilled.MEetAndYou.DataAccess;
+using Pentaskilled.MEetAndYou.DataAccess.Contracts;
 using Xunit;
 
 namespace Pentaskilled.MEetAndYou.XUnitTests
@@ -12,7 +14,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         [Fact]
         public void VerifyCredentialsInDBTest()
         {
-            IAuthnDAO _AuthnDAO = new AuthnDAO();
+            IAuthorizationDAO _AuthnDAO = new AuthnDAO();
             string email = "jdcramos@gmail.com";
             string password = "jimothy235!!";
             bool accountExists = true;
