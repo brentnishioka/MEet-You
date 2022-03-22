@@ -25,7 +25,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         /// <param name="array1">Describe parameter.</param>
         /// <param name="array">Describe parameter.</param>
         /// <returns>Describe return value.</returns>
-        public Task<bool> VerifyToken(int userID, string token)
+        public bool VerifyToken(int userID, string token)
         {
             _connectionString = GetConnectionString();
             bool result = false;      // User ID column to be read from    
@@ -56,14 +56,14 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             }
             catch (SqlException ex)
             {
-                return Task.FromResult(false);
+                return false;
             }
             catch (Exception ex)
             {
-                return Task.FromResult(false);
+                return false;
             }
 
-            return Task.FromResult(result);
+            return result;
         }
 
         // Async versin of the VerifyToken
@@ -143,6 +143,5 @@ namespace Pentaskilled.MEetAndYou.DataAccess
 
             return Task.FromResult(roles);
         }
-
     }
 }
