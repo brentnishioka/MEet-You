@@ -13,11 +13,11 @@ namespace Pentaskilled.MEetAndYou.MainTesting
             AuthzDAO.ConnectionString = new ConnectionString().ToString();
             bool accountExists = true;
             Console.WriteLine("result " + AuthzDAO.ConnectionString);
-            List<string> resultAll = AuthzDAO.GetAllRoles().Result;
-            //List<string> result = AuthzDAO.GetRoles(2).Result;
+            //List<string> resultAll = AuthzDAO.GetAllRoles().Result;
+            List<string> result = AuthzDAO.GetRoles(2).Result;
             Console.WriteLine("Resulting roles: ");
-            Console.WriteLine("count: " + resultAll.Count);
-            foreach (string r in resultAll)
+            Console.WriteLine("count: " + result.Count);
+            foreach (string r in result)
             {
                 Console.WriteLine(r);
             }

@@ -58,66 +58,25 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             }
             catch (SqlException ex)
             {
+                Console.WriteLine("SQL exception when verifying a token. " + "\n" + ex.Message);
                 return false;
             }
             catch (Exception ex)
             {
+                Console.WriteLine("Exception when verifying a token. " + "\n" + ex.Message);
                 return false;
             }
 
             return result;
         }
 
-        // Async versin of the VerifyToken
-        public async Task<bool> VerifyTokenAsync(int userID, string token)
-        {
-            _connectionString = GetConnectionString();
-            bool result = false;      // User ID column to be read from    
-            int rowsAffected;
-
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(_connectionString))
-                // Call a procedure in the DB to compare the unhashed token with a hashed token. 
-                using (SqlCommand command = new SqlCommand("EXEC [MEetAndYou].[VerifyUserToken](@userID, @token)", connection))
-                {
-                    command.CommandType = CommandType.Text;
-                    command.Parameters.Add("@token", SqlDbType.VarChar).Value = token;
-                    command.Parameters.Add("@userID", SqlDbType.Int).Value = userID;
-
-                    connection.Open();
-                    //reader = command.ExecuteReader();
-                    var rowAsyncTask = await command.ExecuteScalarAsync();
-                    rowsAffected = (int) rowAsyncTask;
-                    connection.Close();
-                }
-                //userID = reader.GetFieldValue<int>(userIDCol);
-
-                if (rowsAffected > 0)
-                {
-                    result = true;
-                }
-
-            }
-            catch (SqlException ex)
-            {
-                return false;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
-
-            return result;
-        }
 
         // <params> token is not hashed, the DB will hashed this string to compare with the one in the database. 
-        public Task<List<string>> GetRoles(int userID)
+        public List<string> GetRoles(int userID)
         {
             //throw new NotImplementedException();
             _connectionString = GetConnectionString();
             SqlDataReader reader;
-            int userIDCol = 1;      // User ID column to be read from    
             List<string> roles = new List<string>();
 
             try
@@ -142,14 +101,16 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             // Change this so that it signify a failure
             catch (SqlException ex)
             {
-                throw;
+                Console.WriteLine("SQL error when querying data" + "\n" + ex.Message);
+                return new List<string>();
             }
             catch (Exception ex)
             {
-                throw;
+                Console.WriteLine("Error when getting user role" + "\n" + ex.Message);
+                return new List<string>();
             }
 
-            return Task.FromResult(roles);
+            return roles;
         }
 
         public Task<List<string>> GetAllRoles()
@@ -193,5 +154,89 @@ namespace Pentaskilled.MEetAndYou.DataAccess
 
             return Task.FromResult(roles);
         }
+
+        // Async versin of the VerifyToken
+        //public async Task<bool> VerifyTokenAsync(int userID, string token)
+        //{
+        //    _connectionString = GetConnectionString();
+        //    bool result = false;      // User ID column to be read from    
+        //    int rowsAffected;
+
+        //    try
+        //    {
+        //        using (SqlConnection connection = new SqlConnection(_connectionString))
+        //        // Call a procedure in the DB to compare the unhashed token with a hashed token. 
+        //        using (SqlCommand command = new SqlCommand("EXEC [MEetAndYou].[VerifyUserToken](@userID, @token)", connection))
+        //        {
+        //            command.CommandType = CommandType.Text;
+        //            command.Parameters.Add("@token", SqlDbType.VarChar).Value = token;
+        //            command.Parameters.Add("@userID", SqlDbType.Int).Value = userID;
+
+        //            connection.Open();
+        //            //reader = command.ExecuteReader();
+        //            var rowAsyncTask = await command.ExecuteScalarAsync();
+        //            rowsAffected = (int) rowAsyncTask;
+        //            connection.Close();
+        //        }
+        //        //userID = reader.GetFieldValue<int>(userIDCol);
+
+        //        if (rowsAffected > 0)
+        //        {
+        //            result = true;
+        //        }
+
+        //    }
+        //    catch (SqlException ex)
+        //    {
+        //        return false;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return false;
+        //    }
+
+        //    return result;
+        //}
+
+        //public async Task<List<string>> GetRolesAsync(int userID)
+        //{
+        //    //throw new NotImplementedException();
+        //    _connectionString = GetConnectionString();
+        //    SqlDataReader reader;
+        //    List<string> roles = new List<string>();
+
+        //    try
+        //    {
+        //        using (SqlConnection connection = new SqlConnection(_connectionString))
+        //        using (SqlCommand command = new SqlCommand("select * from MEetAndYou.GetRolesByID(@UserID)", connection))
+        //        {
+        //            command.CommandType = CommandType.Text;
+        //            command.Parameters.Add("@UserID", SqlDbType.VarChar).Value = userID;
+
+        //            connection.Open();
+        //            reader = await command.ExecuteReaderAsync();
+        //            while (reader.Read())
+        //            {
+        //                string role = reader.GetString(0);
+        //                roles.Add(role);
+        //            }
+        //            connection.Close();
+
+        //        }
+        //    }
+        //    // Change this so that it signify a failure
+        //    catch (SqlException ex)
+        //    {
+        //        Console.WriteLine("SQL error when querying data" + "\n" + ex.Message);
+        //        return new List<string>();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine("Error when getting user role" + "\n" + ex.Message);
+        //        return new List<string>();
+        //    }
+
+        //    return roles;
+        //}
     }
 }

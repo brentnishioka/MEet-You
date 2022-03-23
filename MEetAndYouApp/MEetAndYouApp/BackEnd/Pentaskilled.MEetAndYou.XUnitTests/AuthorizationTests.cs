@@ -23,19 +23,42 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             //Arrange
             AuthorizationDAO AuthzDAO = new AuthorizationDAO();
             AuthzDAO.ConnectionString = new ConnectionString().ToString();
-            int expectedRoleCount = 2;
+            List<string> expectedList = new List<string>{ "Admin", "User" };
 
             //Act
             _output.WriteLine("result " + AuthzDAO.ConnectionString);
-            List<string> result = AuthzDAO.GetRoles(2).Result;
+            List<string> actualList = AuthzDAO.GetRoles(2).Result;
             _output.WriteLine("Resulting roles: ");
-            _output.WriteLine("count: " + result.Count);
-            foreach (string r in result) {
+            _output.WriteLine("count: " + actualList.Count);
+            foreach (string r in actualList) {
                 _output.WriteLine(r);
             }
 
             //Assert
-            Assert.Equal(expectedRoleCount, result.Count);
+            Assert.Equal(expectedList, actualList);
         }
+
+        //[Fact]
+        //public void GetUserRolesAsyncTest()
+        //{
+        //    //Arrange
+        //    AuthorizationDAO AuthzDAO = new AuthorizationDAO();
+        //    AuthzDAO.ConnectionString = new ConnectionString().ToString();
+        //    List<string> expectedList = new List<string> { "Admin", "User" };
+        //    int userID = 2;
+
+        //    //Act
+        //    _output.WriteLine("result " + AuthzDAO.ConnectionString);
+        //    List<string> actualList = AuthzDAO.GetRolesAsync(userID).Result;
+        //    _output.WriteLine("Resulting roles: ");
+        //    _output.WriteLine("count: " + actualList.Count);
+        //    foreach (string r in actualList)
+        //    {
+        //        _output.WriteLine(r);
+        //    }
+
+        //    //Assert
+        //    Assert.Equal(expectedList, actualList);
+        //}
     }
 }
