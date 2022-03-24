@@ -27,7 +27,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
 
             //Act
             _output.WriteLine("result " + AuthzDAO.ConnectionString);
-            List<string> actualList = AuthzDAO.GetRoles(2).Result;
+            List<string> actualList = AuthzDAO.GetRoles(2);
             _output.WriteLine("Resulting roles: ");
             _output.WriteLine("count: " + actualList.Count);
             foreach (string r in actualList) {
