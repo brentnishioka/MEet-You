@@ -14,7 +14,7 @@ namespace Pentaskilled.MEetAndYou.MainTesting
             bool accountExists = true;
             Console.WriteLine("result " + AuthzDAO.ConnectionString);
             //List<string> resultAll = AuthzDAO.GetAllRoles().Result;
-            List<string> result = AuthzDAO.GetRoles(2).Result;
+            List<string> result = AuthzDAO.GetRoles(2);
             Console.WriteLine("Resulting roles: ");
             Console.WriteLine("count: " + result.Count);
             foreach (string r in result)
