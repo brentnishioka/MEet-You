@@ -1,0 +1,9 @@
+Scaffold-DbContext "Data Source=DESKTOP-0QA4EN0\SQLEXPRESS;Initial Catalog=MEetAndYou-DB;Integrated Security=True"
+Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
+
+"Data Source=DESKTOP-0QA4EN0\SQLEXPRESS;Initial Catalog=MEetAndYou-DB;Integrated Security=True"
+
+Scaffold-DbContext 'Data Source=DESKTOP-0QA4EN0\SQLEXPRESS;Initial Catalog=MEetAndYou-DB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;' Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
+
+// Scaffolding a controller command
+dotnet aspnet-codegenerator controller -name EventController -async -api -m Pentaskilled.MEetAndYou.Entities.DBModels.Event -dc Pentaskilled.MEetAndYou.Entities.DBModels.MEetAndYouDBContext -outDir Controllers

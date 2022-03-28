@@ -1,4 +1,4 @@
-select * from MEetAndYou.Events
+﻿select * from MEetAndYou.Events
 select * from MEetAndYou.Category
 
 -- Store Procedures for Category table
@@ -10,6 +10,15 @@ CREATE PROCEDURE  MEetAndYou.CreateCategory
 AS   
 	INSERT INTO MEetAndYou.Category (categoryName) values
 		(@categoryName)
+
+GO
+
+-- Procedure for getting all categories
+USE [MEetAndYou-DB]
+GO
+CREATE PROCEDURE  MEetAndYou.GetCategory
+AS   
+	SELECT * from MEetAndYou.Category;
 
 GO
 
@@ -48,6 +57,26 @@ CREATE PROCEDURE  MEetAndYou.CreateEvent
 AS   
 	INSERT INTO MEetAndYou.Events (eventName, description, address, price, eventDate) values
 		(@eventName, @eventDescription, @eventAddress, @price, @eventDate)
+
+GO
+
+-- Procedure for getting event using EventID
+USE [MEetAndYou-DB]
+GO
+CREATE PROCEDURE  MEetAndYou.GetEventByID
+    @eventID int
+
+AS   
+	SELECT * from MEetAndYou.Events where eventID = @eventID;
+
+GO
+
+-- Procedure for getting all events available
+GO
+CREATE PROCEDURE  MEetAndYou.GetEvents
+
+AS   
+	SELECT * from MEetAndYou.Events;
 
 GO
 
