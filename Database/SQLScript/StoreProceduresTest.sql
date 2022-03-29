@@ -56,3 +56,12 @@ EXEC MEetAndYou.GetItineraryByID @itineraryID = 5;
 
 --TTesting getting itineraries by ownerID
 EXEC MEetAndYou.GetItineraryByOwnerID @ownerID = 3;
+
+-- Testing update itineraryName
+EXEC MEetAndYou.UpdateItineraryName @itineraryID = 10, @itineraryName = 'Demon Slayer Adventure';
+
+-- Testing update itinerary rating
+EXEC MEetAndYou.UpdateItineraryRating @itineraryID = 10, @itineraryRating = 1;
+
+-- Testing removing an itinerary by itineraryID
+EXEC MEetAndYou.DeleteItineraryByID @itineraryID = 10;

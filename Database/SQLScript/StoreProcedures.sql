@@ -240,7 +240,7 @@ CREATE PROCEDURE  MEetAndYou.UpdateItineraryName
 AS   
 	UPDATE MEetAndYou.Itinerary
 	SET itineraryName = @itineraryName
-	where itineraryID = @itinraryID
+	where itineraryID = @itineraryID
 GO
 
 -- Update Itinerary rating using itineraryID
@@ -251,6 +251,16 @@ CREATE PROCEDURE  MEetAndYou.UpdateItineraryRating
 
 AS   
 	UPDATE MEetAndYou.Itinerary
-	SET itineraryRating = @itineraryRating
-	where itineraryID = @itinraryID
+	SET rating = @itineraryRating
+	where itineraryID = @itineraryID
 GO
+
+-- Deleting an itinerary using an ItinearyID
+CREATE PROCEDURE MEetAndYou.DeleteItineraryByID
+    @itineraryID int   
+AS   
+	DELETE FROM MEetAndYou.Itinerary where itineraryID = @itineraryID
+
+GO
+
+----------------------------------------
