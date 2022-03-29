@@ -1,4 +1,4 @@
-SELECT * from MEetAndYou.Category;
+﻿SELECT * from MEetAndYou.Category;
 SELECT * from MEetAndYou.Events;
 SELECT * from MEetAndYou.EventCategory;
 
@@ -42,3 +42,17 @@ EXEC MEetAndYou.UpdateEventCategory @eventID = 13, @categoryName = 'Sports';
 
 -- Removing an EventCategory
 EXEC MEetAndYou.DeleteEventCategory @eventID = 13, @categoryName = 'Sports';
+
+-----------------------------
+
+-- Testing Creating Itinerary
+EXEC MEetAndYou.CreateItinerary @itineraryName = 'Monster Hunter Collections', @itineraryRating = 3, @itineraryOwner = 3;
+
+-- Testing etting all Itineraries
+EXEC MEetAndYou.GetItinerary;
+
+-- Testing getting itineraries by itinID
+EXEC MEetAndYou.GetItineraryByID @itineraryID = 5;
+
+--TTesting getting itineraries by ownerID
+EXEC MEetAndYou.GetItineraryByOwnerID @ownerID = 3;

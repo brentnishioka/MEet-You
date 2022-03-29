@@ -1,4 +1,4 @@
-USE [MEetAndYou-DB]
+﻿USE [MEetAndYou-DB]
 GO
 
 /****** Object:  Table [MEetAndYou].[UserAccountRecords]    Script Date: 3/5/2022 4:35:20 PM ******/
@@ -169,3 +169,11 @@ SELECT * from MEetAndYou.UserAccountRecords;
 	( 9, 'Networking'),
 	( 10, 'Networking'),
 	( 11, 'Food and Drink');
+
+	-- Dummy Data for Itinerary
+	INSERT INTO MEetAndYou.Itinerary (itineraryName, rating, itineraryOwner) values 
+	('Conan Cruise Itinierary', 5 , 3), 
+	('Seven World Wonders', 5, 4),
+	('World Food Tour', 3, 5), 
+	('Kindaichi Adventure', 4, 7),
+	('Lunastra Treat', 2, 8);
