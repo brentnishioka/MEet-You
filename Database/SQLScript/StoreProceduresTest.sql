@@ -65,3 +65,24 @@ EXEC MEetAndYou.UpdateItineraryRating @itineraryID = 10, @itineraryRating = 1;
 
 -- Testing removing an itinerary by itineraryID
 EXEC MEetAndYou.DeleteItineraryByID @itineraryID = 10;
+
+--------------------------------
+
+-- Testing creating a new UserItinerary
+EXEC MEetAndYou.CreateUserItinerary @userID = 3, @itineraryID = 9;
+EXEC MEetAndYou.CreateUserItinerary @userID = 8, @itineraryID = 9;
+
+-- Testing get all UserItinerary
+EXEC MEetAndYou.GetUserItinerary;
+
+-- Testing get UserITinerary by userID
+EXEC MEetAndYou.GetUserItineraryByUserID @userID = 3;
+
+-- Testing get all users associated with an itinerary
+EXEC MEetAndYou.GetUsersByItineraryID @itineraryID = 5;
+
+-- Testing delete UserItinerary by itineraryID and userID
+EXEC MEetAndYou.DeleteUserItinerary @itineraryID = 9, @userID = 3;
+
+-- Testing delete UserItinerary by itineraryID only
+EXEC MEetAndYou.DeleteUserItineraryByItinID @itineraryID = 9;

@@ -264,3 +264,58 @@ AS
 GO
 
 ----------------------------------------
+-- Stored procedures for UserItinerary Tables
+-- Creating a new UserItineraries
+USE [MEetAndYou-DB]
+GO
+CREATE PROCEDURE  MEetAndYou.CreateUserItinerary
+    @userID int, 
+	@itineraryID int 
+
+AS   
+	INSERT INTO MEetAndYou.UserItinerary(itineraryID,UserID) values
+		(@itineraryID, @userID)
+
+GO
+
+-- Get all UserItinerary
+GO
+CREATE PROCEDURE MEetAndYou.GetUserItinerary
+AS   
+	SELECT * from MEetAndYou.UserItinerary
+GO
+
+-- Get an itinerary by itineraryID
+GO
+CREATE PROCEDURE MEetAndYou.GetUserItineraryByUserID
+	@userID int
+AS   
+	SELECT * from MEetAndYou.UserItinerary where UserID = @userID
+GO
+-- Get all itinerary using a specific itineraryOwner ID (userID)
+GO
+CREATE PROCEDURE MEetAndYou.GetUsersByItineraryID
+	@itineraryID int
+AS   
+	SELECT * from MEetAndYou.UserItinerary where itineraryID = @itineraryID
+GO
+
+-- Delete a UserItinerary
+USE [MEetAndYou-DB]
+GO
+CREATE PROCEDURE MEetAndYou.DeleteUserItinerary
+    @itineraryID int,
+	@userID int
+AS   
+	DELETE FROM MEetAndYou.UserItinerary where itineraryID = @itineraryID and UserID = @userID
+
+GO
+
+-- Delete all UserItinerary using an itineraryID
+GO
+CREATE PROCEDURE MEetAndYou.DeleteUserItineraryByItinID
+    @itineraryID int
+AS   
+	DELETE FROM MEetAndYou.UserItinerary where itineraryID = @itineraryID
+
+GO

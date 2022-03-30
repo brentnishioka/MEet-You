@@ -177,3 +177,14 @@ SELECT * from MEetAndYou.UserAccountRecords;
 	('World Food Tour', 3, 5), 
 	('Kindaichi Adventure', 4, 7),
 	('Lunastra Treat', 2, 8);
+
+	-- Dumyy data for UserItinerary table
+	INSERT INTO MEetAndYou.UserItinerary (itineraryID, userID) values 
+	(5, 3),
+	(6, 4),
+	(7, 5),
+	(8, 7),
+	(9, 8),
+	(5, 4),
+	(6, 7),
+	(6, 8);
