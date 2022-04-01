@@ -365,3 +365,14 @@ AS
     -- Return the result of the function
     RETURN @uId
 GO
+
+---------------------------------------------
+-- Stored procedure to remove a UserToken from the UserToken table
+USE [MEetAndYou-DB]
+GO
+CREATE PROCEDURE [MEetAndYou].[DeleteUserToken]
+    -- Add the parameters for the stored procedure here
+    @userID int
+AS
+    DELETE FROM MEetAndYou.UserToken where UserID = @userID
+GO
