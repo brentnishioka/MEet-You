@@ -20,7 +20,6 @@ namespace Pentaskilled.MEetAndYou.DataAccess
 
         public string ConnectionString { get { return _connectionString; } set { _connectionString = value; } }
 
-        // Fix this please, the commands does not know the correct table and columns
         /// <summary>
         /// Verify token takes in the string and the userID to verify if the user token is the same one 
         /// with the one in UserToken Table
@@ -39,7 +38,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
                 // Call a procedure in the DB to compare the unhashed token with a hashed token. 
-                using (SqlCommand command = new SqlCommand("[MEetAndYou].[VerifyUserToken](@userID, @token)", connection))
+                using (SqlCommand command = new SqlCommand("SELECT [MEetAndYou].[VerifyUserToken](@userID, @token)", connection))
                 {
                     command.CommandType = CommandType.Text;
                     command.Parameters.Add("@token", SqlDbType.VarChar).Value = token;
@@ -61,13 +60,15 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             }
             catch (SqlException ex)
             {
-                Console.WriteLine("SQL exception when verifying a token. " + "\n" + ex.Message);
-                return false;
+                throw;
+                //Console.WriteLine("SQL exception when verifying a token. " + "\n" + ex.Message);
+                //return false;
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception when verifying a token. " + "\n" + ex.Message);
-                return false;
+                throw;
+                //Console.WriteLine("Exception when verifying a token. " + "\n" + ex.Message);
+                //return false;
             }
 
             return result;

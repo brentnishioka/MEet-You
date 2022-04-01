@@ -10,13 +10,19 @@ public class Program
         Console.WriteLine(DateTime.UtcNow.ToString());
 
         AuthnDAO authnDAO = new AuthnDAO();
+        AuthorizationDAO authzDAO = new AuthorizationDAO(); 
         AuthnService authnService = new AuthnService();
 
         // Calling the method to save token to the databse, Brent ID
-        string token = authnService.generateToken();
-        int userID = 3; 
+        string token = "blueberrystrawberryy";
+        //int userID = 4; 
 
-        bool result = authnDAO.SaveToken(userID, token).Result;
-        Console.WriteLine(result);
+        //bool result = authnDAO.SaveToken(userID, token).Result;
+        //Console.WriteLine(result);
+
+        Console.WriteLine("");
+        Console.WriteLine("Verifying token: ");
+        bool isVerified = authzDAO.VerifyToken(4, token);
+        Console.WriteLine("Result: " + isVerified);
     }
 }

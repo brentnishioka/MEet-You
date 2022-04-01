@@ -38,6 +38,12 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             Assert.Equal(expectedList, actualList);
         }
 
+        [Fact]
+        public void VerifyTokenTest()
+        {
+
+        }
+
         //[Fact]
         //public void GetUserRolesAsyncTest()
         //{
