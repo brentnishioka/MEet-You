@@ -16,7 +16,7 @@ public class Program
         // Calling the method to save token to the databse, Brent ID
         string token = "blueberrystrawberryy";
         string brokenToken = "blu123rrystraw456ryy";
-        int userID = 33; 
+        int userID = 4; 
 
         //bool result = authnDAO.SaveToken(userID, token).Result;
         //Console.WriteLine(result);
@@ -25,5 +25,11 @@ public class Program
         Console.WriteLine("Verifying token: ");
         bool isVerified = authzDAO.VerifyToken(userID, token);
         Console.WriteLine("Result: " + isVerified);
+
+        //Removing the token after verfication
+        Console.WriteLine("");
+        Console.WriteLine("Start removing token: ");
+        bool isDeleted = authnDAO.DeleteToken(userID).Result;
+        Console.WriteLine("Result: " + isDeleted);
     }
 }
