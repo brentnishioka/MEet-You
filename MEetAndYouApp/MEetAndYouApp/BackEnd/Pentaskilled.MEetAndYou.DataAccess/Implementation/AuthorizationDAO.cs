@@ -22,16 +22,18 @@ namespace Pentaskilled.MEetAndYou.DataAccess
 
         // Fix this please, the commands does not know the correct table and columns
         /// <summary>
-        /// Enter description for method anotherMethod.
+        /// Verify token takes in the string and the userID to verify if the user token is the same one 
+        /// with the one in UserToken Table
         /// </summary>
-        /// <param name="array1">Describe parameter.</param>
-        /// <param name="array">Describe parameter.</param>
-        /// <returns>Describe return value.</returns>
+        /// <param name="userID">the ID of the user with the token.</param>
+        /// <param name="token">the string token that is used to get the hash.</param>
+        /// <returns>Return true if token exist in Database, False if not..</returns>
         public bool VerifyToken(int userID, string token)
         {
             _connectionString = GetConnectionString();
             bool result = false;      // User ID column to be read from    
             int rowsAffected;
+            string currentTime = DateTime.Now.ToString("yyyy-mm-dd");
 
             try
             {
@@ -42,6 +44,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                     command.CommandType = CommandType.Text;
                     command.Parameters.Add("@token", SqlDbType.VarChar).Value = token;
                     command.Parameters.Add("@userID", SqlDbType.Int).Value = userID;
+
 
                     connection.Open();
                     //reader = command.ExecuteReader();
