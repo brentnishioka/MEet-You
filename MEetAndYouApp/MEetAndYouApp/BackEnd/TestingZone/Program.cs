@@ -15,14 +15,15 @@ public class Program
 
         // Calling the method to save token to the databse, Brent ID
         string token = "blueberrystrawberryy";
-        //int userID = 4; 
+        string brokenToken = "blu123rrystraw456ryy";
+        int userID = 33; 
 
         //bool result = authnDAO.SaveToken(userID, token).Result;
         //Console.WriteLine(result);
 
         Console.WriteLine("");
         Console.WriteLine("Verifying token: ");
-        bool isVerified = authzDAO.VerifyToken(4, token);
+        bool isVerified = authzDAO.VerifyToken(userID, token);
         Console.WriteLine("Result: " + isVerified);
     }
 }

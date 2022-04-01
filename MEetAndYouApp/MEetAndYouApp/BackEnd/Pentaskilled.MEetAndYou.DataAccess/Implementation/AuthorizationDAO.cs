@@ -26,12 +26,13 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         /// </summary>
         /// <param name="userID">the ID of the user with the token.</param>
         /// <param name="token">the string token that is used to get the hash.</param>
-        /// <returns>Return true if token exist in Database, False if not..</returns>
+        /// <returns>
+        /// Return true if token exist in Database, False if not
+        /// </returns>
         public bool VerifyToken(int userID, string token)
         {
             _connectionString = GetConnectionString();
-            bool result = false;      // User ID column to be read from    
-            int rowsAffected;
+            int isVerified = 0;      // User ID column to be read from    
             string currentTime = DateTime.Now.ToString("yyyy-mm-dd");
 
             try
@@ -42,20 +43,14 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                 {
                     command.CommandType = CommandType.Text;
                     command.Parameters.Add("@token", SqlDbType.VarChar).Value = token;
-                    command.Parameters.Add("@userID", SqlDbType.Int).Value = userID;
+                    command.Parameters.Add("@UserID", SqlDbType.Int).Value = userID;
 
 
                     connection.Open();
-                    //reader = command.ExecuteReader();
-                    rowsAffected = (int) command.ExecuteScalar();
+                    isVerified = (int) command.ExecuteScalar();
                     connection.Close();
                 }
                 //userID = reader.GetFieldValue<int>(userIDCol);
-
-                if (rowsAffected > 0)
-                {
-                    result = true;
-                }
 
             }
             catch (SqlException ex)
@@ -71,7 +66,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                 //return false;
             }
 
-            return result;
+            return Convert.ToBoolean(isVerified);
         }
 
 

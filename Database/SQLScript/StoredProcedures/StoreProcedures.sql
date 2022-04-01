@@ -1,4 +1,4 @@
-﻿select * from MEetAndYou.Events
+select * from MEetAndYou.Events
 select * from MEetAndYou.Category
 
 -- Store Procedures for Category table
@@ -338,4 +338,30 @@ AS
             HASHBYTES('SHA2_512', @token+CAST(@salt AS nvarchar(64))),
             @salt,
             @dateCreated)
+GO
+
+-----------------------------
+-- Stored procedure to verify the user's token with the one in UserToken table
+USE [MEetAndYou-DB]
+GO
+CREATE PROCEDURE [MEetAndYou].[VerifyUserToken]
+    -- Add the parameters for the stored procedure here
+    @userID int,
+    @token VARCHAR(25)
+AS
+    -- Declare the return variable here
+    DECLARE @uId INT;
+
+    DECLARE @salt nvarchar(64)
+    SELECT @salt = [Salt] FROM [MEetAndYou].[UserToken]
+    WHERE [UserId] = @userID
+
+    DECLARE @hashedToken nvarchar(64)
+    SELECT @hashedToken = HASHBYTES('SHA2_512', @token+@salt)
+
+	    SET @uId = (SELECT [UserID] FROM [MEetAndYou].[UserToken]
+                WHERE [token] = @hashedToken);
+
+    -- Return the result of the function
+    RETURN @uId
 GO
