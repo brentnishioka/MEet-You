@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Pentaskilled.MEetAndYou.DataAccess;
 using Pentaskilled.MEetAndYou.DataAccess.Contracts;
+using Pentaskilled.MEetAndYou.Managers;
 using Pentaskilled.MEetAndYou.Services.Implementation;
 using Xunit;
 using Xunit.Abstractions;
@@ -64,7 +65,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
 
             //Clean-up
             _output.WriteLine("");
-            _output.WriteLine("Start removing token: ");
+            _output.WriteLine("Start removing UserToken: ");
             bool isDeleted = authnDAO.DeleteToken(userID).Result;
             _output.WriteLine("Result: " + isDeleted);
 
@@ -97,7 +98,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
 
             //Clean-up
             _output.WriteLine("");
-            _output.WriteLine("Start removing token: ");
+            _output.WriteLine("Start removing UserToken: ");
             bool isDeleted = authnDAO.DeleteToken(userID).Result;
             _output.WriteLine("Result: " + isDeleted);
 
@@ -130,13 +131,82 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
 
             //Clean-up
             _output.WriteLine("");
-            _output.WriteLine("Start removing token: ");
+            _output.WriteLine("Start removing UserToken: ");
             bool isDeleted = authnDAO.DeleteToken(userID).Result;
             _output.WriteLine("Result: " + isDeleted);
 
             //Assert
             Assert.False(isVerified, String.Format("Expected False but got {0}", isVerified));
         }
+
+        [Fact]
+        public void VerifyIsAuthorizedTest()
+        {
+            // Arrange
+            AuthnDAO authnDAO = new AuthnDAO();
+            AuthorizationDAO authzDAO = new AuthorizationDAO();
+            AuthnService authnService = new AuthnService();
+            AuthorizationManager authzController = new AuthorizationManager();
+
+            string token = "blueberrystrawberryy";
+            int userID = 4;
+            string claimedRole = "User";
+
+            _output.WriteLine("");
+            _output.WriteLine("Start adding new token: ");
+            bool isSaved = authnDAO.SaveToken(userID, token).Result;
+            _output.WriteLine("Result: " + isSaved);
+
+            //Act 
+            _output.WriteLine("");
+            _output.WriteLine("Start verifying claimed role: ");
+            bool actualValue = authzController.IsAuthorized(userID, token, claimedRole);
+            _output.WriteLine("Result: " + actualValue);
+
+            //Clean-up
+            _output.WriteLine("");
+            _output.WriteLine("Start removing UserToken: ");
+            bool isDeleted = authnDAO.DeleteToken(userID).Result;
+            _output.WriteLine("Result: " + isDeleted);
+
+            //Assert
+            Assert.True(actualValue, String.Format("Expected True but got {0}", actualValue));
+        }
+
+        [Fact]
+        public void VerifyIsAuthorizedWrongRoleTest()
+        {
+            // Arrange
+            AuthnDAO authnDAO = new AuthnDAO();
+            AuthorizationDAO authzDAO = new AuthorizationDAO();
+            AuthnService authnService = new AuthnService();
+            AuthorizationManager authzController = new AuthorizationManager();
+
+            string token = "blueberrystrawberryy";
+            int userID = 4;
+            string claimedRole = "Admin";
+
+            _output.WriteLine("");
+            _output.WriteLine("Start adding new token: ");
+            bool isSaved = authnDAO.SaveToken(userID, token).Result;
+            _output.WriteLine("Result: " + isSaved);
+
+            //Act 
+            _output.WriteLine("");
+            _output.WriteLine("Start verifying claimed role: ");
+            bool actualValue = authzController.IsAuthorized(userID, token, claimedRole);
+            _output.WriteLine("Result: " + actualValue);
+
+            //Clean-up
+            _output.WriteLine("");
+            _output.WriteLine("Start removing UserToken: ");
+            bool isDeleted = authnDAO.DeleteToken(userID).Result;
+            _output.WriteLine("Result: " + isDeleted);
+
+            //Assert
+            Assert.False(actualValue, String.Format("Expected False but got {0}", actualValue));
+        }
+
         //[Fact]
         //public void GetUserRolesAsyncTest()
         //{

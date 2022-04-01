@@ -55,15 +55,13 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             }
             catch (SqlException ex)
             {
-                throw;
-                //Console.WriteLine("SQL exception when verifying a token. " + "\n" + ex.Message);
-                //return false;
+                Console.WriteLine("SQL exception when verifying a token. " + "\n" + ex.Message);
+                return false;
             }
             catch (Exception ex)
             {
-                throw;
-                //Console.WriteLine("Exception when verifying a token. " + "\n" + ex.Message);
-                //return false;
+                Console.WriteLine("Exception when verifying a token. " + "\n" + ex.Message);
+                return false;
             }
 
             return Convert.ToBoolean(isVerified);
