@@ -319,3 +319,23 @@ AS
 	DELETE FROM MEetAndYou.UserItinerary where itineraryID = @itineraryID
 
 GO
+
+---------------------------
+-- Stored procedure to add a new token to UserTOken table
+USE [MEetAndYou-DB]
+GO
+CREATE PROCEDURE [MEetAndYou].[StoreUserToken]
+    -- Add the parameters for the stored procedure here
+    @userID int,
+    @token VARCHAR(25),
+    @dateCreated VARCHAR(30)
+AS
+    DECLARE @salt UNIQUEIDENTIFIER = NEWID()
+
+    -- Insert statements for procedure here
+    INSERT INTO [MEetAndYou].[UserToken] ([UserID], [token], [salt], [dateCreated])
+    VALUES (@userID,
+            HASHBYTES('SHA2_512', @token+CAST(@salt AS nvarchar(64))),
+            @salt,
+            @dateCreated)
+GO

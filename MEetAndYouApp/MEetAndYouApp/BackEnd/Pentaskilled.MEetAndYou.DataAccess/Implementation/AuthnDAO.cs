@@ -85,10 +85,10 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             try
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
-                using (SqlCommand command = new SqlCommand("EXEC [MEetAndYou].[StoreUserToken](@userID, @token, @dateCreated)", connection))
+                using (SqlCommand command = new SqlCommand("[MEetAndYou].[StoreUserToken]", connection))
                 {
-                    command.CommandType = CommandType.Text;
-                    command.Parameters.Add("@userID", SqlDbType.VarChar).Value = userID;
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.Add("@userID", SqlDbType.Int).Value = userID;
                     command.Parameters.Add("@token", SqlDbType.VarChar).Value = token;
                     command.Parameters.Add("@dateCreated", SqlDbType.VarChar).Value = dateCreated;
 
