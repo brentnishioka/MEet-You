@@ -1,4 +1,4 @@
-USE [MEetAndYou-DB]
+﻿USE [MEetAndYou-DB]
 GO
 
 /****** Object:  Table [MEetAndYou].[UserAccountRecords]    Script Date: 3/5/2022 4:35:20 PM ******/
@@ -53,6 +53,7 @@ INSERT INTO MEetAndYou.Roles values
 ('User');
 
 INSERT INTO MEetAndYou.UserRole (UserID, role) values 
+(2, 'Admin'),
 (2, 'User'),
 (3, 'User'),
 (4, 'User'),
@@ -62,6 +63,8 @@ INSERT INTO MEetAndYou.UserRole (UserID, role) values
 
 INSERT INTO MEetAndYou.UserRole (UserID, role) values 
 (1, 'User');
+INSERT INTO MEetAndYou.UserRole (UserID, role) values 
+(7, 'Admin');
 
 DROP TABLE MEetAndYou.UserRole;
 DROP TABLE MEetAndYou.UserToken;
@@ -166,3 +169,22 @@ SELECT * from MEetAndYou.UserAccountRecords;
 	( 9, 'Networking'),
 	( 10, 'Networking'),
 	( 11, 'Food and Drink');
+
+	-- Dummy Data for Itinerary
+	INSERT INTO MEetAndYou.Itinerary (itineraryName, rating, itineraryOwner) values 
+	('Conan Cruise Itinierary', 5 , 3), 
+	('Seven World Wonders', 5, 4),
+	('World Food Tour', 3, 5), 
+	('Kindaichi Adventure', 4, 7),
+	('Lunastra Treat', 2, 8);
+
+	-- Dumyy data for UserItinerary table
+	INSERT INTO MEetAndYou.UserItinerary (itineraryID, userID) values 
+	(5, 3),
+	(6, 4),
+	(7, 5),
+	(8, 7),
+	(9, 8),
+	(5, 4),
+	(6, 7),
+	(6, 8);

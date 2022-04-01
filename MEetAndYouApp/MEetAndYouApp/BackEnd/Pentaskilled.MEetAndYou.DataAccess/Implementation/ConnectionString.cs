@@ -7,9 +7,9 @@
 
         public ConnectionString()
         {
-            _connectionString = @"Data Source=DESKTOP-RM9387O;Initial Catalog=MEetAndYou-DB;Integrated Security=True";
+            _connectionString = @"Data Source=DESKTOP-0QA4EN0\SQLEXPRESS;Initial Catalog=MEetAndYou-DB;Integrated Security=True";
         }
-
+        //SQLEXPRESS
 
         public override string ToString()
         {

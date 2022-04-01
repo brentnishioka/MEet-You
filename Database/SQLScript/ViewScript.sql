@@ -14,3 +14,6 @@ AS
 SELECT * from MEetAndYou.Category
 GO
 
+Select * from MEetAndYou.Events;
+SELECT * from MEetAndYou.Category
+-- MEetAndYou.UpdateEventName @eventID = 13 , @neweventName = 'Fortnite Party night';

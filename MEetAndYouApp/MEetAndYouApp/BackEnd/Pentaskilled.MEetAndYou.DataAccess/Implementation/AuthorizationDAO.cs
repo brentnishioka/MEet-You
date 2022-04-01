@@ -18,40 +18,102 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             return new ConnectionString().ToString();
         }
 
+        public string ConnectionString { get { return _connectionString; } set { _connectionString = value; } }
+
         // Fix this please, the commands does not know the correct table and columns
-        Task<int> IAuthorizationDAO.VerifyToken(string token)
+        /// <summary>
+        /// Enter description for method anotherMethod.
+        /// </summary>
+        /// <param name="array1">Describe parameter.</param>
+        /// <param name="array">Describe parameter.</param>
+        /// <returns>Describe return value.</returns>
+        public bool VerifyToken(int userID, string token)
         {
             _connectionString = GetConnectionString();
-            SqlDataReader reader;
-            int userIDCol = 1;      // User ID column to be read from    
-            var userID = -1;
+            bool result = false;      // User ID column to be read from    
+            int rowsAffected;
 
             try
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
                 // Call a procedure in the DB to compare the unhashed token with a hashed token. 
-                using (SqlCommand command = new SqlCommand("Select * from [MEetAndYou].[UserSesssion] WHERE @token == token", connection))
+                using (SqlCommand command = new SqlCommand("EXEC [MEetAndYou].[VerifyUserToken](@userID, @token)", connection))
                 {
                     command.CommandType = CommandType.Text;
                     command.Parameters.Add("@token", SqlDbType.VarChar).Value = token;
+                    command.Parameters.Add("@userID", SqlDbType.Int).Value = userID;
 
                     connection.Open();
-                    reader = command.ExecuteReader();
+                    //reader = command.ExecuteReader();
+                    rowsAffected = (int) command.ExecuteScalar();
                     connection.Close();
                 }
-                userID = reader.GetFieldValue<int>(userIDCol);
+                //userID = reader.GetFieldValue<int>(userIDCol);
 
+                if (rowsAffected > 0)
+                {
+                    result = true;
+                }
+
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("SQL exception when verifying a token. " + "\n" + ex.Message);
+                return false;
             }
             catch (Exception ex)
             {
-                return Task.FromResult(-1);
+                Console.WriteLine("Exception when verifying a token. " + "\n" + ex.Message);
+                return false;
             }
 
-            return Task.FromResult(userID);
+            return result;
         }
 
+
         // <params> token is not hashed, the DB will hashed this string to compare with the one in the database. 
-        Task<List<string>> IAuthorizationDAO.GetRoles(string token)
+        public List<string> GetRoles(int userID)
+        {
+            //throw new NotImplementedException();
+            _connectionString = GetConnectionString();
+            SqlDataReader reader;
+            List<string> roles = new List<string>();
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                using (SqlCommand command = new SqlCommand("select * from MEetAndYou.GetRolesByID(@UserID)", connection))
+                {
+                    command.CommandType = CommandType.Text;
+                    command.Parameters.Add("@UserID", SqlDbType.VarChar).Value = userID;
+
+                    connection.Open();
+                    reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        string role = reader.GetString(0);
+                        roles.Add(role);
+                    }
+                    connection.Close();
+
+                }
+            }
+            // Change this so that it signify a failure
+            catch (SqlException ex)
+            {
+                Console.WriteLine("SQL error when querying data" + "\n" + ex.Message);
+                return new List<string>();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error when getting user role" + "\n" + ex.Message);
+                return new List<string>();
+            }
+
+            return roles;
+        }
+
+        public Task<List<string>> GetAllRoles()
         {
             //throw new NotImplementedException();
             _connectionString = GetConnectionString();
@@ -62,19 +124,27 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             try
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
-                using (SqlCommand command = new SqlCommand("Select * from [MEetAndYou].[UserRole] WHERE @userID == userID", connection))
+                using (SqlCommand command = new SqlCommand("select * from MEetAndYou.UserRole;", connection))
                 {
-                    command.CommandType = CommandType.Text;
-                    command.Parameters.Add("@userID", SqlDbType.VarChar).Value = token;
-
+                    //command.CommandType = CommandType.Text;
+                    //command.Parameters.Add("@UserID", SqlDbType.VarChar).Value = userID;
+                    Console.WriteLine("We got here at least");
                     connection.Open();
                     reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Console.WriteLine(reader.GetValue(0));
+                        Console.WriteLine("role" + reader.GetValue(1));
+                        string role = (string)reader.GetString(1);
+                        roles.Add(role);
+                    }
                     connection.Close();
                 }
-                while (reader.Read())
-                {
-                    roles.Append(reader.GetString(userIDCol));
-                }
+
+            }
+            catch (SqlException ex)
+            {
+                throw;
             }
             // Change this so that it signify a failure
             catch (Exception ex)
@@ -85,5 +155,88 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             return Task.FromResult(roles);
         }
 
+        // Async versin of the VerifyToken
+        //public async Task<bool> VerifyTokenAsync(int userID, string token)
+        //{
+        //    _connectionString = GetConnectionString();
+        //    bool result = false;      // User ID column to be read from    
+        //    int rowsAffected;
+
+        //    try
+        //    {
+        //        using (SqlConnection connection = new SqlConnection(_connectionString))
+        //        // Call a procedure in the DB to compare the unhashed token with a hashed token. 
+        //        using (SqlCommand command = new SqlCommand("EXEC [MEetAndYou].[VerifyUserToken](@userID, @token)", connection))
+        //        {
+        //            command.CommandType = CommandType.Text;
+        //            command.Parameters.Add("@token", SqlDbType.VarChar).Value = token;
+        //            command.Parameters.Add("@userID", SqlDbType.Int).Value = userID;
+
+        //            connection.Open();
+        //            //reader = command.ExecuteReader();
+        //            var rowAsyncTask = await command.ExecuteScalarAsync();
+        //            rowsAffected = (int) rowAsyncTask;
+        //            connection.Close();
+        //        }
+        //        //userID = reader.GetFieldValue<int>(userIDCol);
+
+        //        if (rowsAffected > 0)
+        //        {
+        //            result = true;
+        //        }
+
+        //    }
+        //    catch (SqlException ex)
+        //    {
+        //        return false;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return false;
+        //    }
+
+        //    return result;
+        //}
+
+        //public async Task<List<string>> GetRolesAsync(int userID)
+        //{
+        //    //throw new NotImplementedException();
+        //    _connectionString = GetConnectionString();
+        //    SqlDataReader reader;
+        //    List<string> roles = new List<string>();
+
+        //    try
+        //    {
+        //        using (SqlConnection connection = new SqlConnection(_connectionString))
+        //        using (SqlCommand command = new SqlCommand("select * from MEetAndYou.GetRolesByID(@UserID)", connection))
+        //        {
+        //            command.CommandType = CommandType.Text;
+        //            command.Parameters.Add("@UserID", SqlDbType.VarChar).Value = userID;
+
+        //            connection.Open();
+        //            reader = await command.ExecuteReaderAsync();
+        //            while (reader.Read())
+        //            {
+        //                string role = reader.GetString(0);
+        //                roles.Add(role);
+        //            }
+        //            connection.Close();
+
+        //        }
+        //    }
+        //    // Change this so that it signify a failure
+        //    catch (SqlException ex)
+        //    {
+        //        Console.WriteLine("SQL error when querying data" + "\n" + ex.Message);
+        //        return new List<string>();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine("Error when getting user role" + "\n" + ex.Message);
+        //        return new List<string>();
+        //    }
+
+        //    return roles;
+        //}
     }
 }

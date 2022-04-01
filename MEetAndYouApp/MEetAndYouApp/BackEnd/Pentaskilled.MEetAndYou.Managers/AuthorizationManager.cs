@@ -27,31 +27,31 @@ namespace Pentaskilled.MEetAndYou.Managers
             _authzDAO = new AuthorizationDAO();
         }
 
-        public bool IsAuthorized(string userToken, string role) {
+        //public bool IsAuthorized(string userToken, string role) {
 
-            try
-            {
-                int userID = _authzDAO.VerifyToken(userToken).Result;
+        //    try
+        //    {
+        //        int userID = _authzDAO.VerifyToken(userToken).Result;
 
-                //Create User Identity object
-                UserIdentity userIdentity = new UserIdentity(userID.ToString());
-                List<string> roleList = _authzDAO.GetRoles(userToken).Result;
+        //        //Create User Identity object
+        //        UserIdentity userIdentity = new UserIdentity(userID.ToString());
+        //        List<string> roleList = _authzDAO.GetRoles(userToken).Result;
 
-                // Create the User Principle object
-                UserPrincipal userPrincipal = new UserPrincipal(userIdentity, roleList);
+        //        // Create the User Principle object
+        //        UserPrincipal userPrincipal = new UserPrincipal(userIdentity, roleList);
 
-                bool isAuthorized = _authzService.IsAuthorized(userPrincipal, role);
+        //        bool isAuthorized = _authzService.IsAuthorized(userPrincipal, role);
 
-                return isAuthorized;
-            }
-            catch (SqlException ex)
-            {
-                return false;
-            }
-            catch(Exception ex)
-            {
-                return false;
-            }
-        }
+        //        return isAuthorized;
+        //    }
+        //    catch (SqlException ex)
+        //    {
+        //        return false;
+        //    }
+        //    catch(Exception ex)
+        //    {
+        //        return false;
+        //    }
+        //}
     }
 }

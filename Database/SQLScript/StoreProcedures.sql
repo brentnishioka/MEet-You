@@ -1,4 +1,4 @@
-select * from MEetAndYou.Events
+﻿select * from MEetAndYou.Events
 select * from MEetAndYou.Category
 
 -- Store Procedures for Category table
@@ -10,6 +10,15 @@ CREATE PROCEDURE  MEetAndYou.CreateCategory
 AS   
 	INSERT INTO MEetAndYou.Category (categoryName) values
 		(@categoryName)
+
+GO
+
+-- Procedure for getting all categories
+USE [MEetAndYou-DB]
+GO
+CREATE PROCEDURE  MEetAndYou.GetCategory
+AS   
+	SELECT * from MEetAndYou.Category;
 
 GO
 
@@ -48,6 +57,26 @@ CREATE PROCEDURE  MEetAndYou.CreateEvent
 AS   
 	INSERT INTO MEetAndYou.Events (eventName, description, address, price, eventDate) values
 		(@eventName, @eventDescription, @eventAddress, @price, @eventDate)
+
+GO
+
+-- Procedure for getting event using EventID
+USE [MEetAndYou-DB]
+GO
+CREATE PROCEDURE  MEetAndYou.GetEventByID
+    @eventID int
+
+AS   
+	SELECT * from MEetAndYou.Events where eventID = @eventID;
+
+GO
+
+-- Procedure for getting all events available
+GO
+CREATE PROCEDURE  MEetAndYou.GetEvents
+
+AS   
+	SELECT * from MEetAndYou.Events;
 
 GO
 
@@ -160,5 +189,133 @@ CREATE PROCEDURE MEetAndYou.DeleteEventCategory
 	@categoryName varchar(50)
 AS   
 	DELETE FROM MEetAndYou.EventCategory where eventID = @eventID and categoryName = @categoryName
+
+GO
+
+-----------------------------------------------
+-- Stored Procedures for Itinerary Table
+
+-- Store Procedure for creating a new itinerary
+USE [MEetAndYou-DB]
+GO
+CREATE PROCEDURE MEetAndYou.CreateItinerary
+    @itineraryName varchar(50),
+	@itineraryRating int, 
+	@itineraryOwner int
+AS   
+	INSERT INTO MEetAndYou.Itinerary (itineraryName, rating, itineraryOwner) values 
+	(@itineraryName, @itineraryRating, @itineraryOwner)
+GO
+
+-- Get all available itinerary
+GO
+CREATE PROCEDURE MEetAndYou.GetItinerary
+AS   
+	SELECT * from MEetAndYou.Itinerary
+GO
+
+-- Get an itinerary by itineraryID
+GO
+CREATE PROCEDURE MEetAndYou.GetItineraryByID
+	@itineraryID int
+AS   
+	SELECT * from MEetAndYou.Itinerary where itineraryID = @itineraryID
+GO
+
+-- Get all itinerary using a specific itineraryOwner ID (userID)
+GO
+CREATE PROCEDURE MEetAndYou.GetItineraryByOwnerID
+	@ownerID int
+AS   
+	SELECT * from MEetAndYou.Itinerary where itineraryOwner = @ownerID
+GO
+
+-- Update itinerary name using itineraryID
+USE [MEetAndYou-DB]
+GO
+CREATE PROCEDURE  MEetAndYou.UpdateItineraryName
+    @itineraryID int, 
+	@itineraryName varchar(50)
+
+AS   
+	UPDATE MEetAndYou.Itinerary
+	SET itineraryName = @itineraryName
+	where itineraryID = @itineraryID
+GO
+
+-- Update Itinerary rating using itineraryID
+GO
+CREATE PROCEDURE  MEetAndYou.UpdateItineraryRating
+    @itineraryID int, 
+	@itineraryRating varchar(50)
+
+AS   
+	UPDATE MEetAndYou.Itinerary
+	SET rating = @itineraryRating
+	where itineraryID = @itineraryID
+GO
+
+-- Deleting an itinerary using an ItinearyID
+CREATE PROCEDURE MEetAndYou.DeleteItineraryByID
+    @itineraryID int   
+AS   
+	DELETE FROM MEetAndYou.Itinerary where itineraryID = @itineraryID
+
+GO
+
+----------------------------------------
+-- Stored procedures for UserItinerary Tables
+-- Creating a new UserItineraries
+USE [MEetAndYou-DB]
+GO
+CREATE PROCEDURE  MEetAndYou.CreateUserItinerary
+    @userID int, 
+	@itineraryID int 
+
+AS   
+	INSERT INTO MEetAndYou.UserItinerary(itineraryID,UserID) values
+		(@itineraryID, @userID)
+
+GO
+
+-- Get all UserItinerary
+GO
+CREATE PROCEDURE MEetAndYou.GetUserItinerary
+AS   
+	SELECT * from MEetAndYou.UserItinerary
+GO
+
+-- Get an itinerary by itineraryID
+GO
+CREATE PROCEDURE MEetAndYou.GetUserItineraryByUserID
+	@userID int
+AS   
+	SELECT * from MEetAndYou.UserItinerary where UserID = @userID
+GO
+-- Get all itinerary using a specific itineraryOwner ID (userID)
+GO
+CREATE PROCEDURE MEetAndYou.GetUsersByItineraryID
+	@itineraryID int
+AS   
+	SELECT * from MEetAndYou.UserItinerary where itineraryID = @itineraryID
+GO
+
+-- Delete a UserItinerary
+USE [MEetAndYou-DB]
+GO
+CREATE PROCEDURE MEetAndYou.DeleteUserItinerary
+    @itineraryID int,
+	@userID int
+AS   
+	DELETE FROM MEetAndYou.UserItinerary where itineraryID = @itineraryID and UserID = @userID
+
+GO
+
+-- Delete all UserItinerary using an itineraryID
+GO
+CREATE PROCEDURE MEetAndYou.DeleteUserItineraryByItinID
+    @itineraryID int
+AS   
+	DELETE FROM MEetAndYou.UserItinerary where itineraryID = @itineraryID
 
 GO
