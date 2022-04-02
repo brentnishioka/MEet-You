@@ -376,3 +376,59 @@ CREATE PROCEDURE [MEetAndYou].[DeleteUserToken]
 AS
     DELETE FROM MEetAndYou.UserToken where UserID = @userID
 GO
+
+---------------------------------
+-- Stored Procedures for Images table
+
+-- Store procedure to create an Image
+USE [MEetAndYou-DB]
+GO
+CREATE PROCEDURE  MEetAndYou.CreateImage
+    @imageName varchar(50), 
+	@imageExtension varchar(50), 
+	@imagePath varchar(200), 
+	@itineraryID int
+
+AS   
+	INSERT INTO MEetAndYou.Images (imageName, imageExtension, imagePath, itineraryID) values
+		(@imageName, @imageExtension, @imagePath, @itineraryID)
+
+GO
+
+-- Get an Image using image ID, return the image path
+GO
+CREATE PROCEDURE  MEetAndYou.GetImageByID
+    @imageID int
+
+AS   
+	SELECT * from MEetAndYou.Images where imageID = @imageID
+
+GO
+
+-- Get all images by itineraryID
+GO
+CREATE PROCEDURE  MEetAndYou.GetImageByItineraryID
+    @itineraryID int
+
+AS   
+	SELECT * from MEetAndYou.Images where itineraryID = @itineraryID
+
+GO
+
+-- Delete an image using an imageID
+GO
+CREATE PROCEDURE MEetAndYou.DeleteImageByID
+    @imageID int
+AS   
+	DELETE FROM MEetAndYou.Images where imageID = @imageID
+
+GO
+
+-- Delete all images using an itineraryID
+GO
+CREATE PROCEDURE MEetAndYou.DeleteImagesByItineraryID
+    @itineraryID int
+AS   
+	DELETE FROM MEetAndYou.Images where itineraryID = @itineraryID
+
+GO

@@ -1,4 +1,4 @@
-﻿USE [MEetAndYou-DB]
+USE [MEetAndYou-DB]
 GO
 
 /****** Object:  Table [MEetAndYou].[UserAccountRecords]    Script Date: 3/5/2022 4:35:20 PM ******/
@@ -121,6 +121,19 @@ SELECT * from MEetAndYou.UserAccountRecords;
 		constraint userIDitinerary_fk FOREIGN KEY (UserID) references MEetAndYou.UserAccountRecords (UserID), 
 		constraint userItinerary_pk PRIMARY KEY (itineraryID, UserID)
   );
+
+  -- Table for MemoryAlbum
+  CREATE TABLE [MEetAndYou].[Images] (
+		imageID int IDENTITY(1,1),
+		imageName varchar(50) not null, 
+		imageExtension varchar(50) not null, 
+		imagePath varchar(200) not null, 
+		itineraryID int not null
+
+		constraint imageID_pk PRIMARY KEY (imageID), 
+		constraint imageItineraryID_fk FOREIGN KEY (itineraryID) references MEetAndYou.Itinerary (itineraryID)
+  ); 
+
 
   SELECT * from MEetAndYou.UserItinerary;
   SELECT * from MEetAndYou.Events
