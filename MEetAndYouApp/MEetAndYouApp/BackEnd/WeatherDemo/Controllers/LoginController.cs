@@ -11,7 +11,7 @@ namespace WeatherDemo.Controllers
 
         //Method to login
         [HttpPost]
-        [Route("Signin")]
+        [Route("SignIn")]
         public Object SignIn(string userEmail, string userPassword)
         {
             AuthnManager authnManager = new AuthnManager();
