@@ -20,6 +20,7 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Event> Events { get; set; }
         public virtual DbSet<EventLog> EventLogs { get; set; }
+        public virtual DbSet<Image> Images { get; set; }
         public virtual DbSet<Itinerary> Itineraries { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<UserAccountRecord> UserAccountRecords { get; set; }
@@ -137,6 +138,39 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
                     .IsRequired()
                     .HasMaxLength(255)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Image>(entity =>
+            {
+                entity.ToTable("Images", "MEetAndYou");
+
+                entity.Property(e => e.ImageId).HasColumnName("imageID");
+
+                entity.Property(e => e.ImageExtension)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("imageExtension");
+
+                entity.Property(e => e.ImageName)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("imageName");
+
+                entity.Property(e => e.ImagePath)
+                    .IsRequired()
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("imagePath");
+
+                entity.Property(e => e.ItineraryId).HasColumnName("itineraryID");
+
+                entity.HasOne(d => d.Itinerary)
+                    .WithMany(p => p.Images)
+                    .HasForeignKey(d => d.ItineraryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("imageItineraryID_fk");
             });
 
             modelBuilder.Entity<Itinerary>(entity =>

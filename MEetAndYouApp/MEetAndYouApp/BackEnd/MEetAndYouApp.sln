@@ -23,7 +23,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pentaskilled.MEetAndYou.API
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherDemo", "WeatherDemo\WeatherDemo.csproj", "{4932BC78-5531-437E-B6B1-6ED94998A3EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MEetAndYou.EFCoreEntities", "MEetAndYou.EFCoreEntities\MEetAndYou.EFCoreEntities.csproj", "{9422EDDF-3F18-4619-84DC-664B4439FFAB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MEetAndYou.EFCoreEntities", "MEetAndYou.EFCoreEntities\MEetAndYou.EFCoreEntities.csproj", "{9422EDDF-3F18-4619-84DC-664B4439FFAB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingZone", "TestingZone\TestingZone.csproj", "{96425944-26D3-403F-95D4-490F62096CD2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +77,10 @@ Global
 		{9422EDDF-3F18-4619-84DC-664B4439FFAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9422EDDF-3F18-4619-84DC-664B4439FFAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9422EDDF-3F18-4619-84DC-664B4439FFAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96425944-26D3-403F-95D4-490F62096CD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96425944-26D3-403F-95D4-490F62096CD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96425944-26D3-403F-95D4-490F62096CD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96425944-26D3-403F-95D4-490F62096CD2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

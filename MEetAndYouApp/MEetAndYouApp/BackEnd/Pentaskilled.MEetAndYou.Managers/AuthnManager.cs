@@ -20,22 +20,37 @@ namespace Pentaskilled.MEetAndYou.Managers
             _authnDAO = new AuthnDAO();
         }
 
+        // this method always give the user a token with or without the correct credentials
         public string AuthenticateUser(string userEmail, string userPassword)
         {
             string userToken;
+            string errorMessage = "Invalid Username or Password";
             bool isInputValid = true;
             bool isCredsValid = true;
             bool isOTPValid = true;
             try
             {
                 isInputValid = _authnService.validateUserInput(userEmail, userPassword);
+
+                if (isInputValid == false)
+                {
+                    return errorMessage;
+                }
+
                 isCredsValid = _authnDAO.ValidateCredentials(userEmail, userPassword).Result;
-                string oneTimePw = _authnService.generateOTP();
-                string phoneNum = _authnDAO.GetPhoneNum(userEmail, userPassword).Result;
-                isOTPValid = _authnService.validateOTP(oneTimePw);
 
-                userToken = _authnService.generateToken();
+                if (isCredsValid == true)
+                {
+                    string oneTimePw = _authnService.generateOTP();
+                    //string phoneNum = _authnDAO.GetPhoneNum(userEmail, userPassword).Result;
+                    isOTPValid = _authnService.validateOTP(oneTimePw);
 
+                    userToken = _authnService.generateToken();
+                }
+                else
+                {
+                    userToken = "Wrong Username or Password";
+                }
             }
             catch (ArgumentException ex) when (!isInputValid)
             {
