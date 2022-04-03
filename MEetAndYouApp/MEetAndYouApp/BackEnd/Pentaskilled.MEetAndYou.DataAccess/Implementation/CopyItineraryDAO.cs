@@ -13,9 +13,16 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
     public class CopyItineraryDAO
     {
         private string _connectionString;
-        //string connection = System.Configuration.ConfigurationManager.
-        //   ConnectionStrings["MEetAndYouDatabase"].ConnectionString;
-        private MEetAndYouDBContext _dbContext = new MEetAndYouDBContext();
+        string _connection = System.Configuration.ConfigurationManager.
+           ConnectionStrings["MEetAndYouDatabase"].ConnectionString;
+        private MEetAndYouDBContext _dbContext;
+
+        // Constructor
+        public CopyItineraryDAO()
+        {
+            var dbOptions = new DbContextOptionsBuilder<MEetAndYouDBContext>().UseSqlServer(_connection).Options;
+            _dbContext = new MEetAndYouDBContext(dbOptions);
+        }
 
         // GetConnectionString() from https://docs.microsoft.com/en-us/dotnet/api/system.data.sqlclient.sqlconnection.connectionstring?view=dotnet-plat-ext-6.0
         static private string GetConnectionString()

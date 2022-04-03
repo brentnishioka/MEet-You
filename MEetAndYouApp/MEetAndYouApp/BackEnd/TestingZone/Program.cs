@@ -45,6 +45,7 @@ public class Program
         //Console.WriteLine("Result: " + actualValue);
 
         // Testing Itinerary DAO
+        Console.WriteLine("Before getting itin");
         int itineraryID = 2;
         Itinerary itinerary = copyItinDAO.GetItinerary(itineraryID).Result;
         if (itinerary != null)
