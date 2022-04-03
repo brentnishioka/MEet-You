@@ -13,11 +13,13 @@ namespace Pentaskilled.MEetAndYou.Managers
     {
         private readonly IAuthnService _authnService;
         private readonly IAuthnDAO _authnDAO;
+        private readonly IUMDAO _umDAO;                 //Needed to get userID using Email
 
         public AuthnManager()
         {
             _authnService = new AuthnService();
             _authnDAO = new AuthnDAO();
+            _umDAO = new UMDAO();
         }
 
         // this method always give the user a token with or without the correct credentials
@@ -46,6 +48,10 @@ namespace Pentaskilled.MEetAndYou.Managers
                     isOTPValid = _authnService.validateOTP(oneTimePw);
 
                     userToken = _authnService.generateToken();
+
+                    // Save the token to the database using userID
+                    int userID = _umDAO.GetUserIDByEmail(userEmail).Result;
+                    bool saveResult = _authnDAO.SaveToken(userID, userToken).Result;
                 }
                 else
                 {
