@@ -7,6 +7,7 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
 {
     public partial class MEetAndYouDBContext : DbContext
     {
+        //private string connection = System.Configuration.ConfigurationManager.ConnectionStrings["MEetAndYouDatabase"].ConnectionString;
         public MEetAndYouDBContext()
         {
         }

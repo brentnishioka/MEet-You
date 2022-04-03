@@ -1,4 +1,6 @@
 ﻿using Pentaskilled.MEetAndYou.DataAccess;
+using Pentaskilled.MEetAndYou.DataAccess.Implementation;
+using Pentaskilled.MEetAndYou.Entities.DBModels;
 using Pentaskilled.MEetAndYou.Managers;
 using Pentaskilled.MEetAndYou.Services.Implementation;
 
@@ -14,20 +16,21 @@ public class Program
         AuthorizationDAO authzDAO = new AuthorizationDAO(); 
         AuthnService authnService = new AuthnService();
         AuthorizationManager authzController = new AuthorizationManager();
+        CopyItineraryDAO copyItinDAO = new CopyItineraryDAO();
 
         // Calling the method to save token to the databse, Brent ID
-        string token = "blueberrystrawberryy";
-        string brokenToken = "blu123rrystraw456ryy";
-        int userID = 4;
-        string claimedRole = "Admin";
+        //string token = "blueberrystrawberryy";
+        //string brokenToken = "blu123rrystraw456ryy";
+        //int userID = 4;
+        //string claimedRole = "Admin";
 
-        bool result = authnDAO.SaveToken(userID, token).Result;
-        Console.WriteLine(result);
+        //bool result = authnDAO.SaveToken(userID, token).Result;
+        //Console.WriteLine(result);
 
-        Console.WriteLine("");
-        Console.WriteLine("Verifying token: ");
-        bool isVerified = authzDAO.VerifyToken(userID, token);
-        Console.WriteLine("Result: " + isVerified);
+        //Console.WriteLine("");
+        //Console.WriteLine("Verifying token: ");
+        //bool isVerified = authzDAO.VerifyToken(userID, token);
+        //Console.WriteLine("Result: " + isVerified);
 
         //Removing the token after verfication
         //Console.WriteLine("");
@@ -36,9 +39,18 @@ public class Program
         //Console.WriteLine("Result: " + isDeleted);
 
         // Testing the Authorization Manager
-        Console.WriteLine("");
-        Console.WriteLine("Start verifying claimed role: ");
-        bool actualValue = authzController.IsAuthorized(userID, token, claimedRole);
-        Console.WriteLine("Result: " + actualValue);
+        //Console.WriteLine("");
+        //Console.WriteLine("Start verifying claimed role: ");
+        //bool actualValue = authzController.IsAuthorized(userID, token, claimedRole);
+        //Console.WriteLine("Result: " + actualValue);
+
+        // Testing Itinerary DAO
+        int itineraryID = 2;
+        Itinerary itinerary = copyItinDAO.GetItinerary(itineraryID).Result;
+        if (itinerary != null)
+        {
+            Console.Write("Resulting itinerary: ");
+            Console.WriteLine(itinerary);
+        }
     }
 }

@@ -2,14 +2,20 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Pentaskilled.MEetAndYou.Entities;
+using Pentaskilled.MEetAndYou.Entities.DBModels;
 
 namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
 {
     public class CopyItineraryDAO
     {
         private string _connectionString;
+        //string connection = System.Configuration.ConfigurationManager.
+        //   ConnectionStrings["MEetAndYouDatabase"].ConnectionString;
+        private MEetAndYouDBContext _dbContext = new MEetAndYouDBContext();
 
         // GetConnectionString() from https://docs.microsoft.com/en-us/dotnet/api/system.data.sqlclient.sqlconnection.connectionstring?view=dotnet-plat-ext-6.0
         static private string GetConnectionString()
@@ -86,9 +92,27 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             return categoryList;
         }
 
-        public Itinerary GetItinerary(int intineraryID)
+        public async Task<Itinerary> GetItinerary(int intineraryID)
         {
-            throw new NotImplementedException();
+            //var dbcontext = new MEetAndYouDBContext();
+            Itinerary itinerary;
+            try
+            {
+                itinerary = await _dbContext.Itineraries.FindAsync(intineraryID);
+            }
+            catch (SqlException ex){
+                Console.WriteLine("Sql exception occur when getting itinerary");
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Exception occur when trying to get itinerary by ID");
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+            return itinerary;
+            //throw new NotImplementedException();
         }
     }
 }
