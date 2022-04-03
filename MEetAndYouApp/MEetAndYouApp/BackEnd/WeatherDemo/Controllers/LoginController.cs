@@ -20,5 +20,15 @@ namespace WeatherDemo.Controllers
             return Ok(token);
             //return new ObjectResult(new { Value = token });
         }
+
+        [HttpDelete]
+        [Route("SignOut")]
+        public Object SignOut(int userID)
+        {
+            AuthnManager authnManager = new AuthnManager();
+            bool isSignOut = authnManager.SignOut(userID);
+
+            return Ok(isSignOut);
+        }
     }
 }

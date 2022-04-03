@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Pentaskilled.MEetAndYou.Services.Contracts;
 using Pentaskilled.MEetAndYou.Services.Implementation;
 using Pentaskilled.MEetAndYou.DataAccess;
+using System.Data.SqlClient;
 
 namespace Pentaskilled.MEetAndYou.Managers
 {
@@ -76,6 +77,26 @@ namespace Pentaskilled.MEetAndYou.Managers
                 return userToken;
             }
             throw new NullReferenceException();
+        }
+
+        public bool SignOut(int userID)
+        {
+            bool isSignOut = false;
+            try
+            {
+                isSignOut = _authnDAO.DeleteToken(userID).Result;
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("Sql Exception when Signing Out" + "\n" + ex.Message);
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception when Signing Out" + "\n" + ex.Message );
+                return false;
+            }
+            return isSignOut;
         }
     }
 }
