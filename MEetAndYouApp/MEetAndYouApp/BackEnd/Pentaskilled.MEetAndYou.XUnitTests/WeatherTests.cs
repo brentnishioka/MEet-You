@@ -10,12 +10,12 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         [Fact]
         public void DAOLatLonTest()
         {
-            WeatherDAO weatherDAO = new WeatherDAO();
+            OpenWeatherWrapper weatherDAO = new OpenWeatherWrapper();
             string cityName = "London";
             string countryName = "KY";
             string geoJsonString;
 
-            geoJsonString = weatherDAO.GeoCoderAPI(cityName, countryName);
+            geoJsonString = weatherDAO.GetGeoCoords(cityName, countryName);
 
             Assert.Equal("{\"name\":\"London\",\"lat\":37.1289771,\"lon\":-84.0832646,\"country\":\"US\",\"state\":\"Kentucky\"}", geoJsonString);
         }
@@ -23,14 +23,14 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         [Fact]
         public void ServiceLatLonTest()
         {
-            WeatherDAO weatherDAO = new WeatherDAO();
+            OpenWeatherWrapper weatherDAO = new OpenWeatherWrapper();
             WeatherService weatherService = new WeatherService();
             string cityName = "London";
             string countryName = "KY";
             string geoJsonString;
             string[] coordinates;
 
-            geoJsonString = weatherDAO.GeoCoderAPI(cityName, countryName);
+            geoJsonString = weatherDAO.GetGeoCoords(cityName, countryName);
             coordinates = weatherService.ParseLatLong(geoJsonString);
 
             Assert.Equal("37.12898", coordinates[0]);

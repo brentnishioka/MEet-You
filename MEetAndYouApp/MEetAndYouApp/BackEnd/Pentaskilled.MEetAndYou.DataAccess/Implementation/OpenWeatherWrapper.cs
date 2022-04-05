@@ -9,14 +9,14 @@ using System.IO;
 
 namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
 {
-    public class WeatherDAO : IWeatherDAO
+    public class OpenWeatherWrapper : IOpenWeatherWrapper
     {
         private string _weatherKey;
 
         // TODO: Move API key as environmental variable or config file 
         private StreamReader _keyReader = new StreamReader("D:\\weather.txt");
 
-        public string GeoCoderAPI(string cityName, string countryName)
+        public string GetGeoCoords(string cityName, string countryName)
         {
             _weatherKey = _keyReader.ReadLine(); // Get API Key
 
@@ -33,7 +33,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             return geoJsonString;
         }
 
-        public string OneCallAPI(string latitude, string longitude)
+        public string GetWeatherData(string latitude, string longitude)
         {
             _weatherKey = _keyReader.ReadLine(); // Get API Key
 

@@ -22,7 +22,7 @@ namespace Pentaskilled.MEetAndYou.Managers
         {
             try
             {
-                _weatherData = _weatherService.BeginWeatherProcess(cityName, stateName, dateTime);
+                _weatherData = _weatherService.CalculateWeather(cityName, stateName, dateTime);
             }
             catch (Exception ex)
             {

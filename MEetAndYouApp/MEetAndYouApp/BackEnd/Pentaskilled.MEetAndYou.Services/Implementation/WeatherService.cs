@@ -13,21 +13,21 @@ namespace Pentaskilled.MEetAndYou.Services.Implementation
 {
     public class WeatherService : IWeatherService
     {
-        private readonly IWeatherDAO _weatherDAO;
+        private readonly IOpenWeatherWrapper _weatherDAO;
         private string[] _coordinates;
         private List<string> _weatherData;
 
         public WeatherService()
         {
-            _weatherDAO = new WeatherDAO();
+            _weatherDAO = new OpenWeatherWrapper();
         }
 
-        public List<string> BeginWeatherProcess(string cityName, string stateName, DateTime dateTime)
+        public List<string> CalculateWeather(string cityName, string stateName, DateTime dateTime)
         {
-            string geoJsonString = _weatherDAO.GeoCoderAPI(cityName, stateName);
+            string geoJsonString = _weatherDAO.GetGeoCoords(cityName, stateName);
             _coordinates = ParseLatLong(geoJsonString);
 
-            string weatherJsonString = _weatherDAO.OneCallAPI(_coordinates[0], _coordinates[1]);
+            string weatherJsonString = _weatherDAO.GetWeatherData(_coordinates[0], _coordinates[1]);
             _weatherData = ParseWeatherInfo(weatherJsonString, dateTime);
 
             return _weatherData;

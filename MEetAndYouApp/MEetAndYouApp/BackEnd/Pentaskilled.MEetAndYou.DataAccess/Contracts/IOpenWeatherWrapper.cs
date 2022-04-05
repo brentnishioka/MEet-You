@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Pentaskilled.MEetAndYou.DataAccess.Contracts
 {
-    public interface IWeatherDAO
+    public interface IOpenWeatherWrapper
     {
-        string GeoCoderAPI(string cityName, string countryName);
+        string GetGeoCoords(string cityName, string countryName);
 
-        string OneCallAPI(string latitude, string longitude);
+        string GetWeatherData(string latitude, string longitude);
     }
 }
