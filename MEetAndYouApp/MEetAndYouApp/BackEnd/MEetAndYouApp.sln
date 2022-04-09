@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherDemo", "WeatherDemo\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MEetAndYou.EFCoreEntities", "MEetAndYou.EFCoreEntities\MEetAndYou.EFCoreEntities.csproj", "{9422EDDF-3F18-4619-84DC-664B4439FFAB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingZone", "TestingZone\TestingZone.csproj", "{96425944-26D3-403F-95D4-490F62096CD2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestingZone", "TestingZone\TestingZone.csproj", "{96425944-26D3-403F-95D4-490F62096CD2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
