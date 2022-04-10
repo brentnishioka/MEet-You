@@ -1,0 +1,1 @@
+(function(){var a=window.AWSC;if(!a){a={};window.AWSC=a}a.auth=true;if(a.onAuth){a.onAuth()}})();

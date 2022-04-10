@@ -36,7 +36,5 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         bool IsUserInDBVerified(UserAccountEntity user);
 
         bool IsAdminInDBVerified(string email, string password);
-
-        Task<int> GetUserIDByEmail(string userEmail);
     }
 }
