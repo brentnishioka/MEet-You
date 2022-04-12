@@ -4,6 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+	  <ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,5 +14,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Pentaskilled.MEetAndYou.Managers\Pentaskilled.MEetAndYou.Managers.csproj" />
   </ItemGroup>
+	
 
 </Project>

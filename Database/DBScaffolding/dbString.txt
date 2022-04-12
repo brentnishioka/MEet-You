@@ -7,3 +7,11 @@ Scaffold-DbContext 'Data Source=DESKTOP-0QA4EN0\SQLEXPRESS;Initial Catalog=MEetA
 
 // Scaffolding a controller command
 dotnet aspnet-codegenerator controller -name EventController -async -api -m Pentaskilled.MEetAndYou.Entities.DBModels.Event -dc Pentaskilled.MEetAndYou.Entities.DBModels.MEetAndYouDBContext -outDir Controllers
+
+//
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+	<connectionStrings>
+		<add name="MEetAndYouDatabase" connectionString="Data Source=CHUNCHUNMARUPC\SQLEXPRESS;Initial Catalog=MEetAndYou-DB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;" providerName="System.Data.SqlClient" />
+	</connectionStrings>
+</configuration>
