@@ -1,1 +1,0 @@
-(function(){var a=window.AWSC;if(!a){a={};window.AWSC=a}a.phd_auth=true;if(a.onAuth){a.onAuth('phd')}})();

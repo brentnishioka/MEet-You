@@ -201,3 +201,7 @@ SELECT * from MEetAndYou.UserAccountRecords;
 	(5, 4),
 	(6, 7),
 	(6, 8);
+
+	-- Dummy data for UserAccountRecords table
+	EXEC MEetAndYou.CreateUserAccountRecord @email = 'katsura.Kotaro@gmail.com', @password = 'helloworld', 
+	@phoneNum = '234-234-3459', @registerDate = '12/16/2021 7:07:57 AM', @active = 1
