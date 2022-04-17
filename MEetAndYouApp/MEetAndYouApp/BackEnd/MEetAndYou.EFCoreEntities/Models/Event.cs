@@ -8,6 +8,7 @@ namespace MEetAndYou.EFCoreEntities.Models
         public Event()
         {
             CategoryNames = new HashSet<Category>();
+            Itineraries = new HashSet<Itinerary>();
         }
 
         public int EventId { get; set; }
@@ -18,5 +19,6 @@ namespace MEetAndYou.EFCoreEntities.Models
         public DateTime? EventDate { get; set; }
 
         public virtual ICollection<Category> CategoryNames { get; set; }
+        public virtual ICollection<Itinerary> Itineraries { get; set; }
     }
 }

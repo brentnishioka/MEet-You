@@ -20,5 +20,6 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
         public virtual ICollection<Image> Images { get; set; }
 
         public virtual ICollection<UserAccountRecord> Users { get; set; }
+        public virtual ICollection<Event> Events { get; set; }
     }
 }
