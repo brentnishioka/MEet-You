@@ -8,6 +8,7 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
         public Itinerary()
         {
             Images = new HashSet<Image>();
+            Events = new HashSet<Event>();
             Users = new HashSet<UserAccountRecord>();
         }
 
@@ -19,7 +20,7 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
         public virtual UserAccountRecord ItineraryOwnerNavigation { get; set; }
         public virtual ICollection<Image> Images { get; set; }
 
-        public virtual ICollection<UserAccountRecord> Users { get; set; }
         public virtual ICollection<Event> Events { get; set; }
+        public virtual ICollection<UserAccountRecord> Users { get; set; }
     }
 }

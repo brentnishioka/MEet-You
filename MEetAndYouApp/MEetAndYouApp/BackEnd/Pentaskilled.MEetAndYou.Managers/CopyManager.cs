@@ -19,26 +19,26 @@ namespace Pentaskilled.MEetAndYou.Managers
             _copyItineraryDAO = new CopyItineraryDAO();
         }
 
-        public Itinerary LoadItineraryInfo(int itineraryID)
-        {
-            //Get the itinerary with that ID
-            var itinerary = _copyItineraryDAO.GetItinerary(itineraryID).Result;
+        //public Itinerary LoadItineraryInfo(int itineraryID)
+        //{
+        //    //Get the itinerary with that ID
+        //    var itinerary = _copyItineraryDAO.GetItinerary(itineraryID).Result;
 
-            //Get the list of events from the old itinerary
-            //var eventList = _copyItineraryDAO.get
-            var eventList =
-                from itin in _dbContext.Itineraries
-                from e in _dbContext.Events
-                where itin.ItineraryId.Equals(e.EventId)
-                select e;
+        //    //Get the list of events from the old itinerary
+        //    //var eventList = _copyItineraryDAO.get
+        //    var eventList =
+        //        from itin in _dbContext.Itineraries
+        //        from e in _dbContext.Events
+        //        where itin.ItineraryId.Equals(e.EventId)
+        //        select e;
                 
 
 
-               //from author in _dbcontext.Authors                 //blank used to be here
-               //from book in dbcontext.Titles                    //blank used to be here
-               //orderby author.LastName, author.FirstName
-               //select new { author.FirstName, author.LastName, book.ISBN };
-        }
+        //       //from author in _dbcontext.Authors                 //blank used to be here
+        //       //from book in dbcontext.Titles                    //blank used to be here
+        //       //orderby author.LastName, author.FirstName
+        //       //select new { author.FirstName, author.LastName, book.ISBN };
+        //}
 
     }
 }

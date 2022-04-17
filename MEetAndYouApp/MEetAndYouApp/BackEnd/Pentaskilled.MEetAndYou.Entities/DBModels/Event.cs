@@ -8,16 +8,7 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
         public Event()
         {
             CategoryNames = new HashSet<Category>();
-        }
-
-        public Event(int newID, string name, string description, string address, float price, DateTime dateTime)
-        {
-            EventId  = newID;
-            EventName = name;
-            Description = description;
-            Address = address;
-            Price = price;
-            EventDate = dateTime;
+            Itineraries = new HashSet<Itinerary>();
         }
 
         public int EventId { get; set; }
@@ -28,6 +19,6 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
         public DateTime? EventDate { get; set; }
 
         public virtual ICollection<Category> CategoryNames { get; set; }
-
+        public virtual ICollection<Itinerary> Itineraries { get; set; }
     }
 }

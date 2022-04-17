@@ -134,6 +134,16 @@ SELECT * from MEetAndYou.UserAccountRecords;
 		constraint imageItineraryID_fk FOREIGN KEY (itineraryID) references MEetAndYou.Itinerary (itineraryID)
   ); 
 
+    -- Table for ItineraryEvent
+  CREATE TABLE [MEetAndYou].[ItineraryEvent] (
+		itineraryID int not null,		
+		eventID int not null
+
+		constraint ItinEventI_fk FOREIGN KEY (itineraryID) references MEetAndYou.Itinerary (itineraryID),
+		constraint ItinEventE_fk FOREIGN KEY (eventID) references MEetAndYou.Events (eventID),
+		constraint ItinEvent_pk PRIMARY KEY (itineraryID, eventID),
+  ); 
+
 
   SELECT * from MEetAndYou.UserItinerary;
   SELECT * from MEetAndYou.Events
@@ -205,3 +215,13 @@ SELECT * from MEetAndYou.UserAccountRecords;
 	-- Dummy data for UserAccountRecords table
 	EXEC MEetAndYou.CreateUserAccountRecord @email = 'katsura.Kotaro@gmail.com', @password = 'helloworld', 
 	@phoneNum = '234-234-3459', @registerDate = '12/16/2021 7:07:57 AM', @active = 1
+
+
+	-- Dummy data for ItinEvent table
+	INSERT INTO MEetAndYou.ItineraryEvent(itineraryID, eventID) values 
+	(7, 4),
+	(7, 5),
+	(7, 6),
+	(11, 9), 
+	(11, 10)
+
