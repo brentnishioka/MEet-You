@@ -265,46 +265,6 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         }
 
         /// <summary>
-        /// Get a userID using user emamil in the "UserAccountRecords" in the database.
-        /// </summary>
-        /// <param name="userEmail"></param>
-        /// <returns>  
-        ///     userID > 0 if the user is the datbase
-        ///     userID = -1 if the user is not found
-        /// </returns>
-        public Task<int> GetUserIDByEmail(string userEmail)
-        {
-            _connectionString = GetConnectionString();
-            int userID = -1;
-
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(_connectionString))
-                // First, need to get the user's ID from the DB using their email.
-                using (SqlCommand command = new SqlCommand("SELECT [MEetAndYou].[GetUserID](@email)", connection))
-                {
-                    command.CommandType = CommandType.Text;
-                    command.Parameters.Add("@email", SqlDbType.VarChar).Value = userEmail;
-
-                    connection.Open();
-                    userID = (int)command.ExecuteScalar();
-                    connection.Close();
-                }
-            }
-            catch (SqlException ex)
-            {
-                Console.WriteLine("Sql Exception when querying for userID using email.");
-                return Task.FromResult(-1);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Exception when querying for userID using email.");
-                return Task.FromResult(-1);
-            }
-            return Task.FromResult(userID);
-        }
-
-        /// <summary>
         /// Disables a user in the "UserAccountRecords" in the database.
         /// </summary>
         /// <param name="id"></param>

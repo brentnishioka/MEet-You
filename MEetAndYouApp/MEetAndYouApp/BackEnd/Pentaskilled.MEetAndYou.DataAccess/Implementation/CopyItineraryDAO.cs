@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Pentaskilled.MEetAndYou.Entities;
@@ -68,11 +69,10 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
         public async Task<List<string>> GetEventCategoryAsync(int eventID)
         {
             _connectionString = GetConnectionString();
-            List<string> categoryList = new List<string>();
+            List<string> categoryList =  new List<string>();
             try
             {
-                using (SqlConnection connection = new SqlConnection(_connectionString))
-                {
+                using (SqlConnection connection = new SqlConnection(_connectionString)) {
                     await connection.OpenAsync();
                     using (SqlCommand command = new SqlCommand("[MEetAndYou].[GetEventCategory](@eventID)", connection))
                     {
@@ -97,29 +97,29 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
                 return null;
             }
             return categoryList;
+            }
         }
 
-        public async Task<Itinerary> GetItinerary(int intineraryID)
-        {
-            //var dbcontext = new MEetAndYouDBContext();
-            Itinerary itinerary;
-            try
-            {
-                itinerary = await _dbContext.Itineraries.FindAsync(intineraryID);
-            }
-            catch (SqlException ex){
-                Console.WriteLine("Sql exception occur when getting itinerary");
-                Console.WriteLine(ex.Message);
-                return null;
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine("Exception occur when trying to get itinerary by ID");
-                Console.WriteLine(ex.Message);
-                return null;
-            }
-            return itinerary;
-            //throw new NotImplementedException();
-        }
+        //public async Task<Itinerary> GetItinerary(int intineraryID)
+        //{
+        //    //var dbcontext = new MEetAndYouDBContext();
+        //    Itinerary itinerary;
+        //    try
+        //    {
+        //        itinerary = await _dbContext.Itineraries.FindAsync(intineraryID);
+        //    }
+        //    catch (SqlException ex){
+        //        Console.WriteLine("Sql exception occur when getting itinerary");
+        //        Console.WriteLine(ex.Message);
+        //        return null;
+        //    }
+        //    catch(Exception ex)
+        //    {
+        //        Console.WriteLine("Exception occur when trying to get itinerary by ID");
+        //        Console.WriteLine(ex.Message);
+        //        return null;
+        //    }
+        //    return itinerary;
+        //    //throw new NotImplementedException();
+        //}
     }
-}
