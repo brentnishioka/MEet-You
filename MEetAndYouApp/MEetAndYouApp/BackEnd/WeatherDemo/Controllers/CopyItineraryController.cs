@@ -10,19 +10,19 @@ namespace WeatherDemo.Controllers
     public class CopyItineraryController : ControllerBase
     {
         private readonly CopyManager _copyManager;
-        private readonly MEetAndYouDBContext _dbContext;
+        private readonly MEetAndYouDBContext _dbcontext;
 
-        public CopyItineraryController(CopyManager copyManager, MEetAndYouDBContext dBContext)
+        public CopyItineraryController(CopyManager copyManager, MEetAndYouDBContext dbcontext)
         {
             _copyManager = copyManager;
-            _dbContext = dBContext;
+            _dbcontext = dbcontext;
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("CopyItinerary/{itineraryID}")]
-        public ActionResult<bool> CopyItinerary (int itineraryID)
+        public ActionResult<Itinerary> CopyItinerary (int itineraryID)
         {
-            throw new NotImplementedException();
+            return _copyManager.LoadItineraryInfo (itineraryID);
         }
     }
 }

@@ -14,25 +14,25 @@ namespace WeatherDemo.Controllers
     [ApiController]
     public class EventController : ControllerBase
     {
-        private readonly MEetAndYouDBContext _context;
+        private readonly MEetAndYouDBContext _dbcontext;
 
         public EventController(MEetAndYouDBContext context)
         {
-            _context = context;
+            _dbcontext = context;
         }
 
         // GET: api/Event
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Event>>> GetEvents()
         {
-            return await _context.Events.ToListAsync();
+            return await _dbcontext.Events.ToListAsync();
         }
 
         // GET: api/Event/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Event>> GetEvent(int id)
         {
-            var @event = await _context.Events.FindAsync(id);
+            var @event = await _dbcontext.Events.FindAsync(id);
 
             if (@event == null)
             {
@@ -52,11 +52,11 @@ namespace WeatherDemo.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(@event).State = EntityState.Modified;
+            _dbcontext.Entry(@event).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _dbcontext.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -78,8 +78,8 @@ namespace WeatherDemo.Controllers
         [HttpPost]
         public async Task<ActionResult<Event>> PostEvent(Event @event)
         {
-            _context.Events.Add(@event);
-            await _context.SaveChangesAsync();
+            _dbcontext.Events.Add(@event);
+            await _dbcontext.SaveChangesAsync();
 
             return CreatedAtAction("GetEvent", new { id = @event.EventId }, @event);
         }
@@ -88,21 +88,21 @@ namespace WeatherDemo.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEvent(int id)
         {
-            var @event = await _context.Events.FindAsync(id);
+            var @event = await _dbcontext.Events.FindAsync(id);
             if (@event == null)
             {
                 return NotFound();
             }
 
-            _context.Events.Remove(@event);
-            await _context.SaveChangesAsync();
+            _dbcontext.Events.Remove(@event);
+            await _dbcontext.SaveChangesAsync();
 
             return NoContent();
         }
 
         private bool EventExists(int id)
         {
-            return _context.Events.Any(e => e.EventId == id);
+            return _dbcontext.Events.Any(e => e.EventId == id);
         }
     }
 }
