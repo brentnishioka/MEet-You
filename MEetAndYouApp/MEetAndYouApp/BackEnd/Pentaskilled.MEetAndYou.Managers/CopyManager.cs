@@ -67,5 +67,15 @@ namespace Pentaskilled.MEetAndYou.Managers
             return true;
         }
 
+        public IList<Itinerary> GetItineraries(int userID)
+        {
+            List<Itinerary> itinList =
+                (from itin in _dbContext.Itineraries.Include("Events")
+                 where itin.ItineraryOwner == userID
+                 select itin).ToList();
+
+            return itinList;
+        }
+
     }
 }

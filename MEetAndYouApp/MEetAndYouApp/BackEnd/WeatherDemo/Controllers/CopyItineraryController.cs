@@ -32,5 +32,13 @@ namespace WeatherDemo.Controllers
             bool result = _copyManager.AddEvent();
             return result;
         }
+
+        [HttpGet]
+        [Route("GetItineraries")]
+        public ActionResult<List<Itinerary>> GetAllItinerary(int userID)
+        {
+            List<Itinerary> result =  (_copyManager.GetItineraries(userID)).ToList();
+            return result;
+        }
     }
 }
