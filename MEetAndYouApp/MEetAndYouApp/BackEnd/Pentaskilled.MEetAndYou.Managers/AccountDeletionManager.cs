@@ -20,7 +20,7 @@ namespace Pentaskilled.MEetAndYou.Managers
             uAcc = new UserAccountEntity();
         }
 
-        public bool DeleteUser(string json)    // Pass in the parameters from the API controller (id, token?)
+        public bool DeleteUser(string json)    // Pass in the parameters from the Pentaskilled.MEetAndYou.API controller (id, token?)
         {
             try
             {

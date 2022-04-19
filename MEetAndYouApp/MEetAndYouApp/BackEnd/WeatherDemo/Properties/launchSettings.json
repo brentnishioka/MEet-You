@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "WeatherDemo": {
+    "Pentaskilled.MEetAndYou.API": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
