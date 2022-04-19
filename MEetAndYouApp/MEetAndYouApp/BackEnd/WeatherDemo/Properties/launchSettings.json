@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "WeatherDemo": {
+    "API": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

@@ -1,4 +1,4 @@
-﻿namespace WeatherDemo;
+﻿namespace API;
 
 public class WeatherForecast
 {
