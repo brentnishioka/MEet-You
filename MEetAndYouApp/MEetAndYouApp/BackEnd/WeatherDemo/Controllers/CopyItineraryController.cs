@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Pentaskilled.MEetAndYou.Entities.DBModels;
 using Pentaskilled.MEetAndYou.Managers;
 
-namespace API.Controllers
+namespace WeatherDemo.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
