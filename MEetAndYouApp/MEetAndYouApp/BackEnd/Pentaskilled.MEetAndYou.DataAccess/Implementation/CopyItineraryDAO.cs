@@ -12,16 +12,18 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
 {
     public class CopyItineraryDAO
     {
+        //private string _connectionString;
+        //string _connection = System.Configuration.ConfigurationManager.
+        //   ConnectionStrings["MEetAndYouDatabase"].ConnectionString;
         private string _connectionString;
-        string _connection = System.Configuration.ConfigurationManager.
-           ConnectionStrings["MEetAndYouDatabase"].ConnectionString;
         private MEetAndYouDBContext _dbContext;
 
         // Constructor
         public CopyItineraryDAO()
         {
-            var dbOptions = new DbContextOptionsBuilder<MEetAndYouDBContext>().UseSqlServer(_connection).Options;
-            _dbContext = new MEetAndYouDBContext(dbOptions);
+            //var dbOptions = new DbContextOptionsBuilder<MEetAndYouDBContext>().UseSqlServer(_connection).Options;
+            //_dbContext = new MEetAndYouDBContext(dbOptions);
+            _dbContext = new MEetAndYouDBContext();
         }
 
         // GetConnectionString() from https://docs.microsoft.com/en-us/dotnet/api/system.data.sqlclient.sqlconnection.connectionstring?view=dotnet-plat-ext-6.0
@@ -107,16 +109,19 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             {
                 itinerary = await _dbContext.Itineraries.FindAsync(intineraryID);
             }
-            catch (SqlException ex){
-                Console.WriteLine("Sql exception occur when getting itinerary");
-                Console.WriteLine(ex.Message);
-                return null;
-            }
-            catch(Exception ex)
+            catch (SqlException ex)
             {
-                Console.WriteLine("Exception occur when trying to get itinerary by ID");
-                Console.WriteLine(ex.Message);
-                return null;
+                //Console.WriteLine("Sql exception occur when getting itinerary");
+                //Console.WriteLine(ex.Message);
+                //return null;
+                throw;
+            }
+            catch (Exception ex)
+            {
+                //Console.WriteLine("Exception occur when trying to get itinerary by ID");
+                //Console.WriteLine(ex.Message);
+                //return null;
+                throw;
             }
             return itinerary;
             //throw new NotImplementedException();

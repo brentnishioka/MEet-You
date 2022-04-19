@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration.Assemblies;
+using System.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -8,7 +8,6 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
 {
     public partial class MEetAndYouDBContext : DbContext
     {
-        //private string connection = System.Configuration.ConfigurationManager.ConnectionStrings["MEetAndYouDatabase"].ConnectionString;
         public MEetAndYouDBContext()
         {
         }
@@ -28,15 +27,16 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
         public virtual DbSet<UserAccountRecord> UserAccountRecords { get; set; }
         public virtual DbSet<UserToken> UserTokens { get; set; }
 
-//        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//        {
-//            if (!optionsBuilder.IsConfigured)
-//            {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-//                //optionsBuilder.UseSqlServer("Data Source=DESKTOP-0QA4EN0\\SQLEXPRESS;Initial Catalog=MEetAndYou-DB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;");
-//                optionsBuilder.UseSqlServer(System.Configuration.ConfigurationManager.ConnectionStrings["MEetAndYouDatabase"].ConnectionString);
-//            }
-//        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                //optionsBuilder.UseSqlServer("Data Source=DESKTOP-0QA4EN0\\SQLEXPRESS;Initial Catalog=MEetAndYou-DB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;");
+                //optionsBuilder.UseSqlServer(System.Configuration.ConfigurationManager.ConnectionStrings["MEetAndYouDatabase"].ConnectionString);
+                optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["MEetAndYouDatabase"].ConnectionString);
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -197,6 +197,23 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
                     .HasForeignKey(d => d.ItineraryOwner)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("itinOwner_fk");
+
+                entity.HasMany(d => d.Events)
+                    .WithMany(p => p.Itineraries)
+                    .UsingEntity<Dictionary<string, object>>(
+                        "ItineraryEvent",
+                        l => l.HasOne<Event>().WithMany().HasForeignKey("EventId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("ItinEventE_fk"),
+                        r => r.HasOne<Itinerary>().WithMany().HasForeignKey("ItineraryId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("ItinEventI_fk"),
+                        j =>
+                        {
+                            j.HasKey("ItineraryId", "EventId").HasName("ItinEvent_pk");
+
+                            j.ToTable("ItineraryEvent", "MEetAndYou");
+
+                            j.IndexerProperty<int>("ItineraryId").HasColumnName("itineraryID");
+
+                            j.IndexerProperty<int>("EventId").HasColumnName("eventID");
+                        });
 
                 entity.HasMany(d => d.Users)
                     .WithMany(p => p.ItinerariesNavigation)

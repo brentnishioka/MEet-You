@@ -8,14 +8,19 @@ namespace WeatherDemo.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
+        private readonly AuthnManager _authnManager;
+
+        public LoginController(AuthnManager authnManager)
+        {
+            _authnManager = authnManager;
+        }
 
         //Method to login
         [HttpPost]
         [Route("SignIn")]
-        public Object SignIn(string userEmail, string userPassword)
+        public ActionResult<string> SignIn(string userEmail, string userPassword)
         {
-            AuthnManager authnManager = new AuthnManager();
-            string token = authnManager.AuthenticateUser(userEmail, userPassword);
+            string token = _authnManager.AuthenticateUser(userEmail, userPassword);
 
             return Ok(token);
             //return new ObjectResult(new { Value = token });
@@ -23,10 +28,9 @@ namespace WeatherDemo.Controllers
 
         [HttpDelete]
         [Route("SignOut")]
-        public Object SignOut(int userID)
+        public ActionResult<string> SignOut(int userID)
         {
-            AuthnManager authnManager = new AuthnManager();
-            bool isSignOut = authnManager.SignOut(userID);
+            bool isSignOut = _authnManager.SignOut(userID);
 
             return Ok(isSignOut);
         }

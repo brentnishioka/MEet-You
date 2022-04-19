@@ -9,11 +9,12 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
         public Event()
         {
             CategoryNames = new HashSet<Category>();
+            Itineraries = new HashSet<Itinerary>();
         }
 
         public Event(int newID, string name, string description, string address, float price, DateTime dateTime)
         {
-            EventId  = newID;
+            EventId = newID;
             EventName = name;
             Description = description;
             Address = address;
@@ -29,6 +30,8 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
         public DateTime? EventDate { get; set; }
 
         public virtual ICollection<Category> CategoryNames { get; set; }
-
+        // Temporary method to solve circular reference between Itinerary and Event
+        [System.Text.Json.Serialization.JsonIgnore]
+        public virtual ICollection<Itinerary> Itineraries { get; set; }
     }
 }

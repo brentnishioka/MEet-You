@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Pentaskilled.MEetAndYou.DataAccess.Implementation;
 using Pentaskilled.MEetAndYou.Entities.DBModels;
 
 namespace Pentaskilled.MEetAndYou.Managers
 {
     public class CopyManager
     {
-        private readonly _dbContext;
-        private readonly _copyItinerary;
-        public Itinerary LoadItineraryInfo(string itineraryName)
+        private readonly MEetAndYouDBContext _dbContext;
+        private readonly CopyItineraryDAO _copyItineraryDAO;
+
+        public CopyManager(MEetAndYouDBContext dBContext)
         {
             _dbContext = dBContext;
             _copyItineraryDAO = new CopyItineraryDAO();
