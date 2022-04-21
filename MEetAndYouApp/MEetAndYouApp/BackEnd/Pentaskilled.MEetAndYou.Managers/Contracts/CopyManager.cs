@@ -23,7 +23,7 @@ namespace Pentaskilled.MEetAndYou.Managers
         public Itinerary LoadItineraryInfo(int itineraryID)
         {
             //Get the itinerary with that ID
-            Itinerary itinerary = _copyItineraryDAO.GetItinerary(itineraryID).Result;
+            //Itinerary itinerary = _copyItineraryDAO.GetItinerary(itineraryID).Result;
 
             //var itin2 =
             //    (from itin in _dbContext.Itineraries
@@ -36,11 +36,10 @@ namespace Pentaskilled.MEetAndYou.Managers
                  select itin).FirstOrDefault<Itinerary>();
 
             //Get the list of events from the old itinerary
-            ICollection < Event > eventList = itinerary.Events;
-            ICollection<Image> imageList = itinerary.Images;
+            //ICollection < Event > eventList = itinerary.Events;
+            //ICollection<Image> imageList = itinerary.Images;
 
             return itinEager;
         }
-
     }
 }
