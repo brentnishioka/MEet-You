@@ -1,38 +1,28 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Pentaskilled.MEetAndYou.Managers;
+using Pentaskilled.MEetAndYou.Entities;
+using Newtonsoft.Json.Linq;
 
 namespace Pentaskilled.MEetAndYou.API.Controllers
 {
-    [Route("[controller]")]
     [ApiController]
+    [Route("[controller]")]
     public class LoginController : ControllerBase
     {
-        private readonly AuthnManager _authnManager;
+        private AuthnManager _authnManager;
 
-        public LoginController(AuthnManager authnManager)
+        public LoginController()
         {
-            _authnManager = authnManager;
+            _authnManager = new AuthnManager();
         }
 
-        //Method to login
-        [HttpPost]
-        [Route("SignIn")]
-        public ActionResult<string> SignIn(string userEmail, string userPassword)
+        [HttpPost("Login")]
+        public string Login([FromBody] JObject userInfo)
         {
-            string token = _authnManager.AuthenticateUser(userEmail, userPassword);
-
-            return Ok(token);
-            //return new ObjectResult(new { Value = token });
-        }
-
-        [HttpDelete]
-        [Route("SignOut")]
-        public ActionResult<string> SignOut(int userID)
-        {
-            bool isSignOut = _authnManager.SignOut(userID);
-
-            return Ok(isSignOut);
+            var email = userInfo["email"].ToString();
+            var password = userInfo["password"].ToString();
+            return _authnManager.AuthenticateUser(email, password);
         }
     }
 }
