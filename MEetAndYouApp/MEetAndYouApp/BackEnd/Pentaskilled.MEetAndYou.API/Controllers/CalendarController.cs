@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Pentaskilled.MEetAndYou.Entities.DBModels;
 using Pentaskilled.MEetAndYou.Managers;
 namespace Pentaskilled.MEetAndYou.API.Controllers
@@ -8,14 +7,8 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
     [ApiController]
     public class CalendarController : ControllerBase
     {
-        private readonly CalendarManager _calendarManager;
+        private readonly ICalendarManager _calendarManager;
         private readonly MEetAndYouDBContext _dbcontext;
-
-        public class CopyItineraryController : ControllerBase
-        {
-            private readonly CalendarManager _calendarManager;
-            private readonly MEetAndYouDBContext _dbcontext;
-        }
 
         public CalendarController(CalendarManager calendarManager, MEetAndYouDBContext dbcontext)
         {
