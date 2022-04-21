@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Pentaskilled.MEetAndYou.Entities.DBModels;
 using Pentaskilled.MEetAndYou.Managers;
+
 namespace Pentaskilled.MEetAndYou.API.Controllers
 {
     [Route("api/[controller]")]
@@ -10,7 +11,7 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
         private readonly ICalendarManager _calendarManager;
         private readonly MEetAndYouDBContext _dbcontext;
 
-        public CalendarController(CalendarManager calendarManager, MEetAndYouDBContext dbcontext)
+        public CalendarController(ICalendarManager calendarManager, MEetAndYouDBContext dbcontext)
         {
             _calendarManager = calendarManager;
             _dbcontext = dbcontext;

@@ -1,15 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Pentaskilled.MEetAndYou.DataAccess.Implementation;
+﻿using System.Collections.Generic;
 using Pentaskilled.MEetAndYou.Entities.DBModels;
 using Pentaskilled.MEetAndYou.DataAccess; 
-
-
-
 
 namespace Pentaskilled.MEetAndYou.Managers
 {
