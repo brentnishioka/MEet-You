@@ -2,16 +2,20 @@
 using Microsoft.AspNetCore.Mvc;
 using Pentaskilled.MEetAndYou.Entities.DBModels;
 using Pentaskilled.MEetAndYou.Managers;
-
-
-namespace WeatherDemo.Controllers
+namespace Pentaskilled.MEetAndYou.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class CalendarController : ControllerBase
     {
-        private readonly ICalendarManager _calendarManager;
+        private readonly CalendarManager _calendarManager;
         private readonly MEetAndYouDBContext _dbcontext;
+
+        public class CopyItineraryController : ControllerBase
+        {
+            private readonly CalendarManager _calendarManager;
+            private readonly MEetAndYouDBContext _dbcontext;
+        }
 
         public CalendarController(CalendarManager calendarManager, MEetAndYouDBContext dbcontext)
         {

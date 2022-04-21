@@ -1,4 +1,4 @@
-﻿namespace WeatherDemo;
+﻿namespace Pentaskilled.MEetAndYou.API;
 
 public class WeatherForecast
 {
