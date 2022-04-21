@@ -424,3 +424,6 @@ FodyWeavers.xsd
 # BeatPulse healthcheck temp database 
 healthchecksdb
 
+MEetAndYouApp/MEetAndYouApp/BackEnd/WeatherDemo/app.Config
+MEetAndYouApp/MEetAndYouApp/BackEnd/WeatherDemo/app.Config
+MEetAndYouApp/MEetAndYouApp/BackEnd/Pentaskilled.MEetAndYou.DataAccess/Implementation/ConnectionString.cs
