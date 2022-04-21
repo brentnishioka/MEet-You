@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Pentaskilled.MEetAndYou.API.Controllers;
+namespace WeatherDemo.Controllers;
 
 [ApiController]
 [Route("[controller]")]
