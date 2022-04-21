@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace Pentaskilled.MEetAndYou.Entities.DBModels
 {
@@ -22,5 +23,7 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
 
         public virtual ICollection<Event> Events { get; set; }
         public virtual ICollection<UserAccountRecord> Users { get; set; }
+
+        //public EntityState EntityState { get; set; }
     }
 }
