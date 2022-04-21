@@ -27,4 +27,8 @@
     <Folder Include="Models\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Pentaskilled.MEetAndYou.Managers\Pentaskilled.MEetAndYou.Managers.csproj" />
+  </ItemGroup>
+
 </Project>
