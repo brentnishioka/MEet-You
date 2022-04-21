@@ -4,6 +4,7 @@ using Pentaskilled.MEetAndYou.Entities.DBModels;
 using Microsoft.Extensions.Configuration;                   //Ask to see if it is approved
 using Pentaskilled.MEetAndYou.Managers;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -22,7 +23,7 @@ builder.Services.AddControllers();
 //Dependency injection for Controllers
 builder.Services.AddSingleton<AuthnManager>();
 builder.Services.AddSingleton<CopyManager>();
-builder.Services.AddSingleton<CalendarManager>();
+builder.Services.AddSingleton<ICalendarManager, CalendarManager>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

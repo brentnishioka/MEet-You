@@ -5,12 +5,11 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Pentaskilled.MEetAndYou.Entities;
 using Pentaskilled.MEetAndYou.Entities.DBModels;
 
-namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
+namespace Pentaskilled.MEetAndYou.DataAccess
 {
-    public class CalendarDAO
+    public class CalendarDAO : ICalendarDAO
     {
         private string _connectionString;
         private MEetAndYouDBContext _dbContext;

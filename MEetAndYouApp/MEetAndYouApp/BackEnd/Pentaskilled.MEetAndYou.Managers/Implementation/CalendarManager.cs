@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Pentaskilled.MEetAndYou.DataAccess.Implementation;
 using Pentaskilled.MEetAndYou.Entities.DBModels;
+using Pentaskilled.MEetAndYou.DataAccess; 
+
+
 
 
 namespace Pentaskilled.MEetAndYou.Managers
@@ -20,6 +23,7 @@ namespace Pentaskilled.MEetAndYou.Managers
             _dbContext = dBContext;
             _calendarDAO = new CalendarDAO();
         }
+
 
         public List<Itinerary> LoadUserItineraries(int userID)
         {
