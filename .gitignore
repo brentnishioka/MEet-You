@@ -427,3 +427,7 @@ healthchecksdb
 MEetAndYouApp/MEetAndYouApp/BackEnd/WeatherDemo/app.Config
 MEetAndYouApp/MEetAndYouApp/BackEnd/WeatherDemo/app.Config
 MEetAndYouApp/MEetAndYouApp/BackEnd/Pentaskilled.MEetAndYou.DataAccess/Implementation/ConnectionString.cs
+MEetAndYouApp/MEetAndYouApp/BackEnd/Pentaskilled.MEetAndYou.DataAccess/Implementation/ConnectionString.cs
+MEetAndYouApp/MEetAndYouApp/BackEnd/Pentaskilled.MEetAndYou.Entities/app.config
+MEetAndYouApp/MEetAndYouApp/BackEnd/WeatherDemo/app.Config
+MEetAndYouApp/MEetAndYouApp/BackEnd/WeatherDemo/appsettings.json
