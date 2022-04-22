@@ -35,11 +35,25 @@ namespace Pentaskilled.MEetAndYou.Managers
                  where itin.ItineraryId == itineraryID
                  select itin).FirstOrDefault<Itinerary>();
 
+            //Itinerary itin5 =
+            //     (from itin in _dbContext.Itineraries.Include("Users")
+            //     where itin.ItineraryId == itineraryID
+            //     select itin).FirstOrDefault<Itinerary>();
+
             //Get the list of events from the old itinerary
-            ICollection < Event > eventList = itinerary.Events;
-            ICollection<Image> imageList = itinerary.Images;
+            //ICollection< Event > eventList = itinerary.Events;
+            //ICollection<Image> imageList = itinerary.Images;
+
+            //_dbContext.UserAccountRecords.FindAsync(3);
+            //itinEager.Users.Remove(new UserAccountRecord());
+
+            //Itinerary itin6 = new Itinerary();
+            //_dbContext.Entry(itin6).State = EntityState.Modified;
+            //_dbContext.SaveChanges();
+            //List<UserAccountRecord> userList = itin5.Users.ToList();
 
             return itinEager;
+
         }
 
     }
