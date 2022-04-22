@@ -63,8 +63,8 @@ namespace Pentaskilled.MEetAndYou.Managers
 
                     // Save the token to the database using userID
 
-                    //int userID = _umDAO.GetUserIDByEmail(userEmail).Result;
-                    int userID = 2;
+                    int userID = _umDAO.GetUserIDByEmail(userEmail).Result;
+                    //int userID = 2;
                     bool saveResult = _authnDAO.SaveToken(userID, userToken).Result;
                     List<string> roles = _authzDAO.GetRoles(userID);
 
