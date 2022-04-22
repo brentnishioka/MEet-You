@@ -23,6 +23,7 @@ builder.Services.AddControllers();
 builder.Services.AddSingleton<AuthnManager>();
 builder.Services.AddSingleton<CopyManager>();
 builder.Services.AddSingleton<SuggestionManager>();
+//builder.Services.AddSingleton<ISuggestionManager, ImprovedSuggestionManager>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

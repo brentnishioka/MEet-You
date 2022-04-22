@@ -20,6 +20,20 @@ namespace Pentaskiled.MEetAndYou.API.Controllers
         [Route("Suggestion/GetSuggestion")]
         public ActionResult<JObject> GetEventCat()
         {
+            //if (token == null)
+            //{
+            //    return BadRequest("Invalid Token");
+            //}
+            //bool isAuthroized = _authzManager.IsAuthorized();
+            //if (isAuthroized == false)
+            //{
+            //    return BadRequest("Not authorized");
+            //    throw new HttpResponseException();
+            //}
+            //else
+            //{
+            //    // Call the manager to execute the feature. 
+            //}
             JObject result = _suggestionManager.GetEventByCategory();
             return result;
         }
