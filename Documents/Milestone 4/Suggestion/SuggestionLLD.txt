@@ -1,0 +1,59 @@
+title Suggestion Sequence Diagram (Save Event)
+
+participant FrontEnd #green
+participant SuggestionController #orange
+participant AuthorizationManager #red
+
+participant SuggestionManager #lightgreen
+
+participant EventAPIService #cyan
+participant Event #blue
+participant SuggestionDAO #lightblue
+participant SuggestionResponse #brown
+
+autoactivation
+
+SuggestionController->AuthorizationManager:Dependencies Injection: new AuthorizationManager( )
+AuthorizationManager->AuthorizationManager:AuthorizationManager( )
+AuthorizationManager-->SuggestionController:return _authzManager
+SuggestionController->SuggestionManager:Dependencies Injection: new SuggestionManager( )
+SuggestionManager->SuggestionManager:SuggestionManager( )
+SuggestionManager->EventAPIService: new EventAPIService( )
+EventAPIService->EventAPIService:EventAPIService( )
+EventAPIService-->SuggestionManager:return _eventAPIService
+SuggestionManager->SuggestionDAO: new SuggestionDAO( )
+SuggestionDAO->SuggestionDAO:SuggestionDAO( )
+SuggestionDAO-->SuggestionManager:return _suggestionDAO
+SuggestionManager-->SuggestionController:return _suggestionManager
+
+FrontEnd->SuggestionController:HTTP Header(int userID, string token, string claimRole) \n(string category, string location, DateTime date)
+
+// The start of API call
+SuggestionController->SuggestionController:ActionResult<SuggestionResponse> GetEvent\n(string category, string location, DateTime date)
+group if (token == null)
+SuggestionController-->FrontEnd:return BadRequest("Inavalid Token")
+end 
+SuggestionController->SuggestionController:bool isAuthorized = _authzManager.IsAuthorized\n(int userID, string token, string claimRole)
+
+group if (isAuthorized == false)
+SuggestionController-->FrontEnd:return BadRequset\n("Not authorized to use access this feature")
+end
+
+//
+group else
+//Instantiate necessary classes
+
+SuggestionManager->SuggestionManager:SuggestionResponse SuggestionManager.GetEvent\n(string cat, string location, Datetime date)
+SuggestionManager->EventAPIService: JObject EventAPIService.GetEvent(string query)
+EventAPIService-->SuggestionManager:return eventResult
+
+//Conver JSON object to Event
+SuggestionManager->SuggestionDAO:SuggestionResponse SuggestionDAO.ParseJSON(JObject o)
+SuggestionDAO->SuggestionResponse:new SuggestionReponse\n(string message, bool isSuccessful, List<Event> data)
+SuggestionResponse->SuggestionResponse:SuggestionReponse\n(string message, bool isSuccessful, List<Event> data)
+SuggestionResponse-->SuggestionDAO:return suggestionReponse
+SuggestionDAO-->SuggestionManager: return suggestionResponse
+SuggestionManager-->SuggestionController: return suggestionResponse
+SuggestionController-->FrontEnd:return suggestionResponse
+end
+
