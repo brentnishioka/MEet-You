@@ -9,7 +9,7 @@ using PentaSkilled.MEetAndYou.Authorization.Model;
 
 namespace Pentaskilled.MEetAndYou.Managers
 {
-    public class AuthorizationManager
+    public class AuthorizationManager : IAuthorizationManager
     {
         private IAuthorizeService _authzService;
         private IAuthorizationDAO _authzDAO;

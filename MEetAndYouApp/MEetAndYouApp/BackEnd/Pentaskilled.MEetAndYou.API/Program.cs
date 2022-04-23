@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Pentaskilled.MEetAndYou.DataAccess;
 using Pentaskilled.MEetAndYou.Entities.DBModels;
 using Pentaskilled.MEetAndYou.Managers;
 
@@ -20,7 +21,9 @@ builder.Services.AddControllers();
 //Dependency injection for Controllers
 builder.Services.AddSingleton<AuthnManager>();
 builder.Services.AddSingleton<CopyManager>();
+builder.Services.AddSingleton<IAuthorizationManager, AuthorizationManager>();
 builder.Services.AddSingleton<ICalendarManager, CalendarManager>();
+builder.Services.AddSingleton<ICalendarDAO, CalendarDAO>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
