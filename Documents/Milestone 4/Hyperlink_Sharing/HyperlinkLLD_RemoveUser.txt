@@ -36,7 +36,7 @@ HyperlinkController-->FrontEnd:throw new BadRequest\n("Not authorized to use acc
 end
 
 group else
-HyperlinkManager->HyperlinkManager:HyperlinkResponse HyperlinkManager.AddUserToItinerary\n(string email, int itineraryID)
+HyperlinkManager->HyperlinkManager:HyperlinkResponse HyperlinkManager.RemoveUserFromtinerary\n(string email, int itineraryID)
 
 // Input Validation
 HyperlinkManager->HyperlinkManager:HyperlinkResponse HyperlinkManager.IsValidEmail(string email)
@@ -50,7 +50,7 @@ MicrosoftSQL Server->MicrosoftSQL Server:SQL Commands
 MicrosoftSQL Server-->HyperlinkDAO: return userAccountRecord
 
 // Add UserAccountRecord to Intinerary
-HyperlinkManager->HyperlinkDAO:HyperlinkResponse HyperlinkDAO.AddUserToItinerary(UserAccountRecord userAccountRecord, int itineraryID)
+HyperlinkManager->HyperlinkDAO:HyperlinkResponse HyperlinkDAO.RemoveUserFromItinerary(UserAccountRecord userAccountRecord, int itineraryID)
 HyperlinkDAO->HyperlinkDAO:Itinerary itin = await _dbContext.Itineraries.FindAsync(itineraryID)\n itin.Users.Remove(userAccountRecord)\n _dbcontext.Entry(itin).State = EntityState.Modified;\n await _dbcontext.SaveChangesAsync();
 
 // Instantiate HyperlinkResponse
