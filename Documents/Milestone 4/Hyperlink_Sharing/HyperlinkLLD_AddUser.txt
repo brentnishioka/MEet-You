@@ -43,14 +43,14 @@ HyperlinkManager->HyperlinkManager:HyperlinkResponse HyperlinkManager.IsValidEma
 HyperlinkManager->HyperlinkManager:HyperlinkResponse HyperlinkManager.IsValidID(int itineraryID)
 
 // Find UserAcountRecord by Email
-HyperlinkManager->HyperlinkDAO:UserAccountRecord HyperlinkDAO.GetUserAcountByEmail(string email)
+HyperlinkManager->HyperlinkDAO:async UserAccountRecord HyperlinkDAO.GetUserAcountByEmail(string email)
 
-HyperlinkDAO->MicrosoftSQL Server:UserAccountRecord userAccountRecord =                                     \nfrom user in _dbContext.Itineraries                  \nwhere user.Email == email                                 \nselect user).FirstOrDefault<UserAccountRecord>()
+HyperlinkDAO->MicrosoftSQL Server:UserAccountRecord userAccountRecord =                                     \nawait ((from user in _dbContext.Itineraries                  \nwhere user.Email == email                                 \nselect user).FirstOrDefaultAsync<UserAccountRecord>())
 MicrosoftSQL Server->MicrosoftSQL Server:SQL Commands
 MicrosoftSQL Server-->HyperlinkDAO: return userAccountRecord
 
 // Add UserAccountRecord to Intinerary
-HyperlinkManager->HyperlinkDAO:HyperlinkResponse HyperlinkDAO.AddUserToItinerary(UserAccountRecord userAccountRecord, int itineraryID)
+HyperlinkManager->HyperlinkDAO:async HyperlinkResponse HyperlinkDAO.AddUserToItinerary(UserAccountRecord userAccountRecord, int itineraryID)
 HyperlinkDAO->HyperlinkDAO:Itinerary itin = await _dbContext.Itineraries.FindAsync(itineraryID)\n itin.Users.Add(userAccountRecord)\n _dbcontext.Entry(itin).State = EntityState.Modified;\n await _dbcontext.SaveChangesAsync();
 
 // Instantiate HyperlinkResponse
