@@ -29,7 +29,7 @@ SuggestionManager-->SuggestionController:return _suggestionManager
 FrontEnd->SuggestionController:HTTP Header(int userID, string token, string claimRole) \n(string category, string location, DateTime date)
 
 // The start of API call
-SuggestionController->SuggestionController:ActionResult<SuggestionResponse> GetEvent\n(string category, string location, DateTime date)
+SuggestionController->SuggestionController:async ActionResult<SuggestionResponse> GetEvent\n(string category, string location, DateTime date)
 group if (token == null)
 SuggestionController-->FrontEnd:return BadRequest("Inavalid Token")
 end 
@@ -43,12 +43,12 @@ end
 group else
 //Instantiate necessary classes
 
-SuggestionManager->SuggestionManager:SuggestionResponse SuggestionManager.GetEvent\n(string cat, string location, Datetime date)
-SuggestionManager->EventAPIService: JObject EventAPIService.GetEvent(string query)
+SuggestionManager->SuggestionManager:async SuggestionResponse SuggestionManager.GetEvent\n(string cat, string location, Datetime date)
+SuggestionManager->EventAPIService:async JObject EventAPIService.GetEvent(string query)
 EventAPIService-->SuggestionManager:return eventResult
 
 //Conver JSON object to Event
-SuggestionManager->SuggestionDAO:SuggestionResponse SuggestionDAO.ParseJSON(JObject o)
+SuggestionManager->SuggestionDAO:async SuggestionResponse SuggestionDAO.ParseJSON(JObject o)
 SuggestionDAO->SuggestionResponse:new SuggestionReponse\n(string message, bool isSuccessful, List<Event> data)
 SuggestionResponse->SuggestionResponse:SuggestionReponse\n(string message, bool isSuccessful, List<Event> data)
 SuggestionResponse-->SuggestionDAO:return suggestionReponse
