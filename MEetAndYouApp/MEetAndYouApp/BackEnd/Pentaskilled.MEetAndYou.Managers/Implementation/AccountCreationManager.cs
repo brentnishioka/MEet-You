@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Pentaskilled.MEetAndYou.Entities;
 using Pentaskilled.MEetAndYou.DataAccess;
+using Pentaskilled.MEetAndYou.DataAccess.Implementation;
+using Pentaskilled.MEetAndYou.Entities;
 using Pentaskilled.MEetAndYou.Services.Contracts;
 using Pentaskilled.MEetAndYou.Services.Implementation;
-using Pentaskilled.MEetAndYou.DataAccess.Implementation;
 
 namespace Pentaskilled.MEetAndYou.Managers
 {
@@ -31,7 +27,7 @@ namespace Pentaskilled.MEetAndYou.Managers
 
                 UMManager _UMManager = new UMManager();
 
-                AccountCreationDAO ACManager =  new AccountCreationDAO();   
+                AccountCreationDAO ACManager = new AccountCreationDAO();
 
                 user.Email = email;
                 user.Password = password;
@@ -47,9 +43,9 @@ namespace Pentaskilled.MEetAndYou.Managers
                     }
 
                 }
-             
 
-               
+
+
             }
             catch (Exception)
             {
@@ -58,14 +54,14 @@ namespace Pentaskilled.MEetAndYou.Managers
             return "Username is not available.";
         }
 
-       /// <summary>
-       /// Creates user based off account registration
-       /// </summary>
-       /// <param name="email">User given email</param>
-       /// <param name="password">User generated password</param>
-       /// <param name="phoneNumber">User given phone number</param>
-       /// <returns>Successful account creation</returns>
-       /// <exception cref="Exception"></exception>
+        /// <summary>
+        /// Creates user based off account registration
+        /// </summary>
+        /// <param name="email">User given email</param>
+        /// <param name="password">User generated password</param>
+        /// <param name="phoneNumber">User given phone number</param>
+        /// <returns>Successful account creation</returns>
+        /// <exception cref="Exception"></exception>
         public string BeginAccountCreation(string email, string password, string phoneNumber)
         {
 
@@ -108,7 +104,7 @@ namespace Pentaskilled.MEetAndYou.Managers
                 //_UMManager._UMService.IsUserCreated(user);
                 if (IsAccountCreated)
                 {
-                        
+
                     _authnService.sendOTP(user.PhoneNumber, userOTP);
 
                     string OTP = Console.ReadLine();
@@ -125,7 +121,7 @@ namespace Pentaskilled.MEetAndYou.Managers
                     }
                 }
 
-              
+
             }
             catch (Exception)
             {
@@ -136,6 +132,6 @@ namespace Pentaskilled.MEetAndYou.Managers
         }
 
 
-        
+
     }
 }

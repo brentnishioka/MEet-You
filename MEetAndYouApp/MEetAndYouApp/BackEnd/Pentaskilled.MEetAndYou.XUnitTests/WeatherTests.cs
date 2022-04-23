@@ -1,7 +1,6 @@
-﻿using Xunit;
-using System;
-using Pentaskilled.MEetAndYou.DataAccess.Implementation;
+﻿using Pentaskilled.MEetAndYou.DataAccess.Implementation;
 using Pentaskilled.MEetAndYou.Services.Implementation;
+using Xunit;
 
 namespace Pentaskilled.MEetAndYou.XUnitTests
 {

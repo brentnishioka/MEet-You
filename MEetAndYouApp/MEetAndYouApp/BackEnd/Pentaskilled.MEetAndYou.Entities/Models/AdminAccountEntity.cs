@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Pentaskilled.MEetAndYou.Entities
+﻿namespace Pentaskilled.MEetAndYou.Entities
 {
     public class AdminAccountEntity
     {
@@ -9,7 +7,7 @@ namespace Pentaskilled.MEetAndYou.Entities
 
         // The email of a registered user
         public string Email { get; set; }
-        
+
         public string Password { get; set; }
     }
 }

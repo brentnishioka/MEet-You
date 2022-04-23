@@ -1,7 +1,5 @@
-﻿using System.Configuration;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Pentaskilled.MEetAndYou.Entities.DBModels;
-using Microsoft.Extensions.Configuration;                   //Ask to see if it is approved
 using Pentaskilled.MEetAndYou.Managers;
 
 var builder = WebApplication.CreateBuilder(args);

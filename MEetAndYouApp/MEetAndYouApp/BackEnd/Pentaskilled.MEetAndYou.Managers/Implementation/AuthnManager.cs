@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
+using Pentaskilled.MEetAndYou.DataAccess;
 using Pentaskilled.MEetAndYou.Services.Contracts;
 using Pentaskilled.MEetAndYou.Services.Implementation;
-using Pentaskilled.MEetAndYou.DataAccess;
-using System.Data.SqlClient;
 
 namespace Pentaskilled.MEetAndYou.Managers
 {
@@ -67,7 +63,7 @@ namespace Pentaskilled.MEetAndYou.Managers
             {
                 throw new Exception(ex.Message);
             }
-            catch(Exception ex) when (!isOTPValid)
+            catch (Exception ex) when (!isOTPValid)
             {
                 throw new Exception(ex.Message);
             }
@@ -93,7 +89,7 @@ namespace Pentaskilled.MEetAndYou.Managers
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception when Signing Out" + "\n" + ex.Message );
+                Console.WriteLine("Exception when Signing Out" + "\n" + ex.Message);
                 return false;
             }
             return isSignOut;

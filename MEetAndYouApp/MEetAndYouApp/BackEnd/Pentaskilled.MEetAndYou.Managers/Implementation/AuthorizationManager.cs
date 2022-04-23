@@ -1,25 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Security.Principal;
-using System.Security.Permissions;
-using System.Threading;
-using Pentaskilled.MEetAndYou.Services.Implementation;
+using System.Data.SqlClient;
 using Pentaskilled.MEetAndYou.DataAccess;
 using Pentaskilled.MEetAndYou.DataAccess.Contracts;
 using PentaSkilled.MEetAndYou.Authorization.Contracts;
-using PentaSkilled.MEetAndYou.Authorization.Model;
-using System.Data.SqlClient;
 using PentaSkilled.MEetAndYou.Authorization.Implementation;
+using PentaSkilled.MEetAndYou.Authorization.Model;
 
 namespace Pentaskilled.MEetAndYou.Managers
 {
     public class AuthorizationManager
     {
-        private  IAuthorizeService _authzService;
-        private  IAuthorizationDAO _authzDAO;
+        private IAuthorizeService _authzService;
+        private IAuthorizationDAO _authzDAO;
 
         public AuthorizationManager()
         {

@@ -13,7 +13,7 @@ public class Program
         Console.WriteLine(DateTime.UtcNow.ToString());
 
         AuthnDAO authnDAO = new AuthnDAO();
-        AuthorizationDAO authzDAO = new AuthorizationDAO(); 
+        AuthorizationDAO authzDAO = new AuthorizationDAO();
         AuthnService authnService = new AuthnService();
         AuthorizationManager authzController = new AuthorizationManager();
         CopyItineraryDAO copyItinDAO = new CopyItineraryDAO();

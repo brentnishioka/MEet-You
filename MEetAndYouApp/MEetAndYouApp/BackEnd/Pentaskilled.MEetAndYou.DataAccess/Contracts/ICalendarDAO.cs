@@ -6,6 +6,6 @@ namespace Pentaskilled.MEetAndYou.DataAccess
 {
     public interface ICalendarDAO
     {
-        Task<List<Itinerary>> GetUserItineraries(int userID); 
+        Task<List<Itinerary>> GetUserItineraries(int userID);
     }
 }

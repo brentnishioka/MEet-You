@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Pentaskilled.MEetAndYou.DataAccess;
-using Pentaskilled.MEetAndYou.DataAccess.Contracts;
 using Pentaskilled.MEetAndYou.Managers;
 using Pentaskilled.MEetAndYou.Services.Implementation;
 using Xunit;
@@ -25,14 +21,15 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             //Arrange
             AuthorizationDAO AuthzDAO = new AuthorizationDAO();
             AuthzDAO.ConnectionString = new ConnectionString().ToString();
-            List<string> expectedList = new List<string>{ "Admin", "User" };
+            List<string> expectedList = new List<string> { "Admin", "User" };
 
             //Act
             _output.WriteLine("result " + AuthzDAO.ConnectionString);
             List<string> actualList = AuthzDAO.GetRoles(2);
             _output.WriteLine("Resulting roles: ");
             _output.WriteLine("count: " + actualList.Count);
-            foreach (string r in actualList) {
+            foreach (string r in actualList)
+            {
                 _output.WriteLine(r);
             }
 

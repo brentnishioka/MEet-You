@@ -1,16 +1,13 @@
-﻿using Xunit;
+﻿using System;
 using Pentaskilled.MEetAndYou.DataAccess;
-using Pentaskilled.MEetAndYou.Entities;
 using Pentaskilled.MEetAndYou.Managers;
 using Pentaskilled.MEetAndYou.Services.Contracts;
 using Pentaskilled.MEetAndYou.Services.Implementation;
-using System;
-using System.Diagnostics;
-using System.IO;
+using Xunit;
 
 
 namespace Pentaskilled.MEetAndYou.XUnitTests
-{   
+{
     public class AuthnTests
     {
         [Fact]
@@ -21,8 +18,8 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             string password = "jimothy235!!";
             bool accountExists = true;
 
-            Assert.Equal(accountExists, _AuthnDAO.ValidateCredentials(email, password).Result); 
-        } 
+            Assert.Equal(accountExists, _AuthnDAO.ValidateCredentials(email, password).Result);
+        }
 
         [Fact]
         public void verifyAuthnManager()
@@ -30,7 +27,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             AuthnManager authnManager = new AuthnManager();
             string returnVal = authnManager.AuthenticateUser("jdcramos@gmail.com", "jimothy235!!");
             Assert.NotNull(returnVal);
-            
+
         }
 
         [Fact]

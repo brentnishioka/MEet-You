@@ -1,11 +1,8 @@
-﻿using Pentaskilled.MEetAndYou.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.SqlClient;
+﻿using System;
 using System.Data;
+using System.Data.SqlClient;
+using System.Threading.Tasks;
+using Pentaskilled.MEetAndYou.Entities;
 
 namespace Pentaskilled.MEetAndYou.DataAccess
 {
@@ -28,11 +25,11 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         ///     True -> the UserAccount is inserted into the database successfully.
         ///     False -> the UserAccount is not successfully inserted into the database.
         /// </returns>
-       
+
         public bool IsUserCreated(UserAccountEntity user)
         {
             _connectionString = GetConnectionString();
-            bool isSuccessfullyCreated; 
+            bool isSuccessfullyCreated;
 
             try
             {
@@ -71,7 +68,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         public bool IsUserEmailUpdated(int id, string newEmail)
         {
             _connectionString = GetConnectionString();
-            bool isSuccessfullyUpdated; 
+            bool isSuccessfullyUpdated;
 
             try
             {
@@ -108,7 +105,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         public bool IsUserPasswordUpdated(int id, string newPassword)
         {
             _connectionString = GetConnectionString();
-            bool isSuccessfullyUpdated; 
+            bool isSuccessfullyUpdated;
 
             try
             {
@@ -144,7 +141,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         public bool IsUserPhoneUpdated(int id, string newPhoneNum)
         {
             _connectionString = GetConnectionString();
-            bool isSuccessfullyUpdated; 
+            bool isSuccessfullyUpdated;
 
             try
             {
@@ -179,7 +176,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         public bool IsUserDeleted(int id)
         {
             _connectionString = GetConnectionString();
-            bool isSuccessfullyDeleted; 
+            bool isSuccessfullyDeleted;
 
             try
             {
@@ -542,7 +539,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                     command.Parameters.Add("@active", SqlDbType.Bit).Value = user.Active;
 
                     connection.Open();
-                    rowsAffected = (int) command.ExecuteScalar();
+                    rowsAffected = (int)command.ExecuteScalar();
                     connection.Close();
                 }
             }
