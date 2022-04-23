@@ -1,0 +1,65 @@
+ title Hyperlink Sharing LLD (Add User)
+
+participant FrontEnd #lightgreen
+participant HyperlinkController #lightpink
+participant AuthorizationManager #lightsalmon
+participant HyperlinkManager #lightgreen
+participant HyperlinkDAO #lightblue
+participant BaseResponse #lightcoral
+participant MicrosoftSQL Server #gray
+
+autoactivation 
+HyperlinkController->AuthorizationManager:Dependency Injection: new AuthorizationManager( )
+AuthorizationManager->AuthorizationManager:AuthorizationManager( )
+AuthorizationManager-->HyperlinkController:return _authzManager
+
+HyperlinkController->HyperlinkManager:Dependency Injection: new HyperlinkManager( )
+HyperlinkManager->HyperlinkManager:HyperlinkManager( )
+//Instantiate classes
+HyperlinkManager->HyperlinkDAO: new HyperlinkDAO( )
+HyperlinkDAO->HyperlinkDAO:HyperlinkDAO( )
+HyperlinkDAO-->HyperlinkManager:return _hyperlinkDAO
+HyperlinkManager-->HyperlinkController:return _hyperlinkManager
+
+
+FrontEnd->HyperlinkController:HTTP Header(int userID, string token, string claimRole) \n(string email, int itineraryID)
+
+
+HyperlinkController->HyperlinkController:ActionResult<BaseResponse> AddShare( )
+group if (token == null)
+HyperlinkController-->FrontEnd:throw new BadRequest("Invalid Token")
+end 
+HyperlinkController->HyperlinkController:bool isAuthorized = _authzManager.IsAuthorized\n(int userID, string token, string claimRole)
+
+group if (isAuthorized == false)
+HyperlinkController-->FrontEnd:throw new BadRequest\n("Not authorized to use access this feature")
+end
+
+group else
+HyperlinkManager->HyperlinkManager:BaseResponse HyperlinkManager.AddUserToItinerary\n(string email, int itineraryID)
+
+// Input Validation
+HyperlinkManager->HyperlinkManager:BaseResponse HyperlinkManager.IsValidEmail(string email)
+HyperlinkManager->HyperlinkManager:BaseResponse HyperlinkManager.IsValidID(int itineraryID)
+
+// Find UserAcountRecord by Email
+HyperlinkManager->HyperlinkDAO:UserAccountRecord HyperlinkDAO.GetUserAcountByEmail(string email)
+
+HyperlinkDAO->MicrosoftSQL Server:UserAccountRecord userAccountRecord =                                     \nfrom user in _dbContext.Itineraries                  \nwhere user.Email == email                                 \nselect user).FirstOrDefault<UserAccountRecord>()
+MicrosoftSQL Server->MicrosoftSQL Server:SQL Commands
+MicrosoftSQL Server-->HyperlinkDAO: return userAccountRecord
+
+// Add UserAccountRecord to Intinerary
+HyperlinkManager->HyperlinkDAO:BaseResponse HyperlinkDAO.AddUserToItinerary(UserAccountRecord userAccountRecord, int itineraryID)
+HyperlinkDAO->HyperlinkDAO:Itinerary itin = await _dbContext.Itineraries.FindAsync(itineraryID)\n itin.Users.add(userAccountRecord)\n _dbcontext.Entry(itin).State = EntityState.Modified;\n await _dbcontext.SaveChangesAsync();
+
+// Instantiate BaseResponse
+HyperlinkDAO->BaseResponse:new BaseReponse\n(string message, bool isSuccessful)
+BaseResponse->BaseResponse:BaseReponse\n(string message, bool isSuccessful)
+BaseResponse-->HyperlinkDAO:return baseResponse
+
+
+HyperlinkDAO-->HyperlinkManager:return baseResponse
+HyperlinkManager-->HyperlinkController:return baseResponse
+HyperlinkController-->FrontEnd:return baseResponse
+end
