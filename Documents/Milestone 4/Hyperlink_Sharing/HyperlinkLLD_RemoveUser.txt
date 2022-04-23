@@ -25,7 +25,7 @@ HyperlinkManager-->HyperlinkController:return _hyperlinkManager
 FrontEnd->HyperlinkController:HTTP Header(int userID, string token, string claimRole) \n(string email, int itineraryID)
 
 
-HyperlinkController->HyperlinkController:ActionResult<HyperlinkResponse> RemoveShare( )
+HyperlinkController->HyperlinkController:ActionResult<HyperlinkResponse> RemoveUser( )
 group if (token == null)
 HyperlinkController-->FrontEnd:throw new BadRequest("Invalid Token")
 end 
