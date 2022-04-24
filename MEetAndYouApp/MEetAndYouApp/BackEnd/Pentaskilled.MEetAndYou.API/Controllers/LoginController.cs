@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Pentaskilled.MEetAndYou.Entities.DBModels;
 using Pentaskilled.MEetAndYou.Managers;
 using System.Web.Http.Cors;
 
@@ -19,11 +22,12 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
         //Method to login
         [HttpPost]
         [Route("SignIn")]
-        public ActionResult<string> SignIn(string userEmail, string userPassword)
+        public ActionResult<AuthnResponse> SignIn(string userEmail, string userPassword)
         {
-            string token = _authnManager.AuthenticateUser(userEmail, userPassword);
+            AuthnResponse token = _authnManager.AuthenticateUser(userEmail, userPassword);
 
-            return Ok(token);
+            return token;
+
             //return new ObjectResult(new { Value = token });
         }
 

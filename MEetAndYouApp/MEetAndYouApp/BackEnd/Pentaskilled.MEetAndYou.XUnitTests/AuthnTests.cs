@@ -25,7 +25,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         public void verifyAuthnManager()
         {
             AuthnManager authnManager = new AuthnManager();
-            string returnVal = authnManager.AuthenticateUser("jdcramos@gmail.com", "jimothy235!!");
+            AuthnResponse returnVal = authnManager.AuthenticateUser("jdcramos@gmail.com", "jimothy235!!");
             Assert.NotNull(returnVal);
 
         }

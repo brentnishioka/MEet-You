@@ -1,0 +1,38 @@
+title User Profile Dashboard 
+
+participant FrontEnd
+participant UPDController
+participant AuthorizationManager
+participant UPDManager
+participant ItineraryDAO
+participant SQLServer
+
+autoactivation 
+# UPDController has dependency on Authorization Manager
+UPDController->AuthorizationManager: Dependency Injection: AuthorizationManager 
+AuthorizationManager->AuthorizationManager: new AuthorizationManager()
+AuthorizationManager-->UPDController: return authzManager
+FrontEnd ->UPDController: HTTP Headers (int userID, string token, string role)
+
+UPDController ->UPDController: UPData getUPInfo()
+
+UPDController ->UPDController: bool authz = authzManager.IsAuthorized(int userID, string token, string role)
+group if (token == null && authz)
+UPDController-->FrontEnd: return BadRequest("Not authorized or bad token")
+end 
+
+group else
+UPDController ->UPDManager: UPData userProfileData  = UPDManager.getUPData(int userID);
+UPDManager->UPDManager: async UPData getUPData(int userID)
+UPDManager ->ItineraryDAO: List<Itinerary> itineraries = async List<Itinerary> getUserItineraries(int userID)
+ItineraryDAO ->SQLServer: (from itinerary in _dbcontext.Itinerary where itineraryowner == userID).ToList()
+SQLServer -->ItineraryDAO: return List<Itinerary>
+ItineraryDAO -->UPDManager: return List<Itinerary>
+UPDManager->UPDManager: UserAccountRecord user = from user in _dbcontext.UserAccountRecords where UserID == userID
+UPDManager ->UPDManager: UPData userProfileData = new UPData(user, itineraries);
+
+UPDManager -->UPDController: return userProfileData;
+UPDController -->FrontEnd: return userProfileData
+
+end 
+
