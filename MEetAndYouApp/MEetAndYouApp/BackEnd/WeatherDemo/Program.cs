@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Pentaskilled.MEetAndYou.Entities.DBModels;
 using Microsoft.Extensions.Configuration;                   //Ask to see if it is approved
 using Pentaskilled.MEetAndYou.Managers;
+using Pentaskilled.MEetAndYou.DataAccess.Implementation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,9 @@ builder.Services.AddSingleton<AuthnManager>();
 builder.Services.AddSingleton<CopyManager>();
 builder.Services.AddSingleton<SuggestionManager>();
 //builder.Services.AddSingleton<ISuggestionManager, ImprovedSuggestionManager>();
+
+//DAO injection
+builder.Services.AddSingleton<CopyItineraryDAO>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

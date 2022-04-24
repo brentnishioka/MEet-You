@@ -14,10 +14,10 @@ namespace Pentaskilled.MEetAndYou.Managers
         private readonly MEetAndYouDBContext _dbContext;
         private readonly CopyItineraryDAO _copyItineraryDAO;
 
-        public CopyManager(MEetAndYouDBContext dBContext)
+        public CopyManager(MEetAndYouDBContext dBContext, CopyItineraryDAO copyItineraryDAO)
         {
             _dbContext = dBContext;
-            _copyItineraryDAO = new CopyItineraryDAO();
+            _copyItineraryDAO = copyItineraryDAO;
         }
 
         public Itinerary LoadItineraryInfo(int itineraryID)
@@ -52,7 +52,7 @@ namespace Pentaskilled.MEetAndYou.Managers
             //_dbContext.SaveChanges();
             //List<UserAccountRecord> userList = itin5.Users.ToList();
 
-            return itinEager;
+            return itinerary;
 
         }
 

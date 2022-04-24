@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Pentaskilled.MEetAndYou.DataAccess.Implementation;
 using Pentaskilled.MEetAndYou.Entities.DBModels;
 using Pentaskilled.MEetAndYou.Managers;
 
@@ -11,11 +12,13 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
     {
         private readonly CopyManager _copyManager;
         private readonly MEetAndYouDBContext _dbcontext;
+        private readonly CopyItineraryDAO _copyItineraryDAO;
 
-        public CopyItineraryController(CopyManager copyManager, MEetAndYouDBContext dbcontext)
+        public CopyItineraryController(CopyManager copyManager, MEetAndYouDBContext dbcontext, CopyItineraryDAO copyItineraryDAO)
         {
             _copyManager = copyManager;
             _dbcontext = dbcontext;
+            _copyItineraryDAO = copyItineraryDAO;
         }
 
         [HttpGet]
