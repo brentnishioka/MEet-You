@@ -7,10 +7,6 @@ using Pentaskilled.MEetAndYou.Services.Contracts;
 using Pentaskilled.MEetAndYou.Services.Implementation;
 using Pentaskilled.MEetAndYou.DataAccess;
 using System.Data.SqlClient;
-using Pentaskilled.MEetAndYou.DataAccess.Contracts;
-using Pentaskilled.MEetAndYou.Entities.DBModels;
-using Pentaskilled.MEetAndYou.Logging;
-using Pentaskilled.MEetAndYou.Entities;
 
 namespace Pentaskilled.MEetAndYou.Managers
 {
@@ -19,29 +15,22 @@ namespace Pentaskilled.MEetAndYou.Managers
         private readonly IAuthnService _authnService;
         private readonly IAuthnDAO _authnDAO;
         private readonly IUMDAO _umDAO;                 //Needed to get userID using Email
-        private readonly IAuthorizationDAO _authzDAO;
-        private readonly LoggingManager _loggingManager;
 
         public AuthnManager()
         {
             _authnService = new AuthnService();
             _authnDAO = new AuthnDAO();
             _umDAO = new UMDAO();
-            _authzDAO = new AuthorizationDAO();
-            _loggingManager = new LoggingManager(new LoggingService(new LogDAO(), new Log()));
-            
         }
 
         // this method always give the user a token with or without the correct credentials
-        public AuthnResponse AuthenticateUser(string userEmail, string userPassword)
+        public string AuthenticateUser(string userEmail, string userPassword)
         {
             string userToken;
-            AuthnResponse errorMessage = new AuthnResponse();
+            string errorMessage = "Invalid Username or Password";
             bool isInputValid = true;
             bool isCredsValid = true;
             bool isOTPValid = true;
-            AuthnResponse authnResponse = new AuthnResponse();
-            
             try
             {
                 isInputValid = _authnService.validateUserInput(userEmail, userPassword);
@@ -62,16 +51,8 @@ namespace Pentaskilled.MEetAndYou.Managers
                     userToken = _authnService.generateToken();
 
                     // Save the token to the database using userID
-
                     int userID = _umDAO.GetUserIDByEmail(userEmail).Result;
-                    //int userID = 2;
                     bool saveResult = _authnDAO.SaveToken(userID, userToken).Result;
-                    List<string> roles = _authzDAO.GetRoles(userID);
-
-                    // Instantiate the object AutnResponse to return to the front
-                    authnResponse = new AuthnResponse(userID, userToken, roles);
-                    bool logResult = _loggingManager.BeginLogProcess("View", LogLevel.Info, userID, "User Log in to account").Result;
-
                 }
                 else
                 {
@@ -93,9 +74,9 @@ namespace Pentaskilled.MEetAndYou.Managers
 
             if (userToken != null)
             {
-                return authnResponse;
+                return userToken;
             }
-            throw new Exception("Hello World");
+            throw new NullReferenceException();
         }
 
         public bool SignOut(int userID)

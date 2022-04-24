@@ -7,7 +7,7 @@ using Pentaskilled.MEetAndYou.Services.Implementation;
 using System;
 using System.Diagnostics;
 using System.IO;
-using Pentaskilled.MEetAndYou.Entities.DBModels;
+
 
 namespace Pentaskilled.MEetAndYou.XUnitTests
 {   
@@ -28,7 +28,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         public void verifyAuthnManager()
         {
             AuthnManager authnManager = new AuthnManager();
-            AuthnResponse returnVal = authnManager.AuthenticateUser("jdcramos@gmail.com", "jimothy235!!");
+            string returnVal = authnManager.AuthenticateUser("jdcramos@gmail.com", "jimothy235!!");
             Assert.NotNull(returnVal);
             
         }
