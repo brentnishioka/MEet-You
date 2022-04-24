@@ -15,7 +15,12 @@
     <ProjectReference Include="..\PentaSkilled.MEetAndYou.Authorization\PentaSkilled.MEetAndYou.Authorization.csproj" />
     <ProjectReference Include="..\Pentaskilled.MEetAndYou.DataAccess\Pentaskilled.MEetAndYou.DataAccess.csproj" />
     <ProjectReference Include="..\Pentaskilled.MEetAndYou.Entities\Pentaskilled.MEetAndYou.Entities.csproj" />
+    <ProjectReference Include="..\Pentaskilled.MEetAndYou.Logging\Pentaskilled.MEetAndYou.Logging.csproj" />
     <ProjectReference Include="..\Pentaskilled.MEetAndYou.Services\Pentaskilled.MEetAndYou.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="NewFolder\" />
   </ItemGroup>
 
 </Project>

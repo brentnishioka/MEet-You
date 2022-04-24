@@ -19,11 +19,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pentaskilled.MEetAndYou.Ser
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PentaSkilled.MEetAndYou.Authorization", "PentaSkilled.MEetAndYou.Authorization\PentaSkilled.MEetAndYou.Authorization.csproj", "{3E0814FF-7F30-445A-B225-71E5E6B4462A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pentaskiled.MEetAndYou.API", "WeatherDemo\Pentaskiled.MEetAndYou.API.csproj", "{4932BC78-5531-437E-B6B1-6ED94998A3EA}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MEetAndYou.EFCoreEntities", "MEetAndYou.EFCoreEntities\MEetAndYou.EFCoreEntities.csproj", "{9422EDDF-3F18-4619-84DC-664B4439FFAB}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestingZone", "TestingZone\TestingZone.csproj", "{96425944-26D3-403F-95D4-490F62096CD2}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "Pentaskilled.MEetAndYou.FrontEnd", "pentaskilled.meetandyou.frontend\Pentaskilled.MEetAndYou.FrontEnd.esproj", "{13BFF4D9-7228-4B56-8D68-6D4A55E6CD44}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pentaskilled.MEetAndYou.API", "Pentaskilled.MEetAndYou.API\Pentaskilled.MEetAndYou.API.csproj", "{4D595A5D-72C8-49AF-8B40-E26EF14B66FE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,18 +63,20 @@ Global
 		{3E0814FF-7F30-445A-B225-71E5E6B4462A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E0814FF-7F30-445A-B225-71E5E6B4462A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E0814FF-7F30-445A-B225-71E5E6B4462A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4932BC78-5531-437E-B6B1-6ED94998A3EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4932BC78-5531-437E-B6B1-6ED94998A3EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4932BC78-5531-437E-B6B1-6ED94998A3EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4932BC78-5531-437E-B6B1-6ED94998A3EA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9422EDDF-3F18-4619-84DC-664B4439FFAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9422EDDF-3F18-4619-84DC-664B4439FFAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9422EDDF-3F18-4619-84DC-664B4439FFAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9422EDDF-3F18-4619-84DC-664B4439FFAB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{96425944-26D3-403F-95D4-490F62096CD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{96425944-26D3-403F-95D4-490F62096CD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{96425944-26D3-403F-95D4-490F62096CD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{96425944-26D3-403F-95D4-490F62096CD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13BFF4D9-7228-4B56-8D68-6D4A55E6CD44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13BFF4D9-7228-4B56-8D68-6D4A55E6CD44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13BFF4D9-7228-4B56-8D68-6D4A55E6CD44}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{13BFF4D9-7228-4B56-8D68-6D4A55E6CD44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13BFF4D9-7228-4B56-8D68-6D4A55E6CD44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13BFF4D9-7228-4B56-8D68-6D4A55E6CD44}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{4D595A5D-72C8-49AF-8B40-E26EF14B66FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D595A5D-72C8-49AF-8B40-E26EF14B66FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D595A5D-72C8-49AF-8B40-E26EF14B66FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D595A5D-72C8-49AF-8B40-E26EF14B66FE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
