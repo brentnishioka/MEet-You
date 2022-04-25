@@ -1,6 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using Pentaskilled.MEetAndYou.DataAccess;
+using Pentaskilled.MEetAndYou.DataAccess.Contracts;
+using Pentaskilled.MEetAndYou.Entities;
+using Pentaskilled.MEetAndYou.Entities.DBModels;
+using Pentaskilled.MEetAndYou.Logging;
 using Pentaskilled.MEetAndYou.Services.Contracts;
 using Pentaskilled.MEetAndYou.Services.Implementation;
 

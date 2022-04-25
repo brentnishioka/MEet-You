@@ -4,6 +4,8 @@ using Pentaskilled.MEetAndYou.Entities.DBModels;
 using Pentaskilled.MEetAndYou.Managers;
 using System.Web.Http;
 
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -40,12 +42,12 @@ if (app.Environment.IsDevelopment())
 }
 
 // Produciton settings
-if (app.Environment.IsProduction())
+/*if (app.Environment.IsProduction())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+*/
 
 app.UseHttpsRedirection();
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using Pentaskilled.MEetAndYou.DataAccess;
+using Pentaskilled.MEetAndYou.Entities.DBModels;
 using Pentaskilled.MEetAndYou.Managers;
 using Pentaskilled.MEetAndYou.Services.Contracts;
 using Pentaskilled.MEetAndYou.Services.Implementation;

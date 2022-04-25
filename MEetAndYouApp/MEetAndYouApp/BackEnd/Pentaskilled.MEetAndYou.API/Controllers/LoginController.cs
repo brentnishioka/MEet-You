@@ -7,7 +7,7 @@ using System.Web.Http.Cors;
 
 namespace Pentaskilled.MEetAndYou.API.Controllers
 {
-    [EnableCors(origins: "http://mywebclient.azurewebsites.net", headers: "*", methods: "*")]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     [Route("[controller]")]
     [ApiController]
     public class LoginController : ControllerBase
