@@ -1,4 +1,4 @@
-title Suggestion Sequence Diagram (Save Event)
+title Suggestion Sequence Diagram (Save Event List)
 
 participant FrontEnd #green
 participant SuggestionController #orange
@@ -25,10 +25,10 @@ SuggestionDAO->SuggestionDAO:SuggestionDAO( )
 SuggestionDAO-->SuggestionManager:return _suggestionDAO
 SuggestionManager-->SuggestionController:return _suggestionManager
 
-FrontEnd->SuggestionController:HTTP Header(int userID, string token, string claimRole) \n(Event e)
+FrontEnd->SuggestionController:HTTP Header(int userID, string token, string claimRole) \n(List<Event> eList)
 
 // The start of API call
-SuggestionController->SuggestionController:async ActionResult<SuggestionResponse> GetEvent\n(Event selectedEvent)
+SuggestionController->SuggestionController:async ActionResult<SuggestionResponse> SaveEvent\n(List<Event> eList)
 group if (token == null)
 SuggestionController-->FrontEnd:return BadRequest("Inavalid Token")
 end 
@@ -40,9 +40,14 @@ end
 
 //
 group else
-SuggestionController->SuggestionManager:async ActionResult<BaseResponse> SaveEvent(Event e)
-SuggestionManager->SuggestionDAO:async BaseResponse SuggestionDAO.SaveEvent(Event selectedEvent)
+SuggestionController->SuggestionManager:async ActionResult<BaseResponse> SaveEvent(List<Event> eList)
+SuggestionManager->SuggestionDAO:async BaseResponse SuggestionDAO.SaveEvent(List<Event> selectedEvents)
+
+//Loop to save event
+group foreach (Event e in selectedEvents)
 SuggestionDAO->SuggestionDAO:_dbContext.Events.Add(Event e)
+end 
+
 SuggestionDAO->MicrosoftSQL Server:_dbContext.SaveChangesAsync( )
 MicrosoftSQL Server-->SuggestionDAO:return int
 SuggestionDAO->BaseResponse:new BaseReponse(string message, bool isSuccessful)

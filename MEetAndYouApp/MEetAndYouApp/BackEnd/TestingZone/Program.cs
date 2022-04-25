@@ -105,5 +105,15 @@ public class Program
             Console.WriteLine("Exception:");
             Console.WriteLine(ex.ToString());
         }
+
+        //var request = new Yelp.Api.Models.SearchRequest();
+        //request.Latitude = 37.786882;
+        //request.Longitude = -122.399972;
+        //request.Term = "cupcakes";
+        //request.MaxResults = 40;
+        //request.OpenNow = true;
+
+        //var client = new Yelp.Api.Client("API_KEY");
+        //var results = await client.SearchBusinessesAllAsync(request);
     }
 }
