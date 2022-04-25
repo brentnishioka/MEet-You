@@ -9,13 +9,15 @@ function Login(props) {
     const [error, setError] = useState(null);
 
     // handle button click of login form
-    /*const handleLogin = () => {
+    /*const handleLogin = async () => {
         setError(null);
         setLoading(true);
-        axios.post('http://localhost:9000/Login/SignIn', { username: username.value, password: password.value }).then(response => {
+        await axios.post('http://localhost:9000/Login/SignIn', { username: username.value, password: password.value }).then(response => {
+            console.log(response.data)
             setLoading(false);
-            setUserSession(response.data.token, response.data.userID, response.data.roles);
+            setUserSession(response.data.token, response.data.userID, response.data.roles);     
         }).catch(error => {
+            console.log('Error: ', error.response);
             setLoading(false);
             if (error.response.status === 401) setError(error.response.data.message);
             else setError("Something went wrong. Please try again later.");
@@ -25,7 +27,7 @@ function Login(props) {
     const handleLogin = async () => {
         try {
             const response = await axios.post('http://localhost:9000/Login/SignIn', { username: username.value, password: password.value })
-            setUserSession(response.data.token, response.data.userID, response.data.roles);
+            //setUserSession(response.data.token, response.data.userID, response.data.roles);
             console.log(response.data);
         } catch (e) {
             console.log(e);

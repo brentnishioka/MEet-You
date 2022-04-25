@@ -7,9 +7,10 @@ using System.Web.Http.Cors;
 
 namespace Pentaskilled.MEetAndYou.API.Controllers
 {
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
+    
     [Route("[controller]")]
     [ApiController]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class LoginController : ControllerBase
     {
         private readonly AuthnManager _authnManager;

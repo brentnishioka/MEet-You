@@ -3,8 +3,7 @@ using Pentaskilled.MEetAndYou.DataAccess;
 using Pentaskilled.MEetAndYou.Entities.DBModels;
 using Pentaskilled.MEetAndYou.Managers;
 using System.Web.Http;
-
-
+using System.Web.Cors;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +16,18 @@ var connection =
 
 builder.Services.AddDbContext<MEetAndYouDBContext>(options =>
      options.UseSqlServer(connection));
+
+//trying to add cors
+builder.Services.AddCors();
+builder.Services.AddCors(options => {
+    options.AddDefaultPolicy(
+        builder => {
+            builder.WithOrigins("https://*") //change 
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+        });
+});
+
 
 
 builder.Services.AddControllers();
@@ -34,6 +45,24 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+//trying to add cors
+app.UseCors();
+app.UseCors(builder => {
+    builder
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader();
+});
+
+/*app.options('*', function(req, res){
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,HEAD,POST,PATCH');
+    res.header('Access-Control-Allow-Headers',
+    'Authorization,Origin,Referer,Content-Type,Accept,User-Agent');
+    res.sendStatus(200);
+    res.end();
+});*/
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -42,12 +71,13 @@ if (app.Environment.IsDevelopment())
 }
 
 // Produciton settings
-/*if (app.Environment.IsProduction())
+if (app.Environment.IsProduction())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-*/
+
+
 
 app.UseHttpsRedirection();
 

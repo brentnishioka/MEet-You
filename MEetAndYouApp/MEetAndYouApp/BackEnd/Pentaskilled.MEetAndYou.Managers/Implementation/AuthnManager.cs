@@ -50,24 +50,31 @@ namespace Pentaskilled.MEetAndYou.Managers
 
                 isCredsValid = _authnDAO.ValidateCredentials(userEmail, userPassword).Result;
 
-                if (isCredsValid == true)
+                if (isCredsValid == true) //modified this method
                 {
-                    string oneTimePw = _authnService.generateOTP();
-                    //string phoneNum = _authnDAO.GetPhoneNum(userEmail, userPassword).Result;
-                    isOTPValid = _authnService.validateOTP(oneTimePw);
-
                     userToken = _authnService.generateToken();
+                    int userID = _umDAO.GetUserIDByEmail(userEmail).Result;
+                    bool saveResult = _authnDAO.SaveToken(userID, userToken).Result;
+                    List<string> roles = _authzDAO.GetRoles(userID);
+                    authnResponse = new AuthnResponse(userID, userToken, roles);
+
+                    //string oneTimePw = _authnService.generateOTP();
+                    //string phoneNum = _authnDAO.GetPhoneNum(userEmail, userPassword).Result;
+                    //isOTPValid = _authnService.validateOTP(oneTimePw);
+
+                    //userToken = _authnService.generateToken();
 
                     // Save the token to the database using userID
 
-                    int userID = _umDAO.GetUserIDByEmail(userEmail).Result;
+                    //int userID = _umDAO.GetUserIDByEmail(userEmail).Result;
                     //int userID = 2;
-                    bool saveResult = _authnDAO.SaveToken(userID, userToken).Result;
-                    List<string> roles = _authzDAO.GetRoles(userID);
+                    //bool saveResult = _authnDAO.SaveToken(userID, userToken).Result;
+                    //List<string> roles = _authzDAO.GetRoles(userID);
 
                     // Instantiate the object AutnResponse to return to the front
-                    authnResponse = new AuthnResponse(userID, userToken, roles);
-                    bool logResult = _loggingManager.BeginLogProcess("View", LogLevel.Info, userID, "User Log in to account").Result;
+                    //authnResponse = new AuthnResponse(userID, userToken, roles);
+                    //bool logResult = _loggingManager.BeginLogProcess("View", LogLevel.Info, userID, "User Log in to account").Result;
+                    return authnResponse; 
 
                 }
                 else
