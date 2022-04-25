@@ -3,15 +3,25 @@ title Suggestion Sequence Diagram (Save Event)
 participant FrontEnd #green
 participant SuggestionController #orange
 participant AuthorizationManager #red
-
 participant SuggestionManager #lightgreen
-
+participant Validator #purple
 participant EventAPIService #cyan
 participant Event #blue
 participant SuggestionDAO #lightblue
 participant SuggestionResponse #brown
 
+activecolor FrontEnd #green
+activecolor SuggestionController #orange
+activecolor AuthorizationManager #red
+activecolor SuggestionManager #lightgreen
+activecolor EventAPIService #cyan
+activecolor Event #blue
+activecolor SuggestionDAO #lightblue
+activecolor SuggestionResponse #brown
+activecolor Validator #purple
+
 autoactivation
+
 
 SuggestionController->AuthorizationManager:Dependencies Injection: new AuthorizationManager( )
 AuthorizationManager->AuthorizationManager:AuthorizationManager( )
@@ -44,6 +54,17 @@ group else
 //Instantiate necessary classes
 
 SuggestionManager->SuggestionManager:async SuggestionResponse SuggestionManager.GetEvent\n(string cat, string location, Datetime date)
+
+//Input check
+SuggestionManager->Validator:static bool IsStringInputValid(string cat)
+Validator-->SuggestionManager:return true
+SuggestionManager->Validator:static bool IsStringInputValid(string location)
+Validator-->SuggestionManager:return true
+SuggestionManager->Validator:static bool IsDateTimeValid(DateTime date)
+Validator-->SuggestionManager:return true
+
+// Only execute if input check is valid
+group #green if input is valid
 SuggestionManager->EventAPIService:async JObject EventAPIService.GetEvent(string query)
 EventAPIService-->SuggestionManager:return eventResult
 
@@ -56,4 +77,5 @@ SuggestionDAO-->SuggestionManager: return suggestionResponse
 SuggestionManager-->SuggestionController: return suggestionResponse
 SuggestionController-->FrontEnd:return suggestionResponse
 end
+end 
 
