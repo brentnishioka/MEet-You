@@ -31,7 +31,7 @@ namespace Pentaskilled.MEetAndYou.Managers
             //     select new { itin.ItineraryId, itin.ItineraryName, itin.Rating, e.EventId, e.EventName }).ToList();
 
             Itinerary itinEager =
-                (from itin in _dbContext.Itineraries.Include("Events")
+                (from itin in _dbContext.Itineraries.Include("Users")
                  where itin.ItineraryId == itineraryID
                  select itin).FirstOrDefault<Itinerary>();
 
