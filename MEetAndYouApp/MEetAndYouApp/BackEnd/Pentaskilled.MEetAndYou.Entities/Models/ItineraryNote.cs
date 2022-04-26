@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Pentaskilled.MEetAndYou.Entities.Models
 {
-    internal class ItineraryNote
+    public class ItineraryNote
     {
+        public int itineraryID { get; set; }
+        public string note { get; set; }
     }
 }

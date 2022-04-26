@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Pentaskilled.MEetAndYou.Entities.Models
 {
-    internal class UserEventRating
+    public class UserEventRating
     {
+        public int eventID { get; set; }
+        public int itineraryID { get; set; }
+        public int userRating { get; set; }
     }
 }

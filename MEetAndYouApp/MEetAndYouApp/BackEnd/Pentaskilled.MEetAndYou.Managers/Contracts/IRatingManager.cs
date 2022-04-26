@@ -11,7 +11,7 @@ namespace Pentaskilled.MEetAndYou.Managers.Contracts
     {
         BaseResponse CreateRating(int eventID, int itineraryID, int userRating);
         BaseResponse ModifyRating(int eventID, int itineraryID, int userRating);
-        BaseResponse CreateItineraryNote(int itineraryID, string note);
-        BaseResponse ModifyItineraryNote(int itineraryID, string note);
+        BaseResponse CreateItineraryNote(int itineraryID, string noteContent);
+        BaseResponse ModifyItineraryNote(int itineraryID, string noteContent);
     }
 }
