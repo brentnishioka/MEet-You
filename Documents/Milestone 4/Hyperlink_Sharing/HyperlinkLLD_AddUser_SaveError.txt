@@ -1,0 +1,77 @@
+title Hyperlink Sharing LLD (Add User)
+
+participant FrontEnd #lightgreen
+participant HyperlinkController #lightpink
+participant AuthorizationManager #lightsalmon
+participant HyperlinkManager #lightgreen
+participant Validator #lightyellow
+participant HyperlinkDAO #lightblue
+participant HyperlinkResponse #lightcoral
+participant MicrosoftSQL Server #gray
+
+activecolor FrontEnd #lightgreen
+activecolor HyperlinkController #lightpink
+activecolor AuthorizationManager #lightsalmon
+activecolor HyperlinkManager #lightgreen
+activecolor Validator #lightyellow
+activecolor HyperlinkDAO #lightblue
+activecolor HyperlinkResponse #lightcoral
+activecolor MicrosoftSQL Server #gray
+
+autoactivation 
+HyperlinkController->AuthorizationManager:Dependency Injection: new AuthorizationManager( )
+AuthorizationManager->AuthorizationManager:AuthorizationManager( )
+AuthorizationManager-->HyperlinkController:return _authzManager
+
+HyperlinkController->HyperlinkManager:Dependency Injection: new HyperlinkManager( )
+HyperlinkManager->HyperlinkManager:HyperlinkManager( )
+//Instantiate classes
+HyperlinkManager->HyperlinkDAO: new HyperlinkDAO( )
+HyperlinkDAO->HyperlinkDAO:HyperlinkDAO( )
+HyperlinkDAO-->HyperlinkManager:return _hyperlinkDAO
+HyperlinkManager-->HyperlinkController:return _hyperlinkManager
+
+
+FrontEnd->HyperlinkController:HTTP Header(int userID, string token, string claimRole) \n(string email, int itineraryID)
+
+
+HyperlinkController->HyperlinkController:ActionResult<HyperlinkResponse> AddUser( )
+group if (token == null)
+HyperlinkController-->FrontEnd:throw new BadRequest("Invalid Token")
+end 
+HyperlinkController->HyperlinkController:bool isAuthorized = _authzManager.IsAuthorized\n(int userID, string token, string claimRole)
+
+group if (isAuthorized == false)
+HyperlinkController-->FrontEnd:throw new BadRequest\n("Not authorized to use access this feature")
+end
+
+group else
+HyperlinkManager->HyperlinkManager:HyperlinkResponse HyperlinkManager.AddUserToItinerary\n(string email, int itineraryID)
+
+// Input Validation
+HyperlinkManager->Validator:static bool IsEmailValid(string email)
+Validator-->HyperlinkManager:return true
+
+HyperlinkManager->Validator:static bool IsNumericalityValid(int itineraryID)
+Validator-->HyperlinkManager:return true
+
+// Find UserAcountRecord by Email
+HyperlinkManager->HyperlinkDAO:async UserAccountRecord HyperlinkDAO.GetUserAcountByEmail(string email)
+
+HyperlinkDAO->MicrosoftSQL Server:UserAccountRecord userAccountRecord =                                     \nawait ((from user in _dbContext.Itineraries                  \nwhere user.Email == email                                 \nselect user).FirstOrDefaultAsync<UserAccountRecord>())
+MicrosoftSQL Server->MicrosoftSQL Server:SQL Commands
+MicrosoftSQL Server-->HyperlinkDAO: return userAccountRecord
+
+// Add UserAccountRecord to Intinerary
+HyperlinkManager->HyperlinkDAO:async HyperlinkResponse HyperlinkDAO.AddUserToItinerary(UserAccountRecord userAccountRecord, int itineraryID)
+HyperlinkDAO->HyperlinkDAO:Itinerary itin = await _dbContext.Itineraries.FindAsync(itineraryID)\n itin.Users.Add(userAccountRecord)\n _dbcontext.Entry(itin).State = EntityState.Modified;\n await _dbcontext.SaveChangesAsync();
+
+// Input Validation Errors
+alt #red If user already exists
+HyperlinkDAO->HyperlinkResponse:return new HyperlinkResponse("User already added", false, new Itinerary data)
+HyperlinkResponse->HyperlinkResponse:new HyperlinkResponse(string message, bool isSuccessful, Itinerary data)
+HyperlinkResponse-->HyperlinkManager:return hyperlinkResponse
+HyperlinkManager-->HyperlinkController:return hyperlinkResponse
+HyperlinkController-->FrontEnd:return hyperlinkResponse
+end 
+end
