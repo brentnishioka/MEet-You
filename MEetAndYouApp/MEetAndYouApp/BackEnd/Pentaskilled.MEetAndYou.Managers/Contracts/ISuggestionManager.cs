@@ -10,8 +10,8 @@ namespace Pentaskilled.MEetAndYou.Managers.Contracts
 {
     public interface ISuggestionManager
     {
-        ICollection<Event> GetEvents(string category, string location, DateTime date);
-        ICollection<Event> GetRandomEvents();
-        BaseResponse SaveEvent(Event e);
+        ICollection<Event> GetEventsAsync(string category, string location, DateTime date);
+        ICollection<Event> GetRandomEventsAsync();
+        Task<BaseResponse> SaveEventAsync(Event e);
     }
 }

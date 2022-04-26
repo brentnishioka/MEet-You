@@ -11,21 +11,8 @@ namespace Pentaskilled.MEetAndYou.Services.Implementation
 {
     public class EventAPIService : IAPIService
     {
-        private readonly IHttpClientFactory _httpClientFactory;
-
-        public EventAPIService(IHttpClientFactory httpClientFactory)
+        public Task<JObject> GetEventByCategoryAsync(string category, string location, DateTime date)
         {
-            _httpClientFactory = httpClientFactory;
-        }
-        public async Task<JObject> GetEventByCategory(string category, string location, DateTime date)
-        {
-            HttpClient client = _httpClientFactory.CreateClient("EventService API");
-
-            string requestURL = "URL" + category + location + date.ToString();
-            
-            //Send the GET request to yelp api
-            var response = await client.GetAsync(requestURL);
-
             throw new NotImplementedException();
         }
     }
