@@ -1,12 +1,22 @@
- title Hyperlink Sharing LLD (Remove User)
+title Hyperlink Sharing LLD (Remove User)
 
 participant FrontEnd #lightgreen
 participant HyperlinkController #lightpink
 participant AuthorizationManager #lightsalmon
 participant HyperlinkManager #lightgreen
+participant Validator #lightyellow
 participant HyperlinkDAO #lightblue
 participant HyperlinkResponse #lightcoral
 participant MicrosoftSQL Server #gray
+
+activecolor FrontEnd #lightgreen
+activecolor HyperlinkController #lightpink
+activecolor AuthorizationManager #lightsalmon
+activecolor HyperlinkManager #lightgreen
+activecolor Validator #lightyellow
+activecolor HyperlinkDAO #lightblue
+activecolor HyperlinkResponse #lightcoral
+activecolor MicrosoftSQL Server #gray
 
 autoactivation 
 HyperlinkController->AuthorizationManager:Dependency Injection: new AuthorizationManager( )
@@ -39,8 +49,11 @@ group else
 HyperlinkManager->HyperlinkManager:HyperlinkResponse HyperlinkManager.RemoveUserFromtinerary\n(string email, int itineraryID)
 
 // Input Validation
-HyperlinkManager->HyperlinkManager:HyperlinkResponse HyperlinkManager.IsValidEmail(string email)
-HyperlinkManager->HyperlinkManager:HyperlinkResponse HyperlinkManager.IsValidID(int itineraryID)
+HyperlinkManager->Validator:static bool IsEmailValid(string email)
+Validator-->HyperlinkManager:return true
+
+HyperlinkManager->Validator:static bool IsNumericalityValid(int itineraryID)
+Validator-->HyperlinkManager:return true
 
 // Find UserAcountRecord by Email
 HyperlinkManager->HyperlinkDAO:async UserAccountRecord HyperlinkDAO.GetUserAcountByEmail(string email)
