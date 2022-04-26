@@ -1,14 +1,23 @@
-import React, { useState } from 'react';
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
+import React from "react";
+import './App.css';
+import Navbar from "./Components/Navbar";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import SignUp from './pages/signup';
+import Home from './pages/home'
+import MyCalendar from './pages/mycalendar';
 
 function App() {
-    const [value, onChange] = useState(new Date());
-
     return (
-        <div>
-            {<Calendar onChange={onChange} value={value} />}
-        </div>
+        <Router>
+            <Navbar />
+            <Switch>
+                
+                <Route path="/home" component={Home} />
+                <Route path="/calendar" component={MyCalendar} />
+                <Route path="/signup" component={SignUp} />
+               
+            </Switch>
+        </Router>
     );
 }
 
