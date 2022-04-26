@@ -11,7 +11,7 @@ function App() {
         <Router>
             <Navbar />
             <Switch>
-                
+               
                 <Route path="/home" component={Home} />
                 <Route path="/calendar" component={MyCalendar} />
                 <Route path="/signup" component={SignUp} />
