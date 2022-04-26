@@ -54,9 +54,9 @@ HyperlinkManager->Validator:static bool IsEmailValid(string email)
 Validator-->HyperlinkManager:return false
 HyperlinkManager->HyperlinkResponse:return new HyperlinkResponse("Email is invalid", false, new Itinerary data)
 HyperlinkResponse->HyperlinkResponse:new HyperlinkResponse(string message, bool isSuccessful, Itinerary data)
-HyperlinkResponse-->HyperlinkManager:return suggestionResponse
-HyperlinkManager-->HyperlinkController:return suggestionResponse
-HyperlinkController-->FrontEnd:return suggestionResponse
+HyperlinkResponse-->HyperlinkManager:return hyperlinkResponse
+HyperlinkManager-->HyperlinkController:return hyperlinkResponse
+HyperlinkController-->FrontEnd:return hyperlinkResponse
 end 
 
 alt #red If ID is false
@@ -64,8 +64,8 @@ HyperlinkManager->Validator:static bool IsEmailValid(int itineraryID)
 Validator-->HyperlinkManager:return false
 HyperlinkManager->HyperlinkResponse:return new HyperlinkResponse("ID is invalid", false, new Itinerary data)
 HyperlinkResponse->HyperlinkResponse:new HyperlinkResponse(string message, bool isSuccessful, Itinerary data)
-HyperlinkResponse-->HyperlinkManager:return suggestionResponse
-HyperlinkManager-->HyperlinkController:return suggestionResponse
-HyperlinkController-->FrontEnd:return suggestionResponse
+HyperlinkResponse-->HyperlinkManager:return hyperlinkResponse
+HyperlinkManager-->HyperlinkController:return hyperlinkResponse
+HyperlinkController-->FrontEnd:return hyperlinkResponse
 end 
 end
