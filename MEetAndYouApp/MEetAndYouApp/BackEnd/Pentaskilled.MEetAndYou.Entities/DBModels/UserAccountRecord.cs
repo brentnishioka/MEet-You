@@ -21,11 +21,9 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
         public bool Active { get; set; }
         public Guid? Salt { get; set; }
 
-        [System.Text.Json.Serialization.JsonIgnore]
         public virtual ICollection<Itinerary> Itineraries { get; set; }
         public virtual ICollection<UserToken> UserTokens { get; set; }
 
-        [System.Text.Json.Serialization.JsonIgnore]
         public virtual ICollection<Itinerary> ItinerariesNavigation { get; set; }
         public virtual ICollection<Role> Roles { get; set; }
     }

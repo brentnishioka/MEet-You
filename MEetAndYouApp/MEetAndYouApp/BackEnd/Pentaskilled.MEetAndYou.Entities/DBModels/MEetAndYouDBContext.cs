@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -23,8 +22,10 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
         public virtual DbSet<EventLog> EventLogs { get; set; }
         public virtual DbSet<Image> Images { get; set; }
         public virtual DbSet<Itinerary> Itineraries { get; set; }
+        public virtual DbSet<ItineraryNote> ItineraryNotes { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<UserAccountRecord> UserAccountRecords { get; set; }
+        public virtual DbSet<UserEventRating> UserEventRatings { get; set; }
         public virtual DbSet<UserToken> UserTokens { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -32,9 +33,7 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                //optionsBuilder.UseSqlServer("Data Source=DESKTOP-0QA4EN0\\SQLEXPRESS;Initial Catalog=MEetAndYou-DB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;");
-                //optionsBuilder.UseSqlServer(System.Configuration.ConfigurationManager.ConnectionStrings["MEetAndYouDatabase"].ConnectionString);
-                optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["MEetAndYouDatabase"].ConnectionString);
+                optionsBuilder.UseSqlServer("Data Source=meetandyou-db.cyakceoi9n4j.us-west-1.rds.amazonaws.com;Initial Catalog=MEetAndYou-DB;User Id=admin;Password=?MEetAndYou1;Connect Timeout=30;TrustServerCertificate=True;");
             }
         }
 
@@ -43,7 +42,7 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
             modelBuilder.Entity<AdminAccountRecord>(entity =>
             {
                 entity.HasKey(e => e.AdminId)
-                    .HasName("PK__AdminAcc__719FE4E8D92D3466");
+                    .HasName("PK__AdminAcc__719FE4E88D2ED507");
 
                 entity.ToTable("AdminAccountRecords", "MEetAndYou");
 
@@ -121,7 +120,7 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
             modelBuilder.Entity<EventLog>(entity =>
             {
                 entity.HasKey(e => e.LogId)
-                    .HasName("PK__EventLog__5E548648459EF28B");
+                    .HasName("PK__EventLog__5E5486482149FA44");
 
                 entity.ToTable("EventLogs", "MEetAndYou");
 
@@ -233,10 +232,25 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
                         });
             });
 
+            modelBuilder.Entity<ItineraryNote>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("ItineraryNotes", "MEetAndYou");
+
+                entity.Property(e => e.ItineraryId).HasColumnName("itineraryID");
+
+                entity.Property(e => e.NoteContent)
+                    .IsRequired()
+                    .HasMaxLength(300)
+                    .IsUnicode(false)
+                    .HasColumnName("noteContent");
+            });
+
             modelBuilder.Entity<Role>(entity =>
             {
                 entity.HasKey(e => e.Role1)
-                    .HasName("PK__Roles__863D2149F085ACCF");
+                    .HasName("PK__Roles__863D21492235A5A9");
 
                 entity.ToTable("Roles", "MEetAndYou");
 
@@ -249,7 +263,7 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
             modelBuilder.Entity<UserAccountRecord>(entity =>
             {
                 entity.HasKey(e => e.UserId)
-                    .HasName("PK__UserAcco__1788CCAC0D4020A1");
+                    .HasName("PK__UserAcco__1788CCAC45CBEC85");
 
                 entity.ToTable("UserAccountRecords", "MEetAndYou");
 
@@ -278,8 +292,8 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
                     .WithMany(p => p.Users)
                     .UsingEntity<Dictionary<string, object>>(
                         "UserRole",
-                        l => l.HasOne<Role>().WithMany().HasForeignKey("Role").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK__UserRole__role__0F2D40CE"),
-                        r => r.HasOne<UserAccountRecord>().WithMany().HasForeignKey("UserId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK__UserRole__UserID__0E391C95"),
+                        l => l.HasOne<Role>().WithMany().HasForeignKey("Role").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK__UserRole__role__46E78A0C"),
+                        r => r.HasOne<UserAccountRecord>().WithMany().HasForeignKey("UserId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK__UserRole__UserID__47DBAE45"),
                         j =>
                         {
                             j.HasKey("UserId", "Role").HasName("user_rolePK");
@@ -290,6 +304,19 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
 
                             j.IndexerProperty<string>("Role").HasMaxLength(50).IsUnicode(false).HasColumnName("role");
                         });
+            });
+
+            modelBuilder.Entity<UserEventRating>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("UserEventRatings", "MEetAndYou");
+
+                entity.Property(e => e.EventId).HasColumnName("eventID");
+
+                entity.Property(e => e.ItineraryId).HasColumnName("itineraryID");
+
+                entity.Property(e => e.UserRating).HasColumnName("userRating");
             });
 
             modelBuilder.Entity<UserToken>(entity =>

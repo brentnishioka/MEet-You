@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Pentaskilled.MEetAndYou.DataAccess.Contracts;
 using Pentaskilled.MEetAndYou.DataAccess.Implementation;
+using Pentaskilled.MEetAndYou.Entities.DBModels;
 using Pentaskilled.MEetAndYou.Entities.Models;
 using Pentaskilled.MEetAndYou.Services.Contracts;
 

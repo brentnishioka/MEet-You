@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Pentaskilled.MEetAndYou.Entities.Models;
 using Pentaskilled.MEetAndYou.Entities.DBModels;
+using Pentaskilled.MEetAndYou.Entities.Models;
 
 namespace Pentaskilled.MEetAndYou.DataAccess.Contracts
 {
