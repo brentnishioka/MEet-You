@@ -19,6 +19,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
         private MEetAndYouDBContext _dbContext;
 
         // Constructor
+        // Depedencies injectoin for _dbcontext
         public CopyItineraryDAO()
         {
             //var dbOptions = new DbContextOptionsBuilder<MEetAndYouDBContext>().UseSqlServer(_connection).Options;

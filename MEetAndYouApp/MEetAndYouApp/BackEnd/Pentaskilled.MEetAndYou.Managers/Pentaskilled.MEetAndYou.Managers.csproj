@@ -5,16 +5,22 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNet.WebApi.Cors" Version="5.2.7" />
-    <PackageReference Include="Microsoft.Data.SqlClient" Version="4.0.0" />
-    <PackageReference Include="Twilio" Version="5.72.0" />
+    <PackageReference Include="google-search-results-dotnet" Version="2.0.1" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Cors" Version="5.2.8" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="4.1.0" />
+    <PackageReference Include="Twilio" Version="5.74.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\PentaSkilled.MEetAndYou.Authorization\PentaSkilled.MEetAndYou.Authorization.csproj" />
     <ProjectReference Include="..\Pentaskilled.MEetAndYou.DataAccess\Pentaskilled.MEetAndYou.DataAccess.csproj" />
     <ProjectReference Include="..\Pentaskilled.MEetAndYou.Entities\Pentaskilled.MEetAndYou.Entities.csproj" />
+    <ProjectReference Include="..\Pentaskilled.MEetAndYou.Logging\Pentaskilled.MEetAndYou.Logging.csproj" />
     <ProjectReference Include="..\Pentaskilled.MEetAndYou.Services\Pentaskilled.MEetAndYou.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="NewFolder\" />
   </ItemGroup>
 
 </Project>

@@ -10,7 +10,7 @@ using Pentaskilled.MEetAndYou.Entities.DBModels;
 
 namespace Pentaskilled.MEetAndYou.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class EventController : ControllerBase
     {

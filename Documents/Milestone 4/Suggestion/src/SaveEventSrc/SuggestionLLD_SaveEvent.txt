@@ -1,0 +1,54 @@
+title Suggestion Sequence Diagram (Save Event)
+
+participant FrontEnd #green
+participant SuggestionController #orange
+participant AuthorizationManager #red
+participant SuggestionManager #lightgreen
+participant EventAPIService #cyan
+participant Event #blue
+participant SuggestionDAO #lightblue
+participant BaseResponse #brown
+participant MicrosoftSQL Server #grey
+
+autoactivation
+
+SuggestionController->AuthorizationManager:Dependencies Injection: new AuthorizationManager( )
+AuthorizationManager->AuthorizationManager:AuthorizationManager( )
+AuthorizationManager-->SuggestionController:return _authzManager
+SuggestionController->SuggestionManager:Dependencies Injection: new SuggestionManager( )
+SuggestionManager->SuggestionManager:SuggestionManager( )
+SuggestionManager->EventAPIService: new EventAPIService( )
+EventAPIService->EventAPIService:EventAPIService( )
+EventAPIService-->SuggestionManager:return _eventAPIService
+SuggestionManager->SuggestionDAO: new SuggestionDAO( )
+SuggestionDAO->SuggestionDAO:SuggestionDAO( )
+SuggestionDAO-->SuggestionManager:return _suggestionDAO
+SuggestionManager-->SuggestionController:return _suggestionManager
+
+FrontEnd->SuggestionController:HTTP Header(int userID, string token, string claimRole) \n(Event e)
+
+// The start of API call
+SuggestionController->SuggestionController:async ActionResult<SuggestionResponse> GetEvent\n(Event selectedEvent)
+group if (token == null)
+SuggestionController-->FrontEnd:return BadRequest("Inavalid Token")
+end 
+SuggestionController->SuggestionController:bool isAuthorized = _authzManager.IsAuthorized\n(int userID, string token, string claimRole)
+
+group if (isAuthorized == false)
+SuggestionController-->FrontEnd:return BadRequset\n("Not authorized to use access this feature")
+end
+
+//
+group else
+SuggestionController->SuggestionManager:async ActionResult<BaseResponse> SaveEvent(Event e)
+SuggestionManager->SuggestionDAO:async BaseResponse SuggestionDAO.SaveEvent(Event selectedEvent)
+SuggestionDAO->SuggestionDAO:_dbContext.Events.Add(Event e)
+SuggestionDAO->MicrosoftSQL Server:_dbContext.SaveChangesAsync( )
+MicrosoftSQL Server-->SuggestionDAO:return int
+SuggestionDAO->BaseResponse:new BaseReponse(string message, bool isSuccessful)
+BaseResponse->BaseResponse:BaseResponse(string message, bool isSuccessfull)
+BaseResponse-->SuggestionDAO:return BaseResponse
+SuggestionDAO-->SuggestionManager:return BaseResponse
+SuggestionManager-->SuggestionController:return BaseResponse
+end
+
