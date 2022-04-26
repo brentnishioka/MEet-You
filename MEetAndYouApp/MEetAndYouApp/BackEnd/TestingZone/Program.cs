@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Globalization;
 using Newtonsoft.Json.Linq;
 using Pentaskilled.MEetAndYou.DataAccess;
 using Pentaskilled.MEetAndYou.DataAccess.Implementation;
@@ -83,28 +84,33 @@ public class Program
     static void Main(string[] args)
     {
         // secret api key from https://serpapi.com/dashboard
-        String apiKey = "";
+        //String apiKey = "";
 
-        Hashtable ht = new Hashtable();
-        ht.Add("engine", "google_events");
-        ht.Add("q", "events in Long Beach");
-        ht.Add("location", "Long Beach");
+        //Hashtable ht = new Hashtable();
+        //ht.Add("engine", "google_events");
+        //ht.Add("q", "events in Long Beach");
+        //ht.Add("location", "Long Beach");
 
-        try
-        {
-            GoogleSearch search = new GoogleSearch(ht, apiKey);
-            JObject data = search.GetJson();
-            JArray results = (JArray)data["events_results"];
-            foreach (JObject result in results)
-            {
-                Console.WriteLine("Found: " + result["title"]);
-            }
-        }
-        catch (SerpApiSearchException ex)
-        {
-            Console.WriteLine("Exception:");
-            Console.WriteLine(ex.ToString());
-        }
+        //try
+        //{
+        //    GoogleSearch search = new GoogleSearch(ht, apiKey);
+        //    JObject data = search.GetJson();
+        //    JArray results = (JArray)data["events_results"];
+        //    foreach (JObject result in results)
+        //    {
+        //        Console.WriteLine("Found: " + result["title"]);
+        //    }
+        //}
+        //catch (SerpApiSearchException ex)
+        //{
+        //    Console.WriteLine("Exception:");
+        //    Console.WriteLine(ex.ToString());
+        //}
+
+        Console.WriteLine("Parsing the date: ");
+        string date = "May 1";
+        DateTime dateTime = DateConversion(date);
+        Console.WriteLine(date.ToString());
 
         //var request = new Yelp.Api.Models.SearchRequest();
         //request.Latitude = 37.786882;
@@ -115,5 +121,11 @@ public class Program
 
         //var client = new Yelp.Api.Client("API_KEY");
         //var results = await client.SearchBusinessesAllAsync(request);
+    }
+
+    public static DateTime DateConversion(string date)
+    {
+        CultureInfo ci = new CultureInfo("en-US");
+        return DateTime.Parse(date, ci);
     }
 }

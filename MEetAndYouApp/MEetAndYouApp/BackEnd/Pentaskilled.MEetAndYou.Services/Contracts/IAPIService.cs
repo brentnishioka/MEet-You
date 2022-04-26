@@ -9,6 +9,6 @@ namespace Pentaskilled.MEetAndYou.Services.Contracts
 {
     public interface IAPIService
     {
-        Task<JObject> GetEventByCategoryAsync(string category, string location, DateTime date);
+        JObject GetEventByCategoryAsync(string category, string location, DateTime date);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,14 +22,49 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
         }
 
 
-        public async Task<ICollection<Event>> ParseJSONAsync(JObject o)
+        public  ICollection<Event> ParseJSON(JObject data)
         {
-            throw new NotImplementedException();
+            //Get the category of the events
+            var parameter = data["search_parameters"];
+            string category = parameter["category"].ToString();
+
+            JArray results = (JArray)data["events_results"];
+            int limit = 10;
+            ICollection<Event> eventList = new List<Event>();
+
+            //Create a list of Events
+            foreach (JObject result in results)
+            {
+                Console.WriteLine("Found: " + result["title"]);
+                string eventName = result["title"].ToString();
+                string description = result["description"].ToString();
+                string eventAddress = result["address"].ToString();
+                string date = result["date"].ToString();
+
+                //Convert the date into Datetime object
+                DateTime eventDate = this.DateConversion(date);
+
+                Event temp = new Event {
+                    EventName = eventName,
+                    Address = eventAddress,
+                    Description = description,
+                    EventDate = eventDate
+                };
+                temp.CategoryNames.Add(new Category { CategoryName = category });
+                eventList.Add(temp);
+            }
+            return eventList;
         }
 
         public async Task<BaseResponse> SaveEvent(Event e)
         {
             throw new NotImplementedException();
+        }
+
+        public DateTime DateConversion(string date)
+        {
+            CultureInfo ci = new CultureInfo("en-US");
+            return DateTime.Parse(date, ci);
         }
     }
 }
