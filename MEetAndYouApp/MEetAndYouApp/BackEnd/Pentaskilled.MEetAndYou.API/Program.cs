@@ -16,7 +16,6 @@ var connection =
 builder.Services.AddDbContext<MEetAndYouDBContext>(options =>
      options.UseSqlServer(connection));
 
-
 builder.Services.AddControllers();
 
 //Dependency injection for Controllers
