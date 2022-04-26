@@ -1,19 +1,13 @@
-import './App.css';
-import React from 'react';
-import Login from './Scenes/Sign/Scenes/Login/login.js';
-//import Logout from './components/pages/Logout'
-import { BrowserRouter, Switch, Route, } from 'react-router-dom'
+import React, { useState } from 'react';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 
 function App() {
+    const [value, onChange] = useState(new Date());
 
     return (
-        <div className="App">
-            <BrowserRouter>
-                <Switch>
-                    <Route path='/login' component={Login} />
-                    {/* <Redirect to='/home' /> */}
-                </Switch>
-            </BrowserRouter>
+        <div>
+            {<Calendar onChange={onChange} value={value} />}
         </div>
     );
 }

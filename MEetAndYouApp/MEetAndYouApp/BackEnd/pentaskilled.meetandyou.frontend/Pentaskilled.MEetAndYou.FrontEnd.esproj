@@ -12,9 +12,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="src\Components\" />
-    <Folder Include="src\Scenes\Home\" />
-    <Folder Include="src\Scenes\Sign\Components\" />
-    <Folder Include="src\Scenes\Sign\Scenes\Register\" />
     <Folder Include="src\Services\" />
   </ItemGroup>
   <!-- This target is copied from the ASP.NET SPA template in order to ensure node_modules are in place. -->
