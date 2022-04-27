@@ -3,10 +3,42 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Pentaskilled.MEetAndYou.Entities.Models;
+using Pentaskilled.MEetAndYou.Entities.DBModels;
+using Microsoft.EntityFrameworkCore;
+
+
+
 
 namespace Pentaskilled.MEetAndYou.Managers.Implementation
 {
-    internal class UPDManager
+    public class UPDManager
     {
+        private readonly MEetAndYouDBContext _dbContext;
+        
+
+        public UPDManager()
+        {
+
+        }
+
+
+        public UPData GetUPData()
+        {
+
+            List<Itinerary> itineraries = from itin in _dbContext.Itineraries.Include("Users")
+                                          where 
+                                          select itin;
+
+
+
+
+        }
+
+
+
+
+
+
     }
 }
