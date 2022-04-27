@@ -107,10 +107,29 @@ public class Program
         //    Console.WriteLine(ex.ToString());
         //}
 
+        //Test the API and conversion
+        string location = "Long Beach";
+        string category = "coffee";
         Console.WriteLine("Parsing the date: ");
         string date = "May 1";
         DateTime dateTime = DateConversion(date);
         Console.WriteLine(date.ToString());
+
+        EventAPIService eventAPI = new EventAPIService();
+        JObject results = eventAPI.GetEventByCategoryAsync(category, location, dateTime);
+        SuggestionDAO suggestionDAO = new SuggestionDAO();
+        ICollection<Event> eventList = suggestionDAO.ParseJSON(results);
+
+        foreach(Event e in eventList)
+        {
+            Console.WriteLine(e.EventName.ToString());
+            Console.WriteLine(e.Description.ToString());
+            Console.WriteLine(e.EventDate.ToString());
+            Console.WriteLine(e.CategoryNames.ToString());
+            Console.WriteLine(e.Address);
+            Console.WriteLine("--------------------------------------");
+        }
+
 
         //var request = new Yelp.Api.Models.SearchRequest();
         //request.Latitude = 37.786882;

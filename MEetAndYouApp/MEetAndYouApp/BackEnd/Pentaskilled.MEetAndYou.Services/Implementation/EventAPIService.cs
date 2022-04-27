@@ -17,6 +17,11 @@ namespace Pentaskilled.MEetAndYou.Services.Implementation
         private readonly IConfiguration _configuration;
         private readonly string _eventsAPIkey;
 
+        public EventAPIService()
+        {
+
+        }
+
         public EventAPIService(IConfiguration configuration)
         {
             _configuration = configuration;
@@ -32,7 +37,6 @@ namespace Pentaskilled.MEetAndYou.Services.Implementation
             ht.Add("engine", "google_events");
             ht.Add("q", category);
             ht.Add("location", location);
-            ht.Add("category", category);
             ht.Add("date", date.ToString());
 
             try

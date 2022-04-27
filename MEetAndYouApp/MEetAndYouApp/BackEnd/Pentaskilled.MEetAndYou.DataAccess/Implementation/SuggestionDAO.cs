@@ -26,20 +26,23 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
         {
             //Get the category of the events
             var parameter = data["search_parameters"];
-            string category = parameter["category"].ToString();
+            string category = parameter["q"].ToString();
 
             JArray results = (JArray)data["events_results"];
             int limit = 10;
             ICollection<Event> eventList = new List<Event>();
 
             //Create a list of Events
-            foreach (JObject result in results)
+            foreach (var result in results)
             {
-                Console.WriteLine("Found: " + result["title"]);
                 string eventName = result["title"].ToString();
-                string description = result["description"].ToString();
-                string eventAddress = result["address"].ToString();
-                string date = result["date"].ToString();
+                string description = "";
+
+                if (result["description"] != null) {
+                    description = result["description"].ToString();
+                }
+                string eventAddress = this.addressConcatenation(result["address"]);
+                string date = (result["date"])["start_date"].ToString();
 
                 //Convert the date into Datetime object
                 DateTime eventDate = this.DateConversion(date);
@@ -65,6 +68,16 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
         {
             CultureInfo ci = new CultureInfo("en-US");
             return DateTime.Parse(date, ci);
+        }
+
+        public string addressConcatenation (JToken addresses)
+        {
+            string result = "";
+            foreach (JToken address in addresses)
+            {
+                result = result + address.ToString() + " ";
+            }
+            return result;
         }
     }
 }
