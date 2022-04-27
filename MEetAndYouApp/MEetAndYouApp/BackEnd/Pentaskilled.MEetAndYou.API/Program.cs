@@ -10,6 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+// Add Cors policy to allow from all origins
+builder.Services.AddCors();
+
 // Add ASPNETCoreDemoDBContext services. (Dependency Injection for database)
 var connection =
     System.Configuration.ConfigurationManager.
@@ -45,6 +48,13 @@ if (app.Environment.IsProduction())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// Add global Cors policies
+app.UseCors(x => x
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+    .SetIsOriginAllowed(origin => true) // allow any origin
+    .AllowCredentials()); // allow credentials
 
 app.UseHttpsRedirection();
 
