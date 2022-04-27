@@ -17,11 +17,12 @@ function MyCalendar() {
             headers: {
                 'Content-type': 'application/json',
             },
+            body: formData,
             mode: 'cors'
         };
 
-        await fetch(`https://localhost:9000/api/Calendar/GetItineraries/3`, requestOptions).then(
-            response => console.log("Response: ", response)
+        await fetch(`https://localhost:9000/Calendar`, requestOptions).then(
+            response => console.log("Viv look: ", response.json())
         )
     }
 

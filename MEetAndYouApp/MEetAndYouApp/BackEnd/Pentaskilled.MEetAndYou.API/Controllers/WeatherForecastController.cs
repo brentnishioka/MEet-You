@@ -37,13 +37,6 @@ public class WeatherForecastController : ControllerBase
         return student;
     }
 
-    //[HttpGet(Name = "CalculateFibonachi")]
-    //public Object GetStudent()
-    //{
-    //    var student = new { Name = "Joshua", Age = 42};
-    //    return student;
-    //}
-
     [HttpPost]
     [Route("Hello")]
     public void Hello()

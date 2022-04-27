@@ -8,6 +8,14 @@ using System.Web.Cors;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddCors(options => 
+{
+    options.AddPolicy("MEetAndYouPolicy",
+        policy => {
+            policy.WithOrigins("https://localhost:3000/");
+                      });
+});
+
 
 // Add ASPNETCoreDemoDBContext services. (Dependency Injection for database)
 var connection =
@@ -18,16 +26,23 @@ builder.Services.AddDbContext<MEetAndYouDBContext>(options =>
      options.UseSqlServer(connection));
 
 //trying to add cors
-builder.Services.AddCors();
+//builder.Services.AddCors();
+//builder.Services.AddCors(options => {
+//    options.AddDefaultPolicy(
+//        builder => {
+//            builder.WithOrigins("https://*") //change 
+//                                .AllowAnyHeader()
+//                                .AllowAnyMethod();
+//        });
+//});
 builder.Services.AddCors(options => {
     options.AddDefaultPolicy(
         builder => {
-            builder.WithOrigins("https://*") //change 
+            builder.AllowAnyOrigin() //change 
                                 .AllowAnyHeader()
                                 .AllowAnyMethod();
         });
 });
-
 
 
 builder.Services.AddControllers();
@@ -80,6 +95,7 @@ if (app.Environment.IsProduction())
 
 
 app.UseHttpsRedirection();
+
 
 app.UseAuthorization();
 

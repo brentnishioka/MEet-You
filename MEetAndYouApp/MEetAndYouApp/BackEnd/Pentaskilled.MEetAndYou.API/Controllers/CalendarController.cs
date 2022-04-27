@@ -1,11 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Pentaskilled.MEetAndYou.Entities.DBModels;
 using Pentaskilled.MEetAndYou.Managers;
+using System.Web.Http.Cors;
 
 namespace Pentaskilled.MEetAndYou.API.Controllers
 {
-    [Route("api/[controller]")]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     [ApiController]
+    //[EnableCors("MEetAndYouPolicy")]
+    [Route("[controller]")]
     public class CalendarController : ControllerBase
     {
         private readonly ICalendarManager _calendarManager;
@@ -20,8 +23,8 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
         }
 
 
-        [HttpPost]
-        [Route("GetItineraries/{userID}")]
+        [HttpPost(Name = "GetItineraries")]
+        //[Route("GetItineraries/{userID}")]
         public async Task<ActionResult<List<Itinerary>>> GetItineraries(int userID)
         {
             /*string? token;
