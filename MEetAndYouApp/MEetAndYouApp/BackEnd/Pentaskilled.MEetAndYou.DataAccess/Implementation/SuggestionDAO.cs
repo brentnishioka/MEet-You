@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -22,17 +23,17 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
         }
 
 
-        public  ICollection<Event> ParseJSON(JObject data)
+        public  ICollection<Event> ParseJSON(JObject data, int limit = 10)
         {
             //Get the category of the events
             var parameter = data["search_parameters"];
             string category = parameter["q"].ToString();
 
             JArray results = (JArray)data["events_results"];
-            int limit = 10;
             ICollection<Event> eventList = new List<Event>();
 
             //Create a list of Events
+            int counter = 0;
             foreach (var result in results)
             {
                 string eventName = result["title"].ToString();
@@ -55,13 +56,36 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
                 };
                 temp.CategoryNames.Add(new Category { CategoryName = category });
                 eventList.Add(temp);
+
+                //Create a limit for the Event list to 10, by returning the list 
+                counter++;
+                if (counter >= limit)
+                {
+                    return eventList;
+                }
             }
             return eventList;
         }
 
         public async Task<BaseResponse> SaveEvent(Event e)
         {
-            throw new NotImplementedException();
+            string sucessMessage = "Saving Event was successful.";
+            try
+            {
+                _dbContext.Entry(e).State = EntityState.Added;
+                int result = await _dbContext.SaveChangesAsync();
+
+            }
+            catch (SqlException ex)
+            {
+                return new BaseResponse
+                    ("Saving event failed due to database error \n" + ex.Message, false);
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse("Saving event failed. \n" + ex.Message, false);
+            }
+            return new BaseResponse(sucessMessage, true);
         }
 
         public DateTime DateConversion(string date)

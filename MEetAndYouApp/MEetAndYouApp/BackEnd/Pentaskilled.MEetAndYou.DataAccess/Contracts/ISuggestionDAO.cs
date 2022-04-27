@@ -11,7 +11,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Contracts
 {
     public interface ISuggestionDAO
     {
-        ICollection<Event> ParseJSON(JObject o);
+        ICollection<Event> ParseJSON(JObject o, int limit);
         Task<BaseResponse> SaveEvent(Event e);
     }
 }

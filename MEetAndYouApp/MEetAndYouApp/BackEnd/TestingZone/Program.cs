@@ -114,11 +114,12 @@ public class Program
         string date = "May 1";
         DateTime dateTime = DateConversion(date);
         Console.WriteLine(date.ToString());
+        int limit = 10;
 
         EventAPIService eventAPI = new EventAPIService();
         JObject results = eventAPI.GetEventByCategoryAsync(category, location, dateTime);
         SuggestionDAO suggestionDAO = new SuggestionDAO();
-        ICollection<Event> eventList = suggestionDAO.ParseJSON(results);
+        ICollection<Event> eventList = suggestionDAO.ParseJSON(results, limit);
 
         foreach(Event e in eventList)
         {
