@@ -28,7 +28,7 @@ namespace Pentaskilled.MEetAndYou.Services.Implementation
             _eventsAPIkey = _configuration["EventsAPI"];
         }
 
-        public JObject GetEventByCategoryAsync(string category, string location, DateTime date)
+        public JObject GetEventByCategory(string category, string location, DateTime date)
         {
             String apiKey = "";
             JObject result = null;

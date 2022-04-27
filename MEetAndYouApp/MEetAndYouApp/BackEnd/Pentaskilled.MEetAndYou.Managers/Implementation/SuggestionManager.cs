@@ -4,27 +4,52 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
+using Pentaskilled.MEetAndYou.DataAccess.Contracts;
 using Pentaskilled.MEetAndYou.DataAccess.Implementation;
 using Pentaskilled.MEetAndYou.Entities.DBModels;
 using Pentaskilled.MEetAndYou.Entities.Models;
 using Pentaskilled.MEetAndYou.Managers.Contracts;
+using Pentaskilled.MEetAndYou.Services.Contracts;
+using SerpApi;
 
 namespace Pentaskilled.MEetAndYou.Managers.Implementation
 {
     public class SuggestionManager : ISuggestionManager
     {
         private readonly MEetAndYouDBContext _dbContext;
-        private readonly SuggestionDAO _copyItineraryDAO;
+        private readonly ISuggestionDAO _suggestionDAO;
+        private readonly IAPIService _eventAPIService;
 
         public SuggestionManager(SuggestionDAO suggestionDAO, MEetAndYouDBContext dbContext)
         {
-            _copyItineraryDAO = suggestionDAO;
+            _suggestionDAO = suggestionDAO;
             _dbContext = dbContext;
         }
 
-        public ICollection<Event> GetEventsAsync(string category, string location, DateTime date)
+        public SuggestionResponse GetEvents(string category, string location, DateTime date)
         {
-            throw new NotImplementedException();
+            string successfulMessage = "Get Events was successful.";
+            List<Event> eventList = new List<Event>();
+            try
+            {
+                JObject result = _eventAPIService.GetEventByCategory(category, location, date);
+                if (result != null)
+                {
+                    eventList = (List<Event>) _suggestionDAO.ParseJSON(result);
+                }
+            }
+            catch (SerpApiSearchException ex)
+            {
+                return new SuggestionResponse
+                    ("Getting Event from the SERP API failed \n" + ex.Message, false, eventList);
+            }
+            catch (Exception ex)
+            {
+                return new SuggestionResponse
+                    ("Getting Event from SuggestionManager failed \n" + ex.Message, false, eventList);
+            }
+            return new SuggestionResponse(successfulMessage, true, eventList);
         }
 
         public ICollection<Event> GetRandomEventsAsync()
