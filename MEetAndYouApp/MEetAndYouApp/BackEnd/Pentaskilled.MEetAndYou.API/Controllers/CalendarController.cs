@@ -20,7 +20,7 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
         }
 
 
-        [HttpGet]
+        [HttpPost]
         [Route("GetItineraries/{userID}")]
         public async Task<ActionResult<List<Itinerary>>> GetItineraries(int userID)
         {
