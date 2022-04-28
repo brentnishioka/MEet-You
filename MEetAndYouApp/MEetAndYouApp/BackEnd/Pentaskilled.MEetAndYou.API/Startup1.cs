@@ -12,6 +12,7 @@ namespace Pentaskilled.MEetAndYou.API
 {
     public class Startup1
     {
+
         public Startup1(IConfiguration configuration)
         {
             Configuration = configuration;

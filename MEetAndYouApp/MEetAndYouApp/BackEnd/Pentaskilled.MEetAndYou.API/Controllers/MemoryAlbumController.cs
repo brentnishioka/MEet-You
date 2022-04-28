@@ -6,8 +6,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Pentaskilled.MEetAndYou.Entities.DBModels;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
 
 
 namespace Pentaskilled.MEetAndYou.API.Controllers
@@ -26,6 +24,19 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
         }
 
 
+        // GET: api/Employee
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Image>>> GetEmployees()
+        {
+            return await _dbcontext.Images.Select
+                    (x => new Image() {
+                    ImageId = x.ImageId,
+                    ImageName = x.ImageName,
+                    ImageExtension = x.ImageExtension,
+                    ImagePath = String.Format("{0}://{1}{2}/Images/{3}", Request.Scheme, Request.Host, Request.PathBase, x.ImageName)
+                })
+                .ToListAsync();
+        }
 
         // GET: api/Images/5
         [HttpGet("{id}")]
@@ -72,39 +83,58 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
             return NoContent();
         }
 
-
         // POST: api/Employee
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        /*        public async Task<ActionResult<IActionResult>> PostImageModel([FromForm] Image imageModel)
-                {
-                    imageModel.ImageName = await SaveImage(imageModel.ImageFile);
-                    _context.Employees.Add(employeeModel);
-                    await _context.SaveChangesAsync();
+        public async Task<ActionResult<Image>> PostEmployeeModel([FromForm] Image imageModel)
+        {
+            imageModel.ImageName = await SaveImage(imageModel.ImageFile);
+            _dbcontext.Images.Add(imageModel);
+            await _dbcontext.SaveChangesAsync();
 
-                    return StatusCode(201);
-                }
+            return StatusCode(201);
+        }
 
 
+        // DELETE: api/Employee/5
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Image>> DeleteEmployeeModel(int id)
+        {
+            var imageModel = await _dbcontext.Images.FindAsync(id);
+            if (imageModel == null)
+            {
+                return NotFound();
+            }
 
-                private string UploadedFile(Image model)
-                {
-                    string uniqueFileName = null;
+            DeleteImage(imageModel.ImageName);
+            _dbcontext.Images.Remove(imageModel);
+            await _dbcontext.SaveChangesAsync();
 
-                    if (model.ProfileImage != null)
-                    {
-                        string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
-                        uniqueFileName = Guid.NewGuid().ToString() + "_" + model.ProfileImage.FileName;
-                        string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                        using (var fileStream = new FileStream(filePath, FileMode.Create))
-                        {
-                            model.ProfileImage.CopyTo(fileStream);
-                        }
-                    }
-                    return uniqueFileName;
-                }*/
+            return imageModel;
+        }
 
+        public void DeleteImage(string imageName)
+        {
+            var imagePath = Path.Combine(webHostEnvironment.ContentRootPath, "Images", imageName);
+            if (System.IO.File.Exists(imagePath))
+                System.IO.File.Delete(imagePath);
+        }
+
+        public async Task<string> SaveImage(IFormFile imageFile)
+        {
+            string imageName = new String(Path.GetFileNameWithoutExtension(imageFile.FileName).Take(10).ToArray()).Replace(' ', '-');
+            imageName = imageName + DateTime.Now.ToString("yymmssfff") + Path.GetExtension(imageFile.FileName);
+            var imagePath = Path.Combine(webHostEnvironment.ContentRootPath, "Images", imageName);
+            using (var fileStream = new FileStream(imagePath, FileMode.Create))
+            {
+                await imageFile.CopyToAsync(fileStream);
+            }
+            return imageName;
+        }
+
+
+       
         private bool ItineraryExists(int id)
         {
             return _dbcontext.Images.Any(e => e.ItineraryId == id);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 
 namespace Pentaskilled.MEetAndYou.Entities.DBModels
 {
@@ -13,6 +14,7 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
         public string ImagePath { get; set; }
         public int ItineraryId { get; set; }
 
+        public IFormFile ImageFile { get; set; }
         public virtual Itinerary Itinerary { get; set; }
     }
 }
