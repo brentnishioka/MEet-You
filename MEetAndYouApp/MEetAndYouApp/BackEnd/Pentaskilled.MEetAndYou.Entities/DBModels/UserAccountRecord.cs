@@ -8,8 +8,8 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
         public UserAccountRecord()
         {
             Itineraries = new HashSet<Itinerary>();
+            UserItineraries = new HashSet<UserItinerary>();
             UserTokens = new HashSet<UserToken>();
-            ItinerariesNavigation = new HashSet<Itinerary>();
             Roles = new HashSet<Role>();
         }
 
@@ -23,10 +23,9 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
 
         [System.Text.Json.Serialization.JsonIgnore]
         public virtual ICollection<Itinerary> Itineraries { get; set; }
+        public virtual ICollection<UserItinerary> UserItineraries { get; set; }
         public virtual ICollection<UserToken> UserTokens { get; set; }
-
         [System.Text.Json.Serialization.JsonIgnore]
-        public virtual ICollection<Itinerary> ItinerariesNavigation { get; set; }
         public virtual ICollection<Role> Roles { get; set; }
     }
 }

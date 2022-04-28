@@ -8,8 +8,9 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
         public Itinerary()
         {
             Images = new HashSet<Image>();
+            UserEventRatings = new HashSet<UserEventRating>();
+            UserItineraries = new HashSet<UserItinerary>();
             Events = new HashSet<Event>();
-            Users = new HashSet<UserAccountRecord>();
         }
 
         public int ItineraryId { get; set; }
@@ -18,9 +19,11 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
         public int ItineraryOwner { get; set; }
 
         public virtual UserAccountRecord ItineraryOwnerNavigation { get; set; }
+        public virtual ItineraryNote ItineraryNote { get; set; }
         public virtual ICollection<Image> Images { get; set; }
+        public virtual ICollection<UserEventRating> UserEventRatings { get; set; }
+        public virtual ICollection<UserItinerary> UserItineraries { get; set; }
 
         public virtual ICollection<Event> Events { get; set; }
-        public virtual ICollection<UserAccountRecord> Users { get; set; }
     }
 }
