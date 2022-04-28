@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Pentaskilled.MEetAndYou.Services.Contracts;
-using Pentaskilled.MEetAndYou.Services.Implementation;
-using Pentaskilled.MEetAndYou.DataAccess;
 using System.Data.SqlClient;
+using Pentaskilled.MEetAndYou.DataAccess;
 using Pentaskilled.MEetAndYou.DataAccess.Contracts;
+using Pentaskilled.MEetAndYou.Entities;
 using Pentaskilled.MEetAndYou.Entities.DBModels;
 using Pentaskilled.MEetAndYou.Logging;
-using Pentaskilled.MEetAndYou.Entities;
+using Pentaskilled.MEetAndYou.Services.Contracts;
+using Pentaskilled.MEetAndYou.Services.Implementation;
 
 namespace Pentaskilled.MEetAndYou.Managers
 {
@@ -53,24 +50,31 @@ namespace Pentaskilled.MEetAndYou.Managers
 
                 isCredsValid = _authnDAO.ValidateCredentials(userEmail, userPassword).Result;
 
-                if (isCredsValid == true)
+                if (isCredsValid == true) //modified this method
                 {
-                    string oneTimePw = _authnService.generateOTP();
-                    //string phoneNum = _authnDAO.GetPhoneNum(userEmail, userPassword).Result;
-                    isOTPValid = _authnService.validateOTP(oneTimePw);
-
                     userToken = _authnService.generateToken();
+                    int userID = _umDAO.GetUserIDByEmail(userEmail).Result;
+                    bool saveResult = _authnDAO.SaveToken(userID, userToken).Result;
+                    List<string> roles = _authzDAO.GetRoles(userID);
+                    authnResponse = new AuthnResponse(userID, userToken, roles);
+
+                    //string oneTimePw = _authnService.generateOTP();
+                    //string phoneNum = _authnDAO.GetPhoneNum(userEmail, userPassword).Result;
+                    //isOTPValid = _authnService.validateOTP(oneTimePw);
+
+                    //userToken = _authnService.generateToken();
 
                     // Save the token to the database using userID
 
-                    int userID = _umDAO.GetUserIDByEmail(userEmail).Result;
+                    //int userID = _umDAO.GetUserIDByEmail(userEmail).Result;
                     //int userID = 2;
-                    bool saveResult = _authnDAO.SaveToken(userID, userToken).Result;
-                    List<string> roles = _authzDAO.GetRoles(userID);
+                    //bool saveResult = _authnDAO.SaveToken(userID, userToken).Result;
+                    //List<string> roles = _authzDAO.GetRoles(userID);
 
                     // Instantiate the object AutnResponse to return to the front
-                    authnResponse = new AuthnResponse(userID, userToken, roles);
-                    bool logResult = _loggingManager.BeginLogProcess("View", LogLevel.Info, userID, "User Log in to account").Result;
+                    //authnResponse = new AuthnResponse(userID, userToken, roles);
+                    //bool logResult = _loggingManager.BeginLogProcess("View", LogLevel.Info, userID, "User Log in to account").Result;
+                    return authnResponse; 
 
                 }
                 else
@@ -86,7 +90,7 @@ namespace Pentaskilled.MEetAndYou.Managers
             {
                 throw new Exception(ex.Message);
             }
-            catch(Exception ex) when (!isOTPValid)
+            catch (Exception ex) when (!isOTPValid)
             {
                 throw new Exception(ex.Message);
             }
@@ -112,7 +116,7 @@ namespace Pentaskilled.MEetAndYou.Managers
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception when Signing Out" + "\n" + ex.Message );
+                Console.WriteLine("Exception when Signing Out" + "\n" + ex.Message);
                 return false;
             }
             return isSignOut;

@@ -1,14 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Pentaskilled.MEetAndYou.Services.Contracts;
-using Pentaskilled.MEetAndYou.Entities;
 using Pentaskilled.MEetAndYou.DataAccess;
 using Pentaskilled.MEetAndYou.DomainModels;
+using Pentaskilled.MEetAndYou.Entities;
+using Pentaskilled.MEetAndYou.Services.Contracts;
 
 namespace Pentaskilled.MEetAndYou.Services.Implementation
 {
@@ -119,7 +117,7 @@ namespace Pentaskilled.MEetAndYou.Services.Implementation
             {
                 foreach (Log log in oldLogs)
                     sw.WriteLine(log.ToString());
-            }   
+            }
         }
 
         ///<summary>
@@ -144,9 +142,9 @@ namespace Pentaskilled.MEetAndYou.Services.Implementation
                 string completePath = $"{buffLocation}" + "\\" + $"{fileName}";
                 int csvRowCount = 0;
                 string line;
-                StreamReader file = new StreamReader(completePath); 
+                StreamReader file = new StreamReader(completePath);
                 while ((line = file.ReadLine()) != null)
-                        csvRowCount++;
+                    csvRowCount++;
                 file.Close();
                 if (oldLogs.Count != csvRowCount)
                     throw new Exception();

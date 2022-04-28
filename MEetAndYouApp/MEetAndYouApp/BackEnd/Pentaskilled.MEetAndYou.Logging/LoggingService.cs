@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Pentaskilled.MEetAndYou.DataAccess;
+﻿using Pentaskilled.MEetAndYou.DataAccess;
 using Pentaskilled.MEetAndYou.Entities;
 
 namespace Pentaskilled.MEetAndYou.Logging
@@ -29,8 +24,7 @@ namespace Pentaskilled.MEetAndYou.Logging
         /// <returns> Returns true if the system logging process is successful, false if unsuccessful. </returns>
         public async Task<bool> CreateNewLogAsync(DateTime dateTime, string category, LogLevel logLevel, string message)
         {
-            return await Task.Run(async () =>
-            {
+            return await Task.Run(async () => {
                 try
                 {
                     await MakeLogAsync(dateTime, category, logLevel, message);
@@ -41,7 +35,7 @@ namespace Pentaskilled.MEetAndYou.Logging
                     }
 
                     await PushLogToDBAsync(_eventLog);
-                    Log sysLogCheck = await Task.Run (() => _logDataAccess.UpdateLogAsync(_eventLog));
+                    Log sysLogCheck = await Task.Run(() => _logDataAccess.UpdateLogAsync(_eventLog));
                     if (sysLogCheck != null)
                     {
                         throw new Exception();
@@ -66,8 +60,7 @@ namespace Pentaskilled.MEetAndYou.Logging
         /// <returns> Returns true if the user logging process is successful, false if unsuccessful. </returns>
         public async Task<bool> CreateNewLogAsync(DateTime dateTime, string category, LogLevel logLevel, int userId, string message)
         {
-            return await Task.Run(async () =>
-            {
+            return await Task.Run(async () => {
                 try
                 {
                     await MakeLogAsync(dateTime, category, logLevel, userId, message);
@@ -150,8 +143,7 @@ namespace Pentaskilled.MEetAndYou.Logging
         /// <returns> Returns true if log is pushed successfully, false if otherwise. </returns>
         public async Task<bool> PushLogToDBAsync(Log eventLog)
         {
-            return await Task.Run(() =>
-            {
+            return await Task.Run(() => {
                 try
                 {
                     _logDataAccess.PushLogToDBAsync(eventLog);

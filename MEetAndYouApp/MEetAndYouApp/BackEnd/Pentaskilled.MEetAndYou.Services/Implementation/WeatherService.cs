@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.Json;
 using Pentaskilled.MEetAndYou.DataAccess.Contracts;
 using Pentaskilled.MEetAndYou.DataAccess.Implementation;
-using Pentaskilled.MEetAndYou.Services.Contracts;
 using Pentaskilled.MEetAndYou.Entities;
-using System.Text.Json;
+using Pentaskilled.MEetAndYou.Services.Contracts;
 
 namespace Pentaskilled.MEetAndYou.Services.Implementation
 {

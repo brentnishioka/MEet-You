@@ -28,13 +28,13 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         public async Task<List<Itinerary>> GetUserItineraries(int userID)
         {
             //var dbcontext = new MEetAndYouDBContext();
-            List<Itinerary> itineraries; 
+            List<Itinerary> itineraries;
             try
             {
-                itineraries =
+                itineraries = await
                 (from itin in _dbContext.Itineraries.Include("Events")
                  where itin.ItineraryOwner == userID
-                 select itin).ToList<Itinerary>();
+                 select itin).ToListAsync<Itinerary>();
             }
             catch (SqlException ex)
             {

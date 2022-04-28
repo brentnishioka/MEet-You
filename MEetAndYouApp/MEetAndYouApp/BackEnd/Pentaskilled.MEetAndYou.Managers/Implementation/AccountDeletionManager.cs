@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using Pentaskilled.MEetAndYou.DataAccess;
 using Pentaskilled.MEetAndYou.Entities;
 
@@ -13,7 +9,7 @@ namespace Pentaskilled.MEetAndYou.Managers
     {
         private readonly IUMDAO _umDAO;
         private UserAccountEntity uAcc;
-        
+
         public AccountDeletionManager()
         {
             _umDAO = new UMDAO();

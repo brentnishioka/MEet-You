@@ -7,7 +7,7 @@
 
         public ConnectionString()
         {
-            _connectionString = @"Data Source=DESKTOP-0QA4EN0\SQLEXPRESS;Initial Catalog=MEetAndYou-DB;Integrated Security=True";
+            _connectionString = @"Data Source=DESKTOP-MIH6TNI\MSSQLSERVER01;Initial Catalog=MEetAndYou-DB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False";
         }
         //SQLEXPRESS
 

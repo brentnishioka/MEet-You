@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Pentaskilled.MEetAndYou.Entities;
 using Pentaskilled.MEetAndYou.Entities.DBModels;
 
 namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
@@ -19,6 +16,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
         private MEetAndYouDBContext _dbContext;
 
         // Constructor
+        // Depedencies injectoin for _dbcontext
         public CopyItineraryDAO()
         {
             //var dbOptions = new DbContextOptionsBuilder<MEetAndYouDBContext>().UseSqlServer(_connection).Options;

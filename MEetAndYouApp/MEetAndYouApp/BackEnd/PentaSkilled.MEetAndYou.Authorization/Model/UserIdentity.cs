@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Security.Principal;
 
 namespace PentaSkilled.MEetAndYou.Authorization.Model
 {
@@ -14,7 +9,7 @@ namespace PentaSkilled.MEetAndYou.Authorization.Model
             get;
         }
 
-        public bool IsAuthenticated { get; } 
+        public bool IsAuthenticated { get; }
 
         public string? Name { get; }
 
@@ -43,6 +38,6 @@ namespace PentaSkilled.MEetAndYou.Authorization.Model
             Name = name;
             IsAuthenticated = isAuthenticated;
         }
-        
+
     }
 }
