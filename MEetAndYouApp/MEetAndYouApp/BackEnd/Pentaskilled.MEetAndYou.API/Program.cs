@@ -5,10 +5,17 @@ using Microsoft.Extensions.Configuration;                   //Ask to see if it i
 using Pentaskilled.MEetAndYou.Managers;
 using Pentaskilled.MEetAndYou.DataAccess.Implementation;
 using Pentaskilled.MEetAndYou.Services.Implementation;
+using Pentaskilled.MEetAndYou.Managers.Contracts;
+using Pentaskilled.MEetAndYou.Managers.Implementation;
+using Pentaskilled.MEetAndYou.DataAccess.Contracts;
+using Pentaskilled.MEetAndYou.Services.Contracts;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+//Add API key
+//var eventsApiKey = builder.Configuration["EventsAPI:ServiceApiKey"];
 
 // Add Cors policy to allow from all origins
 builder.Services.AddCors();
@@ -28,6 +35,11 @@ builder.Services.AddSingleton<AuthnManager>();
 builder.Services.AddSingleton<CopyManager>();
 builder.Services.AddSingleton<ICalendarManager, CalendarManager>();
 builder.Services.AddSingleton<CopyItineraryDAO>();
+builder.Services.AddSingleton<ISuggestionManager, SuggestionManager>();
+builder.Services.AddSingleton<ISuggestionDAO, SuggestionDAO>();
+builder.Services.AddSingleton<IAPIService, EventAPIService>();
+//builder.Services.AddSingleton<Configuration>();
+
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -55,6 +67,8 @@ app.UseCors(x => x
     .AllowAnyHeader()
     .SetIsOriginAllowed(origin => true)
     .AllowCredentials());
+
+//app.MapGet("/", () => eventsApiKey);
 
 app.UseHttpsRedirection();
 

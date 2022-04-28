@@ -21,10 +21,11 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
         private readonly ISuggestionDAO _suggestionDAO;
         private readonly IAPIService _eventAPIService;
 
-        public SuggestionManager(SuggestionDAO suggestionDAO, MEetAndYouDBContext dbContext)
+        public SuggestionManager(ISuggestionDAO suggestionDAO, MEetAndYouDBContext dbContext, IAPIService eventAPIService)
         {
             _suggestionDAO = suggestionDAO;
             _dbContext = dbContext;
+            _eventAPIService = eventAPIService;
         }
 
         public SuggestionResponse GetEvents(string category, string location, DateTime date)

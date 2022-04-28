@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
+using Pentaskilled.MEetAndYou.DataAccess.Contracts;
 using Pentaskilled.MEetAndYou.Entities.DBModels;
 using Pentaskilled.MEetAndYou.Entities.Models;
 using Pentaskilled.MEetAndYou.Managers;
+using Pentaskilled.MEetAndYou.Managers.Contracts;
 using Pentaskilled.MEetAndYou.Managers.Implementation;
+using Pentaskilled.MEetAndYou.Services.Contracts;
 
 namespace Pentaskiled.MEetAndYou.API.Controllers
 {
@@ -12,15 +15,19 @@ namespace Pentaskiled.MEetAndYou.API.Controllers
     [ApiController]
     public class SuggestionController : ControllerBase
     {
-        private readonly SuggestionManager _suggestionManager;
-        private readonly AuthorizationManager _authorizationManager;
+        private readonly ISuggestionManager _suggestionManager;
+        //private readonly AuthorizationManager _authorizationManager;
         private readonly MEetAndYouDBContext _dbcontext;
+        private readonly ISuggestionDAO _suggestionDAO;
+        private readonly IAPIService _eventAPIService;
 
-        public SuggestionController(SuggestionManager suggestionController, AuthorizationManager authorizationManager, MEetAndYouDBContext dbContext)
+        public SuggestionController(ISuggestionManager suggestionManager, MEetAndYouDBContext dbContext, ISuggestionDAO suggestionDAO, IAPIService eventAPIService)
         {
-            _suggestionManager = suggestionController;
-            _authorizationManager = authorizationManager;
+            _suggestionManager = suggestionManager;
+            //_authorizationManager = authorizationManager;
             _dbcontext = dbContext;
+            _eventAPIService = eventAPIService;
+            _suggestionDAO = suggestionDAO;
         }
 
         [HttpGet]

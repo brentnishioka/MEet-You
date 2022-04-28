@@ -5,9 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 using Pentaskilled.MEetAndYou.DataAccess.Implementation;
 using Pentaskilled.MEetAndYou.Entities.DBModels;
 using Pentaskilled.MEetAndYou.Entities.Models;
+using Pentaskilled.MEetAndYou.Services.Implementation;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -32,14 +34,13 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             _dbContext = new MEetAndYouDBContext(dbContextOptions);
         }
 
-        [Fact]
-        public async void SaveEventsTest()
+        [Theory]
+        [InlineData (3, 5)]
+        public async void SaveEventsTest(int numEvent, int itinID)
         {
             //Arrange
             SuggestionDAO suggestionDAO = new SuggestionDAO(_dbContext);
             List<Event> eventList = new List<Event>();
-            int numEvent = 3;
-            int itinID = 5;
 
             for (int i = 0; i<numEvent; i++)
             {
@@ -60,5 +61,57 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             //
             Assert.True(response.IsSuccessful);
         }
+
+        [Fact]
+        public async void GetRandomCategoryTest()
+        {
+            //Arrange
+            SuggestionDAO suggestionDAO = new SuggestionDAO(_dbContext);
+            bool actual = false;
+
+            //Act
+            Category randCat = await suggestionDAO.GetRandomCategory();
+            if (randCat != null)
+            {
+                actual = true;
+            }
+            _output.WriteLine("Category: " + randCat.CategoryName);
+
+            //Assert 
+            Assert.True(actual);
+        }
+
+        [Fact]
+        public void ParsingJSONTest()
+        {
+            // Arrange
+            SuggestionDAO suggestionDAO = new SuggestionDAO(_dbContext);
+
+            string location = "Long Beach";
+            string category = "coffee";
+            Console.WriteLine("Parsing the date: ");
+            string date = "May 1";
+            DateTime dateTime = suggestionDAO.DateConversion(date);
+            Console.WriteLine(date.ToString());
+            int limit = 10;
+
+            EventAPIService eventAPI = new EventAPIService();
+            JObject results = eventAPI.GetEventByCategory(category, location, dateTime);
+
+            bool actual = false;
+
+            // Act
+            _output.WriteLine("Parse JSON ...");
+            ICollection<Event> eventList = suggestionDAO.ParseJSON(results, limit);
+            if(eventList != null)
+            {
+                actual=true;
+            }
+
+            // Assert
+            Assert.True(actual);
+        }
+
+
     }
 }
