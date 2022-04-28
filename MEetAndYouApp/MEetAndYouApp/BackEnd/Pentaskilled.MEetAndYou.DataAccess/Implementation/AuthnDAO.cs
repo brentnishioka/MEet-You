@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
-using System.Data;
 
 namespace Pentaskilled.MEetAndYou.DataAccess
 {
@@ -22,7 +19,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
         public Task<bool> ValidateCredentials(string email, string password)
         {
             _connectionString = GetConnectionString();
-            int rowsReturned = -1; 
+            int rowsReturned = -1;
 
             try
             {
@@ -34,17 +31,17 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                     command.Parameters.Add("@password", SqlDbType.VarChar).Value = password;
 
                     connection.Open();
-                    rowsReturned = (int) command.ExecuteScalar();
+                    rowsReturned = (int)command.ExecuteScalar();
                     connection.Close();
                 }
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                return Task.FromResult(false);  
+                return Task.FromResult(false);
             }
 
-            return Task.FromResult(Convert.ToBoolean(rowsReturned)); 
+            return Task.FromResult(Convert.ToBoolean(rowsReturned));
         }
 
         // Todo: GetPhoneNumber function or store procedure does not exist in the database
@@ -63,7 +60,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                     command.Parameters.Add("@password", SqlDbType.VarChar).Value = password;
 
                     connection.Open();
-                    phoneNumber = (string) command.ExecuteScalar();
+                    phoneNumber = (string)command.ExecuteScalar();
                     connection.Close();
                 }
 
@@ -112,7 +109,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                 }
 
             }
-            catch(SqlException ex)
+            catch (SqlException ex)
             {
                 Console.WriteLine("SQL exception when saving token to the DB!!");
                 return Task.FromException<bool>(ex);

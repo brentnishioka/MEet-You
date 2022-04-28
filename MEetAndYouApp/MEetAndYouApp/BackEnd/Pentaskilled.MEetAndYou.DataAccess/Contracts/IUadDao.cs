@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Pentaskilled.MEetAndYou.Entities;
 
 namespace Pentaskilled.MEetAndYou.DataAccess.Contracts
@@ -15,8 +12,8 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Contracts
 
         Dictionary<DateTime, int> getDailyRegistration();
 
-        
 
-        
+
+
     }
 }

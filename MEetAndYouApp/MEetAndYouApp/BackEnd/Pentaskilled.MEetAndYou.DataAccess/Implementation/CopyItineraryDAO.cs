@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Pentaskilled.MEetAndYou.Entities;
 using Pentaskilled.MEetAndYou.Entities.DBModels;
 
 namespace Pentaskilled.MEetAndYou.DataAccess.Implementation

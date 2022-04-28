@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Pentaskilled.MEetAndYou.DataAccess;
 using Pentaskilled.MEetAndYou.Entities;
 using Pentaskilled.MEetAndYou.Services.Contracts;
@@ -26,7 +22,7 @@ namespace Pentaskilled.MEetAndYou.Services.Implementation
             }
             catch (Exception)
             {
-                throw new Exception(); 
+                throw new Exception();
             }
         }
 

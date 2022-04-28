@@ -21,8 +21,7 @@ public class WeatherForecastController : ControllerBase
     [HttpGet(Name = "GetWeatherForecast")]
     public IEnumerable<WeatherForecast> Get()
     {
-        return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-        {
+        return Enumerable.Range(1, 5).Select(index => new WeatherForecast {
             Date = DateTime.Now.AddDays(index),
             TemperatureC = Random.Shared.Next(-20, 55),
             Summary = Summaries[Random.Shared.Next(Summaries.Length)]
@@ -37,13 +36,6 @@ public class WeatherForecastController : ControllerBase
         var student = new { Name = "Joshua", Age = 42 };
         return student;
     }
-
-    //[HttpGet(Name = "CalculateFibonachi")]
-    //public Object GetStudent()
-    //{
-    //    var student = new { Name = "Joshua", Age = 42};
-    //    return student;
-    //}
 
     [HttpPost]
     [Route("Hello")]

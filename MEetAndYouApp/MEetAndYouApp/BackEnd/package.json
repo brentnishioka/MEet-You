@@ -1,0 +1,22 @@
+{
+  "dependencies": {
+    "@react-icons/all-files": "^4.1.0",
+    "components": "^0.1.0",
+    "react-calendar": "^3.7.0",
+    "react-icons": "^4.3.1",
+    "react-router-dom": "^6.3.0",
+    "styled": "^1.0.0",
+    "styled-components": "^5.3.5"
+  },
+  "name": "BackEnd",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
