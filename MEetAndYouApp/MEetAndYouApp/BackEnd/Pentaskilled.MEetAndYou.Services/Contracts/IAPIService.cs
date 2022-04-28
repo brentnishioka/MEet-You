@@ -10,5 +10,6 @@ namespace Pentaskilled.MEetAndYou.Services.Contracts
     public interface IAPIService
     {
         JObject GetEventByCategory(string category, string location, DateTime date);
+        JObject GetEventByCategory(string category);
     }
 }

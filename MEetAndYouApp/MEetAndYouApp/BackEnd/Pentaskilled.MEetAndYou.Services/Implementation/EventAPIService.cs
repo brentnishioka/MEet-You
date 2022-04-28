@@ -53,5 +53,30 @@ namespace Pentaskilled.MEetAndYou.Services.Implementation
             }
             return result;
         }
+
+        //To use to get events of random category
+        public JObject GetEventByCategory(string category)
+        {
+            String apiKey = "";
+            JObject result = null;
+
+            Hashtable ht = new Hashtable();
+            ht.Add("engine", "google_events");
+            ht.Add("q", category);
+
+            try
+            {
+                GoogleSearch search = new GoogleSearch(ht, apiKey);
+                JObject data = search.GetJson();
+                result = data;
+            }
+            catch (SerpApiSearchException ex)
+            {
+                Console.WriteLine("Exception:");
+                Console.WriteLine(ex.ToString());
+                return result;
+            }
+            return result;
+        }
     }
 }

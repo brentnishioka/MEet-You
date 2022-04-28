@@ -88,6 +88,47 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             return new BaseResponse(sucessMessage, true);
         }
 
+        public async Task<BaseResponse> SaveEventAsync(List<Event> events)
+        {
+            string message = "Saving Event failed.";
+            bool isSuccessful = false;
+            try
+            {
+                foreach (Event item in events)
+                {
+                    _dbContext.Entry(item).State = EntityState.Added;
+                }
+                int result = await _dbContext.SaveChangesAsync();
+
+                //Check to see if all events are added successfully
+                if (result == events.Capacity)
+                {
+                    message = "Saving Events was successful.";
+                    isSuccessful = true;
+                }
+
+            }
+            catch (SqlException ex)
+            {
+                // Remove Rolling back changes
+                return new BaseResponse
+                    ("Saving event failed due to database error \n" + ex.Message, false);
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse("Saving event failed. \n" + ex.Message, false);
+            }
+            return new BaseResponse(message, isSuccessful);
+        }
+
+        // Method to get a random category
+        public async Task<Category> GetRandomCategory()
+        {
+            //return repo.Items.OrderBy(o => Guid.NewGuid()).First();
+            Category randCategory = await _dbContext.Categories.OrderBy(o => Guid.NewGuid()).FirstAsync();
+            return randCategory;
+        }
+
         public DateTime DateConversion(string date)
         {
             CultureInfo ci = new CultureInfo("en-US");

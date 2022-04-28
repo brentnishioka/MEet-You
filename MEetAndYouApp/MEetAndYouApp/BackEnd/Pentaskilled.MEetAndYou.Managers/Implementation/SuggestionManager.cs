@@ -52,12 +52,13 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
             return new SuggestionResponse(successfulMessage, true, eventList);
         }
 
-        public ICollection<Event> GetRandomEventsAsync()
+        public async Task<BaseResponse> SaveEventAsync(List<Event> events)
         {
-            throw new NotImplementedException();
+            BaseResponse response = await _suggestionDAO.SaveEventAsync(events);
+            return response;
         }
 
-        public Task<BaseResponse> SaveEventAsync(Event e)
+        Task<SuggestionResponse> ISuggestionManager.GetRandomEventsAsync()
         {
             throw new NotImplementedException();
         }

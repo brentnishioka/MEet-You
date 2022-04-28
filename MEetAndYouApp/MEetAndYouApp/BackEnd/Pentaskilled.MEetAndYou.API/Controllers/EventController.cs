@@ -91,8 +91,8 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
         {
             Event resultEvent = events[0];
             foreach (Event item in events)
-               { 
-            _dbcontext.Entry(item).State = EntityState.Added;
+            { 
+                _dbcontext.Entry(item).State = EntityState.Added;
             }
             //_dbcontext.Events.Add(@event);
             await _dbcontext.SaveChangesAsync();
