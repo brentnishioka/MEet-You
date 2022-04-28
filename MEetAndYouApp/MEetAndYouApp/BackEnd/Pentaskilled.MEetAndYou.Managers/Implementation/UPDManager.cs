@@ -15,6 +15,8 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
     public class UPDManager
     {
         private readonly MEetAndYouDBContext _dbContext;
+           
+        
         
 
         public UPDManager()
@@ -25,10 +27,7 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
 
         public UPData GetUPData()
         {
-
-            List<Itinerary> itineraries = from itin in _dbContext.Itineraries.Include("Users")
-                                          where 
-                                          select itin;
+            throw new NotImplementedException();
 
 
 
