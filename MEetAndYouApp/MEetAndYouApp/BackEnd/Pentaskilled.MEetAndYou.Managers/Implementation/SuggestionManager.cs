@@ -58,9 +58,37 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
             return response;
         }
 
-        Task<SuggestionResponse> ISuggestionManager.GetRandomEventsAsync()
+        public async Task<SuggestionResponse> GetRandomEventsAsync()
         {
-            throw new NotImplementedException();
+            string successfulMessage = "Get Events was successful.";
+            List<Event> eventList = new List<Event>();
+            try
+            {
+                Category category = await GetRandomCategory();
+                JObject result = _eventAPIService.GetEventByCategory(category.CategoryName);
+                if (result != null)
+                {
+                    eventList = (List<Event>)_suggestionDAO.ParseJSON(result);
+                }
+            }
+            catch (SerpApiSearchException ex)
+            {
+                return new SuggestionResponse
+                    ("Getting random Event from the SERP API failed \n" + ex.Message, false, eventList);
+            }
+            catch (Exception ex)
+            {
+                return new SuggestionResponse
+                    ("Getting random Event from SuggestionManager failed \n" + ex.Message, false, eventList);
+            }
+            return new SuggestionResponse(successfulMessage, true, eventList);
         }
+
+        public async Task<Category> GetRandomCategory()
+        {
+            Category category = await _suggestionDAO.GetRandomCategory();
+            return category;
+        }
+
     }
 }
