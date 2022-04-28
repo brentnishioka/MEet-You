@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
+using Pentaskilled.MEetAndYou.Entities.DBModels;
+using Pentaskilled.MEetAndYou.Entities.Models;
 using Pentaskilled.MEetAndYou.Managers;
 
 namespace Pentaskiled.MEetAndYou.API.Controllers
@@ -37,5 +39,12 @@ namespace Pentaskiled.MEetAndYou.API.Controllers
             JObject result = _suggestionManager.GetEventByCategory();
             return result;
         }
+
+        //[HttpPost]
+        //public ActionResult<BaseResponse> SaveEvent(int eventID, string des, )
+        //{
+        //    new Event()
+        //    return new BaseResponse();
+        //}
     }
 }
