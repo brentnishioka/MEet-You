@@ -5,6 +5,18 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
 {
     public partial class UserEventRating
     {
+        public UserEventRating()
+        {
+
+        }
+
+        public UserEventRating(int eventID, int itineraryID, int userRating)
+        {
+            EventId = eventID;
+            ItineraryId = itineraryID;
+            UserRating = userRating;
+        }
+
         public int EventId { get; set; }
         public int ItineraryId { get; set; }
         public int UserRating { get; set; }
