@@ -15,7 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 //Add API key
-//var eventsApiKey = builder.Configuration["EventsAPI:ServiceApiKey"];
+var eventsApiKey = builder.Configuration["EventsAPI:ServiceApiKey"];
 
 // Add Cors policy to allow from all origins
 builder.Services.AddCors();

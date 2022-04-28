@@ -35,10 +35,11 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
             try
             {
                 JObject result = _eventAPIService.GetEventByCategory(category, location, date);
-                if (result != null)
+                if (result == null)
                 {
-                    eventList = (List<Event>) _suggestionDAO.ParseJSON(result);
+                    return new SuggestionResponse("There was no events with that category", false, eventList);
                 }
+                eventList = (List<Event>)_suggestionDAO.ParseJSON(result);
             }
             catch (SerpApiSearchException ex)
             {
@@ -61,16 +62,17 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
 
         public async Task<SuggestionResponse> GetRandomEventsAsync()
         {
-            string successfulMessage = "Get Events was successful.";
+            string successfulMessage = "Get Random Events was successful.";
             List<Event> eventList = new List<Event>();
             try
             {
                 Category category = await GetRandomCategory();
                 JObject result = _eventAPIService.GetEventByCategory(category.CategoryName);
-                if (result != null)
+                if (result == null)
                 {
-                    eventList = (List<Event>)_suggestionDAO.ParseJSON(result);
+                    return new SuggestionResponse("There was no events with that category", false, eventList);
                 }
+                eventList = (List<Event>)_suggestionDAO.ParseJSON(result);
             }
             catch (SerpApiSearchException ex)
             {

@@ -14,19 +14,20 @@ namespace Pentaskilled.MEetAndYou.Services.Implementation
 {
     public class EventAPIService : IAPIService
     {
-        //private readonly IConfiguration _configuration;
-        private readonly string _eventsAPIkey = "5ebf47bd63dbb46ff6dcc84edbc58cb326723d49af7dedff19b243b94e3ab4b8";
+        private readonly IConfiguration _configuration;
+        //private readonly string _eventsAPIkey = "5ebf47bd63dbb46ff6dcc84edbc58cb326723d49af7dedff19b243b94e3ab4b8";
+        private readonly string _eventsAPIkey;
 
         public EventAPIService()
         {
 
         }
 
-        //public EventAPIService(IConfiguration configuration)
-        //{
-        //    _configuration = configuration;
-        //    _eventsAPIkey = _configuration["EventsAPI:ServiceApiKey"];
-        //}
+        public EventAPIService(IConfiguration configuration)
+        {
+            _configuration = configuration;
+            _eventsAPIkey = _configuration["EventsAPI:ServiceApiKey"];
+        }
 
         public JObject GetEventByCategory(string category, string location, DateTime date)
         {
@@ -57,7 +58,7 @@ namespace Pentaskilled.MEetAndYou.Services.Implementation
         //To use to get events of random category
         public JObject GetEventByCategory(string category)
         {
-            String apiKey = "";
+            String apiKey = _eventsAPIkey;
             JObject result = null;
 
             Hashtable ht = new Hashtable();
