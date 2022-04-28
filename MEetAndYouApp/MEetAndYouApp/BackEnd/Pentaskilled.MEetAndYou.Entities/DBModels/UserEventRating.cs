@@ -20,5 +20,8 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
         public int EventId { get; set; }
         public int ItineraryId { get; set; }
         public int UserRating { get; set; }
+
+        public virtual Event Event { get; set; }
+        public virtual Itinerary Itinerary { get; set; }
     }
 }

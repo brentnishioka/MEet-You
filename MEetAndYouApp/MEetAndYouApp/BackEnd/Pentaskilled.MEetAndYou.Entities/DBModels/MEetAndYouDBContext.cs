@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -24,16 +23,17 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
         public virtual DbSet<Image> Images { get; set; }
         public virtual DbSet<Itinerary> Itineraries { get; set; }
         public virtual DbSet<ItineraryNote> ItineraryNotes { get; set; }
+        public virtual DbSet<Permission> Permissions { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<UserAccountRecord> UserAccountRecords { get; set; }
         public virtual DbSet<UserEventRating> UserEventRatings { get; set; }
+        public virtual DbSet<UserItinerary> UserItineraries { get; set; }
         public virtual DbSet<UserToken> UserTokens { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 //optionsBuilder.UseSqlServer("Data Source=DESKTOP-0QA4EN0\SQLEXPRESS;Initial Catalog=MEetAndYou-DB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;");
                 //optionsBuilder.UseSqlServer(System.Configuration.ConfigurationManager.ConnectionStrings["MEetAndYouDatabase"].ConnectionString);
                 optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["MEetAndYouDatabase"].ConnectionString);
@@ -216,38 +216,43 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
 
                             j.IndexerProperty<int>("EventId").HasColumnName("eventID");
                         });
-
-                entity.HasMany(d => d.Users)
-                    .WithMany(p => p.ItinerariesNavigation)
-                    .UsingEntity<Dictionary<string, object>>(
-                        "UserItinerary",
-                        l => l.HasOne<UserAccountRecord>().WithMany().HasForeignKey("UserId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("userIDitinerary_fk"),
-                        r => r.HasOne<Itinerary>().WithMany().HasForeignKey("ItineraryId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("itineraryID_fk"),
-                        j =>
-                        {
-                            j.HasKey("ItineraryId", "UserId").HasName("userItinerary_pk");
-
-                            j.ToTable("UserItinerary", "MEetAndYou");
-
-                            j.IndexerProperty<int>("ItineraryId").HasColumnName("itineraryID");
-
-                            j.IndexerProperty<int>("UserId").HasColumnName("UserID");
-                        });
             });
 
             modelBuilder.Entity<ItineraryNote>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.ItineraryId)
+                    .HasName("itineraryNotes_pk");
 
                 entity.ToTable("ItineraryNotes", "MEetAndYou");
 
-                entity.Property(e => e.ItineraryId).HasColumnName("itineraryID");
+                entity.Property(e => e.ItineraryId)
+                    .ValueGeneratedNever()
+                    .HasColumnName("itineraryID");
 
                 entity.Property(e => e.NoteContent)
                     .IsRequired()
                     .HasMaxLength(300)
                     .IsUnicode(false)
                     .HasColumnName("noteContent");
+
+                entity.HasOne(d => d.Itinerary)
+                    .WithOne(p => p.ItineraryNote)
+                    .HasForeignKey<ItineraryNote>(d => d.ItineraryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("noteItineraryID_fk");
+            });
+
+            modelBuilder.Entity<Permission>(entity =>
+            {
+                entity.HasKey(e => e.PermissionName)
+                    .HasName("permission_pk");
+
+                entity.ToTable("Permission", "MEetAndYou");
+
+                entity.Property(e => e.PermissionName)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("permissionName");
             });
 
             modelBuilder.Entity<Role>(entity =>
@@ -311,7 +316,8 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
 
             modelBuilder.Entity<UserEventRating>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => new { e.EventId, e.ItineraryId })
+                    .HasName("userEventRatings_pk");
 
                 entity.ToTable("UserEventRatings", "MEetAndYou");
 
@@ -320,6 +326,53 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
                 entity.Property(e => e.ItineraryId).HasColumnName("itineraryID");
 
                 entity.Property(e => e.UserRating).HasColumnName("userRating");
+
+                entity.HasOne(d => d.Event)
+                    .WithMany(p => p.UserEventRatings)
+                    .HasForeignKey(d => d.EventId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("ratingEventID_fk");
+
+                entity.HasOne(d => d.Itinerary)
+                    .WithMany(p => p.UserEventRatings)
+                    .HasForeignKey(d => d.ItineraryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("ratingItineraryID_fk");
+            });
+
+            modelBuilder.Entity<UserItinerary>(entity =>
+            {
+                entity.HasKey(e => new { e.ItineraryId, e.UserId, e.PermissionName })
+                    .HasName("userItinerary_pk");
+
+                entity.ToTable("UserItinerary", "MEetAndYou");
+
+                entity.Property(e => e.ItineraryId).HasColumnName("itineraryID");
+
+                entity.Property(e => e.UserId).HasColumnName("UserID");
+
+                entity.Property(e => e.PermissionName)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("permissionName");
+
+                entity.HasOne(d => d.Itinerary)
+                    .WithMany(p => p.UserItineraries)
+                    .HasForeignKey(d => d.ItineraryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("itineraryID_fk");
+
+                entity.HasOne(d => d.PermissionNameNavigation)
+                    .WithMany(p => p.UserItineraries)
+                    .HasForeignKey(d => d.PermissionName)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("permission_fk");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.UserItineraries)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("userIDItinerary_fk");
             });
 
             modelBuilder.Entity<UserToken>(entity =>

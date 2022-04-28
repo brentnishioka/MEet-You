@@ -15,8 +15,9 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
             ItineraryId = itineraryID;
             NoteContent = noteContent;
         }
-
         public int ItineraryId { get; set; }
         public string NoteContent { get; set; }
+
+        public virtual Itinerary Itinerary { get; set; }
     }
 }
