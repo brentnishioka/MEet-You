@@ -17,10 +17,10 @@ const Navbar = () => {
             <Nav>
                 <Bars />
                 <NavMenu>
-                    <NavLink to='/' activeStyle>
+                    <NavLink to='/' activeStyle={{ color: 'black' }}>
                         Home
                     </NavLink>
-                    <NavLink to='/calendar' activeStyle>
+                    <NavLink to='/calendar' activeStyle={{ color: 'black' }}>
                         Calendar
                     </NavLink>
 

@@ -23,22 +23,24 @@ function MyCalendar() {
     //var user = sessionStorage.getItem("userID")
 
     const fetchItinerary = async () => {
-        const formData = new FormData()
-
+        //const formData = new FormData()
+        var id = 3
         var requestOptions = {
             method: "POST",
-            headers: {
+            headerss: {
                 'Content-type': 'application/json',
+                'Accept': 'application/json, text/plain, */*'
             },
+            //body: JSON.stringify({userID: 3}),
             mode: 'cors'
         };
 
-        await fetch(`https://localhost:9000/Calendar?userID=3`, requestOptions).then(response => response.text())
+        await fetch(`https://localhost:9000/Calendar?userID=`+id, requestOptions).then(response => response.text())
             .then(body => console.log(body))
     }
 
     useEffect(() => {
-        createDateString();
+        fetchItinerary();
     }, [])
 
     return (

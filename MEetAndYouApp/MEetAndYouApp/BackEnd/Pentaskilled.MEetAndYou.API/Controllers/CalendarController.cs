@@ -25,7 +25,7 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
 
         [HttpPost(Name = "GetItineraries")]
         //[Route("GetItineraries/{userID}")]
-        public async Task<ActionResult<List<Itinerary>>> GetItineraries(int userID, string date)
+        public async Task<ActionResult<List<Itinerary>>> GetItineraries(int userID)
         {
             //var dateTimeObject = new DateTime(parsedDate[0], parsedDate[1], parsedDate[2]);
 
