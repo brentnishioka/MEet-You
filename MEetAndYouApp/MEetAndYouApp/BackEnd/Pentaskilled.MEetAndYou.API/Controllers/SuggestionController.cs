@@ -75,7 +75,7 @@ namespace Pentaskiled.MEetAndYou.API.Controllers
 
         [HttpGet]
         [Route("/GetSuggestion")]
-        public ActionResult<SuggestionResponse> GetRandomEvent(string category, string location, DateTime date)
+        public async Task<ActionResult<SuggestionResponse>> GetRandomEvent()
         {
             //if (token == null)
             //{
@@ -91,7 +91,7 @@ namespace Pentaskiled.MEetAndYou.API.Controllers
             //{
             //    // Call the manager to execute the feature. 
             //}
-            SuggestionResponse result = _suggestionManager.GetEvents(category, location, date);
+            SuggestionResponse result = await _suggestionManager.GetRandomEventsAsync();
             return result;
         }
     }
