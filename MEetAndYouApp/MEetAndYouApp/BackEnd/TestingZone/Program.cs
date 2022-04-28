@@ -135,6 +135,7 @@ public class Program
         //Test Saving events to DB
         SuggestionDAO suggestionDAO = new SuggestionDAO();
         List<Event> eventList = new List<Event>();
+        int itinID = 4;
         int numEvent = 3;
 
         for (int i = 0; i < numEvent; i++)
@@ -150,7 +151,7 @@ public class Program
 
         //Act
         Console.WriteLine("Saving Events");
-        BaseResponse response = suggestionDAO.SaveEventAsync(eventList).Result;
+        BaseResponse response = suggestionDAO.SaveEventAsync(eventList, itinID).Result;
         Console.WriteLine("Saving events Successful");
         Console.WriteLine(response.Message);
     }

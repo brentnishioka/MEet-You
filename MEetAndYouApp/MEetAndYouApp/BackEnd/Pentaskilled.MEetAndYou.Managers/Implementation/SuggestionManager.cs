@@ -52,9 +52,9 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
             return new SuggestionResponse(successfulMessage, true, eventList);
         }
 
-        public async Task<BaseResponse> SaveEventAsync(List<Event> events)
+        public async Task<BaseResponse> SaveEventAsync(List<Event> events, int itinID)
         {
-            BaseResponse response = await _suggestionDAO.SaveEventAsync(events);
+            BaseResponse response = await _suggestionDAO.SaveEventAsync(events, itinID);
             return response;
         }
 

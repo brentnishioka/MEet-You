@@ -92,20 +92,29 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             return new BaseResponse(sucessMessage, true);
         }
 
-        public async Task<BaseResponse> SaveEventAsync(List<Event> events)
+        public async Task<BaseResponse> SaveEventAsync(List<Event> events, int itinID)
         {
             string message = "Saving Event failed.";
             bool isSuccessful = false;
             try
             {
+                Itinerary itin = await _dbContext.Itineraries.FindAsync(itinID);
+                if (itin == null)
+                {
+                    return new BaseResponse("Itinerary does not exist", isSuccessful);
+                }
+                // Save to Event table
                 foreach (Event item in events)
                 {
                     _dbContext.Entry(item).State = EntityState.Added;
+                    // Save to the itinerary Object
+                    itin.Events.Add(item);
                 }
+
                 int result = await _dbContext.SaveChangesAsync();
 
                 //Check to see if all events are added successfully
-                if (result == events.Count)
+                if (result == (events.Count * 2))
                 {
                     message = "Saving Events was successful.";
                     isSuccessful = true;

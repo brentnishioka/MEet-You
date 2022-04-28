@@ -47,7 +47,7 @@ namespace Pentaskiled.MEetAndYou.API.Controllers
 
         [HttpPost]
         [Route("/SaveEvent")]
-        public async Task<ActionResult<BaseResponse>> SaveEvent(List<Event> events)
+        public async Task<ActionResult<BaseResponse>> SaveEvent(List<Event> events, int itinID)
         {
             //string? token;
             //int userID;
@@ -69,7 +69,7 @@ namespace Pentaskiled.MEetAndYou.API.Controllers
             //    return BadRequest("User is not authorized to use this service");
             //}
 
-            BaseResponse response = await _suggestionManager.SaveEventAsync(events);
+            BaseResponse response = await _suggestionManager.SaveEventAsync(events, itinID);
             return response;
         }
 

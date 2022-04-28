@@ -36,9 +36,10 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         public async void SaveEventsTest()
         {
             //Arrange
-            SuggestionDAO suggestionDAO = new SuggestionDAO();
+            SuggestionDAO suggestionDAO = new SuggestionDAO(_dbContext);
             List<Event> eventList = new List<Event>();
             int numEvent = 3;
+            int itinID = 5;
 
             for (int i = 0; i<numEvent; i++)
             {
@@ -53,7 +54,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
 
             //Act
             _output.WriteLine("Saving Events....");
-            BaseResponse response = await suggestionDAO.SaveEventAsync(eventList);
+            BaseResponse response = await suggestionDAO.SaveEventAsync(eventList, itinID);
             _output.WriteLine(response.Message);
 
             //
