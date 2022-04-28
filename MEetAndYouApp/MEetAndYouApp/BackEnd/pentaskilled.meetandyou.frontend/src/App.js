@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import SignUp from './pages/signup';
 import Home from './pages/home'
 import MyCalendar from './pages/mycalendar';
+import MemoryAlbum from './pages/mycalendar';
 
 function App() {
     return (
@@ -14,7 +15,8 @@ function App() {
                 <Route path="/home" element={<Home/>} />
                 <Route path="/calendar" element={<MyCalendar/>} />
                 <Route path="/signup" element={<SignUp/>} />
-               
+                <Route path="/memoryalbum" element={<MemoryAlbum />} />
+
             </Routes>
         </Router>
     );
