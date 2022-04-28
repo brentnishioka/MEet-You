@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using Pentaskilled.MEetAndYou.DataAccess;
 using Pentaskilled.MEetAndYou.DataAccess.Implementation;
 using Pentaskilled.MEetAndYou.Entities.DBModels;
+using Pentaskilled.MEetAndYou.Entities.Models;
 using Pentaskilled.MEetAndYou.Managers;
 using Pentaskilled.MEetAndYou.Services.Implementation;
 using SerpApi;
@@ -108,39 +109,50 @@ public class Program
         //}
 
         //Test the API and conversion
-        string location = "Long Beach";
-        string category = "coffee";
-        Console.WriteLine("Parsing the date: ");
-        string date = "May 1";
-        DateTime dateTime = DateConversion(date);
-        Console.WriteLine(date.ToString());
-        int limit = 10;
+        //string location = "Long Beach";
+        //string category = "coffee";
+        //Console.WriteLine("Parsing the date: ");
+        //string date = "May 1";
+        //DateTime dateTime = DateConversion(date);
+        //Console.WriteLine(date.ToString());
+        //int limit = 10;
 
-        EventAPIService eventAPI = new EventAPIService();
-        JObject results = eventAPI.GetEventByCategoryAsync(category, location, dateTime);
+        //EventAPIService eventAPI = new EventAPIService();
+        //JObject results = eventAPI.GetEventByCategory(category, location, dateTime);
+        //SuggestionDAO suggestionDAO = new SuggestionDAO();
+        //ICollection<Event> eventList = suggestionDAO.ParseJSON(results, limit);
+
+        //foreach(Event e in eventList)
+        //{
+        //    Console.WriteLine(e.EventName.ToString());
+        //    Console.WriteLine(e.Description.ToString());
+        //    Console.WriteLine(e.EventDate.ToString());
+        //    Console.WriteLine(e.CategoryNames.ToString());
+        //    Console.WriteLine(e.Address);
+        //    Console.WriteLine("--------------------------------------");
+        //}
+
+        //Test Saving events to DB
         SuggestionDAO suggestionDAO = new SuggestionDAO();
-        ICollection<Event> eventList = suggestionDAO.ParseJSON(results, limit);
+        List<Event> eventList = new List<Event>();
+        int numEvent = 3;
 
-        foreach(Event e in eventList)
+        for (int i = 0; i < numEvent; i++)
         {
-            Console.WriteLine(e.EventName.ToString());
-            Console.WriteLine(e.Description.ToString());
-            Console.WriteLine(e.EventDate.ToString());
-            Console.WriteLine(e.CategoryNames.ToString());
-            Console.WriteLine(e.Address);
-            Console.WriteLine("--------------------------------------");
+            Event temp = new Event {
+                EventName = "Test event " + i,
+                Address = i + "Main street, Long Beach CA 99284",
+                Description = "Test events use for saving events unit test",
+                EventDate = DateTime.Now
+            };
+            eventList.Add(temp);
         }
 
-
-        //var request = new Yelp.Api.Models.SearchRequest();
-        //request.Latitude = 37.786882;
-        //request.Longitude = -122.399972;
-        //request.Term = "cupcakes";
-        //request.MaxResults = 40;
-        //request.OpenNow = true;
-
-        //var client = new Yelp.Api.Client("API_KEY");
-        //var results = await client.SearchBusinessesAllAsync(request);
+        //Act
+        Console.WriteLine("Saving Events");
+        BaseResponse response = suggestionDAO.SaveEventAsync(eventList).Result;
+        Console.WriteLine("Saving events Successful");
+        Console.WriteLine(response.Message);
     }
 
     public static DateTime DateConversion(string date)

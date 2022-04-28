@@ -21,6 +21,10 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
         {
             _dbContext = new MEetAndYouDBContext();
         }
+        public SuggestionDAO(MEetAndYouDBContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
 
 
         public  ICollection<Event> ParseJSON(JObject data, int limit = 10)
@@ -101,7 +105,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
                 int result = await _dbContext.SaveChangesAsync();
 
                 //Check to see if all events are added successfully
-                if (result == events.Capacity)
+                if (result == events.Count)
                 {
                     message = "Saving Events was successful.";
                     isSuccessful = true;
