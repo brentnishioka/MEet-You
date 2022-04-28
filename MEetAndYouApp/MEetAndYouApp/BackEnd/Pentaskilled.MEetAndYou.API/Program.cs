@@ -8,14 +8,14 @@ using System.Web.Cors;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddCors(options => 
+/*builder.Services.AddCors(options => 
 {
     options.AddPolicy("MEetAndYouPolicy",
         policy => {
             policy.WithOrigins("https://localhost:3000/");
                       });
 });
-
+*/
 
 // Add ASPNETCoreDemoDBContext services. (Dependency Injection for database)
 var connection =
@@ -35,14 +35,14 @@ builder.Services.AddDbContext<MEetAndYouDBContext>(options =>
 //                                .AllowAnyMethod();
 //        });
 //});
-builder.Services.AddCors(options => {
+/*builder.Services.AddCors(options => {
     options.AddDefaultPolicy(
         builder => {
             builder.AllowAnyOrigin() //change 
                                 .AllowAnyHeader()
                                 .AllowAnyMethod();
         });
-});
+});*/
 
 
 builder.Services.AddControllers();
@@ -58,6 +58,7 @@ builder.Services.AddSingleton<ICalendarDAO, CalendarDAO>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//cors block 
 var app = builder.Build();
 
 //trying to add cors
@@ -68,6 +69,8 @@ app.UseCors(builder => {
     .AllowAnyMethod()
     .AllowAnyHeader();
 });
+//end cors
+
 
 /*app.options('*', function(req, res){
     res.header('Access-Control-Allow-Origin', '*');
