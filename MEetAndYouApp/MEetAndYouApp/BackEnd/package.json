@@ -4,6 +4,7 @@
     "components": "^0.1.0",
     "react-calendar": "^3.7.0",
     "react-icon": "^1.0.0",
+    "react-datetime": "^3.1.1",
     "react-icons": "^4.3.1",
     "react-router-dom": "^6.3.0",
     "styled": "^1.0.0",
