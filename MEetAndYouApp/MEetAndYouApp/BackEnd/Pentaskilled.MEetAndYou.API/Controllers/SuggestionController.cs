@@ -81,7 +81,7 @@ namespace Pentaskiled.MEetAndYou.API.Controllers
         }
 
         [HttpGet]
-        [Route("/GetSuggestion")]
+        [Route("/GetRandomEvent")]
         public async Task<ActionResult<SuggestionResponse>> GetRandomEvent()
         {
             //if (token == null)
