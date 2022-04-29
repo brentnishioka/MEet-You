@@ -21,7 +21,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             _dbContext = dbContext;
         }
 
-        public async Task<UserAccountRecordResponse> GetUserAccountRecordByEmail(string email)
+        public async Task<UserAccountRecordResponse> GetUserAccountRecordAsync(string email)
         {
             UserAccountRecord userAccountRecord;
 
@@ -44,7 +44,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             }
         }
 
-        public async Task<HyperlinkResponse> AddUserToItinerary(UserAccountRecord userAccountRecord, int itineraryID, string permission)
+        public async Task<HyperlinkResponse> AddUserToItineraryAsync(UserAccountRecord userAccountRecord, int itineraryID, string permission)
         {
             Itinerary itin;
 
@@ -71,13 +71,19 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
                 //    Console.WriteLine(user.ItineraryId + " " + user.UserId);
 
                 Console.WriteLine("There are " + uniqueUsers + " unique users");
+                if (uniqueUsers < 5)
+                {
+                    // Add object to context
+                    itin.UserItineraries.Add(userItinerary);
+                    _dbContext.Entry(itin).State = EntityState.Modified;
 
-                // Add object to context
-                itin.UserItineraries.Add(userItinerary);
-                _dbContext.Entry(itin).State = EntityState.Modified;
-
-                // Save changes to context
-                await _dbContext.SaveChangesAsync();
+                    // Save changes to context
+                    await _dbContext.SaveChangesAsync();
+                }
+                else
+                {
+                    return new HyperlinkResponse("Max users reached, please remove a user", false, null);
+                }
             }
             catch (DbUpdateException ex)
             {
@@ -87,7 +93,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             return new HyperlinkResponse("User successfully added", true, itin);
         }
 
-        public async Task<HyperlinkResponse> RemoveUserFromItinerary(UserAccountRecord userAccountRecord, int itineraryID, string permission)
+        public async Task<HyperlinkResponse> RemoveUserFromItineraryAsync(UserAccountRecord userAccountRecord, int itineraryID, string permission)
         {
             Itinerary itin;
 
@@ -117,7 +123,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             return new HyperlinkResponse("User successfully removed", true, itin);
         }
 
-        public async Task<HyperlinkResponse> isUserOwner(int userID, int itineraryID)
+        public async Task<HyperlinkResponse> isUserOwnerAsync(int userID, int itineraryID)
         {
             HyperlinkResponse response;
 
