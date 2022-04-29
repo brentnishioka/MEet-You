@@ -169,5 +169,15 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
             }
             return response;
         }
+
+        public async Task<ItineraryResponse> GetUserItineraries(int userID)
+        {
+            ItineraryResponse response = await _suggestionDAO.GetUserItineraries(userID);
+            if (response.IsSuccessful == true && response.Data.Count == 0)
+            {
+                response.Message = "The userID: " + userID + " have no itineraries.";
+            }
+            return response;
+        }
     }
 }

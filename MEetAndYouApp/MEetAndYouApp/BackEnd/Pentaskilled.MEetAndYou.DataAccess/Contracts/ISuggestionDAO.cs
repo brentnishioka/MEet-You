@@ -20,6 +20,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Contracts
         Task<BaseResponse> isUserOwner(int userID, int itineraryID);
         DateTime DateConversion(string date);
         Task<BaseResponse> AddItineraryAsync(List<Itinerary> iList);
+        Task<ItineraryResponse> GetUserItineraries (int userID);
 
     }
 }

@@ -289,5 +289,28 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             }
             return new BaseResponse(message, isSuccessful);
         }
+
+        public async Task<ItineraryResponse> GetUserItineraries(int userID)
+        {
+            List<Itinerary> itineraries = null;
+            string sucessMessage = "Getting all Itineraries was successful.";
+            try
+            {
+                itineraries = await (from itin in _dbContext.Itineraries.Include("Events")
+                                     where itin.ItineraryOwner == userID
+                                     select itin).ToListAsync<Itinerary>();
+            }
+            catch (SqlException ex)
+            {
+                return new ItineraryResponse
+                    ("Getting Itineraries failed due to database error \n" + ex.Message, false, itineraries);
+            }
+            catch (Exception ex)
+            {
+                return new ItineraryResponse
+                    ("Getting Itineraries failed. \n" + ex.Message, false, itineraries);
+            }
+            return new ItineraryResponse(sucessMessage, true, itineraries);
+        }
     }
 }
