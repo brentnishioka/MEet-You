@@ -10,9 +10,9 @@ namespace Pentaskilled.MEetAndYou.Managers.Contracts
 {
     public interface ISuggestionManager
     {
-        SuggestionResponse GetEvents(string category, string location, DateTime date);
+        Task<SuggestionResponse> GetEvents(string category, string location, DateTime date);
         Task<SuggestionResponse> GetRandomEventsAsync();
-        Task<BaseResponse> SaveEventAsync(List<Event> e, int itinID);
+        Task<BaseResponse> SaveEventAsync(List<Event> e, int itinID, int userID);
         Task<bool> IsInCategory(string category);
     }
 }

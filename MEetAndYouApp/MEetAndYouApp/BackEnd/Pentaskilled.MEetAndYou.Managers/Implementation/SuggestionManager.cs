@@ -28,13 +28,18 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
             _eventAPIService = eventAPIService;
         }
 
-        public SuggestionResponse GetEvents(string category, string location, DateTime date)
+        public async Task<SuggestionResponse> GetEvents(string category, string location, DateTime date)
         {
             string successfulMessage = "Get Events was successful.";
             List<Event> eventList = new List<Event>();
             try
             {
                 //Check to see if user pass in a correct category
+                bool isCategoryValid = await IsInCategory(category);
+                if (!isCategoryValid)
+                {
+                    return new SuggestionResponse("Category is invalid", false, eventList);
+                }
 
                 // Run the Search for events
                 JObject result = _eventAPIService.GetEventByCategory(category, location, date);
@@ -57,9 +62,24 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
             return new SuggestionResponse(successfulMessage, true, eventList);
         }
 
-        public async Task<BaseResponse> SaveEventAsync(List<Event> events, int itinID)
+        public async Task<BaseResponse> SaveEventAsync(List<Event> events, int itinID, int userID)
         {
-            BaseResponse response = await _suggestionDAO.SaveEventAsync(events, itinID);
+            BaseResponse response;
+            try {
+                // Check to see if the user own the itinerary
+                BaseResponse isOwner = await _suggestionDAO.isUserOwner(userID, itinID);
+                if (isOwner.IsSuccessful == false)
+                {
+                    return new BaseResponse("Not authorized to add Event", false);
+                }
+
+                response = await _suggestionDAO.SaveEventAsync(events, itinID);
+            }
+
+            catch(Exception ex)
+            {
+                return new BaseResponse("Saving event in Manager failed: \n" + ex.Message, false);
+            }
             return response;
         }
 

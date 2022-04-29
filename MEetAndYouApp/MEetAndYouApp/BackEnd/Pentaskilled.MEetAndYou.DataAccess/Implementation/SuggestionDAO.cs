@@ -180,5 +180,32 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             }
             return result;
         }
+
+        public async Task<BaseResponse> isUserOwner(int userID, int itineraryID)
+        {
+            BaseResponse baseResponse;
+
+            try
+            {
+                // Find associated itinerary
+                Itinerary itin = await _dbContext.Itineraries.FindAsync(itineraryID);
+
+                if (userID == itin.ItineraryOwner)
+                {
+                    baseResponse = new BaseResponse("User owns the itinerary", true);
+                }
+                else
+                {
+                   baseResponse = new BaseResponse("User does not own the itinerary", false);
+                }
+
+            }
+            catch (SqlException ex)
+            {
+                return new BaseResponse("Could not find itinerary", false);
+            }
+
+            return baseResponse;
+        }
     }
 }

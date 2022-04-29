@@ -32,7 +32,7 @@ namespace Pentaskiled.MEetAndYou.API.Controllers
 
         [HttpGet]
         [Route("/GetEvent")]
-        public ActionResult<SuggestionResponse> GetEvent(string category, string location, DateTime date)
+        public async Task<ActionResult<SuggestionResponse>> GetEvent(string category, string location, DateTime date)
         {
             //if (token == null)
             //{
@@ -48,13 +48,13 @@ namespace Pentaskiled.MEetAndYou.API.Controllers
             //{
             //    // Call the manager to execute the feature. 
             //}
-            SuggestionResponse result = _suggestionManager.GetEvents(category, location, date);
+            SuggestionResponse result = await _suggestionManager.GetEvents(category, location, date);
             return result;
         }
 
         [HttpPost]
         [Route("/SaveEvent")]
-        public async Task<ActionResult<BaseResponse>> SaveEvent(List<Event> events, int itinID)
+        public async Task<ActionResult<BaseResponse>> SaveEvent(List<Event> events, int itinID, int userID)
         {
             //string? token;
             //int userID;
@@ -76,7 +76,7 @@ namespace Pentaskiled.MEetAndYou.API.Controllers
             //    return BadRequest("User is not authorized to use this service");
             //}
 
-            BaseResponse response = await _suggestionManager.SaveEventAsync(events, itinID);
+            BaseResponse response = await _suggestionManager.SaveEventAsync(events, itinID, userID);
             return response;
         }
 
