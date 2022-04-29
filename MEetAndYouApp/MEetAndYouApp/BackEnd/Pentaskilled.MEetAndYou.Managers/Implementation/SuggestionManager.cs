@@ -122,7 +122,8 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
             List<Category> categories = response.Data;
             foreach (Category c in categories)
             {
-                if (c.CategoryName == category)
+                string lowerCat = c.CategoryName.ToLower();
+                if (lowerCat == category.ToLower())
                 {
                     return true;
                 }

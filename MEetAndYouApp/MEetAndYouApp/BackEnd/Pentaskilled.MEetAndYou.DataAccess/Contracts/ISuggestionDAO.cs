@@ -17,5 +17,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Contracts
         Task<Category> GetRandomCategory();
         Task<CategoryResponse> GetAllCategory();
         Task<BaseResponse> isUserOwner(int userID, int itineraryID);
+        DateTime DateConversion(string date);
+
     }
 }
