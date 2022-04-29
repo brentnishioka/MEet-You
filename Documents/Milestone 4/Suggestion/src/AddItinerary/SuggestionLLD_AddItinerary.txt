@@ -39,7 +39,7 @@ SuggestionManager-->SuggestionController:return _suggestionManager
 FrontEnd->SuggestionController:HTTP Header(int userID, string token, string claimRole) \n(List<Itinerary> iList)
 
 // The start of API call
-SuggestionController->SuggestionController:async ActionResult<BaseResponse> AddItinerary\n(List<Itinerary> iList)
+SuggestionController->SuggestionController:async ActionResult<BaseResponse> AddItineraryAsync\n(List<Itinerary> iList)
 group if (token == null)
 SuggestionController-->FrontEnd:return BadRequest("Inavalid Token")
 end 
@@ -51,12 +51,12 @@ end
 
 //
 group else
-SuggestionController->SuggestionManager:async ActionResult<BaseResponse> AddItinerary(List<Itinerary> iList)
-SuggestionManager->SuggestionDAO:async BaseResponse SuggestionDAO.AddEvent(List<Itinerary> selectedEvents)
+SuggestionController->SuggestionManager:async ActionResult<BaseResponse> AddItineraryAsync(List<Itinerary> iList)
+SuggestionManager->SuggestionDAO:async BaseResponse SuggestionDAO.AddItineraryAsync(List<Itinerary> selectedItineraries)
 
 //Loop to save event
 group foreach (Event e in selectedEvents)
-SuggestionDAO->SuggestionDAO:_dbContext.Itinerary.Add(Itinerary e)
+SuggestionDAO->SuggestionDAO:_dbContext.Itinerary.Add(Itinerary i)
 end 
 
 SuggestionDAO->MicrosoftSQL Server:_dbContext.SaveChangesAsync( )
