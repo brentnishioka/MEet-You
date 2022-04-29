@@ -10,13 +10,13 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
     [ApiController]
     public class RatingController : ControllerBase
     {
-        private readonly AuthorizationManager _authorizationManager;
+        //private readonly AuthorizationManager _authorizationManager;
         private readonly IRatingManager _ratingManager;
         private readonly MEetAndYouDBContext _dbcontext;
 
-        public RatingController(AuthorizationManager authzManager, IRatingManager _ratingManager, MEetAndYouDBContext dbcontext)
+        public RatingController(IRatingManager _ratingManager, MEetAndYouDBContext dbcontext)
         {
-            _authorizationManager = authzManager;
+            //_authorizationManager = authzManager;
             this._ratingManager = _ratingManager;
             _dbcontext = dbcontext;
         }
@@ -25,7 +25,8 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
         [Route("PostRatingCreation")]
         public ActionResult<BaseResponse> PostRatingCreation(int eventID, int itineraryID, int userRating)
         {
-            throw new NotImplementedException();
+            BaseResponse postRatingCreationResult = _ratingManager.CreateRating(eventID, itineraryID, userRating);
+            return postRatingCreationResult;
         }
 
         [HttpPost]

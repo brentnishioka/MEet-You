@@ -14,6 +14,7 @@
     <ProjectReference Include="..\Pentaskilled.MEetAndYou.DataAccess\Pentaskilled.MEetAndYou.DataAccess.csproj" />
     <ProjectReference Include="..\Pentaskilled.MEetAndYou.DomainModels\Pentaskilled.MEetAndYou.DomainModels.csproj" />
     <ProjectReference Include="..\Pentaskilled.MEetAndYou.Entities\Pentaskilled.MEetAndYou.Entities.csproj" />
+    <ProjectReference Include="..\Pentaskilled.MEetAndYou.Logging\Pentaskilled.MEetAndYou.Logging.csproj" />
   </ItemGroup>
 
 </Project>

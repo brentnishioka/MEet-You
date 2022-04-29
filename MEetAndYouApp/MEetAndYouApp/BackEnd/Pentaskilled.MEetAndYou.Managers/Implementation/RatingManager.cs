@@ -32,7 +32,11 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
 
         public BaseResponse CreateRating(int eventID, int itineraryID, int userRating)
         {
-            throw new NotImplementedException();
+            UserEventRating userEventRating = new UserEventRating(eventID, itineraryID, userRating);
+            BaseResponse addRatingResult = _ratingDAO.AddRatingInDBAsync(userEventRating).Result;
+            //BaseResponse logAddRatingResult = _ratingService.LogCreatedNoteAsync(userEventRating);
+            return addRatingResult;
+            //throw new NotImplementedException();
         }
 
         public BaseResponse ModifyItineraryNote(int itineraryID, string noteContent)
