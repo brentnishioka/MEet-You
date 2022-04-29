@@ -133,27 +133,40 @@ public class Program
         //}
 
         //Test Saving events to DB
-        SuggestionDAO suggestionDAO = new SuggestionDAO();
-        List<Event> eventList = new List<Event>();
-        int itinID = 4;
-        int numEvent = 3;
+        //SuggestionDAO suggestionDAO = new SuggestionDAO();
+        //List<Event> eventList = new List<Event>();
+        //int itinID = 4;
+        //int numEvent = 3;
 
-        for (int i = 0; i < numEvent; i++)
-        {
-            Event temp = new Event {
-                EventName = "Test event " + i,
-                Address = i + "Main street, Long Beach CA 99284",
-                Description = "Test events use for saving events unit test",
-                EventDate = DateTime.Now
-            };
-            eventList.Add(temp);
-        }
+        //for (int i = 0; i < numEvent; i++)
+        //{
+        //    Event temp = new Event {
+        //        EventName = "Test event " + i,
+        //        Address = i + "Main street, Long Beach CA 99284",
+        //        Description = "Test events use for saving events unit test",
+        //        EventDate = DateTime.Now
+        //    };
+        //    eventList.Add(temp);
+        //}
+
+        ////Act
+        //Console.WriteLine("Saving Events");
+        //BaseResponse response = suggestionDAO.SaveEventAsync(eventList, itinID).Result;
+        //Console.WriteLine("Saving events Successful");
+        //Console.WriteLine(response.Message);
+
+        //Arrange
+        SuggestionDAO suggestionDAO = new SuggestionDAO();
+        int itinID = 5;
+        int eventID = 56;
 
         //Act
-        Console.WriteLine("Saving Events");
-        BaseResponse response = suggestionDAO.SaveEventAsync(eventList, itinID).Result;
-        Console.WriteLine("Saving events Successful");
+        Console.WriteLine("Saving Events....");
+        BaseResponse response = suggestionDAO.DeleteEventAsync(itinID, eventID).Result;
         Console.WriteLine(response.Message);
+
+        // Assert
+        //Assert.True(response.IsSuccessful);
     }
 
     public static DateTime DateConversion(string date)

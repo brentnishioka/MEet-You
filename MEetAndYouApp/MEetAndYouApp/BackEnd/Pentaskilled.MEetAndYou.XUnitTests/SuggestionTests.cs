@@ -279,6 +279,39 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             Assert.False(actual);
         }
 
+        [Theory]
+        [InlineData(5, 55)]
+        public async void DeleteEventsDAOTest(int itinID, int eventID)
+        {
+            //Arrange
+            SuggestionDAO suggestionDAO = new SuggestionDAO(_dbContext);
+
+            //Act
+            _output.WriteLine("Deleting Events....");
+            BaseResponse response = await suggestionDAO.DeleteEventAsync(itinID, eventID);
+            _output.WriteLine(response.Message);
+
+            // Assert
+            Assert.True(response.IsSuccessful);
+        }
+
+        [Theory]
+        [InlineData(5, 57, 3)]
+        public async void DeleteEventsManagerTest(int itinID, int eventID, int userID)
+        {
+            //Arrange
+            SuggestionDAO suggestionDAO = new SuggestionDAO(_dbContext);
+            IAPIService eventAPI = new EventAPIService(_eventsAPIkey);
+            SuggestionManager suggestionManager = new SuggestionManager(suggestionDAO, _dbContext, eventAPI);
+
+            //Act
+            _output.WriteLine("Manager Deleting Events....");
+            BaseResponse response = await suggestionManager.DeleteEventAsync(itinID, eventID, userID);
+            _output.WriteLine(response.Message);
+
+            // Assert
+            Assert.True(response.IsSuccessful);
+        }
 
     }
 }

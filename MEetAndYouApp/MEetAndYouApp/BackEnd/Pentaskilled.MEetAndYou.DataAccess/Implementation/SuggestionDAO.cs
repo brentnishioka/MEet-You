@@ -207,5 +207,51 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
 
             return baseResponse;
         }
+
+        public async Task<BaseResponse> DeleteEventAsync(int itinID, int eventID)
+        {
+            string message = "Delete Event failed.";
+            bool isSuccessful = false;
+            try
+            {
+                // Find itinerary
+                Itinerary itin = (from itinerary in _dbContext.Itineraries.Include("Events")
+                                  where itinerary.ItineraryId == itinID
+                                  select itinerary).FirstOrDefault<Itinerary>();
+
+                //Find the Event
+                Event e = await _dbContext.Events.FindAsync(eventID);
+                //Console.Write("EventID: " + e.EventId + " " + "Event Name: " + e.EventName);
+              
+
+                //Remove event from the itinerary
+                itin.Events.Remove(e);
+                
+                _dbContext.Entry(itin).State = EntityState.Modified;
+                _dbContext.Entry(e).State = EntityState.Deleted;
+
+                int result = await _dbContext.SaveChangesAsync();
+                Console.WriteLine("Num rows affected: " + result);
+
+                //Check to see if all events are added successfully
+                if (result > 0)
+                {
+                    message = "Deleting Events was successful.";
+                    isSuccessful = true;
+                }
+
+            }
+            catch (SqlException ex)
+            {
+                return new BaseResponse
+                    ("Delete event failed due to database error \n" + ex.Message, false);
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse("Delete event failed. \n" + ex.Message, false);
+                //throw;
+            }
+            return new BaseResponse(message, isSuccessful);
+        }
     }
 }

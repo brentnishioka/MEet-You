@@ -132,5 +132,27 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
 
         }
 
+        public async Task<BaseResponse> DeleteEventAsync(int itinID, int eventID, int userID)
+        {
+            BaseResponse response;
+            try
+            {
+                // Check to see if the user own the itinerary
+                BaseResponse isOwner = await _suggestionDAO.isUserOwner(userID, itinID);
+                if (isOwner.IsSuccessful == false)
+                {
+                    return new BaseResponse("Not authorized to add Event", false);
+                }
+
+                response = await _suggestionDAO.DeleteEventAsync(itinID, eventID);
+            }
+
+            catch (Exception ex)
+            {
+                return new BaseResponse("Delete event in Manager failed: \n" + ex.Message, false);
+            }
+            return response;
+        }
+
     }
 }
