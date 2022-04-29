@@ -56,6 +56,22 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
                 // Create userItinerary object to be added
                 UserItinerary userItinerary = new UserItinerary(userAccountRecord.UserId, itineraryID, permission);
 
+                // LINQ to find count of unique users of an itinerary
+                var uniqueUsers = await
+                    (from user in _dbContext.UserItineraries
+                     where user.ItineraryId == itineraryID
+                     group user by new { user.ItineraryId, user.UserId } into grp
+                     select new 
+                     {
+                         grp.Key.ItineraryId,
+                         grp.Key.UserId,
+                     }).CountAsync();
+                
+                //foreach (var user in uniqueUsers)
+                //    Console.WriteLine(user.ItineraryId + " " + user.UserId);
+
+                Console.WriteLine("There are " + uniqueUsers + " unique users");
+
                 // Add object to context
                 itin.UserItineraries.Add(userItinerary);
                 _dbContext.Entry(itin).State = EntityState.Modified;
