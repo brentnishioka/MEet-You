@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Permissions;
 using System.Security.Principal;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using Pentaskilled.MEetAndYou.DataAccess;
 using Xunit;
 using Xunit.Abstractions;
 
 namespace Pentaskilled.MEetAndYou.XUnitTests
 {
-     public class AuthorizationTests2
+    public class AuthorizationTests2
     {
         private readonly ITestOutputHelper _output;
         public AuthorizationTests2(ITestOutputHelper output)
@@ -28,7 +22,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
 
             // Create generic principal.
             String[] myStringArray = { "Manager", "Teller" };
-            String[] myStringArray2 = {"Teller" };
+            String[] myStringArray2 = { "Teller" };
             GenericPrincipal myPrincipal =
                 new GenericPrincipal(myIdentity, myStringArray);
 
@@ -62,7 +56,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             _output.WriteLine("Hello World");
 
             WindowsIdentity windowsIdentity = WindowsIdentity.GetCurrent();
-            WindowsBuiltInRole myBuiltInRole = WindowsBuiltInRole.Guest; 
+            WindowsBuiltInRole myBuiltInRole = WindowsBuiltInRole.Guest;
 
             string[] roles = new string[10];
             if (windowsIdentity.IsAuthenticated)

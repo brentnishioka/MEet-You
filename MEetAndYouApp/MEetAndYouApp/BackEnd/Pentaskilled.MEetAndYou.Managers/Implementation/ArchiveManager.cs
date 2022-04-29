@@ -1,9 +1,9 @@
 ﻿using System;
-using Pentaskilled.MEetAndYou.Services.Contracts;
-using Pentaskilled.MEetAndYou.Services.Implementation;
-using Pentaskilled.MEetAndYou.Entities;
 using System.Collections.Generic;
 using Pentaskilled.MEetAndYou.DataAccess;
+using Pentaskilled.MEetAndYou.Entities;
+using Pentaskilled.MEetAndYou.Services.Contracts;
+using Pentaskilled.MEetAndYou.Services.Implementation;
 
 namespace Pentaskilled.MEetAndYou.Managers
 {

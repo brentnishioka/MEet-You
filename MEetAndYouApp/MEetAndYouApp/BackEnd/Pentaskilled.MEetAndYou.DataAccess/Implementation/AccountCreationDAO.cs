@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Pentaskilled.MEetAndYou.DataAccess.Contracts;
 using Pentaskilled.MEetAndYou.Entities;
 
 namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
 {
-    public class AccountCreationDAO: IAccountCreation 
+    public class AccountCreationDAO : IAccountCreation
     {
 
         // TODO: move this to our config file instead of it being directly in the code.
@@ -21,7 +18,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
         {
             return new ConnectionString().ToString();
         }
-        
+
         public Task<bool> DoesEmailExist(UserAccountEntity user)
         {
             _connectionString = GetConnectionString();
@@ -86,8 +83,8 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
         /// <returns></returns>
         public Task<bool> RemoveUnActivatedAccount(UserAccountEntity user)
         {
-             _connectionString = GetConnectionString();
-            bool isSuccessfullyDeleted; 
+            _connectionString = GetConnectionString();
+            bool isSuccessfullyDeleted;
 
             try
             {
@@ -102,7 +99,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
                     isSuccessfullyDeleted = Convert.ToBoolean(command.ExecuteNonQuery());
                     connection.Close();
                 }
-                
+
             }
 
             catch (Exception)
@@ -111,7 +108,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             }
 
             return Task.FromResult(isSuccessfullyDeleted);
-        
+
         }
     }
 }
