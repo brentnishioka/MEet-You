@@ -1,6 +1,8 @@
 import React, { useState, Component, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+//import './pages/react'
+
 //import DateTime from 'react-datetime';
 //import "react-datetime/css/react-datetime.css";
 
@@ -15,10 +17,6 @@ function MyCalendar() {
         makeDate(dateString);
         console.log("DATE STRING:", dateString);
     }
-
-    
-    //console.log("date: ",  value.)
-
 
     //var user = sessionStorage.getItem("userID")
 
@@ -44,7 +42,7 @@ function MyCalendar() {
     }, [])
 
     return (
-        <div style={{ justifyContent: 'center', backgroundColor: 'red', alignItems: 'center' }}>
+        <div>
             {<Calendar onClickDay={onChange} value={value}                
             />}
             
