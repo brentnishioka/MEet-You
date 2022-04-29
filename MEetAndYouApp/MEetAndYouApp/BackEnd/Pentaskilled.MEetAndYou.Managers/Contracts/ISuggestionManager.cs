@@ -15,5 +15,6 @@ namespace Pentaskilled.MEetAndYou.Managers.Contracts
         Task<BaseResponse> SaveEventAsync(List<Event> e, int itinID, int userID);
         Task<bool> IsInCategory(string category);
         Task<BaseResponse> DeleteEventAsync(int itinID, int eventID, int userID);
+        Task<BaseResponse> AddItineraryAsync(List<Itinerary> itineraries);
     }
 }

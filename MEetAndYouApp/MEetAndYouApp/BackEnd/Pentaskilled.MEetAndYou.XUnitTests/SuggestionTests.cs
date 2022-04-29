@@ -313,5 +313,61 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             Assert.True(response.IsSuccessful);
         }
 
+        [Theory]
+        [InlineData(3, 9)]
+        public async void AddItineraiesDAOTest(int numItin, int itinOwver)
+        {
+            //Arrange
+            SuggestionDAO suggestionDAO = new SuggestionDAO(_dbContext);
+            List<Itinerary> itinList = new List<Itinerary>();
+
+            for (int i = 0; i < numItin; i++)
+            {
+                Itinerary temp = new Itinerary {
+                    ItineraryName = "Test Itinerary " + i,
+                    Rating = 0,
+                    ItineraryOwner = itinOwver
+                };
+                itinList.Add(temp);
+            }
+
+            //Act
+            _output.WriteLine("Adding Itineraries ....");
+            BaseResponse response = await suggestionDAO.AddItineraryAsync(itinList);
+            _output.WriteLine(response.Message);
+
+            // Assert
+            Assert.True(response.IsSuccessful);
+        }
+
+        // Onwer ID is supposed to be included from the front end
+        [Theory]
+        [InlineData(3, 9)]
+        public async void AddingItineraryManagerTest(int numItin, int itinOwver)
+        {
+            //Arrange
+            IAPIService eventAPI = new EventAPIService(_eventsAPIkey);
+            SuggestionDAO suggestionDAO = new SuggestionDAO(_dbContext);
+            SuggestionManager suggestionManager = new SuggestionManager(suggestionDAO, _dbContext, eventAPI);
+            List<Itinerary> itinList = new List<Itinerary>();
+
+            for (int i = 0; i < numItin; i++)
+            {
+                Itinerary temp = new Itinerary {
+                    ItineraryName = "Test Itinerary " + i,
+                    Rating = 0,
+                    ItineraryOwner = itinOwver
+                };
+                itinList.Add(temp);
+            }
+
+            //Act
+            _output.WriteLine("Adding Itineraries ....");
+            BaseResponse response = await suggestionManager.AddItineraryAsync(itinList);
+            _output.WriteLine(response.Message);
+
+            // Assert
+            Assert.True(response.IsSuccessful);
+        }
     }
 }

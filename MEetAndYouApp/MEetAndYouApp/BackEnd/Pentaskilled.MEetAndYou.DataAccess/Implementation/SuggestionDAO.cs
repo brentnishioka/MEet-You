@@ -253,5 +253,41 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             }
             return new BaseResponse(message, isSuccessful);
         }
+
+        public async Task<BaseResponse> AddItineraryAsync(List<Itinerary> itineraries)
+        {
+            string message = "Adding Itineraries failed.";
+            bool isSuccessful = false;
+            try
+            {
+                // Save to Event table
+                foreach (Itinerary itinerary in itineraries)
+                {
+                    // Add the itinrary to the database by changing the state
+                    _dbContext.Entry(itinerary).State = EntityState.Added;
+                }
+
+                int result = await _dbContext.SaveChangesAsync();
+
+                //Check to see if all events are added successfully
+                if (result == itineraries.Count)
+                {
+                    message = "Adding Itineraries was successful.";
+                    isSuccessful = true;
+                }
+
+            }
+            catch (SqlException ex)
+            {
+                // Remove Rolling back changes
+                return new BaseResponse
+                    ("Adding Itineraries failed due to database error \n" + ex.Message, false);
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse("Adding Itineraries failed. \n" + ex.Message, false);
+            }
+            return new BaseResponse(message, isSuccessful);
+        }
     }
 }

@@ -154,5 +154,20 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
             return response;
         }
 
+        public async Task<BaseResponse> AddItineraryAsync(List<Itinerary> itineraries)
+        {
+            BaseResponse response;
+            try
+            {
+                // Check to see if the user own the itinerary
+                response = await _suggestionDAO.AddItineraryAsync(itineraries);
+            }
+
+            catch (Exception ex)
+            {
+                return new BaseResponse("Adding Itineraries in Manager failed: \n" + ex.Message, false);
+            }
+            return response;
+        }
     }
 }

@@ -129,5 +129,33 @@ namespace Pentaskiled.MEetAndYou.API.Controllers
             BaseResponse response = await _suggestionManager.DeleteEventAsync(itinID, eventID, userID);
             return response;
         }
+
+        [HttpPost]
+        [Route("/AddItinerary")]
+        public async Task<ActionResult<BaseResponse>> AddItinerary(List<Itinerary> itineraries)
+        {
+            //string? token;
+            //int userID;
+            //string userToken;
+            //string role;
+
+            //token = Request.Headers["Token"];
+            //if (token == null)
+            //{
+            //    return BadRequest("Null token");
+            //}
+            ////Splits the token into userID, userToken, and role for Authorization method 
+            //userID = (int)token.Split(",").Select(Int32.Parse).ElementAt(0);
+            //userToken = token.Split(",")[1];
+            //role = token.Split(",")[2];
+            ////Checks if the user is authorized before continuing 
+            //if (!_authorizationManager.IsAuthorized(userID, userToken, role))
+            //{
+            //    return BadRequest("User is not authorized to use this service");
+            //}
+
+            BaseResponse response = await _suggestionManager.AddItineraryAsync(itineraries);
+            return response;
+        }
     }
 }
