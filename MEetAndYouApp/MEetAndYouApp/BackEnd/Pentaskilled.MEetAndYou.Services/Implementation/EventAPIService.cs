@@ -23,6 +23,11 @@ namespace Pentaskilled.MEetAndYou.Services.Implementation
 
         }
 
+        public EventAPIService(string apiKey)
+        {
+            _eventsAPIkey = apiKey;
+        }
+
         public EventAPIService(IConfiguration configuration)
         {
             _configuration = configuration;

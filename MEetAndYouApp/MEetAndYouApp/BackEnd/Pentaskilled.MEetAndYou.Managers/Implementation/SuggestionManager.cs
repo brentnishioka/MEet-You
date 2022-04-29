@@ -34,6 +34,9 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
             List<Event> eventList = new List<Event>();
             try
             {
+                //Check to see if user pass in a correct category
+
+                // Run the Search for events
                 JObject result = _eventAPIService.GetEventByCategory(category, location, date);
                 if (result == null)
                 {
@@ -91,6 +94,21 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
         {
             Category category = await _suggestionDAO.GetRandomCategory();
             return category;
+        }
+
+        public async Task<bool> IsInCategory(string category)
+        {
+            CategoryResponse response = await _suggestionDAO.GetAllCategory();
+            List<Category> categories = response.Data;
+            foreach (Category c in categories)
+            {
+                if (c.CategoryName == category)
+                {
+                    return true;
+                }
+            }
+            return false;
+
         }
 
     }

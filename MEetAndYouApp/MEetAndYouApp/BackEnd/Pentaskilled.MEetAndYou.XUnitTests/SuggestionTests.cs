@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
 using Pentaskilled.MEetAndYou.DataAccess.Implementation;
 using Pentaskilled.MEetAndYou.Entities.DBModels;
@@ -21,6 +22,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         private MEetAndYouDBContext _dbContext;
         public static DbContextOptions<MEetAndYouDBContext> dbContextOptions { get; }
         public static string connectionString = "Data Source=DESKTOP-0QA4EN0\\SQLEXPRESS;Initial Catalog=MEetAndYou-DB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;";
+        private readonly string _eventsAPIkey = "5ebf47bd63dbb46ff6dcc84edbc58cb326723d49af7dedff19b243b94e3ab4b8";
         static SuggestionTests()
         {
             dbContextOptions = new DbContextOptionsBuilder<MEetAndYouDBContext>()
@@ -81,34 +83,57 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             Assert.True(actual);
         }
 
-        [Fact]
-        public void ParsingJSONTest()
+        [Theory]
+        [InlineData ("art", "Long Beach", "May 4")]
+        public void ParsingJSONTest(string category, string location, string date)
         {
             // Arrange
             SuggestionDAO suggestionDAO = new SuggestionDAO(_dbContext);
 
-            string location = "Long Beach";
-            string category = "coffee";
             Console.WriteLine("Parsing the date: ");
-            string date = "May 1";
             DateTime dateTime = suggestionDAO.DateConversion(date);
             Console.WriteLine(date.ToString());
             int limit = 10;
 
-            EventAPIService eventAPI = new EventAPIService();
+            EventAPIService eventAPI = new EventAPIService(_eventsAPIkey);
             JObject results = eventAPI.GetEventByCategory(category, location, dateTime);
 
             bool actual = false;
 
             // Act
             _output.WriteLine("Parse JSON ...");
-            ICollection<Event> eventList = suggestionDAO.ParseJSON(results, limit);
-            if(eventList != null)
+            if (results != null)
             {
-                actual=true;
+                ICollection<Event> eventList = suggestionDAO.ParseJSON(results, limit);
+                actual = true;
             }
 
             // Assert
+            Assert.True(actual);
+        }
+
+        [Theory]
+        [InlineData("art", "Long Beach", "May 4")]
+        public void GetEventsAPITest(string category, string location, string date)
+        {
+            //Arrange
+            EventAPIService eventAPI = new EventAPIService(_eventsAPIkey);
+            SuggestionDAO suggestionDAO = new SuggestionDAO();
+
+            Console.WriteLine("Parsing the date: ");
+            DateTime dateTime = suggestionDAO.DateConversion(date);
+            Console.WriteLine(date.ToString());
+
+            bool actual = false;
+
+            //Act
+            _output.WriteLine("Loading Events using category ...");
+            JObject results = eventAPI.GetEventByCategory(category, location, dateTime);
+            if (results != null)
+            {
+                actual = true;
+            }
+            //Assert
             Assert.True(actual);
         }
 

@@ -13,5 +13,6 @@ namespace Pentaskilled.MEetAndYou.Managers.Contracts
         SuggestionResponse GetEvents(string category, string location, DateTime date);
         Task<SuggestionResponse> GetRandomEventsAsync();
         Task<BaseResponse> SaveEventAsync(List<Event> e, int itinID);
+        Task<bool> IsInCategory(string category);
     }
 }

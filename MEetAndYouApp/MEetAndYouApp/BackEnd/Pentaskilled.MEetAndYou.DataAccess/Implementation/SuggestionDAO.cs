@@ -142,6 +142,29 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             return randCategory;
         }
 
+        // Method to get all category for input check
+        public async Task<CategoryResponse> GetAllCategory()
+        {
+            //return repo.Items.OrderBy(o => Guid.NewGuid()).First();
+            List<Category> categories = null;
+            string sucessMessage = "Getting all category was successful.";
+            try
+            {
+                categories = await (from c in _dbContext.Categories
+                                                   select c).ToListAsync<Category>();
+            }
+            catch (SqlException ex)
+            {
+                return new CategoryResponse
+                    ("Getting category failed due to database error \n" + ex.Message, false, categories);
+            }
+            catch (Exception ex)
+            {
+                return new CategoryResponse("Getting category failed. \n" + ex.Message, false, categories);
+            }
+            return new CategoryResponse(sucessMessage, true, categories);
+        }
+
         public DateTime DateConversion(string date)
         {
             CultureInfo ci = new CultureInfo("en-US");

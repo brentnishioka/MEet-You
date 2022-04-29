@@ -15,5 +15,6 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Contracts
         Task<BaseResponse> SaveEvent(Event e);
         Task<BaseResponse> SaveEventAsync(List<Event> e, int itinID);
         Task<Category> GetRandomCategory();
+        Task<CategoryResponse> GetAllCategory();
     }
 }
