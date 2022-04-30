@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Pentaskilled.MEetAndYou.DataAccess;
 using Pentaskilled.MEetAndYou.Entities.DBModels;
+using Pentaskilled.MEetAndYou.Entities.Models;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -39,12 +40,12 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             ICalendarDAO calendardDAO = new CalendarDAO(_dbContext);
             DateTime dateTime = calendardDAO.DateConversion(date);
 
-            List<Itinerary> actual = null;
+            ItineraryResponse actual = null;
 
             //Act
             actual = await calendardDAO.GetUserItineraries(userID, dateTime);
-            _output.WriteLine("The size of the array: " + actual.Count);
-            foreach (Itinerary itin in actual)
+            _output.WriteLine("The size of the array: " + actual.Data.Count);
+            foreach (Itinerary itin in actual.Data)
             {
                 _output.WriteLine("Itinerary ID: " + itin.ItineraryId);
                 _output.WriteLine("Itinerary Name: " + itin.ItineraryName);

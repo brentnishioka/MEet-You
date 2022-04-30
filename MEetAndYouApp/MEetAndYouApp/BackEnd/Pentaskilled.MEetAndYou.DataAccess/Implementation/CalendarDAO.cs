@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Pentaskilled.MEetAndYou.Entities.DBModels;
+using Pentaskilled.MEetAndYou.Entities.Models;
 
 namespace Pentaskilled.MEetAndYou.DataAccess
 {
@@ -25,11 +26,12 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             _dbContext = dbContext;
         }
 
-        public async Task<List<Itinerary>> GetUserItineraries(int userID, DateTime date)
+        public async Task<ItineraryResponse> GetUserItineraries(int userID, DateTime date)
         {
             //var dbcontext = new MEetAndYouDBContext();
-            List<Itinerary> itineraries;
-            List<Itinerary> distinctList;
+            List<Itinerary> distinctList = null;
+            string message = "Get User in DAO itineraries is successful.";
+            bool isSuccessful = true;
             try
             {
                 //itineraries = await
@@ -37,14 +39,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                 // where itin.ItineraryOwner == userID
                 // select itin).ToListAsync<Itinerary>();
 
-                //Get itineraries where all events within the itineraries are on the same date
-                //itineraries = await
-                //    (from itin in _dbContext.Itineraries.Include("Events")
-                //     from e in itin.Events
-                //     where itin.ItineraryOwner == userID && (DateTime) e.EventDate == date
-                //     select itin).ToListAsync<Itinerary>();
-
-                itineraries = await
+                List<Itinerary>  itineraries = await
                     (from itin in _dbContext.Itineraries.Include("Events")
                      from e in itin.Events
                      where itin.ItineraryOwner == userID &&
@@ -54,31 +49,22 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                      select itin).ToListAsync<Itinerary>();
 
                 distinctList = itineraries.Distinct().ToList();
-
-                //itineraries =
-                //        (List<Itinerary>)(from itin in _dbContext.Itineraries.Include("Events")
-                //        from e in itin.Events
-                //        where itin.ItineraryOwner == userID &&
-                //        ((DateTime)e.EventDate).Year.Equals(date.Year) &&
-                //        ((DateTime)e.EventDate).Month.Equals(date.Month) &&
-                //        ((DateTime)e.EventDate).Day.Equals(date.Day)
-                //        group itin.ItineraryId by e into g
-                //        select new { itinList = g.ToList() });
-
+                if(distinctList == null)
+                {
+                    return new ItineraryResponse("No itinerary found for user" + userID, isSuccessful, distinctList);
+                }
             }
             catch (SqlException ex)
             {
-                Console.WriteLine("Sql exception occur when getting itinerary");
-                Console.WriteLine(ex.Message);
-                return null;
+                return new ItineraryResponse
+                    ("Sql exception occur when getting itinerary \n" + ex.Message, false, distinctList);
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception occur when trying to get itinerary by ID");
-                Console.WriteLine(ex.Message);
-                return null;
+                return new ItineraryResponse
+                                    ("Exception occur when trying to get itinerary by ID \n" + ex.Message, false, distinctList);
             }
-            return distinctList;
+            return new ItineraryResponse(message, isSuccessful, distinctList);
         }
         public DateTime DateConversion(string date)
         {
