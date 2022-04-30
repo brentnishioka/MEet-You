@@ -1,10 +1,11 @@
 ﻿using System.Collections;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 using Pentaskilled.MEetAndYou.DataAccess;
 using Pentaskilled.MEetAndYou.DataAccess.Implementation;
 using Pentaskilled.MEetAndYou.Entities.DBModels;
 using Pentaskilled.MEetAndYou.Entities.Models;
-using Pentaskilled.MEetAndYou.Managers;
+using Pentaskilled.MEetAndYou.Managers.Implementation;
 using Pentaskilled.MEetAndYou.Services.Implementation;
 using SerpApi;
 
@@ -83,26 +84,19 @@ public class Program
 
     static void Main(string[] args)
     {
-        // Testing Hyperlink DAO
-        string testEmail = "jdcramos@gmail.com";
-
+        // Testing Hyperlink Manger
+        MEetAndYouDBContext _dbContext;
+        DbContextOptions<MEetAndYouDBContext> dbContextOptions = 
+        new DbContextOptionsBuilder<MEetAndYouDBContext>()
+                .UseSqlServer("")
+                .Options;
+        _dbContext = new MEetAndYouDBContext(dbContextOptions);
         HyperlinkDAO hyperlinkDAO = new HyperlinkDAO();
+        HyperlinkManager hyperlinkManager = new HyperlinkManager(hyperlinkDAO, _dbContext);
 
-        Task<UserAccountRecordResponse> UARResponse = hyperlinkDAO.GetUserAccountRecordAsync(testEmail);
+        Task<HyperlinkResponse> response = hyperlinkManager.AddUserToItineraryAsync(8, 9, "viviand2465@gmail.com", "View");
+        //Task<HyperlinkResponse> response = hyperlinkManager.RemoveUserFromItineraryAsync(8, 9, "viviand2465@gmail.com", "View");
 
-        if (UARResponse.Result.Data != null)
-        {
-            UserAccountRecord user = UARResponse.Result.Data;
-            Console.WriteLine(UARResponse.Result.Message);
-
-            Task<HyperlinkResponse> response = hyperlinkDAO.AddUserToItineraryAsync(user, 5, "View");
-            //Task<HyperlinkResponse> response = hyperlinkDAO.RemoveUserFromItinerary(user, 5, "View");
-
-            Console.WriteLine(response.Result.Message);
-        }
-        else
-        {
-            Console.WriteLine(UARResponse.Result.Message);
-        }
+        Console.WriteLine(response.Result.Message);
     }
 }

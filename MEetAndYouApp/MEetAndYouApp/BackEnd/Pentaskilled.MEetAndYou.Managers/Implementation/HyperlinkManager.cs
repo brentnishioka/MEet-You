@@ -65,7 +65,7 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
             return hyperResponse;
         }
 
-        public async Task<HyperlinkResponse> RemoveUserToItineraryAsync(int userID, int itineraryID, string email, string permission)
+        public async Task<HyperlinkResponse> RemoveUserFromItineraryAsync(int userID, int itineraryID, string email, string permission)
         {
             HyperlinkResponse hyperResponse;
 

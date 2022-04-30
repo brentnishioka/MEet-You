@@ -25,6 +25,6 @@ namespace Pentaskilled.MEetAndYou.Managers.Contracts
             3. Pull UserAccountRecord using an email
             4. Remove the user to the associated itinerary
         */
-        Task<HyperlinkResponse> RemoveUserToItineraryAsync(int userID, int itineraryID, string email, string permission);
+        Task<HyperlinkResponse> RemoveUserFromItineraryAsync(int userID, int itineraryID, string email, string permission);
     }
 }
