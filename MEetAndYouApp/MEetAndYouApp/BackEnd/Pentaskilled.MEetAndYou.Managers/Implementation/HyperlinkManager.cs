@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 using Pentaskilled.MEetAndYou.DataAccess.Contracts;
 using Pentaskilled.MEetAndYou.DataAccess.Implementation;
+using Pentaskilled.MEetAndYou.Services.Implementation;
 using Pentaskilled.MEetAndYou.Entities.DBModels;
 using Pentaskilled.MEetAndYou.Entities.Models;
 using Pentaskilled.MEetAndYou.Managers.Contracts;
@@ -32,8 +33,18 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
 
             try
             {
-                // TODO: Validate inputs
-                
+                // Validate inputs
+                bool isValidUserID = Validator.IsValidNumericality(userID);
+                if (!isValidUserID) { return new HyperlinkResponse("Invalid user id", false, null); }
+
+                bool isValidItineraryID = Validator.IsValidNumericality(itineraryID);
+                if (!isValidItineraryID) { return new HyperlinkResponse("Invalid itinerary id", false, null); }
+
+                bool isValidEmail = Validator.IsValidEmail(email);
+                if (!isValidEmail) { return new HyperlinkResponse("Invalid email", false, null); }
+
+                bool isValidPermission = Validator.IsValidString(permission);
+                if (!isValidPermission) { return new HyperlinkResponse("Invalid permission", false, null); }
 
                 // Check to see if the user own the itinerary
                 hyperResponse = await _hyperlinkDAO.isUserOwnerAsync(userID, itineraryID);
@@ -71,8 +82,18 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
 
             try
             {
-                // TODO: Validate inputs
+                // Validate inputs
+                bool isValidUserID = Validator.IsValidNumericality(userID);
+                if (!isValidUserID) { return new HyperlinkResponse("Invalid user id", false, null); }
 
+                bool isValidItineraryID = Validator.IsValidNumericality(itineraryID);
+                if (!isValidItineraryID) { return new HyperlinkResponse("Invalid itinerary id", false, null); }
+
+                bool isValidEmail = Validator.IsValidEmail(email);
+                if (!isValidEmail) { return new HyperlinkResponse("Invalid email", false, null); }
+
+                bool isValidPermission = Validator.IsValidString(permission);
+                if (!isValidPermission) { return new HyperlinkResponse("Invalid permission", false, null); }
 
                 // Check to see if the user own the itinerary
                 hyperResponse = await _hyperlinkDAO.isUserOwnerAsync(userID, itineraryID);
