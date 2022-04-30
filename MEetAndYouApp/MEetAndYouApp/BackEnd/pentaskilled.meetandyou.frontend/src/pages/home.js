@@ -12,7 +12,7 @@ export default function Home() {
     const [selectedOptions, setSelectedOptions] = useState([]);
 
     const options = [
-        { label: "Art", value: 1 },
+        { label: "Art", valuenp : 1 },
         { label: "Attractions", value: 2 },
         { label: "Fitness Activities", value: 3 },
         { label: "Food and Drink", value: 4 },
