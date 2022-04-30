@@ -10,16 +10,16 @@ namespace Pentaskilled.MEetAndYou.Managers
         private readonly MEetAndYouDBContext _dbContext;
         private readonly CopyItineraryDAO _copyItineraryDAO;
 
-        public CopyManager(MEetAndYouDBContext dBContext)
+        public CopyManager(MEetAndYouDBContext dBContext, CopyItineraryDAO copyItineraryDAO)
         {
             _dbContext = dBContext;
-            _copyItineraryDAO = new CopyItineraryDAO();
+            _copyItineraryDAO = copyItineraryDAO;
         }
 
         public Itinerary LoadItineraryInfo(int itineraryID)
         {
             //Get the itinerary with that ID
-            //Itinerary itinerary = _copyItineraryDAO.GetItinerary(itineraryID).Result;
+            Itinerary itinerary = _copyItineraryDAO.GetItinerary(itineraryID).Result;
 
             //var itin2 =
             //    (from itin in _dbContext.Itineraries
@@ -27,20 +27,29 @@ namespace Pentaskilled.MEetAndYou.Managers
             //     select new { itin.ItineraryId, itin.ItineraryName, itin.Rating, e.EventId, e.EventName }).ToList();
 
             Itinerary itinEager =
-                (from itin in _dbContext.Itineraries.Include("Events")
+                (from itin in _dbContext.Itineraries.Include("Users")
                  where itin.ItineraryId == itineraryID
                  select itin).FirstOrDefault<Itinerary>();
 
-            //var itinEager2 =
-            //    (from itin in _dbContext.Itineraries.Include("Events")
+            //Itinerary itin5 =
+            //     (from itin in _dbContext.Itineraries.Include("Users")
             //     where itin.ItineraryId == itineraryID
-            //     select itin);
+            //     select itin).FirstOrDefault<Itinerary>();
 
             //Get the list of events from the old itinerary
-            //ICollection < Event > eventList = itinerary.Events;
+            //ICollection< Event > eventList = itinerary.Events;
             //ICollection<Image> imageList = itinerary.Images;
 
-            return itinEager;
+            //_dbContext.UserAccountRecords.FindAsync(3);
+            //itinEager.Users.Remove(new UserAccountRecord());
+
+            //Itinerary itin6 = new Itinerary();
+            //_dbContext.Entry(itin6).State = EntityState.Modified;
+            //_dbContext.SaveChanges();
+            //List<UserAccountRecord> userList = itin5.Users.ToList();
+
+            return itinerary;
+
         }
     }
 }
