@@ -1,8 +1,10 @@
 ﻿using System.Collections;
+using System.Globalization;
 using Newtonsoft.Json.Linq;
 using Pentaskilled.MEetAndYou.DataAccess;
 using Pentaskilled.MEetAndYou.DataAccess.Implementation;
 using Pentaskilled.MEetAndYou.Entities.DBModels;
+using Pentaskilled.MEetAndYou.Entities.Models;
 using Pentaskilled.MEetAndYou.Managers;
 using Pentaskilled.MEetAndYou.Services.Implementation;
 using SerpApi;
@@ -83,37 +85,93 @@ public class Program
     static void Main(string[] args)
     {
         // secret api key from https://serpapi.com/dashboard
-        String apiKey = "";
+        //String apiKey = "";
 
-        Hashtable ht = new Hashtable();
-        ht.Add("engine", "google_events");
-        ht.Add("q", "events in Long Beach");
-        ht.Add("location", "Long Beach");
+        //Hashtable ht = new Hashtable();
+        //ht.Add("engine", "google_events");
+        //ht.Add("q", "events in Long Beach");
+        //ht.Add("location", "Long Beach");
 
-        try
-        {
-            GoogleSearch search = new GoogleSearch(ht, apiKey);
-            JObject data = search.GetJson();
-            JArray results = (JArray)data["events_results"];
-            foreach (JObject result in results)
-            {
-                Console.WriteLine("Found: " + result["title"]);
-            }
-        }
-        catch (SerpApiSearchException ex)
-        {
-            Console.WriteLine("Exception:");
-            Console.WriteLine(ex.ToString());
-        }
+        //try
+        //{
+        //    GoogleSearch search = new GoogleSearch(ht, apiKey);
+        //    JObject data = search.GetJson();
+        //    JArray results = (JArray)data["events_results"];
+        //    foreach (JObject result in results)
+        //    {
+        //        Console.WriteLine("Found: " + result["title"]);
+        //    }
+        //}
+        //catch (SerpApiSearchException ex)
+        //{
+        //    Console.WriteLine("Exception:");
+        //    Console.WriteLine(ex.ToString());
+        //}
 
-        //var request = new Yelp.Api.Models.SearchRequest();
-        //request.Latitude = 37.786882;
-        //request.Longitude = -122.399972;
-        //request.Term = "cupcakes";
-        //request.MaxResults = 40;
-        //request.OpenNow = true;
+        //Test the API and conversion
+        //string location = "Long Beach";
+        //string category = "coffee";
+        //Console.WriteLine("Parsing the date: ");
+        //string date = "May 1";
+        //DateTime dateTime = DateConversion(date);
+        //Console.WriteLine(date.ToString());
+        //int limit = 10;
 
-        //var client = new Yelp.Api.Client("API_KEY");
-        //var results = await client.SearchBusinessesAllAsync(request);
+        //EventAPIService eventAPI = new EventAPIService();
+        //JObject results = eventAPI.GetEventByCategory(category, location, dateTime);
+        //SuggestionDAO suggestionDAO = new SuggestionDAO();
+        //ICollection<Event> eventList = suggestionDAO.ParseJSON(results, limit);
+
+        //foreach(Event e in eventList)
+        //{
+        //    Console.WriteLine(e.EventName.ToString());
+        //    Console.WriteLine(e.Description.ToString());
+        //    Console.WriteLine(e.EventDate.ToString());
+        //    Console.WriteLine(e.CategoryNames.ToString());
+        //    Console.WriteLine(e.Address);
+        //    Console.WriteLine("--------------------------------------");
+        //}
+
+        //Test Saving events to DB
+        //SuggestionDAO suggestionDAO = new SuggestionDAO();
+        //List<Event> eventList = new List<Event>();
+        //int itinID = 4;
+        //int numEvent = 3;
+
+        //for (int i = 0; i < numEvent; i++)
+        //{
+        //    Event temp = new Event {
+        //        EventName = "Test event " + i,
+        //        Address = i + "Main street, Long Beach CA 99284",
+        //        Description = "Test events use for saving events unit test",
+        //        EventDate = DateTime.Now
+        //    };
+        //    eventList.Add(temp);
+        //}
+
+        ////Act
+        //Console.WriteLine("Saving Events");
+        //BaseResponse response = suggestionDAO.SaveEventAsync(eventList, itinID).Result;
+        //Console.WriteLine("Saving events Successful");
+        //Console.WriteLine(response.Message);
+
+        //Arrange
+        SuggestionDAO suggestionDAO = new SuggestionDAO();
+        int itinID = 5;
+        int eventID = 56;
+
+        //Act
+        Console.WriteLine("Saving Events....");
+        BaseResponse response = suggestionDAO.DeleteEventAsync(itinID, eventID).Result;
+        Console.WriteLine(response.Message);
+
+        // Assert
+        //Assert.True(response.IsSuccessful);
+    }
+
+    public static DateTime DateConversion(string date)
+    {
+        CultureInfo ci = new CultureInfo("en-US");
+        return DateTime.Parse(date, ci);
     }
 }

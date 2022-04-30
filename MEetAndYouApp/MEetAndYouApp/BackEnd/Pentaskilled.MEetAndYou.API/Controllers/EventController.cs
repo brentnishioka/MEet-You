@@ -1,9 +1,4 @@
 #nullable disable
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Pentaskilled.MEetAndYou.Entities.DBModels;
@@ -78,10 +73,26 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
         [HttpPost]
         public async Task<ActionResult<Event>> PostEvent(Event @event)
         {
-            _dbcontext.Events.Add(@event);
+            _dbcontext.Entry(@event).State = EntityState.Added;
+            //_dbcontext.Events.Add(@event);
             await _dbcontext.SaveChangesAsync();
 
             return CreatedAtAction("GetEvent", new { id = @event.EventId }, @event);
+        }
+
+        [HttpPost]
+        [Route("/PostEventList")]
+        public async Task<ActionResult<Event>> PostEventList(List<Event> events)
+        {
+            Event resultEvent = events[0];
+            foreach (Event item in events)
+            { 
+                _dbcontext.Entry(item).State = EntityState.Added;
+            }
+            //_dbcontext.Events.Add(@event);
+            await _dbcontext.SaveChangesAsync();
+
+            return CreatedAtAction("GetEvent", new { id = resultEvent.EventId }, resultEvent);
         }
 
         // DELETE: api/Event/5

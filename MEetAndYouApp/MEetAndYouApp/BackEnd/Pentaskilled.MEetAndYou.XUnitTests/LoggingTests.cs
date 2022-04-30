@@ -1,10 +1,9 @@
-using Xunit;
+using System;
+using System.Threading.Tasks;
 using Pentaskilled.MEetAndYou.DataAccess;
 using Pentaskilled.MEetAndYou.Entities;
 using Pentaskilled.MEetAndYou.Logging;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
+using Xunit;
 
 namespace Pentaskilled.MEetAndYou.XUnitTests
 {

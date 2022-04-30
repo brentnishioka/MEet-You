@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Pentaskilled.MEetAndYou.Entities;
-using Pentaskilled.MEetAndYou.Services.Implementation;
-using Pentaskilled.MEetAndYou.Services.Contracts;
-using System.Text.RegularExpressions;
 using System.IO;
 using System.IO.Compression;
 using System.Reflection;
+using System.Text.RegularExpressions;
+using Pentaskilled.MEetAndYou.Entities;
+using Pentaskilled.MEetAndYou.Services.Contracts;
+using Pentaskilled.MEetAndYou.Services.Implementation;
 
 namespace Pentaskilled.MEetAndYou.Managers
 {
@@ -118,7 +114,7 @@ namespace Pentaskilled.MEetAndYou.Managers
                 throw new Exception();
             }
 
-            return "User phone number was successfully updated"; 
+            return "User phone number was successfully updated";
         }
 
         public string BeginDeleteUserAccount(string id)

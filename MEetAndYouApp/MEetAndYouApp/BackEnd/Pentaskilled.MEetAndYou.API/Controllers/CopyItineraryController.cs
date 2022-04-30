@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Pentaskilled.MEetAndYou.DataAccess.Implementation;
+using Microsoft.AspNetCore.Mvc;
 using Pentaskilled.MEetAndYou.Entities.DBModels;
 using Pentaskilled.MEetAndYou.Managers;
 
@@ -23,9 +24,9 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
 
         [HttpGet]
         [Route("CopyItinerary/{itineraryID}")]
-        public ActionResult<Itinerary> CopyItinerary (int itineraryID)
+        public ActionResult<Itinerary> CopyItinerary(int itineraryID)
         {
-            return _copyManager.LoadItineraryInfo (itineraryID);
+            return _copyManager.LoadItineraryInfo(itineraryID);
         }
     }
 }

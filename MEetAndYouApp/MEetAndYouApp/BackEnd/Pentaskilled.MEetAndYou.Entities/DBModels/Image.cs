@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Pentaskilled.MEetAndYou.Entities.DBModels
+﻿namespace Pentaskilled.MEetAndYou.Entities.DBModels
 {
     public partial class Image
     {

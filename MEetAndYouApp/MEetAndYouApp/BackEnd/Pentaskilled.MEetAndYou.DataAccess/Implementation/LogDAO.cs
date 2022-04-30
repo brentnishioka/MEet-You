@@ -1,11 +1,9 @@
-﻿using Pentaskilled.MEetAndYou.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.SqlClient;
 using System.Data;
+using System.Data.SqlClient;
+using System.Threading.Tasks;
+using Pentaskilled.MEetAndYou.Entities;
 
 namespace Pentaskilled.MEetAndYou.DataAccess
 {
@@ -16,7 +14,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
 
         // GetConnectionString() from https://docs.microsoft.com/en-us/dotnet/api/system.data.sqlclient.sqlconnection.connectionstring?view=dotnet-plat-ext-6.0
         static private string GetConnectionString()
-        { 
+        {
             return new ConnectionString().ToString();
         }
 
@@ -216,7 +214,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                 using (SqlCommand newSysLogsCommand = new SqlCommand("[MEetAndYou].[ArchiveDelete]", connection))
                 {
                     newSysLogsCommand.CommandType = CommandType.StoredProcedure;
-                    
+
                     connection.Open();
                     newSysLogsCommand.ExecuteNonQuery();
                     connection.Close();
