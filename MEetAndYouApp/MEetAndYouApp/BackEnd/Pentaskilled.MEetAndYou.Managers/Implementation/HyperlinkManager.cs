@@ -48,6 +48,10 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
 
                 // Check to see if the user own the itinerary
                 hyperResponse = await _hyperlinkDAO.isUserOwnerAsync(userID, itineraryID);
+                if (hyperResponse.IsSuccessful == false)
+                {
+                    return hyperResponse;
+                }
 
                 // Pull UserAccountRecord using an email
                 UserAccountRecordResponse userResponse = await _hyperlinkDAO.GetUserAccountRecordAsync(email);
@@ -88,6 +92,10 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
 
                 // Check to see if the user own the itinerary
                 hyperResponse = await _hyperlinkDAO.isUserOwnerAsync(userID, itineraryID);
+                if (hyperResponse.IsSuccessful == false)
+                {
+                    return hyperResponse;
+                }
 
                 // Pull UserAccountRecord using an email
                 UserAccountRecordResponse userResponse = await _hyperlinkDAO.GetUserAccountRecordAsync(email);
