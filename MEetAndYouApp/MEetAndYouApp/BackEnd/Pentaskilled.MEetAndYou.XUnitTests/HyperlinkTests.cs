@@ -226,5 +226,71 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             // Assert
             Assert.True(response.IsSuccessful);
         }
+
+        // Test for checking valid numericality
+        [Theory]
+        [InlineData(8)]
+        public void IsValidNumericalityTest(int number)
+        {
+            // Arrange
+            bool isValidNumber; 
+
+            // Act
+            _output.WriteLine("Validating number....");
+            isValidNumber = Validator.IsValidNumericality(number);
+
+            // Assert
+            Assert.True(isValidNumber);
+        }
+
+        // Test for checking invalid numericality
+        [Theory]
+        [InlineData(0)]
+        [InlineData(-123)]
+        public void IsInvalidNumericalityTest(int number)
+        {
+            // Arrange
+            bool isValidNumber;
+
+            // Act
+            _output.WriteLine("Validating number....");
+            isValidNumber = Validator.IsValidNumericality(number);
+
+            // Assert
+            Assert.False(isValidNumber);
+        }
+
+        // Test for checking valid email
+        [Theory]
+        [InlineData("jdcramos@gmail.com")]
+        public void IsValidEmailTest(string email)
+        {
+            // Arrange
+            bool isValidEmail;
+
+            // Act
+            _output.WriteLine("Validating email....");
+            isValidEmail = Validator.IsValidEmail(email);
+
+            // Assert
+            Assert.True(isValidEmail);
+        }
+
+        // Test for checking invalid email
+        [Theory]
+        [InlineData("abcdef")]
+        [InlineData("abcdef@gmailcom")]
+        public void IsInvalidEmailTest(string email)
+        {
+            // Arrange
+            bool isValidEmail;
+
+            // Act
+            _output.WriteLine("Validating email....");
+            isValidEmail = Validator.IsValidEmail(email);
+
+            // Assert
+            Assert.False(isValidEmail);
+        }
     }
 }
