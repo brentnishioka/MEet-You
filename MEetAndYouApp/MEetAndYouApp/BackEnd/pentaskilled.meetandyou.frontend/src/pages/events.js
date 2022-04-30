@@ -23,15 +23,16 @@ const useAnswer = () => {
 
   //Take in a JSON object and parse it
 const converToObjArray = (jObject) => {
-    const resObject = JSON.parse(jObject);
-    
-    return resObject;
+    const rArray = jObject["data"];
+    const rEvent = rArray[0];
+
+    return rEvent;
 }
 
 
 export default function Events() {
     const answer = useAnswer();
-    const answerObject = converToObjArray(answer);
+    const eventObj = converToObjArray(answer);
 
     // const city = sessionStorage.getItem("city");
     // const date = sessionStorage.getItem("date");
@@ -80,21 +81,6 @@ export default function Events() {
       //const firstEvent = rData[0];
       //const txt = '{"name":"John", "age":30, "city":"New York"}'
       //const obj = JSON.parse(txt);
-
-    // async function getSuggestion(){
-    //     const result = await fetch("https://localhost:9000/GetEvent?category=" + location.state.categories[0].label + "&location=" + city + " " + state + "&date= " + date)
-    //     .then(response => setSuggestions(response.json()))
-    //     .then(body => console.log(body))
-
-    //     return result;
-    // }
-
-    // async function getSuggestion(){
-    //     const response = await fetch("https://localhost:9000/GetEvent?category=" + location.state.categories[0].label + "&location=" + city + " " + state + "&date= " + date);
-    //     const responseJ = response.json();
-    //     console.log(responseJ)
-    //     setSuggestions(responseJ)
-    // }
     
     //setSuggestions(getSuggestion())
     // console.log("The response Object", Suggestions);
@@ -112,15 +98,15 @@ export default function Events() {
     // console.log("Event List: ", eventSuggestions.data);
     //const eventObject = eventSuggestions.data[0];
 
-    //const rData = answer["data"];
-    //const rEvent = rData[0];
+
     return (
             //<p> Hello world! {Suggestions.message} </p>
 
             <div>
                 {/* {JSON.stringify(Suggestions)} */}
                 {JSON.stringify(answer)}
-                {answerObject.message}
+                <h1>Hello World! {JSON.stringify(eventObj)}</h1>
+                {/* {answerObject.message} */}
                 {/* {rData.map(item => (
                     <h1>{item.eventName}</h1>
                 ))} */}
