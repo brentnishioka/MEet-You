@@ -14,8 +14,12 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Contracts
         ICollection<Event> ParseJSON(JObject o, int limit = 10);
         Task<BaseResponse> SaveEvent(Event e);
         Task<BaseResponse> SaveEventAsync(List<Event> e, int itinID);
+        Task<BaseResponse> DeleteEventAsync(int itinID, int eventID);
         Task<Category> GetRandomCategory();
         Task<CategoryResponse> GetAllCategory();
         Task<BaseResponse> isUserOwner(int userID, int itineraryID);
+        DateTime DateConversion(string date);
+        Task<BaseResponse> AddItineraryAsync(List<Itinerary> iList);
+
     }
 }

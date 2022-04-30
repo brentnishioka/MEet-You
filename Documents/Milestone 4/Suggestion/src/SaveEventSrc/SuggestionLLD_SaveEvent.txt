@@ -28,7 +28,7 @@ SuggestionManager-->SuggestionController:return _suggestionManager
 FrontEnd->SuggestionController:HTTP Header(int userID, string token, string claimRole) \n(Event e)
 
 // The start of API call
-SuggestionController->SuggestionController:async ActionResult<SuggestionResponse> GetEvent\n(Event selectedEvent)
+SuggestionController->SuggestionController:async ActionResult<SuggestionResponse> SaveEvent\n(Event selectedEvent)
 group if (token == null)
 SuggestionController-->FrontEnd:return BadRequest("Inavalid Token")
 end 

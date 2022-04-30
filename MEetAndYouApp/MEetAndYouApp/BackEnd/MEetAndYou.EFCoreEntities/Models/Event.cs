@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace MEetAndYou.EFCoreEntities.Models
+﻿namespace MEetAndYou.EFCoreEntities.Models
 {
     public partial class Event
     {

@@ -1,10 +1,10 @@
-﻿using Xunit;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
 using Pentaskilled.MEetAndYou.DataAccess;
 using Pentaskilled.MEetAndYou.Entities;
 using Pentaskilled.MEetAndYou.Managers;
-using System;
-using System.Diagnostics;
-using System.IO;
+using Xunit;
 namespace Pentaskilled.MEetAndYou.XUnitTests
 {
     public class UMTests

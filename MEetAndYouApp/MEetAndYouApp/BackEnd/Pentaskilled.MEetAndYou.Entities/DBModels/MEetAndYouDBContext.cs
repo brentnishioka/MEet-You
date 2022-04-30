@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Configuration;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Pentaskilled.MEetAndYou.Entities.DBModels
 {
@@ -43,8 +41,7 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<AdminAccountRecord>(entity =>
-            {
+            modelBuilder.Entity<AdminAccountRecord>(entity => {
                 entity.HasKey(e => e.AdminId)
                     .HasName("PK__AdminAcc__719FE4E88D2ED507");
 
@@ -63,8 +60,7 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
                     .IsFixedLength();
             });
 
-            modelBuilder.Entity<Category>(entity =>
-            {
+            modelBuilder.Entity<Category>(entity => {
                 entity.HasKey(e => e.CategoryName)
                     .HasName("category_pk");
 
@@ -76,8 +72,7 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
                     .HasColumnName("categoryName");
             });
 
-            modelBuilder.Entity<Event>(entity =>
-            {
+            modelBuilder.Entity<Event>(entity => {
                 entity.ToTable("Events", "MEetAndYou");
 
                 entity.Property(e => e.EventId).HasColumnName("eventID");
@@ -109,8 +104,7 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
                         "EventCategory",
                         l => l.HasOne<Category>().WithMany().HasForeignKey("CategoryName").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("category_fk"),
                         r => r.HasOne<Event>().WithMany().HasForeignKey("EventId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("eventID_fk"),
-                        j =>
-                        {
+                        j => {
                             j.HasKey("EventId", "CategoryName").HasName("eventCategory_pk");
 
                             j.ToTable("EventCategory", "MEetAndYou");
@@ -121,8 +115,7 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
                         });
             });
 
-            modelBuilder.Entity<EventLog>(entity =>
-            {
+            modelBuilder.Entity<EventLog>(entity => {
                 entity.HasKey(e => e.LogId)
                     .HasName("PK__EventLog__5E5486482149FA44");
 
@@ -146,8 +139,7 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<Image>(entity =>
-            {
+            modelBuilder.Entity<Image>(entity => {
                 entity.ToTable("Images", "MEetAndYou");
 
                 entity.Property(e => e.ImageId).HasColumnName("imageID");
@@ -179,8 +171,7 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
                     .HasConstraintName("imageItineraryID_fk");
             });
 
-            modelBuilder.Entity<Itinerary>(entity =>
-            {
+            modelBuilder.Entity<Itinerary>(entity => {
                 entity.ToTable("Itinerary", "MEetAndYou");
 
                 entity.Property(e => e.ItineraryId).HasColumnName("itineraryID");
@@ -207,8 +198,7 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
                         "ItineraryEvent",
                         l => l.HasOne<Event>().WithMany().HasForeignKey("EventId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("ItinEventE_fk"),
                         r => r.HasOne<Itinerary>().WithMany().HasForeignKey("ItineraryId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("ItinEventI_fk"),
-                        j =>
-                        {
+                        j => {
                             j.HasKey("ItineraryId", "EventId").HasName("ItinEvent_pk");
 
                             j.ToTable("ItineraryEvent", "MEetAndYou");
@@ -256,8 +246,7 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
                     .HasColumnName("permissionName");
             });
 
-            modelBuilder.Entity<Role>(entity =>
-            {
+            modelBuilder.Entity<Role>(entity => {
                 entity.HasKey(e => e.Role1)
                     .HasName("PK__Roles__863D21492235A5A9");
 
@@ -269,8 +258,7 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
                     .HasColumnName("role");
             });
 
-            modelBuilder.Entity<UserAccountRecord>(entity =>
-            {
+            modelBuilder.Entity<UserAccountRecord>(entity => {
                 entity.HasKey(e => e.UserId)
                     .HasName("PK__UserAcco__1788CCAC45CBEC85");
 

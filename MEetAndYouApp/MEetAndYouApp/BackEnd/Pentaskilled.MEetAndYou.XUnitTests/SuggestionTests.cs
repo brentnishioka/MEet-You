@@ -7,9 +7,12 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
+using Pentaskilled.MEetAndYou.DataAccess.Contracts;
 using Pentaskilled.MEetAndYou.DataAccess.Implementation;
 using Pentaskilled.MEetAndYou.Entities.DBModels;
 using Pentaskilled.MEetAndYou.Entities.Models;
+using Pentaskilled.MEetAndYou.Managers.Implementation;
+using Pentaskilled.MEetAndYou.Services.Contracts;
 using Pentaskilled.MEetAndYou.Services.Implementation;
 using Xunit;
 using Xunit.Abstractions;
@@ -22,7 +25,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         private MEetAndYouDBContext _dbContext;
         public static DbContextOptions<MEetAndYouDBContext> dbContextOptions { get; }
         public static string connectionString = "Data Source=DESKTOP-0QA4EN0\\SQLEXPRESS;Initial Catalog=MEetAndYou-DB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;";
-        private readonly string _eventsAPIkey = "5ebf47bd63dbb46ff6dcc84edbc58cb326723d49af7dedff19b243b94e3ab4b8";
+        private readonly string _eventsAPIkey = "";
         static SuggestionTests()
         {
             dbContextOptions = new DbContextOptionsBuilder<MEetAndYouDBContext>()
@@ -60,8 +63,68 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             BaseResponse response = await suggestionDAO.SaveEventAsync(eventList, itinID);
             _output.WriteLine(response.Message);
 
-            //
+            // Assert
             Assert.True(response.IsSuccessful);
+        }
+
+        [Theory]
+        [InlineData(3, 5, 3)]
+        public async void SaveEventsManagerTest(int numEvent, int itinID, int userID)
+        {
+            //Arrange
+            IAPIService eventAPI = new EventAPIService(_eventsAPIkey);
+            SuggestionDAO suggestionDAO = new SuggestionDAO(_dbContext);
+            SuggestionManager suggestionManager = new SuggestionManager(suggestionDAO, _dbContext, eventAPI);
+            List<Event> eventList = new List<Event>();
+
+            for (int i = 0; i < numEvent; i++)
+            {
+                Event temp = new Event {
+                    EventName = "Test event " + i,
+                    Address = i + "Main street, Long Beach CA 99284",
+                    Description = "Test events use for saving events unit test",
+                    EventDate = DateTime.Now
+                };
+                eventList.Add(temp);
+            }
+
+            //Act
+            _output.WriteLine("Saving Events....");
+            BaseResponse response = await suggestionManager.SaveEventAsync(eventList, itinID, userID);
+            _output.WriteLine(response.Message);
+
+            // Assert
+            Assert.True(response.IsSuccessful);
+        }
+
+        [Theory]
+        [InlineData(3, 5, 20)]
+        public async void SaveEventsManagerNotAuthzTest(int numEvent, int itinID, int userID)
+        {
+            //Arrange
+            IAPIService eventAPI = new EventAPIService(_eventsAPIkey);
+            SuggestionDAO suggestionDAO = new SuggestionDAO(_dbContext);
+            SuggestionManager suggestionManager = new SuggestionManager(suggestionDAO, _dbContext, eventAPI);
+            List<Event> eventList = new List<Event>();
+
+            for (int i = 0; i < numEvent; i++)
+            {
+                Event temp = new Event {
+                    EventName = "Test event " + i,
+                    Address = i + "Main street, Long Beach CA 99284",
+                    Description = "Test events use for saving events unit test",
+                    EventDate = DateTime.Now
+                };
+                eventList.Add(temp);
+            }
+
+            //Act
+            _output.WriteLine("Saving Events....");
+            BaseResponse response = await suggestionManager.SaveEventAsync(eventList, itinID, userID);
+            _output.WriteLine(response.Message);
+
+            // Assert
+            Assert.False(response.IsSuccessful);
         }
 
         [Fact]
@@ -78,6 +141,29 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
                 actual = true;
             }
             _output.WriteLine("Category: " + randCat.CategoryName);
+
+            //Assert 
+            Assert.True(actual);
+        }
+
+        [Fact]
+        public async void GetRandomEventsManagerTest()
+        {
+            //Arrange
+            IAPIService eventAPI = new EventAPIService(_eventsAPIkey);
+            SuggestionDAO suggestionDAO = new SuggestionDAO(_dbContext);
+            SuggestionManager suggestionManager = new SuggestionManager(suggestionDAO, _dbContext, eventAPI);
+            bool actual = false;
+
+            //Act
+            SuggestionResponse results = await suggestionManager.GetRandomEventsAsync();
+            if (results != null && results.IsSuccessful == true && results.Data != null)
+            {
+                actual = true;
+            }
+            //Assert
+            _output.WriteLine(results.Message);
+            Assert.True(actual);
 
             //Assert 
             Assert.True(actual);
@@ -137,6 +223,151 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             Assert.True(actual);
         }
 
+        [Theory]
+        [InlineData("Food AND drink", "Long Beach", "May 4")]
+        public async void GetEventsAPIManagerTest(string category, string location, string date)
+        {
+            //Arrange
+            IAPIService eventAPI = new EventAPIService(_eventsAPIkey);
+            ISuggestionDAO suggestionDAO = new SuggestionDAO(_dbContext);
+            SuggestionManager suggestionManager = new SuggestionManager(suggestionDAO, _dbContext, eventAPI);
 
+            Console.WriteLine("Parsing the date: ");
+            DateTime dateTime = suggestionDAO.DateConversion(date);
+            Console.WriteLine(date.ToString());
+
+            bool actual = false;
+
+            //Act
+            _output.WriteLine("Loading Events using category (Manager) ...");
+            //JObject results = eventAPI.GetEventByCategory(category, location, dateTime);
+            SuggestionResponse results = await suggestionManager.GetEvents(category, location, dateTime);
+            if (results != null && results.IsSuccessful == true)
+            {
+                actual = true;
+            }
+            //Assert
+            _output.WriteLine(results.Message);
+            Assert.True(actual);
+        }
+
+        [Theory]
+        [InlineData("Soccer", "Long Beach", "May 4")]
+        public async void GetEventsManagerWrongCatTest(string category, string location, string date)
+        {
+            //Arrange
+            IAPIService eventAPI = new EventAPIService(_eventsAPIkey);
+            ISuggestionDAO suggestionDAO = new SuggestionDAO(_dbContext);
+            SuggestionManager suggestionManager = new SuggestionManager(suggestionDAO, _dbContext, eventAPI);
+
+            Console.WriteLine("Parsing the date: ");
+            DateTime dateTime = suggestionDAO.DateConversion(date);
+            Console.WriteLine(date.ToString());
+
+            bool actual = false;
+
+            //Act
+            _output.WriteLine("Loading Events using category (Manager) ...");
+            //JObject results = eventAPI.GetEventByCategory(category, location, dateTime);
+            SuggestionResponse results = await suggestionManager.GetEvents(category, location, dateTime);
+            if (results != null && results.IsSuccessful == true)
+            {
+                actual = true;
+            }
+            //Assert
+            _output.WriteLine(results.Message);
+            Assert.False(actual);
+        }
+
+        [Theory]
+        [InlineData(5, 55)]
+        public async void DeleteEventsDAOTest(int itinID, int eventID)
+        {
+            //Arrange
+            SuggestionDAO suggestionDAO = new SuggestionDAO(_dbContext);
+
+            //Act
+            _output.WriteLine("Deleting Events....");
+            BaseResponse response = await suggestionDAO.DeleteEventAsync(itinID, eventID);
+            _output.WriteLine(response.Message);
+
+            // Assert
+            Assert.True(response.IsSuccessful);
+        }
+
+        [Theory]
+        [InlineData(5, 57, 3)]
+        public async void DeleteEventsManagerTest(int itinID, int eventID, int userID)
+        {
+            //Arrange
+            SuggestionDAO suggestionDAO = new SuggestionDAO(_dbContext);
+            IAPIService eventAPI = new EventAPIService(_eventsAPIkey);
+            SuggestionManager suggestionManager = new SuggestionManager(suggestionDAO, _dbContext, eventAPI);
+
+            //Act
+            _output.WriteLine("Manager Deleting Events....");
+            BaseResponse response = await suggestionManager.DeleteEventAsync(itinID, eventID, userID);
+            _output.WriteLine(response.Message);
+
+            // Assert
+            Assert.True(response.IsSuccessful);
+        }
+
+        [Theory]
+        [InlineData(3, 9)]
+        public async void AddItineraiesDAOTest(int numItin, int itinOwver)
+        {
+            //Arrange
+            SuggestionDAO suggestionDAO = new SuggestionDAO(_dbContext);
+            List<Itinerary> itinList = new List<Itinerary>();
+
+            for (int i = 0; i < numItin; i++)
+            {
+                Itinerary temp = new Itinerary {
+                    ItineraryName = "Test Itinerary " + i,
+                    Rating = 0,
+                    ItineraryOwner = itinOwver
+                };
+                itinList.Add(temp);
+            }
+
+            //Act
+            _output.WriteLine("Adding Itineraries ....");
+            BaseResponse response = await suggestionDAO.AddItineraryAsync(itinList);
+            _output.WriteLine(response.Message);
+
+            // Assert
+            Assert.True(response.IsSuccessful);
+        }
+
+        // Onwer ID is supposed to be included from the front end
+        [Theory]
+        [InlineData(3, 9)]
+        public async void AddingItineraryManagerTest(int numItin, int itinOwver)
+        {
+            //Arrange
+            IAPIService eventAPI = new EventAPIService(_eventsAPIkey);
+            SuggestionDAO suggestionDAO = new SuggestionDAO(_dbContext);
+            SuggestionManager suggestionManager = new SuggestionManager(suggestionDAO, _dbContext, eventAPI);
+            List<Itinerary> itinList = new List<Itinerary>();
+
+            for (int i = 0; i < numItin; i++)
+            {
+                Itinerary temp = new Itinerary {
+                    ItineraryName = "Test Itinerary " + i,
+                    Rating = 0,
+                    ItineraryOwner = itinOwver
+                };
+                itinList.Add(temp);
+            }
+
+            //Act
+            _output.WriteLine("Adding Itineraries ....");
+            BaseResponse response = await suggestionManager.AddItineraryAsync(itinList);
+            _output.WriteLine(response.Message);
+
+            // Assert
+            Assert.True(response.IsSuccessful);
+        }
     }
 }

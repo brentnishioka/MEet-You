@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Pentaskilled.MEetAndYou.DataAccess.Contracts;
 
@@ -47,7 +45,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
 
 
                     connection.Open();
-                    isVerified = (int) command.ExecuteScalar();
+                    isVerified = (int)command.ExecuteScalar();
                     connection.Close();
                 }
                 //userID = reader.GetFieldValue<int>(userIDCol);
