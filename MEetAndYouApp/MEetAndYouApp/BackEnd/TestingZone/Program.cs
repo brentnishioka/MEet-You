@@ -176,22 +176,22 @@ public class Program
         //Assert.True(response.IsSuccessful);
 
         //Arrange
-        int userID = 9;
+        //int userID = 9;
 
-        ICalendarDAO calendardDAO = new CalendarDAO(_dbContext);
-        string date = "2022 - 05 - 15"
+        //ICalendarDAO calendardDAO = new CalendarDAO(_dbContext);
+        //string date = "2022 - 05 - 15";
 
-        DateTime dateTime = calendardDAO.DateConversion(date);
+        //DateTime dateTime = calendardDAO.DateConversion(date);
 
-        List<Itinerary> actual = null;
+        //List<Itinerary> actual = null;
 
-        //Act
-        actual = await calendardDAO.GetUserItineraries(userID, dateTime);
-        foreach (Itinerary itin in actual)
-        {
-            Console.WriteLine("Itinerary ID: " + itin.ItineraryId);
-            Console.WriteLine("Itinerary Name: " + itin.ItineraryName);
-        }
+        ////Act
+        //actual = await calendardDAO.GetUserItineraries(userID, dateTime).Result;
+        //foreach (Itinerary itin in actual)
+        //{
+        //    Console.WriteLine("Itinerary ID: " + itin.ItineraryId);
+        //    Console.WriteLine("Itinerary Name: " + itin.ItineraryName);
+        //}
     }
 
     public static DateTime DateConversion(string date)
