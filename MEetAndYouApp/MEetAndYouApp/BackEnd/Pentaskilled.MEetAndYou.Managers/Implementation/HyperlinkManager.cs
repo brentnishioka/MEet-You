@@ -65,9 +65,43 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
             return hyperResponse;
         }
 
-        public Task<HyperlinkResponse> RemoveUserToItineraryAsync(int userID, int itineraryID, string email, string permission)
+        public async Task<HyperlinkResponse> RemoveUserToItineraryAsync(int userID, int itineraryID, string email, string permission)
         {
-            throw new NotImplementedException();
+            HyperlinkResponse hyperResponse;
+
+            try
+            {
+                // TODO: Validate inputs
+
+
+                // Check to see if the user own the itinerary
+                hyperResponse = await _hyperlinkDAO.isUserOwnerAsync(userID, itineraryID);
+                if (hyperResponse.IsSuccessful == false)
+                {
+                    return hyperResponse;
+                }
+
+                // Pull UserAccountRecord using an email
+                UserAccountRecordResponse userResponse = await _hyperlinkDAO.GetUserAccountRecordAsync(email);
+                if (userResponse.IsSuccessful == false)
+                {
+                    return new HyperlinkResponse(userResponse.Message, false, null);
+                }
+
+                // Remove the user to the associated itinerary
+                hyperResponse = await _hyperlinkDAO.RemoveUserFromItineraryAsync(userResponse.Data, itineraryID, permission);
+                if (hyperResponse.IsSuccessful == false)
+                {
+                    return hyperResponse;
+                }
+            }
+
+            catch (Exception ex)
+            {
+                return new HyperlinkResponse("Remove user in Manager failed: \n" + ex.Message, false, null);
+            }
+
+            return hyperResponse;
         }
     }
 }
