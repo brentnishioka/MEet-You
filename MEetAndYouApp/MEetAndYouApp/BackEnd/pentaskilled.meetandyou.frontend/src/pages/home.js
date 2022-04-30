@@ -1,13 +1,31 @@
 import React, { useState } from 'react'
 import { useNavigate } from "react-router-dom";
+import Select from 'react-select';
+import { useForm } from 'react-hook-form';
 
 export default function Home() {
     const [city, setCity] = useState("");
     const [date, setDate] = useState("");
     const [state, setState] = useState("");
     const navigate = useNavigate();
+    const { handleSubmit } = useForm();
+    const [selectedOptions, setSelectedOptions] = useState([]);
 
-    const toCategories = () => {
+    const options = [
+        { label: "Art", value: 1 },
+        { label: "Attractions", value: 2 },
+        { label: "Fitness Activities", value: 3 },
+        { label: "Food and Drink", value: 4 },
+        { label: "Libraries", value: 5 },
+        { label: "Live music", value: 6 },
+        { label: "Movies", value: 7 },
+        { label: "Museum", value: 8 },
+        { label: "Networking", value: 9 },
+        { label: "Nightlife", value: 10 },
+        { label: "Park", value: 11 },
+    ];
+
+    /*const toCategories = () => {
         navigate("/categories", {
             state: {
                 city: city,
@@ -15,7 +33,22 @@ export default function Home() {
                 state: state,
             }
         })
+    };*/
+
+    const handleChange = (options) => {
+        setSelectedOptions(options);
     };
+
+    const onSubmit = (formData) => {
+        sessionStorage.setItem("city", city)
+        sessionStorage.setItem("date", date)
+        sessionStorage.setItem("state", state)
+        navigate("/events", {
+            state: {
+                categories: selectedOptions
+            }
+        })
+    }
 
     return (
         <div className="homepage-wrapper">
@@ -36,9 +69,22 @@ export default function Home() {
                     <input type="date" onChange={e => setDate(e.target.value)} />
                 </label>
 
-                <div>
+                {/*<div>
                     <button type="button" onClick={() => { toCategories() }}>Next</button>
-                </div>
+                </div>*/}
+            </form>
+
+            <form onSubmit={handleSubmit(onSubmit)}>
+                
+                <p> Choose categories </p>
+                
+                <Select
+                    isMulti={true}
+                    options={options}
+                    closeMenuOnSelect={true}
+                    onChange={handleChange} />
+
+                <button type="submit">Save</button>
             </form>
         </div>
     )
