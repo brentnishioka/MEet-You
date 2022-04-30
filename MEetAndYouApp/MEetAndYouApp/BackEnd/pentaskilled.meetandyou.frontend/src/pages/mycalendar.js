@@ -38,7 +38,7 @@ function MyCalendar() {
     }
 
     useEffect(() => {
-        fetchItinerary();
+        createDateString();
     }, [])
 
     return (

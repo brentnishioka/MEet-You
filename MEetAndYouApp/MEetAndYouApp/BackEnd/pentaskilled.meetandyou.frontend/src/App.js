@@ -6,6 +6,9 @@ import SignUp from './pages/signup';
 import Login from './pages/signin';
 import Home from './pages/home'
 import MyCalendar from './pages/mycalendar';
+import Categories from './pages/categories';
+import Events from './pages/events';
+
 
 function App() {
     return (
@@ -15,8 +18,9 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/calendar" element={<MyCalendar/>} />
-                <Route path="/signup" element={<SignUp/>} />
-               
+                <Route path="/signup" element={<SignUp />} />
+                <Route path="/categories" element={<Categories />} />
+                <Route path="/events" element={<Events />} />
             </Routes>
         </Router>
     );
