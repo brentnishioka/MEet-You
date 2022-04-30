@@ -18,7 +18,7 @@ export default function Events() {
 
 
     const fetchSuggestions = async (category) => {
-        await fetch("https://localhost:9000/GetEvent?category=" + location.state.categories[0].label + "&location=" + city + state + "&date= " + date)
+        await fetch("https://localhost:9000/GetEvent?category=" + location.state.categories[0].label + "&location=" + city +  " " + state + "&date= " + date)
             .then(response => response.text())
             .then(body => console.log(body))
     }
