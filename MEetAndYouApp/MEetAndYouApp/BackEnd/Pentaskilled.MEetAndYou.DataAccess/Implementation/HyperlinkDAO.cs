@@ -95,7 +95,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
                 return new HyperlinkResponse("Database could not find user", false, null);
             }
 
-            return new HyperlinkResponse("User successfully added", true, itin);
+            return new HyperlinkResponse("User successfully added", true, itin.UserItineraries.ToList());
         }
 
         public async Task<HyperlinkResponse> RemoveUserFromItineraryAsync(UserAccountRecord userAccountRecord, int itineraryID, string permission)
@@ -129,7 +129,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
                 return new HyperlinkResponse("Database could not find user", false, null);
             }
 
-            return new HyperlinkResponse("User successfully removed", true, itin);
+            return new HyperlinkResponse("User successfully removed", true, itin.UserItineraries.ToList());
         }
 
         public async Task<HyperlinkResponse> isUserOwnerAsync(int userID, int itineraryID)
@@ -144,7 +144,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
                 // Compares user ID with itinerary owner's ID
                 if (userID == itin.ItineraryOwner)
                 {
-                    response = new HyperlinkResponse("Authorized to modify user in itinerary", true, itin);
+                    response = new HyperlinkResponse("Authorized to modify user in itinerary", true, itin.UserItineraries.ToList());
                 }
                 else
                 {

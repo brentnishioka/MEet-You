@@ -9,16 +9,16 @@ namespace Pentaskilled.MEetAndYou.Entities.Models
 {
     public class HyperlinkResponse : BaseResponse
     {
-        private Itinerary _data;
+        private List<UserItinerary> _data;
 
-        public Itinerary Data { get; set; }
+        public List<UserItinerary> Data { get; set; }
 
         public HyperlinkResponse() : base()
         {
-            Data = new Itinerary();
+            Data = new List<UserItinerary>();
         }
 
-        public HyperlinkResponse(string message, bool isSuccessful, Itinerary data)
+        public HyperlinkResponse(string message, bool isSuccessful, List<UserItinerary> data)
         {
             Message = message;
             IsSuccessful = isSuccessful;
