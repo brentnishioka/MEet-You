@@ -86,6 +86,10 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             {
                 return new HyperlinkResponse("User already added", false, null);
             }
+            catch (DbUpdateException)
+            {
+                return new HyperlinkResponse("Database failed to add user", false, null);
+            }
             catch (NullReferenceException)
             {
                 return new HyperlinkResponse("Database could not find user", false, null);
