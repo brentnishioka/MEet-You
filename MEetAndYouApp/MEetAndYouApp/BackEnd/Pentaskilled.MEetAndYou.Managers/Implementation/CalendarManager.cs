@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Pentaskilled.MEetAndYou.DataAccess;
 using Pentaskilled.MEetAndYou.Entities.DBModels;
@@ -17,9 +18,10 @@ namespace Pentaskilled.MEetAndYou.Managers
         }
 
 
-        public async Task<List<Itinerary>> LoadUserItineraries(int userID)
+        public async Task<List<Itinerary>> LoadUserItineraries(int userID, string date)
         {
-            List<Itinerary> userItineraries = await _calendarDAO.GetUserItineraries(userID);
+            DateTime datetime = _calendarDAO.DateConversion(date);
+            List<Itinerary> userItineraries = await _calendarDAO.GetUserItineraries(userID, datetime);
 
             return userItineraries;
         }

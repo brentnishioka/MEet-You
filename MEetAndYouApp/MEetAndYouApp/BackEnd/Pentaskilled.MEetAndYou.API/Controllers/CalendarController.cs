@@ -25,7 +25,7 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
 
         [HttpPost(Name = "GetItineraries")]
         //[Route("GetItineraries/{userID}")]
-        public async Task<ActionResult<List<Itinerary>>> GetItineraries(int userID)
+        public async Task<ActionResult<List<Itinerary>>> GetItineraries(int userID, string date)
         {
             /*string? token;
             int userID;
@@ -52,7 +52,7 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
                     return BadRequest("User is not authorized to use this service");
                 }*/
 
-                return await _calendarManager.LoadUserItineraries(userID);
+                return await _calendarManager.LoadUserItineraries(userID, date);
             }
 
             catch(Exception e)

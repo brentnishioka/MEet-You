@@ -6,6 +6,6 @@ namespace Pentaskilled.MEetAndYou.Managers
 {
     public interface ICalendarManager
     {
-        Task<List<Itinerary>> LoadUserItineraries(int userID);
+        Task<List<Itinerary>> LoadUserItineraries(int userID, string date);
     }
 }
