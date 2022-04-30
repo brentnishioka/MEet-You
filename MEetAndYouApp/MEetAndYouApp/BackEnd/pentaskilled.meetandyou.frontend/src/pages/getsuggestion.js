@@ -7,6 +7,7 @@ export default function GetSuggestion()
     const [category, setCategory] = useState("");
     const [result, setResult] = useState([]);
     const [date, setDate] = useState("");
+    const [suggestions, setSuggestions] = useState([])
 
 
     // const suggestion = () => {
@@ -24,24 +25,36 @@ export default function GetSuggestion()
         console.log("THE RESULTS ARE", result)
     }, [])
 
+    function getSuggestion(){
+        const responseData =
+        fetch("https://localhost:9000/GetEvent?category=food%20and%20drink&location=Long%20Beach&date=May%204")
+        .then(response => response.json())
+        .catch(error => console.error('Unable to get items.', error));
+
+        return responseData;
+    }
+
+    function displaySuggestion(reponseData){
+        var data = reponseData.data;
+        const eventObject = data[0];
+
+        return(
+            <div>
+                <h1>eventObject</h1>
+            </div>
+        )
+    }
+
     // let location = "";
     // let category = "";
     // let date = "";
 
-
-
+    const responseData = getSuggestion();
 
     return(
         <div className="getsuggestion-wrapper">
-        <h1>GetSuggestion!</h1>
-            {/* <h1>{result}</h1> */}
-
-        {/* <body>     
-            <script src="src/apicall/site.js" asp-append-version="true"></script>
-            <script type="text/javascript">
-                console.log(getSuggestion());
-            </script>
-        </body> */}
-    </div>
+            <h1>GetSuggestion! </h1>
+            
+        </div>
     )
 }

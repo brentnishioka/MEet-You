@@ -1,6 +1,5 @@
 function getSuggestion() {
-    fetch("https://localhost:9000/GetEvent")
+    fetch("https://localhost:9000/GetEvent?category=food%20and%20drink&location=Long%20Beach&date=May%204")
       .then(response => response.json())
-      .then(data => _displayItems(data))
       .catch(error => console.error('Unable to get items.', error));
   }
