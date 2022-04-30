@@ -23,6 +23,9 @@ const Navbar = () => {
                     <NavLink to='/calendar' activeStyle>
                         Calendar
                     </NavLink>
+                    <NavLink to='/rating' activeStyle>
+                        Event Rating
+                    </NavLink>
 
                     {/* Second Nav */}
                     {/* <NavBtnLink to='/sign-in'>Sign In</NavBtnLink> */}
