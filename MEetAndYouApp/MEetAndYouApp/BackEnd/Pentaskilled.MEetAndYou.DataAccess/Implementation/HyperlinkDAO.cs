@@ -67,10 +67,6 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
                          grp.Key.UserId,
                      }).CountAsync();
                 
-                //foreach (var user in uniqueUsers)
-                //    Console.WriteLine(user.ItineraryId + " " + user.UserId);
-
-                Console.WriteLine("There are " + uniqueUsers + " unique users");
                 if (uniqueUsers < 5)
                 {
                     // Add object to context
