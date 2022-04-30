@@ -86,7 +86,7 @@ public class Program
     {
         // Testing Hyperlink Manger
         MEetAndYouDBContext _dbContext;
-        DbContextOptions<MEetAndYouDBContext> dbContextOptions = 
+        DbContextOptions<MEetAndYouDBContext> dbContextOptions =
         new DbContextOptionsBuilder<MEetAndYouDBContext>()
                 .UseSqlServer("")
                 .Options;
@@ -97,6 +97,14 @@ public class Program
         Task<HyperlinkResponse> response = hyperlinkManager.AddUserToItineraryAsync(8, 9, "viviand2465@gmail.com", "View");
         //Task<HyperlinkResponse> response = hyperlinkManager.RemoveUserFromItineraryAsync(8, 9, "viviand2465@gmail.com", "View");
 
-        Console.WriteLine(response.Result.Message);
+        if (response.Result.Data != null)
+        {
+            Console.WriteLine("Number of records in UserItineraries: " + response.Result.Data.UserItineraries.Count);
+
+            foreach (var record in response.Result.Data.UserItineraries)
+            {
+                Console.WriteLine(string.Format("{0} {1} {2}", record.ItineraryId, record.UserId, record.PermissionName));
+            }
+        }
     }
 }

@@ -51,7 +51,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             try
             {
                 // Find associated itinerary
-                itin = await _dbContext.Itineraries.FindAsync(itineraryID);
+                itin = await _dbContext.Itineraries.Include(i => i.UserItineraries).FirstOrDefaultAsync(i => i.ItineraryId == itineraryID);
 
                 // Create userItinerary object to be added
                 UserItinerary userItinerary = new UserItinerary(userAccountRecord.UserId, itineraryID, permission);
@@ -100,7 +100,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             try
             {
                 // Find associated itinerary
-                itin = await _dbContext.Itineraries.FindAsync(itineraryID);
+                itin = await _dbContext.Itineraries.Include(i => i.UserItineraries).FirstOrDefaultAsync(i => i.ItineraryId == itineraryID);
 
                 // Create userItinerary object to be removed
                 UserItinerary userItinerary = new UserItinerary(userAccountRecord.UserId, itineraryID, permission);
