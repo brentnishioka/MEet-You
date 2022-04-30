@@ -67,6 +67,8 @@ builder.Services.AddSingleton<ICalendarManager, CalendarManager>();
 builder.Services.AddSingleton<CopyItineraryDAO>();
 builder.Services.AddSingleton<ISuggestionManager, SuggestionManager>();
 builder.Services.AddSingleton<ISuggestionDAO, SuggestionDAO>();
+builder.Services.AddSingleton<IHyperlinkManager, HyperlinkManager>();
+builder.Services.AddSingleton<IHyperlinkDAO, HyperlinkDAO>();
 builder.Services.AddSingleton<IAPIService, EventAPIService>();
 //builder.Services.AddSingleton<Configuration>();
 

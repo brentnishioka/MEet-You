@@ -67,6 +67,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
                          grp.Key.UserId,
                      }).CountAsync();
                 
+                // Add user if existing users in itinerary is less than 5
                 if (uniqueUsers < 5)
                 {
                     // Add object to context
@@ -81,11 +82,11 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
                     return new HyperlinkResponse("Max users reached, please remove a user", false, null);
                 }
             }
-            catch (DbUpdateException ex)
+            catch (InvalidOperationException)
             {
                 return new HyperlinkResponse("User already added", false, null);
             }
-            catch (NullReferenceException ex)
+            catch (NullReferenceException)
             {
                 return new HyperlinkResponse("Database could not find user", false, null);
             }
@@ -115,11 +116,11 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
                 // Save changes to context
                 await _dbContext.SaveChangesAsync();
             }
-            catch (DbUpdateException ex)
+            catch (DbUpdateException)
             {
                 return new HyperlinkResponse("Database failed to remove user", false, null);
             }
-            catch (NullReferenceException ex)
+            catch (NullReferenceException)
             {
                 return new HyperlinkResponse("Database could not find user", false, null);
             }
@@ -147,7 +148,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
                 }
 
             }
-            catch (SqlException ex)
+            catch (SqlException)
             {
                 return new HyperlinkResponse("Could not find itinerary", false, null);
             }
