@@ -34,13 +34,13 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             // If userAccountRecord is null, set error message and isSuccessful to false 
             if (userAccountRecord == null)
             {
-                return new UserAccountRecordResponse("User account not found", false, userAccountRecord);
+                return new UserAccountRecordResponse("Unable to find user by email", false, userAccountRecord);
             }
 
             // Successfully pulled UserAccountRecord from context using user email
             else
             {
-                return new UserAccountRecordResponse("User successfully found", true, userAccountRecord);
+                return new UserAccountRecordResponse("Successfully found user by email", true, userAccountRecord);
             }
         }
 
@@ -139,11 +139,11 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
                 // Compares user ID with itinerary owner's ID
                 if (userID == itin.ItineraryOwner)
                 {
-                    response = new HyperlinkResponse("User owns the itinerary", true, itin);
+                    response = new HyperlinkResponse("Authorized to modify user in itinerary", true, itin);
                 }
                 else
                 {
-                    response = new HyperlinkResponse("User does not own the itinerary", false, null);
+                    response = new HyperlinkResponse("Not Authorized to modify user in itinerary", false, null);
                 }
 
             }

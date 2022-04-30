@@ -14,7 +14,7 @@ namespace Pentaskilled.MEetAndYou.Managers.Contracts
             Adds a user to an itinerary with the following procedure:
             1. Validate input of the arguments
             2. Check to see if the User is the owner of the itinerary
-            3. Pull UserAccountRecord using the email
+            3. Pull UserAccountRecord using an email
             4. Add the user to the associated itinerary
         */
         Task<HyperlinkResponse> AddUserToItineraryAsync(int userID, int itineraryID, string email, string permission);
@@ -22,7 +22,7 @@ namespace Pentaskilled.MEetAndYou.Managers.Contracts
             Removes a user to an itinerary with the following procedure:
             1. Validate input of the arguments
             2. Check to see if the User is the owner of the itinerary
-            3. Pull UserAccountRecord using the email
+            3. Pull UserAccountRecord using an email
             4. Remove the user to the associated itinerary
         */
         Task<HyperlinkResponse> RemoveUserToItineraryAsync(int userID, int itineraryID, string email, string permission);
