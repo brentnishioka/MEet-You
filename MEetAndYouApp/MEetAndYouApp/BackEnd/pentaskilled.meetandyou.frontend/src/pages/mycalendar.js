@@ -17,10 +17,13 @@ function MyCalendar() {
         makeDate(dateString);
         console.log("DATE STRING:", dateString);
     }
+    console.log("value test: ", value)
 
     //var user = sessionStorage.getItem("userID")
 
     const fetchItinerary = async () => {
+        makeDate(value)
+        console.log("DATE TEST", date);
         //const formData = new FormData()
         var id = 3
         var requestOptions = {
@@ -33,12 +36,13 @@ function MyCalendar() {
             mode: 'cors'
         };
 
-        await fetch(`https://localhost:9000/Calendar?userID=`+id, requestOptions).then(response => response.text())
+        //.https://localhost:9000/Calendar?userID=9&date=2022-04-28
+        await fetch(`https://localhost:9000/Calendar?userID=`+id + "&date=" + date, requestOptions).then(response => response.text())
             .then(body => console.log(body))
     }
 
     useEffect(() => {
-        createDateString();
+        fetchItinerary();
     }, [])
 
     return (
