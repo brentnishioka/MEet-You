@@ -21,19 +21,16 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
         public virtual DbSet<EventLog> EventLogs { get; set; }
         public virtual DbSet<Image> Images { get; set; }
         public virtual DbSet<Itinerary> Itineraries { get; set; }
-        public virtual DbSet<ItineraryNote> ItineraryNotes { get; set; }
-        public virtual DbSet<Permission> Permissions { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<UserAccountRecord> UserAccountRecords { get; set; }
-        public virtual DbSet<UserEventRating> UserEventRatings { get; set; }
-        public virtual DbSet<UserItinerary> UserItineraries { get; set; }
         public virtual DbSet<UserToken> UserTokens { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                //optionsBuilder.UseSqlServer("Data Source=DESKTOP-0QA4EN0\SQLEXPRESS;Initial Catalog=MEetAndYou-DB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                //optionsBuilder.UseSqlServer("Data Source=DESKTOP-0QA4EN0\\SQLEXPRESS;Initial Catalog=MEetAndYou-DB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;");
                 //optionsBuilder.UseSqlServer(System.Configuration.ConfigurationManager.ConnectionStrings["MEetAndYouDatabase"].ConnectionString);
                 optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["MEetAndYouDatabase"].ConnectionString);
             }
@@ -43,7 +40,7 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
         {
             modelBuilder.Entity<AdminAccountRecord>(entity => {
                 entity.HasKey(e => e.AdminId)
-                    .HasName("PK__AdminAcc__719FE4E88D2ED507");
+                    .HasName("PK__AdminAcc__719FE4E8D92D3466");
 
                 entity.ToTable("AdminAccountRecords", "MEetAndYou");
 
@@ -117,7 +114,7 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
 
             modelBuilder.Entity<EventLog>(entity => {
                 entity.HasKey(e => e.LogId)
-                    .HasName("PK__EventLog__5E5486482149FA44");
+                    .HasName("PK__EventLog__5E548648459EF28B");
 
                 entity.ToTable("EventLogs", "MEetAndYou");
 
@@ -207,48 +204,27 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
 
                             j.IndexerProperty<int>("EventId").HasColumnName("eventID");
                         });
-            });
 
-            modelBuilder.Entity<ItineraryNote>(entity =>
-            {
-                entity.HasKey(e => e.ItineraryId)
-                    .HasName("itineraryNotes_pk");
+                entity.HasMany(d => d.Users)
+                    .WithMany(p => p.ItinerariesNavigation)
+                    .UsingEntity<Dictionary<string, object>>(
+                        "UserItinerary",
+                        l => l.HasOne<UserAccountRecord>().WithMany().HasForeignKey("UserId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("userIDitinerary_fk"),
+                        r => r.HasOne<Itinerary>().WithMany().HasForeignKey("ItineraryId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("itineraryID_fk"),
+                        j => {
+                            j.HasKey("ItineraryId", "UserId").HasName("userItinerary_pk");
 
-                entity.ToTable("ItineraryNotes", "MEetAndYou");
+                            j.ToTable("UserItinerary", "MEetAndYou");
 
-                entity.Property(e => e.ItineraryId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("itineraryID");
+                            j.IndexerProperty<int>("ItineraryId").HasColumnName("itineraryID");
 
-                entity.Property(e => e.NoteContent)
-                    .IsRequired()
-                    .HasMaxLength(300)
-                    .IsUnicode(false)
-                    .HasColumnName("noteContent");
-
-                entity.HasOne(d => d.Itinerary)
-                    .WithOne(p => p.ItineraryNote)
-                    .HasForeignKey<ItineraryNote>(d => d.ItineraryId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("noteItineraryID_fk");
-            });
-
-            modelBuilder.Entity<Permission>(entity =>
-            {
-                entity.HasKey(e => e.PermissionName)
-                    .HasName("permission_pk");
-
-                entity.ToTable("Permission", "MEetAndYou");
-
-                entity.Property(e => e.PermissionName)
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("permissionName");
+                            j.IndexerProperty<int>("UserId").HasColumnName("UserID");
+                        });
             });
 
             modelBuilder.Entity<Role>(entity => {
                 entity.HasKey(e => e.Role1)
-                    .HasName("PK__Roles__863D21492235A5A9");
+                    .HasName("PK__Roles__863D2149F085ACCF");
 
                 entity.ToTable("Roles", "MEetAndYou");
 
@@ -260,7 +236,7 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
 
             modelBuilder.Entity<UserAccountRecord>(entity => {
                 entity.HasKey(e => e.UserId)
-                    .HasName("PK__UserAcco__1788CCAC45CBEC85");
+                    .HasName("PK__UserAcco__1788CCAC0D4020A1");
 
                 entity.ToTable("UserAccountRecords", "MEetAndYou");
 
@@ -289,10 +265,9 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
                     .WithMany(p => p.Users)
                     .UsingEntity<Dictionary<string, object>>(
                         "UserRole",
-                        l => l.HasOne<Role>().WithMany().HasForeignKey("Role").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK__UserRole__role__46E78A0C"),
-                        r => r.HasOne<UserAccountRecord>().WithMany().HasForeignKey("UserId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK__UserRole__UserID__47DBAE45"),
-                        j =>
-                        {
+                        l => l.HasOne<Role>().WithMany().HasForeignKey("Role").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK__UserRole__role__0F2D40CE"),
+                        r => r.HasOne<UserAccountRecord>().WithMany().HasForeignKey("UserId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK__UserRole__UserID__0E391C95"),
+                        j => {
                             j.HasKey("UserId", "Role").HasName("user_rolePK");
 
                             j.ToTable("UserRole", "MEetAndYou");
@@ -303,69 +278,7 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
                         });
             });
 
-            modelBuilder.Entity<UserEventRating>(entity =>
-            {
-                entity.HasKey(e => new { e.EventId, e.ItineraryId })
-                    .HasName("userEventRatings_pk");
-
-                entity.ToTable("UserEventRatings", "MEetAndYou");
-
-                entity.Property(e => e.EventId).HasColumnName("eventID");
-
-                entity.Property(e => e.ItineraryId).HasColumnName("itineraryID");
-
-                entity.Property(e => e.UserRating).HasColumnName("userRating");
-
-                entity.HasOne(d => d.Event)
-                    .WithMany(p => p.UserEventRatings)
-                    .HasForeignKey(d => d.EventId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("ratingEventID_fk");
-
-                entity.HasOne(d => d.Itinerary)
-                    .WithMany(p => p.UserEventRatings)
-                    .HasForeignKey(d => d.ItineraryId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("ratingItineraryID_fk");
-            });
-
-            modelBuilder.Entity<UserItinerary>(entity =>
-            {
-                entity.HasKey(e => new { e.ItineraryId, e.UserId, e.PermissionName })
-                    .HasName("userItinerary_pk");
-
-                entity.ToTable("UserItinerary", "MEetAndYou");
-
-                entity.Property(e => e.ItineraryId).HasColumnName("itineraryID");
-
-                entity.Property(e => e.UserId).HasColumnName("UserID");
-
-                entity.Property(e => e.PermissionName)
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("permissionName");
-
-                entity.HasOne(d => d.Itinerary)
-                    .WithMany(p => p.UserItineraries)
-                    .HasForeignKey(d => d.ItineraryId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("itineraryID_fk");
-
-                entity.HasOne(d => d.PermissionNameNavigation)
-                    .WithMany(p => p.UserItineraries)
-                    .HasForeignKey(d => d.PermissionName)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("permission_fk");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.UserItineraries)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("userIDItinerary_fk");
-            });
-
-            modelBuilder.Entity<UserToken>(entity =>
-            {
+            modelBuilder.Entity<UserToken>(entity => {
                 entity.HasKey(e => new { e.UserId, e.Token })
                     .HasName("userRole_PK");
 

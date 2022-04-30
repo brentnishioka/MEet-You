@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -6,11 +6,6 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="google-search-results-dotnet" Version="2.0.1" />
-    <PackageReference Include="Yelp.Api" Version="1.3.0" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Pentaskilled.MEetAndYou.DataAccess\Pentaskilled.MEetAndYou.DataAccess.csproj" />
