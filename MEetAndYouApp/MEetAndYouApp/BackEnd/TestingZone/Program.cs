@@ -88,14 +88,14 @@ public class Program
 
         HyperlinkDAO hyperlinkDAO = new HyperlinkDAO();
 
-        Task<UserAccountRecordResponse> UARResponse = hyperlinkDAO.GetUserAccountRecordByEmail(testEmail);
+        Task<UserAccountRecordResponse> UARResponse = hyperlinkDAO.GetUserAccountRecordAsync(testEmail);
 
         if (UARResponse.Result.Data != null)
         {
             UserAccountRecord user = UARResponse.Result.Data;
             Console.WriteLine(UARResponse.Result.Message);
 
-            Task<HyperlinkResponse> response = hyperlinkDAO.AddUserToItinerary(user, 5, "View");
+            Task<HyperlinkResponse> response = hyperlinkDAO.AddUserToItineraryAsync(user, 5, "View");
             //Task<HyperlinkResponse> response = hyperlinkDAO.RemoveUserFromItinerary(user, 5, "View");
 
             Console.WriteLine(response.Result.Message);
