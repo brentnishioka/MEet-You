@@ -31,7 +31,7 @@ namespace Pentaskiled.MEetAndYou.API.Controllers
             _hyperlinkDAO = hyperlinkDAO;
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("/AddUser")]
         public async Task<ActionResult<HyperlinkResponse>> AddUser(int userID, int itineraryID, string email, string permission)
         {
@@ -56,7 +56,7 @@ namespace Pentaskiled.MEetAndYou.API.Controllers
             return response;
         }
 
-        [HttpGet]
+        [HttpDelete]
         [Route("/RemoveUser")]
         public async Task<ActionResult<HyperlinkResponse>> RemoveUser(int userID, int itineraryID, string email, string permission)
         {
