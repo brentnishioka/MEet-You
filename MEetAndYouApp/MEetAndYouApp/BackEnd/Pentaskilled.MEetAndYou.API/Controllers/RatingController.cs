@@ -33,21 +33,24 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
         [Route("PostNoteCreaton")]
         public ActionResult<BaseResponse> PostNoteCreaton(int itineraryID, string noteContent)
         {
-            throw new NotImplementedException();
+            BaseResponse postNoteCreationResult = _ratingManager.CreateItineraryNote(itineraryID, noteContent);
+            return postNoteCreationResult;
         }
 
         [HttpPut]
         [Route("PutRatingModification")]
         public ActionResult<BaseResponse> PutRatingModification(int eventID, int itineraryID, int userRating)
         {
-            throw new NotImplementedException();
+            BaseResponse putRatingModificationResult = _ratingManager.ModifyRating(eventID, itineraryID, userRating);
+            return putRatingModificationResult;
         }
 
         [HttpPut]
         [Route("PutNoteModification")]
         public ActionResult<BaseResponse> PutNoteModification(int itineraryID, string noteContent)
         {
-            throw new NotImplementedException();
+            BaseResponse putNoteModificationResult = _ratingManager.ModifyItineraryNote(itineraryID, noteContent);
+            return putNoteModificationResult;
         }
     }
 }

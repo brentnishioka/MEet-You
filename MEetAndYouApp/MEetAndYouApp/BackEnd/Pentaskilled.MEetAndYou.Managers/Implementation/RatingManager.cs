@@ -27,7 +27,9 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
 
         public BaseResponse CreateItineraryNote(int itineraryID, string noteContent)
         {
-            throw new NotImplementedException();
+            ItineraryNote itineraryNote = new ItineraryNote(itineraryID, noteContent);
+            BaseResponse addNoteResult = _ratingDAO.AddNoteInDBAsync(itineraryNote).Result;
+            return addNoteResult;
         }
 
         public BaseResponse CreateRating(int eventID, int itineraryID, int userRating)
@@ -41,12 +43,16 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
 
         public BaseResponse ModifyItineraryNote(int itineraryID, string noteContent)
         {
-            throw new NotImplementedException();
+            ItineraryNote itineraryNote = new ItineraryNote(itineraryID, noteContent);
+            BaseResponse modifyNoteResult = _ratingDAO.ModifyNoteInDBAsync(itineraryNote).Result;
+            return modifyNoteResult;
         }
 
         public BaseResponse ModifyRating(int eventID, int itineraryID, int userRating)
         {
-            throw new NotImplementedException();
+            UserEventRating userEventRating = new UserEventRating(eventID, itineraryID, userRating);
+            BaseResponse modifyRatingResult = _ratingDAO.ModifyRatingInDBAsync(userEventRating).Result;
+            return modifyRatingResult;
         }
     }
 }

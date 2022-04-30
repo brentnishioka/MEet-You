@@ -39,6 +39,8 @@ builder.Services.AddSingleton<ILoggingService, LoggingService>();
 builder.Services.AddSingleton<ILogDAO, LogDAO>();
 builder.Services.AddSingleton<Log>();
 builder.Services.AddSingleton<CopyItineraryDAO>();
+builder.Services.AddScoped<UserEventRating>();
+builder.Services.AddScoped<ItineraryNote>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
