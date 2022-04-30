@@ -89,6 +89,10 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             {
                 return new HyperlinkResponse("User already added", false, null);
             }
+            catch (NullReferenceException ex)
+            {
+                return new HyperlinkResponse("Database could not find user", false, null);
+            }
 
             return new HyperlinkResponse("User successfully added", true, itin);
         }
@@ -118,6 +122,10 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             catch (DbUpdateException ex)
             {
                 return new HyperlinkResponse("Database failed to remove user", false, null);
+            }
+            catch (NullReferenceException ex)
+            {
+                return new HyperlinkResponse("Database could not find user", false, null);
             }
 
             return new HyperlinkResponse("User successfully removed", true, itin);
