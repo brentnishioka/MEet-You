@@ -192,6 +192,19 @@ public class Program
         //    Console.WriteLine("Itinerary ID: " + itin.ItineraryId);
         //    Console.WriteLine("Itinerary Name: " + itin.ItineraryName);
         //}
+
+        string date = "2022-05-15";
+        DateTime dateTime = DateConversion(date);
+        Event temp = new Event {
+            EventName = "Hello world",
+            Address = "123 street",
+            Description = "coffee meetings",
+            EventDate = dateTime
+        };
+        Category catObj = new Category("Food and Drink");
+        temp.CategoryNames.Add(catObj);
+
+        Console.WriteLine(temp.CategoryNames.First().CategoryName);
     }
 
     public static DateTime DateConversion(string date)
