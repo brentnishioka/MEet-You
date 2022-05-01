@@ -23,8 +23,11 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
 
         [HttpPost]
         [Route("PostRatingCreation")]
-        public ActionResult<BaseResponse> PostRatingCreation(int eventID, int itineraryID, int userRating)
+        public ActionResult<BaseResponse> PostRatingCreation([FromBody] UserEventRatingJSON model)
         {
+            var eventID = model.eventID;
+            var itineraryID = model.itineraryID;
+            var userRating = model.userRating;
             BaseResponse postRatingCreationResult = _ratingManager.CreateRating(eventID, itineraryID, userRating);
             return postRatingCreationResult;
         }
@@ -52,5 +55,12 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
             BaseResponse putNoteModificationResult = _ratingManager.ModifyItineraryNote(itineraryID, noteContent);
             return putNoteModificationResult;
         }
+    }
+
+    public class UserEventRatingJSON
+    {
+        public int eventID { get; set; }
+        public int itineraryID { get; set; }
+        public int userRating { get; set; }
     }
 }

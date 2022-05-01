@@ -17,6 +17,8 @@ function Rating() {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': true
             },
             body: JSON.stringify({
                 eventID: 4,
@@ -26,7 +28,7 @@ function Rating() {
             mode: 'cors'
         };
 
-        await fetch('https://localhost:9000/Rating', requestOptions).then(
+        await fetch('https://localhost:9000/api/Rating/PostRatingCreation', requestOptions).then(
             response => console.log("System response: ", response.json())
         )
     }
