@@ -124,7 +124,7 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
         public async Task<string> SaveImage(IFormFile imageFile)
         {
             string imageName = new String(Path.GetFileNameWithoutExtension(imageFile.FileName).Take(10).ToArray()).Replace(' ', '-');
-            imageName = imageName + DateTime.Now.ToString("yymmssfff") + Path.GetExtension(imageFile.FileName);
+            imageName = imageName + DateTime.Now.ToString("yymmss") + Path.GetExtension(imageFile.FileName);
             var imagePath = Path.Combine(webHostEnvironment.ContentRootPath, "Images", imageName);
             using (var fileStream = new FileStream(imagePath, FileMode.Create))
             {

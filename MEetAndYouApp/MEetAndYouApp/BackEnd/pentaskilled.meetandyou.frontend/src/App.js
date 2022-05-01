@@ -5,6 +5,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import SignUp from './pages/signup';
 import Home from './pages/home'
 import MyCalendar from './pages/mycalendar';
+import MemoryAlbum from './pages/memoryalbum';
+
 import MemoryAlbumList from './pages/memoryalbumlist';
 
 function App() {
@@ -16,6 +18,7 @@ function App() {
                 <Route path="/calendar" element={<MyCalendar/>} />
                 <Route path="/signup" element={<SignUp/>} />
                 <Route path="/memoryalbumlist" element={<MemoryAlbumList/>} />
+                <Route path="/memoryalbumlist" element={<MemoryAlbum/>} />
 
             </Routes>
         </Router>
