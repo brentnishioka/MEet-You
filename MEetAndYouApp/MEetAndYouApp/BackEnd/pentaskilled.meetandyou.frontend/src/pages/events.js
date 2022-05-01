@@ -11,15 +11,15 @@ function Events() {
 
     const saveEvent = async (request, itinID, userID) => {
         try {
-          const res = await fetch('https://localhost:9000/SaveEvent?itinID=' + itinID + '&userID=' + userID, request)
-          const saveEventRes = await res.json();
-          setpostRes(saveEventRes)
-          console.log(saveEventRes)
+            const res = await fetch('https://localhost:9000/SaveEvent?itinID=' + itinID + '&userID=' + userID, request)
+            const saveEventRes = await res.json();
+            setpostRes(saveEventRes)
+            console.log(saveEventRes)
         }
         catch (error) {
             console.log('error');
         }
-      }
+    }
 
     const getData = async () => {
         try {
@@ -61,19 +61,19 @@ function Events() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title: 'React POST Request Example' })
-      }
+    }
 
     // A method to create the event object
     const selectedEvent = (eventName) => {
         data.map(item => {
-            if (item.eventName === eventName){
+            if (item.eventName === eventName) {
                 console.log("Selected Object: ", item);
-                return item;  
+                return item;
             }
             else {
                 console.log("Selected Object: ")
                 return null;
-                
+
             }
         })
     }
@@ -87,13 +87,45 @@ function Events() {
         return data[eventID];
     }
 
+    // const eventToSend = {
+    //     eventName: selectedEvent.eventName,
+    //     description: selectedEvent.description,
+    //     address: selectedEvent.selectedEvent,
+    //     price: selectedEvent.price,
+    //     eventDate: selectedEvent.eventDate,
+    //     categoryNames: [
+    //         {
+    //             categoryName: "Workshop"
+    //         }
+    //     ]
+    // }
+
     const AddEvent = () => {
         const selectedEvent = createEvent();
+        // Send an array of json to the back end
+        const eventToSend = 
+        [
+            {
+                eventName: selectedEvent.eventName,
+                description: selectedEvent.description,
+                address: selectedEvent.address,
+                price: selectedEvent.price,
+                eventDate: selectedEvent.eventDate,
+                categoryNames: [
+                    {
+                        categoryName: "Workshop"
+                    }
+                ]
+            }
+        ]
+        console.log("Event to be sent to the backend:", eventToSend)
+
+
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(selectedEvent)
-          }
+            body: JSON.stringify(eventToSend)
+        }
 
         const res = saveEvent(requestOptions, itinID, userID);
         console.log(res);
@@ -101,7 +133,7 @@ function Events() {
     }
 
     //Function to submit data to the back end
-    const addEvent = (userID, itinID, ) => {
+    const addEvent = (userID, itinID,) => {
 
     }
 
@@ -138,7 +170,7 @@ function Events() {
                 <input type="text" placeholder="ex: 2" maxlength="10" onChange={e => setuserID(e.target.value)} />
                 {console.log("The value of itinID", userID)}
             </label>
-            <button type="button" id="SaveEvent" onClick={createEvent}> Save Event</button>
+            <button type="button" id="SaveEvent" onClick={AddEvent}> Save Event</button>
         </div>
 
     )

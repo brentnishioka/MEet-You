@@ -5,7 +5,7 @@ function getSuggestion() {
 }
 
 const saveEvent = (request, itinID, userID) => {
-  fetch('https://localhost:9000/SaveEvent?itinID=' + itinID + '&userID=userID', request)
+  fetch('https://localhost:9000/SaveEvent?itinID=' + itinID + '&userID=' + userID, request)
     .then(response => response.json())
     .then(data => this.setState({ postId: data.id }));
 }
