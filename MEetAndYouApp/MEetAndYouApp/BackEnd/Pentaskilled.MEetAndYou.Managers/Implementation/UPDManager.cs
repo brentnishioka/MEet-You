@@ -5,16 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using Pentaskilled.MEetAndYou.Entities.Models;
 using Pentaskilled.MEetAndYou.Entities.DBModels;
+using Pentaskilled.MEetAndYou.DataAccess.Implementation;
 using Microsoft.EntityFrameworkCore;
-
-
 
 
 namespace Pentaskilled.MEetAndYou.Managers.Implementation
 {
     public class UPDManager
     {
-        private readonly MEetAndYouDBContext _dbContext;
+        private IItineraryDAO _itineraryDAO;
            
         
         
