@@ -5,14 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="google-search-results-dotnet" Version="2.0.1" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="4.1.0" />
-    <PackageReference Include="Twilio" Version="5.72.0" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
+    <PackageReference Include="Twilio" Version="5.74.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Pentaskilled.MEetAndYou.DataAccess\Pentaskilled.MEetAndYou.DataAccess.csproj" />
     <ProjectReference Include="..\Pentaskilled.MEetAndYou.DomainModels\Pentaskilled.MEetAndYou.DomainModels.csproj" />
     <ProjectReference Include="..\Pentaskilled.MEetAndYou.Entities\Pentaskilled.MEetAndYou.Entities.csproj" />
+    <ProjectReference Include="..\Pentaskilled.MEetAndYou.Logging\Pentaskilled.MEetAndYou.Logging.csproj" />
   </ItemGroup>
 
 </Project>

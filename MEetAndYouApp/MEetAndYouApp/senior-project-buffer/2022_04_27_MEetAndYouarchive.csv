@@ -1,0 +1,22 @@
+272,11/16/2021 7:00:41 AM,View,Warning,49230,User unable to interact with the system.
+273,11/16/2021 7:00:41 AM,Business,Error,0,Business rule not implemented correctly.
+274,11/20/2021 7:00:41 AM,Server,Error,0,Web server crashed.
+275,11/20/2021 7:00:41 AM,Data,Error,0,Data not processed correctly.
+276,11/20/2021 7:00:41 AM,Debug,Info,100,This is a test debug log.
+277,12/15/2021 7:00:41 AM,View,Warning,420,User unable to interact with the system.
+278,12/15/2021 7:00:41 AM,View,Error,49230,Error: user logs should not be modifiable
+279,12/16/2021 3:04:58 AM,Data Store,Debug,592,This is a test debug log.
+280,12/16/2021 3:04:58 AM,View,Debug,0,This is a test debug log.
+281,12/16/2021 3:04:58 AM,Data,Error,69,User Data not processed correctly.
+282,12/16/2021 3:04:58 AM,Debug,Info,100,This is a test debug log.
+283,12/16/2021 3:04:58 AM,View,Error,0,Error: system logs should not be modifiable
+284,12/16/2021 3:04:58 AM,Server,Error,0,Web server crashed.
+285,12/16/2021 3:04:58 AM,Server,Error,0,Web server crashed.
+286,12/16/2021 3:04:58 AM,Business,Error,0,Business rule not implemented correctly.
+287,12/16/2021 3:04:58 AM,Business,Error,0,This is a message to indicate an error in the business layer.
+288,12/16/2021 3:04:58 AM,Server,Error,0,Web server crashed.
+289,12/16/2021 3:04:58 AM,Data,Error,0,Data not processed correctly.
+290,12/16/2021 3:04:58 AM,Debug,Info,100,This is a test debug log.
+291,12/16/2021 3:04:58 AM,View,Warning,420,User unable to interact with the system.
+292,12/16/2021 3:04:58 AM,View,Error,49230,Error: user logs should not be modifiable
+293,12/16/2021 3:05:09 AM,View,Warning,49230,User unable to interact with the system.

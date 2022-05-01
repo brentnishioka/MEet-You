@@ -1,9 +1,11 @@
 ﻿using System.Collections;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 using Pentaskilled.MEetAndYou.DataAccess;
 using Pentaskilled.MEetAndYou.DataAccess.Implementation;
 using Pentaskilled.MEetAndYou.Entities.DBModels;
-using Pentaskilled.MEetAndYou.Managers;
+using Pentaskilled.MEetAndYou.Entities.Models;
+using Pentaskilled.MEetAndYou.Managers.Implementation;
 using Pentaskilled.MEetAndYou.Services.Implementation;
 using SerpApi;
 
@@ -82,38 +84,27 @@ public class Program
 
     static void Main(string[] args)
     {
-        // secret api key from https://serpapi.com/dashboard
-        String apiKey = "";
+        // Testing Hyperlink Manger
+        MEetAndYouDBContext _dbContext;
+        DbContextOptions<MEetAndYouDBContext> dbContextOptions =
+        new DbContextOptionsBuilder<MEetAndYouDBContext>()
+                .UseSqlServer("")
+                .Options;
+        _dbContext = new MEetAndYouDBContext(dbContextOptions);
+        HyperlinkDAO hyperlinkDAO = new HyperlinkDAO();
+        HyperlinkManager hyperlinkManager = new HyperlinkManager(hyperlinkDAO, _dbContext);
 
-        Hashtable ht = new Hashtable();
-        ht.Add("engine", "google_events");
-        ht.Add("q", "events in Long Beach");
-        ht.Add("location", "Long Beach");
+        Task<HyperlinkResponse> response = hyperlinkManager.AddUserToItineraryAsync(8, 9, "viviand2465@gmail.com", "View");
+        //Task<HyperlinkResponse> response = hyperlinkManager.RemoveUserFromItineraryAsync(8, 9, "viviand2465@gmail.com", "View");
 
-        try
+        if (response.Result.Data != null)
         {
-            GoogleSearch search = new GoogleSearch(ht, apiKey);
-            JObject data = search.GetJson();
-            JArray results = (JArray)data["events_results"];
-            foreach (JObject result in results)
+            Console.WriteLine("Number of records in UserItineraries: " + response.Result.Data.UserItineraries.Count);
+
+            foreach (var record in response.Result.Data.UserItineraries)
             {
-                Console.WriteLine("Found: " + result["title"]);
+                Console.WriteLine(string.Format("{0} {1} {2}", record.ItineraryId, record.UserId, record.PermissionName));
             }
         }
-        catch (SerpApiSearchException ex)
-        {
-            Console.WriteLine("Exception:");
-            Console.WriteLine(ex.ToString());
-        }
-
-        //var request = new Yelp.Api.Models.SearchRequest();
-        //request.Latitude = 37.786882;
-        //request.Longitude = -122.399972;
-        //request.Term = "cupcakes";
-        //request.MaxResults = 40;
-        //request.OpenNow = true;
-
-        //var client = new Yelp.Api.Client("API_KEY");
-        //var results = await client.SearchBusinessesAllAsync(request);
     }
 }
