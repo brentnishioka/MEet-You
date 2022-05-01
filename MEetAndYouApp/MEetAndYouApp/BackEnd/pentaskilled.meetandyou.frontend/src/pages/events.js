@@ -8,6 +8,7 @@ function Events() {
     const [itinID, setitintID] = useState(5);
     const [userID, setuserID] = useState("");
     const [postRes, setpostRes] = useState();
+    const [postMsg, setpostMsg] = useState();
 
     const saveEvent = async (request, itinID, userID) => {
         try {
@@ -87,18 +88,15 @@ function Events() {
         return data[eventID];
     }
 
-    // const eventToSend = {
-    //     eventName: selectedEvent.eventName,
-    //     description: selectedEvent.description,
-    //     address: selectedEvent.selectedEvent,
-    //     price: selectedEvent.price,
-    //     eventDate: selectedEvent.eventDate,
-    //     categoryNames: [
-    //         {
-    //             categoryName: "Workshop"
-    //         }
-    //     ]
-    // }
+    //Function to print response message
+    function displayPostResponse() {
+        if (postRes.isSuccessful === false){
+            setpostMsg( <p>Save selected event failed, please try again</p>)
+        }
+        else {
+            setpostMsg( <p>Save selected event was successful</p>)
+        }
+    }
 
     const AddEvent = () => {
         const selectedEvent = createEvent();
@@ -128,9 +126,13 @@ function Events() {
         }
 
         const res = saveEvent(requestOptions, itinID, userID);
+        setpostRes(res);
         console.log(res);
+        displayPostResponse();
+        console.log("The message: ", postMsg)
         return res;
     }
+
 
     //Function to submit data to the back end
     const addEvent = (userID, itinID,) => {
@@ -171,6 +173,9 @@ function Events() {
                 {console.log("The value of itinID", userID)}
             </label>
             <button type="button" id="SaveEvent" onClick={AddEvent}> Save Event</button>
+
+            <p>Saving event response: </p>
+            {postMsg}
         </div>
 
     )

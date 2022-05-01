@@ -23,6 +23,9 @@ const Navbar = () => {
                     <NavLink to='/calendar' activeStyle={{ color: 'black' }}>
                         Calendar
                     </NavLink>
+                    <NavLink to='/Getrandomsuggestion' activeStyle={{ color: 'black' }}>
+                        RandomSuggestion
+                    </NavLink>
 
                     {/* Second Nav */}
                     {/* <NavBtnLink to='/sign-in'>Sign In</NavBtnLink> */}
