@@ -11,7 +11,7 @@ function MyCalendar() {
     const [date, setDate] = useState(new Date());
     const [itinerary, setItinerary] = useState([]);
 
-    const fetchItineraryAndDisplay = async () => { //want to call this function everytime the user clicks a new day (convert to dateString first)
+    const fetchItineraryAndDisplay = async () => { 
         const dateString = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
 
         var id = 9
@@ -25,41 +25,28 @@ function MyCalendar() {
         };
 
         await fetch(`https://localhost:9000/Calendar?userID=` + id + "&date=" + dateString, requestOptions)
-            //.then(response => response.text())
-            //.then(body => console.log(body))
             .then(response => response.json())
-            .then(response => setItinerary(response.data))
-            
-        
-        console.log(itinerary);
-
-        const rows = itinerary.map(item => (
-            <tr>
-                <td align='center'>{item.eventName}</td>
-                <td align='center'>{item.address}</td>
-                <td align='center'>{item.eventDate}</td>
-            </tr>
-        ));
-
-        console.log("hi")
-        return (
-            <table
-                style={{ "borderCollapse": "collapse", "padding": "5px", "width": "100%", "border": "1px solid black" }}
-                className="table table-hover">
-                <thead style={{ "borderCollapse": "collapse", "padding": "5px", "width": "100%", "border": "1px solid black" }}>
-                    <tr style={{ "borderCollapse": "collapse", "padding": "5px", "width": "100%", "border": "1px solid black" }}>
-                        <th> Event name</th>
-                        <th> Address </th>
-                        <th> Event Date </th>
-                        {/* <th>Link to Sign-up</th> */}
-                    </tr>
-                </thead>
-                <tbody>
-                    {rows}
-                </tbody>
-            </table>
-        )
+            .then(response => setItinerary(response.data))         
     }
+
+    const displayItinerary = () => {
+        console.log("Test")
+        if (itinerary.length !== 0) {
+           console.log("itineraries found") 
+        }
+        else {
+            console.log("no itineraries found");
+        }
+        //console.log("length", itinerary.length)
+        console.log("itinerary", itinerary);
+        //console.log("itinerary[0]", itinerary[0]);
+        //console.log("itinerary[0].events: ", itinerary[0].events)
+    }
+
+    useEffect(() => {
+        displayItinerary();
+    }, [itinerary]);
+
 
     return (
         <div>
