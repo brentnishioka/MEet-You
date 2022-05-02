@@ -73,7 +73,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
                 // Checks if existing users in itinerary is less than 5
                 if (uniqueUsers == 5)
                 { 
-                    return new HyperlinkResponse("Max users reached, please remove a user", false, itin.UserItineraries.ToList());
+                    return new HyperlinkResponse("Max users reached, please remove a user", true, itin.UserItineraries.ToList());
                 }
 
                 // Add user if it does not exist in DB
@@ -132,7 +132,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
 
                 else
                 {
-                    return new HyperlinkResponse("User already removed", false, itin.UserItineraries.ToList());
+                    return new HyperlinkResponse("User is not in itinerary", false, itin.UserItineraries.ToList());
                 }
                 
             }
