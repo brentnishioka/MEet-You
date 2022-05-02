@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const defaultImageSrc = 'public/img/default.png'
+const defaultImageSrc = '../img/default.jpg'
 
 const initFieldValues = {
     imageId: 0,
@@ -88,13 +88,14 @@ function MemoryAlbum(props) {
             </div>
             <form autoComplete="off" noValidate onSubmit={handleFormSubmit}>
                 <div className="card">
-                    <img src={values.imagePath} className="card-img-top" />
+                    <img src={values.imagePath} alt="preview" className="card-img-top" />
+            
                     <div className="card-body">
                         <div className="form-group">
                             <input type="file" accept="image/*" className={"form-control-file" + applyErrorClass('imagePath')}
                                 onChange={showPreview} id="image-uploader" />
                         </div>
-                        <div className="form-group">
+                        {/* <div className="form-group">
                             <input className={"form-control" + applyErrorClass('imageName')} placeholder="Image Name" name="imageName"
                                 value={values.imageName}
                                 onChange={handleInputChange} />
@@ -103,7 +104,7 @@ function MemoryAlbum(props) {
                             <input className="form-control" placeholder="Image Extension" name="imageExtension"
                                 value={values.imageExtension}
                                 onChange={handleInputChange} />
-                        </div>
+                        </div> */}
                         <div className="form-group text-center">
                             <button type="submit" className="btn btn-light">Submit</button>
                         </div>
