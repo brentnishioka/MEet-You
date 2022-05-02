@@ -1,7 +1,7 @@
 import React, { useState, Component, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-
+import ICalendarLink from "react-icalendar-link";
 
 
 function MyCalendar() {
@@ -31,7 +31,7 @@ function MyCalendar() {
 
     function showItineraries() {
         var rows = [];
-
+        const event = [];
         for (let i = 0; i < itinerary.length; i++) {            
             for (let j = 0; j < itinerary[i].events.length; j++) {                
                 rows.push(
@@ -46,21 +46,29 @@ function MyCalendar() {
         }
 
         return (
+            <div>
             <table
                 style={{ "borderCollapse": "collapse", "padding": "5px", "width": "50%", "border": "1px solid black" }}
                 className="table table-hover">
                 <thead style={{ "borderCollapse": "collapse", "padding": "5px", "width": "50%", "border": "1px solid black" }}>
                     <tr style={{ "borderCollapse": "collapse", "padding": "5px", "width": "50%", "border": "1px solid black" }}>
-                        <th> Event</th>
-                        <th> Address </th>
-                        <th> Date </th>
-                        <th> Description </th>
+                    
+                            <th> Event</th>
+                            <th> Address </th>
+                            <th> Date </th>
+                            <th> Description </th>
+                        
                     </tr>
                 </thead>
                 <tbody>
                     {rows}
                 </tbody>
-            </table>
+                </table>
+                Which event would you like export as an ics file?
+                
+                <ICalendarLink event={itinerary}> Add to calendar </ICalendarLink>
+            </div>
+            
         )
     }
 
@@ -92,7 +100,7 @@ function MyCalendar() {
         <div>
             <Calendar onChange={setDate} value={date}/>
             <button type="button" onClick={fetchItineraryAndDisplay}>See Events Planned For This Day</button> 
-
+            
             {test}
         </div>
     );
