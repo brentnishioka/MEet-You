@@ -23,7 +23,9 @@ const Navbar = () => {
                     <NavLink to='/calendar' activeStyle>
                         Calendar
                     </NavLink>
-
+                    <NavLink to='/share' activeStyle>
+                        Share
+                    </NavLink>
                     {/* Second Nav */}
                     {/* <NavBtnLink to='/sign-in'>Sign In</NavBtnLink> */}
                 </NavMenu>
