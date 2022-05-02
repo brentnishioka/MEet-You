@@ -79,7 +79,7 @@ export default function Home() {
                 <p> Choose categories </p>
                 
                 <Select
-                    isMulti={true}
+                    isMulti={false}
                     options={options}
                     closeMenuOnSelect={true}
                     onChange={handleChange} />
