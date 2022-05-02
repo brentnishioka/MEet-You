@@ -23,7 +23,6 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
         public virtual ICollection<Image> Images { get; set; }
         public virtual ICollection<UserEventRating> UserEventRatings { get; set; }
 
-        [System.Text.Json.Serialization.JsonIgnore]
         public virtual ICollection<UserItinerary> UserItineraries { get; set; }
 
         public virtual ICollection<Event> Events { get; set; }
