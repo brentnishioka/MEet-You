@@ -9,12 +9,12 @@ using Pentaskilled.MEetAndYou.Entities.DBModels;
 
 namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
 {
-public class IItineraryDAO : ICalendarDAO
+public class ItineraryDAO : ICalendarDAO
 {    
     private MEetAndYouDBContext _dbContext;
 
 
-    public IItineraryDAO(MEetAndYouDBContext dbContext)
+    public ItineraryDAO(MEetAndYouDBContext dbContext)
     {
             this._dbContext = dbContext;
     }
