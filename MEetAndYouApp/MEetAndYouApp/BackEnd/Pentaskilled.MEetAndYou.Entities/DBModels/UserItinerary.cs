@@ -23,6 +23,7 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
 
         [System.Text.Json.Serialization.JsonIgnore]
         public virtual Itinerary Itinerary { get; set; }
+        [System.Text.Json.Serialization.JsonIgnore]
         public virtual Permission PermissionNameNavigation { get; set; }
         [System.Text.Json.Serialization.JsonIgnore]
         public virtual UserAccountRecord User { get; set; }
