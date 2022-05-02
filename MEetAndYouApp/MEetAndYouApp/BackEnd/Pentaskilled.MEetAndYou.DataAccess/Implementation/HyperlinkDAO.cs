@@ -70,12 +70,13 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
                          grp.Key.UserId,
                      }).CountAsync();
                 
-                // Add user if existing users in itinerary is less than 5
+                // Checks if existing users in itinerary is less than 5
                 if (uniqueUsers == 5)
                 { 
                     return new HyperlinkResponse("Max users reached, please remove a user", false, null);
                 }
 
+                // Add user if it does not exist in DB
                 if (!itin.UserItineraries.Contains(user))
                 {
                     // Add object to context
