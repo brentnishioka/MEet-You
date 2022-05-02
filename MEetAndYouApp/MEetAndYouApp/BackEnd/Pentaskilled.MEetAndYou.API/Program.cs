@@ -67,13 +67,10 @@ builder.Services.AddSingleton<ICalendarManager, CalendarManager>();
 builder.Services.AddSingleton<CopyItineraryDAO>();
 builder.Services.AddSingleton<ISuggestionManager, SuggestionManager>();
 builder.Services.AddSingleton<ISuggestionDAO, SuggestionDAO>();
-builder.Services.AddSingleton<IHyperlinkManager, HyperlinkManager>();
-builder.Services.AddSingleton<IHyperlinkDAO, HyperlinkDAO>();
 builder.Services.AddSingleton<IAPIService, EventAPIService>();
 //builder.Services.AddSingleton<Configuration>();
 
 builder.Services.AddSingleton<ICalendarDAO, CalendarDAO>();
-
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -84,7 +81,6 @@ var app = builder.Build();
 
 //trying to add cors
 app.UseCors();
-
 app.UseCors(builder => {
     builder
     .AllowAnyOrigin()
@@ -124,7 +120,7 @@ app.UseCors(x => x
     .SetIsOriginAllowed(origin => true)
     .AllowCredentials());
 
-//app.MapGet("/", () => eventsApiKey);
+app.MapGet("/", () => eventsApiKey);
 
 app.UseHttpsRedirection();
 
