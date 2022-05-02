@@ -23,8 +23,11 @@ const Navbar = () => {
                     <NavLink to='/calendar' activeStyle={{ color: 'black' }}>
                         Calendar
                     </NavLink>
-                    <NavLink to='/Getrandomsuggestion' activeStyle={{ color: 'black' }}>
+                    <NavLink to='/getrandomsuggestion' activeStyle={{ color: 'black' }}>
                         RandomSuggestion
+                    </NavLink>
+                    <NavLink to='/itinerary' activeStyle={{ color: 'black' }}>
+                        Create Itinerary
                     </NavLink>
 
                     {/* Second Nav */}

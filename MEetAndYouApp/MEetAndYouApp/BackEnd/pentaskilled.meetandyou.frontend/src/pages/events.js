@@ -38,6 +38,7 @@ function Events() {
         getData();
     }, []);
 
+
     let counter = -1;
     const rows = data.map(item => (
         <tr>

@@ -9,6 +9,7 @@ import MyCalendar from './pages/mycalendar';
 import Categories from './pages/categories';
 import Events from './pages/events';
 import Getrandomsuggestion from './pages/getrandomsuggestion';
+import CreateItinerary from "./pages/itinerary";
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
                 <Route path="/categories" element={<Categories />} />
                 <Route path="/events" element={<Events />} />
                 <Route path="/getrandomsuggestion" element={<Getrandomsuggestion />}/>
+                <Route path="/itinerary" element={<CreateItinerary />} />
             </Routes>
         </Router>
     );
