@@ -12,7 +12,8 @@ function MyCalendar() {
     const fetchItineraryAndDisplay = async () => { 
         const dateString = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
 
-        var id = 9
+        var id = 9;
+        //var id = sessionStorage.getItem("userID")
         var requestOptions = {
             method: "POST",
             headerss: {
@@ -31,8 +32,7 @@ function MyCalendar() {
     function showItineraries() {
         var rows = [];
 
-        for (let i = 0; i < itinerary.length; i++) {
-            
+        for (let i = 0; i < itinerary.length; i++) {            
             for (let j = 0; j < itinerary[i].events.length; j++) {                
                 rows.push(
                     <tr>
@@ -79,18 +79,18 @@ function MyCalendar() {
             
         }
         else {
-            console.log("no itineraries")
             setTest(showNoItineraries());
         }
     }
 
     useEffect(() => {
         displayItinerary();
+        //showItineraries();
     }, [itinerary]);
 
     return (
         <div>
-            <Calendar onChange={setDate} value={date} /> 
+            <Calendar onChange={setDate} value={date}/>
             <button type="button" onClick={fetchItineraryAndDisplay}>See Events Planned For This Day</button> 
 
             {test}

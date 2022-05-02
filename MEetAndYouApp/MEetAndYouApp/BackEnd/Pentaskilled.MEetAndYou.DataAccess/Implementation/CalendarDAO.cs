@@ -28,17 +28,11 @@ namespace Pentaskilled.MEetAndYou.DataAccess
 
         public async Task<ItineraryResponse> GetUserItineraries(int userID, DateTime date)
         {
-            //var dbcontext = new MEetAndYouDBContext();
             List<Itinerary> distinctList = null;
             string message = "Get User in DAO itineraries is successful.";
             bool isSuccessful = true;
             try
             {
-                //itineraries = await
-                //(from itin in _dbContext.Itineraries.Include("Events")
-                // where itin.ItineraryOwner == userID
-                // select itin).ToListAsync<Itinerary>();
-
                 List<Itinerary>  itineraries = await
                     (from itin in _dbContext.Itineraries.Include("Events")
                      from e in itin.Events
