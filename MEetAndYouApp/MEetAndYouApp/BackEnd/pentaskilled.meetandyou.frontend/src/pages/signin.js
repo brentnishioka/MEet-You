@@ -5,39 +5,41 @@ export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
+    const [isLoggedIn, setIsLoggedIn] = useState();
+    
 
-    /*const handleSubmit = (e) => {
+
+    // Post method to save the itinerary
+    const saveItinerary = async (request) => {
+        try {
+            const res = await fetch("https://localhost:9000/Login/SignIn?userEmail=" + email + "&userPassword=" + password, request)
+            const saveItinRes = await res.json();
+            sessionStorage.setItem("token", saveItinRes.token);
+            sessionStorage.setItem("userID", saveItinRes.userID);
+            sessionStorage.setItem("roles", saveItinRes.roles);
+            setIsLoggedIn(true);
+            console.log(saveItinRes)
+        }
+        catch (error) {
+            console.log('error');
+        }
+        navigate("/");
+    }
+
+
+    //Function to create an Itinerary object
+
+    //Function to Add itinerary on click
+    const handleLoginSubmit = (e) => {
         e.preventDefault();
+        
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password })
-        };
-        fetch('https://localhost:9000/Login/SignIn', requestOptions)
-            .then(response => response.text)
-            .then(body => console.log(body))
-    };*/
+        }
 
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        var requestOptions = {
-
-            method: "POST",
-            headers: {
-                'Content-type': 'application/json',
-                'Accept': 'application/json, text/plain, */*'
-            },
-            mode: 'cors'
-        };
-        await fetch("https://localhost:9000/Login/SignIn?userEmail=" + email + "&userPassword=" + password, requestOptions)
-            .then(response => {
-                response.text()
-                //sessionStorage.setItem('userID', response.data.userID)
-            })
-            .then(body => console.log(body))
-       
-        navigate("/");
+        const res = saveItinerary(requestOptions);
+        console.log(res);
     }
 
     return (
@@ -53,7 +55,7 @@ export default function Login() {
                     <input type="password" placeholder="Enter password" onChange={e => setPassword(e.target.value)} />
                 </label>
                 <div>
-                    <button type="submit" onClick={handleSubmit}>Login</button>
+                    <button type="submit" onClick={handleLoginSubmit}>Login</button>
                 </div>
             </form>
         </div>
