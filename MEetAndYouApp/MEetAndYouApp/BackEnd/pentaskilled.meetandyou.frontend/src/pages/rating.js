@@ -41,9 +41,9 @@ function Rating() {
                 <ItineraryComponent />
             </div>
             <div className="col text-center">
-                <h2>Rate an Event</h2>
-                <LocationPin rating={userRating} onRating={(userRating) => setUserRating(userRating)} />
-                <p>The rating is {userRating}.</p>
+                {/* <h2>Rate an Event</h2> */}
+                {/* <LocationPin rating={userRating} onRating={(userRating) => setUserRating(userRating)} /> */}
+                {/* <p>The rating is {userRating}.</p> */}
             </div>
         </>
     );
