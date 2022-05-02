@@ -20,6 +20,28 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             _dbcontext = dbcontext;
         }
 
+        public async Task<ItineraryResponse> GetUserItinerary(int userID, int itineraryID)
+        {
+            List<Itinerary> itinerary = null;
+            try
+            {
+                itinerary = await
+                    (from itin in _dbcontext.Itineraries.Include("Events")
+                     where itin.ItineraryOwner == userID && itin.ItineraryId == itineraryID
+                     select itin).ToListAsync<Itinerary>();
+            }
+            catch (SqlException ex)
+            {
+                return new ItineraryResponse("An error occurred when retrieving the itinerary from the database." + ex.Message, false, itinerary);
+            }
+            catch (Exception ex)
+            {
+                return new ItineraryResponse("An error occurred when retrieving the itineraries." + ex.Message, false, itinerary);
+            }
+
+            return new ItineraryResponse("The itinerary was retrieved successfully.", true, itinerary);
+        }
+
         public async Task<BaseResponse> AddRatingInDBAsync(UserEventRating userRating)
         {
             try

@@ -21,6 +21,16 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
             _dbcontext = dbcontext;
         }
 
+        [HttpGet]
+        [Route("GetUserItinerary")]
+        public ActionResult<ItineraryResponse> GetUserItinerary(int userID, int itineraryID)
+        {
+            //var userID = model.userID;
+            //var itineraryID = model.itineraryID;
+            ItineraryResponse getItineraryResult = _ratingManager.RetrieveUserItinerary(userID, itineraryID);
+            return getItineraryResult;
+        }
+
         [HttpPost]
         [Route("PostRatingCreation")]
         public ActionResult<BaseResponse> PostRatingCreation([FromBody] UserEventRatingJSON model)
@@ -62,5 +72,11 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
         public int eventID { get; set; }
         public int itineraryID { get; set; }
         public int userRating { get; set; }
+    }
+
+    public class UserItinID
+    {
+        public int userID { get; set; }
+        public int itineraryID { get; set; }
     }
 }

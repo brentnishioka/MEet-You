@@ -25,6 +25,12 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
             _dbcontext = dbcontext;
         }
 
+        public ItineraryResponse RetrieveUserItinerary(int userID, int itineraryID)
+        {
+            ItineraryResponse getUserItineraryResult = _ratingDAO.GetUserItinerary(userID, itineraryID).Result;
+            return getUserItineraryResult;
+        }
+
         public BaseResponse CreateItineraryNote(int itineraryID, string noteContent)
         {
             ItineraryNote itineraryNote = new ItineraryNote(itineraryID, noteContent);

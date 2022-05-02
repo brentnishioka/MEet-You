@@ -6,12 +6,27 @@ import LocationPin from "../Components/LocationPin";
 
 function Rating() {
     const [userRating, setUserRating] = useState(null);
+    const [itinerary, setItinerary] = useState([]);
+
+    const fetchItinerary = async () => {
+
+        var requestOptions = {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': true
+            },
+            mode: 'cors'
+        };
+
+        await fetch('https://localhost:9000/api/Rating/GetUserItinerary?userID=5&itineraryID=7', requestOptions).then(
+            response => console.log("System response: ", response.json())
+        )
+    }
+
 
     const createUserEventRating = async () => {
-        // const formData = new FormData()
-        // formData.append("eventID", 4) // hard coded for now
-        // formData.append("itineraryID", 7) // hard coded for now
-        // formData.append("userRating", userRating)
 
         var requestOptions = {
             method: "POST",
@@ -34,16 +49,15 @@ function Rating() {
     }
 
     useEffect(() => {
-        createUserEventRating();
+        fetchItinerary();
+        // createUserEventRating();
     })
 
     return (
-        <div className="row">
-            <div className="col text-center">
-                <h2>Rate an Event</h2>
-                <LocationPin rating={userRating} onRating={(userRating) => setUserRating(userRating)} />
-                <p>The rating is {userRating}.</p>
-            </div>
+        <div className="col text-center">
+            <h2>Rate an Event</h2>
+            <LocationPin rating={userRating} onRating={(userRating) => setUserRating(userRating)} />
+            <p>The rating is {userRating}.</p>
         </div>
     );
 };
