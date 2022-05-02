@@ -86,6 +86,7 @@ builder.Services.AddSingleton<ISuggestionManager, SuggestionManager>();
 builder.Services.AddSingleton<ISuggestionDAO, SuggestionDAO>();
 builder.Services.AddSingleton<IAPIService, EventAPIService>();
 //builder.Services.AddSingleton<Configuration>();
+builder.Services.AddTransient<MEetAndYouDBContext>();
 
 builder.Services.AddSingleton<ICalendarDAO, CalendarDAO>();
 
