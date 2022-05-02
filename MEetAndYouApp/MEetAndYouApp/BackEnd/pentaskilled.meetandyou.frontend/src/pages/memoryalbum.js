@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const defaultImageSrc = 'public\img\default.png'
+const defaultImageSrc = 'public/img/default.png'
 
 const initFieldValues = {
     imageId: 0,

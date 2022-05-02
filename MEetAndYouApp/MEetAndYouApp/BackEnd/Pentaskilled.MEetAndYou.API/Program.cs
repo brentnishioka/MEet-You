@@ -12,17 +12,16 @@ using System.Web.Http;
 using System.Web.Cors;
 
 var builder = WebApplication.CreateBuilder(args);
-
+/*var MSO = "MEetAndYouPolicy";
 // Add services to the container.
-/*builder.Services.AddCors(options => 
-{
+builder.Services.AddCors(options => {
     options.AddPolicy("MEetAndYouPolicy",
         policy => {
             policy.WithOrigins("https://localhost:3000/");
-                      });
+        });
 });
-*/
 
+*/
 //Add API key
 var eventsApiKey = builder.Configuration["EventsAPI:ServiceApiKey"];
 
@@ -112,6 +111,7 @@ if (app.Environment.IsProduction())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 
 // Add global Cors policies
 app.UseCors(x => x
