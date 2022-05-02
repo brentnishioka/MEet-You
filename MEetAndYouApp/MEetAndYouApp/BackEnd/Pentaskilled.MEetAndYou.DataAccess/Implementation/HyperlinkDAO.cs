@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
@@ -94,11 +95,11 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             }
             catch (DbUpdateException)
             {
-                return new HyperlinkResponse("Database failed to add user", false, null);
+                return new HyperlinkResponse("Database failed to add user", false, new List<UserItinerary>());
             }
             catch (NullReferenceException)
             {
-                return new HyperlinkResponse("Database could not find user", false, null);
+                return new HyperlinkResponse("Database could not find user", false, new List<UserItinerary>());
             }
 
             return new HyperlinkResponse("User successfully added", true, itin.UserItineraries.ToList());
@@ -138,11 +139,11 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             }
             catch (DbUpdateException)
             {
-                return new HyperlinkResponse("Database failed to remove user", false, null);
+                return new HyperlinkResponse("Database failed to remove user", false, new List<UserItinerary>());
             }
             catch (NullReferenceException)
             {
-                return new HyperlinkResponse("Database could not find user", false, null);
+                return new HyperlinkResponse("Database could not find user", false, new List<UserItinerary>());
             }
 
             return new HyperlinkResponse("User successfully removed", true, itin.UserItineraries.ToList());
@@ -164,13 +165,13 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
                 }
                 else
                 {
-                    response = new HyperlinkResponse("Not Authorized to modify user in itinerary", false, null);
+                    response = new HyperlinkResponse("Not Authorized to modify user in itinerary", false, new List<UserItinerary>());
                 }
 
             }
             catch (SqlException)
             {
-                return new HyperlinkResponse("Could not find itinerary", false, null);
+                return new HyperlinkResponse("Could not find itinerary", false, new List<UserItinerary>());
             }
 
             return response;

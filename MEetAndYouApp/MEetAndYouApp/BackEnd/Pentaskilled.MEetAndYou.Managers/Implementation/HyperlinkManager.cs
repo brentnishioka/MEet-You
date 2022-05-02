@@ -35,16 +35,16 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
             {
                 // Validate inputs
                 bool isValidUserID = Validator.IsValidNumericality(userID);
-                if (!isValidUserID) { return new HyperlinkResponse("Invalid user id", false, null); }
+                if (!isValidUserID) { return new HyperlinkResponse("Invalid user id", false, new List<UserItinerary>()); }
 
                 bool isValidItineraryID = Validator.IsValidNumericality(itineraryID);
-                if (!isValidItineraryID) { return new HyperlinkResponse("Invalid itinerary id", false, null); }
+                if (!isValidItineraryID) { return new HyperlinkResponse("Invalid itinerary id", false, new List<UserItinerary>()); }
 
                 bool isValidEmail = Validator.IsValidEmail(email);
-                if (!isValidEmail) { return new HyperlinkResponse("Invalid email", false, null); }
+                if (!isValidEmail) { return new HyperlinkResponse("Invalid email", false, new List<UserItinerary>()); }
 
                 bool isValidPermission = Validator.IsValidString(permission);
-                if (!isValidPermission) { return new HyperlinkResponse("Invalid permission", false, null); }
+                if (!isValidPermission) { return new HyperlinkResponse("Invalid permission", false, new List<UserItinerary>()); }
 
                 // Check to see if the user own the itinerary
                 hyperResponse = await _hyperlinkDAO.isUserOwnerAsync(userID, itineraryID);
@@ -57,7 +57,7 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
                 UserAccountRecordResponse userResponse = await _hyperlinkDAO.GetUserAccountRecordAsync(email);
                 if (userResponse.IsSuccessful == false)
                 {
-                    return new HyperlinkResponse(userResponse.Message, false, null);
+                    return new HyperlinkResponse(userResponse.Message, false, new List<UserItinerary>());
                 }
 
                 // Add the user to the associated itinerary
@@ -65,7 +65,7 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
             }
             catch (Exception ex)
             {
-                return new HyperlinkResponse("Add user in Manager failed: \n" + ex.Message, false, null);
+                return new HyperlinkResponse("Add user in Manager failed: \n" + ex.Message, false, new List<UserItinerary>());
             }
 
             return hyperResponse;
@@ -79,16 +79,16 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
             {
                 // Validate inputs
                 bool isValidUserID = Validator.IsValidNumericality(userID);
-                if (!isValidUserID) { return new HyperlinkResponse("Invalid user id", false, null); }
+                if (!isValidUserID) { return new HyperlinkResponse("Invalid user id", false, new List<UserItinerary>()); }
 
                 bool isValidItineraryID = Validator.IsValidNumericality(itineraryID);
-                if (!isValidItineraryID) { return new HyperlinkResponse("Invalid itinerary id", false, null); }
+                if (!isValidItineraryID) { return new HyperlinkResponse("Invalid itinerary id", false, new List<UserItinerary>()); }
 
                 bool isValidEmail = Validator.IsValidEmail(email);
-                if (!isValidEmail) { return new HyperlinkResponse("Invalid email", false, null); }
+                if (!isValidEmail) { return new HyperlinkResponse("Invalid email", false, new List<UserItinerary>()); }
 
                 bool isValidPermission = Validator.IsValidString(permission);
-                if (!isValidPermission) { return new HyperlinkResponse("Invalid permission", false, null); }
+                if (!isValidPermission) { return new HyperlinkResponse("Invalid permission", false, new List<UserItinerary>()); }
 
                 // Check to see if the user own the itinerary
                 hyperResponse = await _hyperlinkDAO.isUserOwnerAsync(userID, itineraryID);
@@ -101,7 +101,7 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
                 UserAccountRecordResponse userResponse = await _hyperlinkDAO.GetUserAccountRecordAsync(email);
                 if (userResponse.IsSuccessful == false)
                 {
-                    return new HyperlinkResponse(userResponse.Message, false, null);
+                    return new HyperlinkResponse(userResponse.Message, false, new List<UserItinerary>());
                 }
 
                 // Remove the user to the associated itinerary
@@ -110,7 +110,7 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
 
             catch (Exception ex)
             {
-                return new HyperlinkResponse("Remove user in Manager failed: \n" + ex.Message, false, null);
+                return new HyperlinkResponse("Remove user in Manager failed: \n" + ex.Message, false, new List<UserItinerary>());
             }
 
             return hyperResponse;
