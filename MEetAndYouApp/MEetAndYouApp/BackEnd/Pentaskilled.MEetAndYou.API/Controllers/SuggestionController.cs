@@ -160,7 +160,7 @@ namespace Pentaskiled.MEetAndYou.API.Controllers
 
         [HttpGet]
         [Route("/GetUserItineraries")]
-        public async Task<ActionResult<ItineraryResponse>> GGetUserItineraries(int userID)
+        public async Task<ActionResult<ItineraryResponse>> GetUserItineraries(int userID)
         {
             //if (token == null)
             //{

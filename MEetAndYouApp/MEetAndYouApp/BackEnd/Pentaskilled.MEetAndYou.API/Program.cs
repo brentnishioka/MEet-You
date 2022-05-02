@@ -137,7 +137,7 @@ app.UseCors(x => x
     .SetIsOriginAllowed(origin => true)
     .AllowCredentials());
 
-//app.MapGet("/", () => eventsApiKey);
+app.MapGet("/", () => eventsApiKey);
 
 app.UseHttpsRedirection();
 

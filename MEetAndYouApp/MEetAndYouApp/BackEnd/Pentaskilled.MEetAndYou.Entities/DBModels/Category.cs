@@ -9,6 +9,12 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
             Events = new HashSet<Event>();
         }
 
+        public Category(string catName)
+        {
+            CategoryName = catName;
+            Events = new HashSet<Event>();
+        }
+
         public string CategoryName { get; set; }
 
         public virtual ICollection<Event> Events { get; set; }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Pentaskilled.MEetAndYou.Entities.DBModels;
+using Pentaskilled.MEetAndYou.Entities.Models;
 using Pentaskilled.MEetAndYou.Managers;
 using System.Web.Http.Cors;
 
@@ -25,8 +26,10 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
 
         [HttpPost(Name = "GetItineraries")]
         //[Route("GetItineraries/{userID}")]
-        public async Task<ActionResult<List<Itinerary>>> GetItineraries(int userID)
+        public async Task<ActionResult<ItineraryResponse>> GetItineraries(int userID, string date)
         {
+            //var dateTimeObject = new DateTime(parsedDate[0], parsedDate[1], parsedDate[2]);
+
             /*string? token;
             int userID;
             string userToken;
@@ -52,7 +55,7 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
                     return BadRequest("User is not authorized to use this service");
                 }*/
 
-                return await _calendarManager.LoadUserItineraries(userID);
+                return await _calendarManager.LoadUserItineraries(userID, date);
             }
 
             catch(Exception e)

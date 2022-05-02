@@ -156,17 +156,55 @@ public class Program
         //Console.WriteLine(response.Message);
 
         //Arrange
-        SuggestionDAO suggestionDAO = new SuggestionDAO();
-        int itinID = 5;
-        int eventID = 56;
+        //SuggestionDAO suggestionDAO = new SuggestionDAO();
+        //int itinID = 5;
+        //int eventID = 56;
 
-        //Act
-        Console.WriteLine("Saving Events....");
-        BaseResponse response = suggestionDAO.DeleteEventAsync(itinID, eventID).Result;
-        Console.WriteLine(response.Message);
+        ////Act
+        //Console.WriteLine("Saving Events....");
+        //BaseResponse response = suggestionDAO.DeleteEventAsync(itinID, eventID).Result;
+        //Console.WriteLine(response.Message);
+
+        // 
+        //string date = "2022-05-15";
+        //DateTime dateTime = DateConversion(date);
+
+        //Console.WriteLine("Input: " + date);
+        //Console.WriteLine("Date time after parse: " + dateTime.ToString());
 
         // Assert
         //Assert.True(response.IsSuccessful);
+
+        //Arrange
+        //int userID = 9;
+
+        //ICalendarDAO calendardDAO = new CalendarDAO(_dbContext);
+        //string date = "2022 - 05 - 15";
+
+        //DateTime dateTime = calendardDAO.DateConversion(date);
+
+        //List<Itinerary> actual = null;
+
+        ////Act
+        //actual = await calendardDAO.GetUserItineraries(userID, dateTime).Result;
+        //foreach (Itinerary itin in actual)
+        //{
+        //    Console.WriteLine("Itinerary ID: " + itin.ItineraryId);
+        //    Console.WriteLine("Itinerary Name: " + itin.ItineraryName);
+        //}
+
+        string date = "2022-05-15";
+        DateTime dateTime = DateConversion(date);
+        Event temp = new Event {
+            EventName = "Hello world",
+            Address = "123 street",
+            Description = "coffee meetings",
+            EventDate = dateTime
+        };
+        Category catObj = new Category("Food and Drink");
+        temp.CategoryNames.Add(catObj);
+
+        Console.WriteLine(temp.CategoryNames.First().CategoryName);
     }
 
     public static DateTime DateConversion(string date)
