@@ -1,30 +1,11 @@
 
 import React, { useEffect, useState } from "react";
-// import Header from "components/Header";
 import LocationPin from "../Components/LocationPin";
-// import ExternalInfo from "components/ExternalInfo";
+import ItineraryComponent from "../Components/ItineraryComponent";
 
 function Rating() {
     const [userRating, setUserRating] = useState(null);
-    const [itinerary, setItinerary] = useState([]);
-
-    const fetchItinerary = async () => {
-
-        var requestOptions = {
-            method: "GET",
-            headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Credentials': true
-            },
-            mode: 'cors'
-        };
-
-        await fetch('https://localhost:9000/api/Rating/GetUserItinerary?userID=5&itineraryID=7', requestOptions).then(
-            response => console.log("System response: ", response.json())
-        )
-    }
-
+    // const [userItinerary, setUserItinerary] = useState([]);
 
     const createUserEventRating = async () => {
 
@@ -49,18 +30,23 @@ function Rating() {
     }
 
     useEffect(() => {
-        fetchItinerary();
+        // fetchItinerary();
         // createUserEventRating();
     })
 
     return (
-        <div className="col text-center">
-            <h2>Rate an Event</h2>
-            <LocationPin rating={userRating} onRating={(userRating) => setUserRating(userRating)} />
-            <p>The rating is {userRating}.</p>
-        </div>
+        <>
+            {/* <h2>Itinerary Name</h2> */}
+            <div className="itineraryDiv">
+                <ItineraryComponent />
+            </div>
+            <div className="col text-center">
+                <h2>Rate an Event</h2>
+                <LocationPin rating={userRating} onRating={(userRating) => setUserRating(userRating)} />
+                <p>The rating is {userRating}.</p>
+            </div>
+        </>
     );
 };
-//color={{filled: "rgb(136 87 25)", unfilled: "rgb(214 184 147)"}}
-//count={10}
+
 export default Rating;
