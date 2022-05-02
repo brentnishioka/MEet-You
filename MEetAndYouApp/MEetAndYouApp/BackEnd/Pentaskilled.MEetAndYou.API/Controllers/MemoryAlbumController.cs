@@ -6,13 +6,15 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Pentaskilled.MEetAndYou.Entities.DBModels;
+using System.Web.Http.Cors;
 
 
 namespace Pentaskilled.MEetAndYou.API.Controllers
 {
 
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class MemoryAlbumController : ControllerBase
     {
         private readonly MEetAndYouDBContext _dbcontext;
@@ -24,17 +26,17 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
         }
 
 
-        // GET: api/Employee
+        // GET: api/Images
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Image>>> GetEmployees()
+        public async Task<ActionResult<IEnumerable<Image>>> GetImages()
         {
             return await _dbcontext.Images.Select
                     (x => new Image() {
-                    ImageId = x.ImageId,
-                    ImageName = x.ImageName,
-                    ImageExtension = x.ImageExtension,
-                    ImagePath = String.Format("{0}://{1}{2}/Images/{3}", Request.Scheme, Request.Host, Request.PathBase, x.ImageName)
-                })
+                        ImageId = x.ImageId,
+                        ImageName = x.ImageName,
+                        ImageExtension = x.ImageExtension,
+                        ImagePath = String.Format("{0}://{1}{2}/Images/{3}", Request.Scheme, Request.Host, Request.PathBase, x.ImageName)
+                    })
                 .ToListAsync();
         }
 
@@ -52,18 +54,18 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
             return @image;
         }
 
-        // PUT: api/Images/5
+        // PUT: api/Event/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutImages(int id, Image image)
+        public async Task<IActionResult> PutImages(int id, Image @image)
         {
-            if (id != image.ImageId)
+            if (id != @image.ImageId)
             {
                 return BadRequest();
             }
 
             _dbcontext.Entry(@image).State = EntityState.Modified;
-         
+
             try
             {
                 await _dbcontext.SaveChangesAsync();
@@ -83,44 +85,46 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
             return NoContent();
         }
 
-        // POST: api/Employee
+        // POST: api/Images
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Image>> PostEmployeeModel([FromForm] Image imageModel)
+        public async Task<ActionResult<Image>> PostEvent(Image @imageModel)
         {
-            imageModel.ImageName = await SaveImage(imageModel.ImageFile);
-            _dbcontext.Images.Add(imageModel);
+            @imageModel.ImageName = await SaveImage(@imageModel.ImageFile);
+            _dbcontext.Images.Add(@imageModel);
             await _dbcontext.SaveChangesAsync();
 
             return StatusCode(201);
         }
 
 
-        // DELETE: api/Employee/5
+        // DELETE: api/Imagem/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Image>> DeleteEmployeeModel(int id)
+        public async Task<IActionResult> DeleteEvent(int id)
         {
-            var imageModel = await _dbcontext.Images.FindAsync(id);
-            if (imageModel == null)
+            var @image = await _dbcontext.Images.FindAsync(id);
+            if (@image == null)
             {
                 return NotFound();
             }
 
-            DeleteImage(imageModel.ImageName);
-            _dbcontext.Images.Remove(imageModel);
+            _dbcontext.Images.Remove(@image);
             await _dbcontext.SaveChangesAsync();
 
-            return imageModel;
+            return NoContent();
         }
 
+/*        [NonAction]
         public void DeleteImage(string imageName)
         {
             var imagePath = Path.Combine(webHostEnvironment.ContentRootPath, "Images", imageName);
             if (System.IO.File.Exists(imagePath))
                 System.IO.File.Delete(imagePath);
-        }
+        }*/
 
+
+        [NonAction]
         public async Task<string> SaveImage(IFormFile imageFile)
         {
             string imageName = new String(Path.GetFileNameWithoutExtension(imageFile.FileName).Take(10).ToArray()).Replace(' ', '-');
@@ -134,11 +138,12 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
         }
 
 
-       
+
         private bool ItineraryExists(int id)
         {
-            return _dbcontext.Images.Any(e => e.ItineraryId == id);
+            return _dbcontext.Images.Any(e => e.ImageId == id);
         }
+
     }
 
 

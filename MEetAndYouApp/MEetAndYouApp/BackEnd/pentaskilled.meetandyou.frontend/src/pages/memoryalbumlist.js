@@ -11,7 +11,7 @@ function MemoryAlbumList() {
         refreshmemoryAlbumList();
     }, [])
 
-    const imagesAPI = (url = 'https://localhost:3000/memoryalbumlist') => {
+    const imagesAPI = (url = 'https://localhost:9000/MemoryAlbum') => {
         return {
             fetchAll: () => axios.get(url),
             create: newRecord => axios.post(url, newRecord),
@@ -87,7 +87,6 @@ function MemoryAlbumList() {
                     recordForEdit={recordForEdit}
                 />
             </div>
-            
             <div className="col-md-8">
                 <table>
                     <tbody>

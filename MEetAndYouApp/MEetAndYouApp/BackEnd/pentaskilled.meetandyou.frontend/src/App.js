@@ -18,7 +18,7 @@ function App() {
                 <Route path="/calendar" element={<MyCalendar/>} />
                 <Route path="/signup" element={<SignUp/>} />
                 <Route path="/memoryalbumlist" element={<MemoryAlbumList/>} />
-                <Route path="/memoryalbumlist" element={<MemoryAlbum/>} />
+                {/* <Route path="/memoryalbumlist" element={<MemoryAlbum/>} /> */}
 
             </Routes>
         </Router>

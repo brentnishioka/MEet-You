@@ -84,6 +84,7 @@ var app = builder.Build();
 
 //trying to add cors
 app.UseCors();
+
 app.UseCors(builder => {
     builder
     .AllowAnyOrigin()

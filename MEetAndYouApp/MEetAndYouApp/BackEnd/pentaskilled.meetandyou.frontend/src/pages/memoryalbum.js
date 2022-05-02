@@ -94,7 +94,7 @@ function MemoryAlbum(props) {
                             <input type="file" accept="image/*" className={"form-control-file" + applyErrorClass('imagePath')}
                                 onChange={showPreview} id="image-uploader" />
                         </div>
-                        {/* <div className="form-group">
+                        <div className="form-group">
                             <input className={"form-control" + applyErrorClass('imageName')} placeholder="Image Name" name="imageName"
                                 value={values.imageName}
                                 onChange={handleInputChange} />
@@ -103,7 +103,7 @@ function MemoryAlbum(props) {
                             <input className="form-control" placeholder="Image Extension" name="imageExtension"
                                 value={values.imageExtension}
                                 onChange={handleInputChange} />
-                        </div> */}
+                        </div>
                         <div className="form-group text-center">
                             <button type="submit" className="btn btn-light">Submit</button>
                         </div>
