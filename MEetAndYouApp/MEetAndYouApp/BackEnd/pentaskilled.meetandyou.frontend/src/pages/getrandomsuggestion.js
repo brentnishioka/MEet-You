@@ -6,7 +6,7 @@ function Getrandomsuggestion(){
     
     const getData = async () => {
         try {
-            const res = await fetch('https://localhost:9000/GetRandomEvent');
+            const res = await fetch('https://meetandyou.me:8001/GetRandomEvent');
             const suggestionResponse = await res.json();
             setData(suggestionResponse.data);
             console.log(suggestionResponse);

@@ -107,7 +107,7 @@ const Categories = () => {
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <Select
-                isMulti={true}
+                isMulti={false}
                 options={options}
                 closeMenuOnSelect={true}
                 onChange={handleChange} />

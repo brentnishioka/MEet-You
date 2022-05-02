@@ -12,7 +12,7 @@ function CreateItinerary(){
     // Post method to save the itinerary
     const saveItinerary = async (request) => {
         try {
-            const res = await fetch('https://localhost:9000/AddItinerary', request)
+            const res = await fetch('https://meetandyou.me:8001/AddItinerary', request)
             const saveItinRes = await res.json();
             setpostRes(saveItinRes)
             console.log(saveItinRes)
