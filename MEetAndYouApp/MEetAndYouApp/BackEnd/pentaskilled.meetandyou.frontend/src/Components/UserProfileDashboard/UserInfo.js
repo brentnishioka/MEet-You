@@ -1,5 +1,10 @@
 import React from "react";
 
+/**
+ * Component that will be used to display basic information pertaining to the account 
+ * @param {*} param0 
+ * @returns JSX table displaying the user account information
+ */
 function UserInfo({ firstName, lastName, userName, email }) {
     return (
         <div>
