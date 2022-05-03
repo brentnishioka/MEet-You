@@ -99,9 +99,9 @@ public class Program
 
         if (response.Result.Data != null)
         {
-            Console.WriteLine("Number of records in UserItineraries: " + response.Result.Data.UserItineraries.Count);
+            Console.WriteLine("Number of records in UserItineraries: " + response.Result.Data.Count);
 
-            foreach (var record in response.Result.Data.UserItineraries)
+            foreach (var record in response.Result.Data)
             {
                 Console.WriteLine(string.Format("{0} {1} {2}", record.ItineraryId, record.UserId, record.PermissionName));
             }
