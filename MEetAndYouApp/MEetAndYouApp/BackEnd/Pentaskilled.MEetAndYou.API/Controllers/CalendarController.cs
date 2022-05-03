@@ -8,18 +8,17 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
 {
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     [ApiController]
-    //[EnableCors("MEetAndYouPolicy")]
     [Route("[controller]")]
     public class CalendarController : ControllerBase
     {
         private readonly ICalendarManager _calendarManager;
-        private readonly IAuthorizationManager _authorizationManager; 
+        //private readonly IAuthorizationManager _authorizationManager; 
         private readonly MEetAndYouDBContext _dbcontext;
 
-        public CalendarController(ICalendarManager calendarManager, IAuthorizationManager authorizationManager, MEetAndYouDBContext dbcontext)
+        public CalendarController(ICalendarManager calendarManager, MEetAndYouDBContext dbcontext) //IAuthorizationManager authorizationManager
         {
             _calendarManager = calendarManager;
-            _authorizationManager = authorizationManager; 
+            //_authorizationManager = authorizationManager; 
             _dbcontext = dbcontext;
         }
 

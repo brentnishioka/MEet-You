@@ -34,7 +34,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             try
             {
                 List<Itinerary>  itineraries = await
-                    (from itin in _dbContext.Itineraries.Include("Events")
+                    (from itin in _dbContext.Itineraries.Include("Events") //Gets all itineraries with events from the day the user clicked on
                      from e in itin.Events
                      where itin.ItineraryOwner == userID &&
                      ((DateTime)e.EventDate).Year.Equals(date.Year) &&
@@ -48,7 +48,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                     return new ItineraryResponse("No itinerary found for user" + userID, isSuccessful, distinctList);
                 }
             }
-            catch (SqlException ex)
+            catch (SqlException ex) //Returns the error message if an exception occured
             {
                 return new ItineraryResponse
                     ("Sql exception occur when getting itinerary \n" + ex.Message, false, distinctList);
