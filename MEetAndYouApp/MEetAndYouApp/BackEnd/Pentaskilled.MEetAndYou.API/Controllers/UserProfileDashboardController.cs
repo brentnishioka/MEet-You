@@ -18,12 +18,14 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
          private AuthorizationManager authorizationManager;
          private ItineraryDAO itineraryDAO;
          private UPDManager updManager;
+         private UserDAO userDAO;
 
-        public UserProfileDashboardController(AuthorizationManager authorizationManager, ItineraryDAO itineraryDAO, UPDManager updManager)
+        public UserProfileDashboardController(AuthorizationManager authorizationManager, ItineraryDAO itineraryDAO, UPDManager updManager, UserDAO userDAO)
         {
             this.authorizationManager = authorizationManager;
             this.itineraryDAO = itineraryDAO;
             this.updManager = updManager;
+            this.userDAO = userDAO;                         
         }
 
 
@@ -33,6 +35,9 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
         [Route("/GetUPDData")]
         public async Task<ActionResult<UPData>> GetUPDData(int id)
         {
+            UPDManager manager = new UPDManager(itineraryDAO, userDAO);
+            UPData userData = await manager.GetUPData(id);   
+            return Ok(userData);    
 
         }
     }
