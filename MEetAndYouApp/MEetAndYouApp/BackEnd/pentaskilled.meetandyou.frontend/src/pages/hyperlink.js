@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 function Hyperlink() {
     const [data, setData] = useState([]);
+    const [emailData, setEmailData] = useState([]);
     const [userID, setUserID] = useState();
     const [itinID, setItinID] = useState();
     const [email, setEmail] = useState("");
@@ -24,6 +25,7 @@ function Hyperlink() {
             const res = await fetch('https://localhost:9000/AddUser?userID=' + userID + '&itineraryID=' + itinID + '&email=' + encodedEmail + '&permission=' + permission, requestOptions);
             const AddUserRes = await res.json();
             setData(AddUserRes.data)
+            setEmailData(AddUserRes.emails)
             setMessage(AddUserRes.message)
             console.log(AddUserRes)
         }
@@ -48,6 +50,7 @@ function Hyperlink() {
             const res = await fetch('https://localhost:9000/RemoveUser?userID=' + userID + '&itineraryID=' + itinID + '&email=' + encodedEmail + '&permission=' + permission, requestOptions);
             const DeleteUserRes = await res.json();
             setData(DeleteUserRes.data)
+            setEmailData(DeleteUserRes.emails)
             setMessage(DeleteUserRes.message)
             console.log(DeleteUserRes)
         }
@@ -56,10 +59,12 @@ function Hyperlink() {
         }
     }
 
+    let index = -1;
     const rows = data.map(item => (
         <tr>
             <td align='center'>{item.itineraryId}</td>
             <td align='center'>{item.userId}</td>
+            <td align='center'>{emailData[index = index + 1]}</td>
             <td align='center'>{item.permissionName}</td>
         </tr>
     ));
@@ -73,6 +78,7 @@ function Hyperlink() {
                     <tr style={{ "borderCollapse": "collapse", "padding": "5px", "width": "100%", "border": "1px solid black" }}>
                         <th> Itinerary ID </th>
                         <th> User ID </th>
+                        <th> Email </th>
                         <th> Permission </th>
                     </tr>
                 </thead>

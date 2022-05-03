@@ -90,7 +90,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
 
                 else
                 {
-                    return new HyperlinkResponse("User already added", false, itin.UserItineraries.ToList(), new List<string>());
+                    return new HyperlinkResponse("User already added", false, itin.UserItineraries.ToList(), GetAllEmailsAsync(itin.UserItineraries.ToList()).Result);
                 }
             }
             catch (DbUpdateException)
@@ -181,17 +181,24 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
         public async Task<List<string>> GetAllEmailsAsync(List<UserItinerary> userItineraries)
         { 
             List<string> emails;
+            List<int> userIDs;
 
             try
             {
-                // LINQ to find associated emails
+                // Map list of UserItinerary to list of user IDs
+                userIDs = userItineraries.Select(a => a.UserId).ToList();
+
+                // Pull list of associated emails
                 emails = await
-                    (from s in _dbContext.UserAccountRecords
-                     from od in userItineraries
-                     where s.UserId == od.UserId
-                     select s.UserEmail).ToListAsync();
+                     (from user in _dbContext.UserAccountRecords
+                     where userIDs.Contains(user.UserId)
+                     select user.UserEmail).ToListAsync();
             }
             catch (SqlException)
+            {
+                return new List<string>();
+            }
+            catch (ArgumentNullException)
             {
                 return new List<string>();
             }

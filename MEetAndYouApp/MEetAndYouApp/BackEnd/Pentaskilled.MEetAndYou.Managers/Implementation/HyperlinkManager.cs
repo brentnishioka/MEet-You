@@ -111,7 +111,7 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
 
             catch (Exception ex)
             {
-                return new HyperlinkResponse("Remove user in Manager failed: " + ex.Message + ex.StackTrace, false, new List<UserItinerary>(), new List<string>());
+                return new HyperlinkResponse("Remove user in Manager failed: \n" + ex.Message, false, new List<UserItinerary>(), new List<string>());
             }
 
             return hyperResponse;
