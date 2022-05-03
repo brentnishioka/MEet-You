@@ -9,9 +9,9 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Contracts
 {
     public interface ISettingsDAO
     { 
-        Task<BaseResponse> updateUserEmail(string email);
-        Task<BaseResponse> updateUserPhone(string phone);
-        Task<BaseResponse> updateUserPassword(string password);
+        Task<BaseResponse> updateUserEmail(int id, string email);
+        Task<BaseResponse> updateUserPhone(int id, string phone);
+        Task<BaseResponse> updateUserPassword(int id, string password);
 
 
     }

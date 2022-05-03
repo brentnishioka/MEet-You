@@ -75,14 +75,14 @@ builder.Services.AddSingleton<ICalendarManager, CalendarManager>();
 builder.Services.AddSingleton<IRatingManager, RatingManager>();
 builder.Services.AddSingleton<IRatingService, RatingService>();
 builder.Services.AddSingleton<IRatingDAO, RatingDAO>();
-<<<<<<< HEAD
+
 builder.Services.AddSingleton<ILogDAO, LogDAO>();
-=======
+
 builder.Services.AddSingleton<LoggingManager>();
 builder.Services.AddSingleton<ILoggingService, LoggingService>();
 builder.Services.AddSingleton<ILogDAO, LogDAO>();
 builder.Services.AddSingleton<Log>();
->>>>>>> origin/RatingSystem2
+
 builder.Services.AddSingleton<CopyItineraryDAO>();
 builder.Services.AddScoped<UserEventRating>();
 builder.Services.AddScoped<ItineraryNote>();

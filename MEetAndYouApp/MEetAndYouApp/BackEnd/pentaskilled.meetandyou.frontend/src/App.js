@@ -22,12 +22,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
-<<<<<<< HEAD
                 <Route path="/calendar" element={<MyCalendar />} />
-=======
-                <Route path="/calendar" element={<MyCalendar/>} />
-                <Route path="/rating" element={<Rating/>}/>
->>>>>>> origin/RatingSystem2
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/categories" element={<Categories />} />
                 <Route path="/events" element={<Events />} />
