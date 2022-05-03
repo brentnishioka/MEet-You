@@ -39,5 +39,14 @@ namespace Pentaskilled.MEetAndYou.Services.Implementation
         {
             return Regex.IsMatch(s, @"^[a-zA-Z]+$");
         }
+
+        public static bool IsValidExtension(string s)
+        {
+            if (s.Equals("jpg") s == "jpeg" || s = "png"){
+                return true;
+            }
+
+            return false;
+        }
     }
 }

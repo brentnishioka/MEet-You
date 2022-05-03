@@ -7,6 +7,7 @@ const initFieldValues = {
     imageName : '',
     imageExtension: '',
     imagePath: defaultImageSrc,
+    itineraryID: [],
     imageFile: null
 }
 
@@ -106,7 +107,8 @@ function MemoryAlbum(props) {
                                 onChange={handleInputChange} />
                         </div> */}
                         <div className="form-group text-center">
-                            <button type="submit" className="btn btn-light">Submit</button>
+                            <button type="submit" className="btn btn-light" >Submit
+                            </button>
                         </div>
                     </div>
                 </div>

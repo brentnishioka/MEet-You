@@ -141,7 +141,7 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
 
         private bool ItineraryExists(int id)
         {
-            return _dbcontext.Images.Any(e => e.ImageId == id);
+            return _dbcontext.Images.Any(e => e.ItineraryId == id);
         }
 
     }

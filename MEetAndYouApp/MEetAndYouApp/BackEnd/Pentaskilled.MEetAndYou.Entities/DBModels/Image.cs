@@ -7,7 +7,20 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
 {
     public partial class Image
     {
-        [Key]
+        public Image()
+        {
+
+        }
+
+        public Image(string imageName, string imageExtension, string imagePath, int itineraryID)
+        {
+
+            ImageName = imageName;  
+            ImageExtension = imageExtension;    
+            ImagePath = imagePath;
+            ItineraryId = itineraryID;  
+        }
+
         public int ImageId { get; set; }
         public string ImageName { get; set; }
         public string ImageExtension { get; set; }

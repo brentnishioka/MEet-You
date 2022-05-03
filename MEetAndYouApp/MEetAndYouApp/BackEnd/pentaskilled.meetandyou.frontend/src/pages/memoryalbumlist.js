@@ -7,21 +7,75 @@ function MemoryAlbumList() {
     const [memoryAlbumList, setmemoryAlbumList] = useState([])
     const [recordForEdit, setRecordForEdit] = useState(null)
 
+    const [imageID, setImageID] = useState();
+    const [imageName, setImageName] = useState();
+    const [imageExtension, setExtension] = useState("");
+    const [imagePath, setPath] = useState("")
+    const [response, setResponse] = useState();
     useEffect(() => {
         refreshmemoryAlbumList();
     }, [])
 
-    const imagesAPI = (url = 'https://localhost:9000/MemoryAlbum') => {
-        return {
-            fetchAll: () => axios.get(url),
-            create: newRecord => axios.post(url, newRecord),
-            update: (id, updatedRecord) => axios.put(url + id, updatedRecord),
-            delete: id => axios.delete(url + id)
+
+    const createImages = async (request) => {
+        const requestOptions = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': true
+            }
+        }
+
+        console.log("Image ID:", imageID)
+        console.log("Image Name", imageName)
+        console.log("Image Extension", imageExtension)
+        console.log("Image Path:", imagePath)
+
+        try {
+            const res = await fetch('https://localhost:9000/MemoryAlbum', requestOptions);
+            const AddedImage = await res.json();
+            // setResponse(AddedImage.data)
+            // console.log(AddedImage)
+            return AddedImage
+        }
+        catch (error) {
+            console.log('error');
         }
     }
 
+
+
+    const getImages = async () => {
+        const requestOptions = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': true
+            }
+        }
+        try {
+            const res = await fetch('https://localhost:9000/MemoryAlbum');
+            const suggestionResponse = await res.json();
+            return suggestionResponse
+        }
+        catch (error) {
+            console.log('error');
+        }
+    }
+
+
+    // function displayPostResponse() {
+    //     if (postRes.isSuccessful === false) {
+    //         setpostMsg(<p>Save image failed, please try again</p>)
+    //     }
+    //     else {
+    //         setpostMsg(<p>Save image was successful</p>)
+    //     }
+    // }
     function refreshmemoryAlbumList() {
-        imagesAPI().fetchAll()
+        getImages()
             .then(res => {
                 setmemoryAlbumList(res.data)
             })
@@ -30,19 +84,19 @@ function MemoryAlbumList() {
 
     const addOrEdit = (formData, onSuccess) => {
         if (formData.get('imageID') == "0")
-            imagesAPI().create(formData)
+            createImages(formData)
                 .then(res => {
                     onSuccess();
                     refreshmemoryAlbumList();
                 })
                 .catch(err => console.log(err))
-        else
-            imagesAPI().update(formData.get('imageID'), formData)
-                .then(res => {
-                    onSuccess();
-                    refreshmemoryAlbumList();
-                })
-                .catch(err => console.log(err))
+        // else
+        //     imagesAPI().update(formData.get('imageID'), formData)
+        //         .then(res => {
+        //             onSuccess();
+        //             refreshmemoryAlbumList();
+        //         })
+        //         .catch(err => console.log(err))
 
     }
 
@@ -50,23 +104,23 @@ function MemoryAlbumList() {
         setRecordForEdit(data)
     }
 
-    const onDelete = (e, id) => {
-        e.stopPropagation();
-        if (window.confirm('Are you sure to delete this record?'))
-            imagesAPI().delete(id)
-                .then(res => refreshmemoryAlbumList())
-                .catch(err => console.log(err))
-    }
+    // const onDelete = (e, id) => {
+    //     e.stopPropagation();
+    //     if (window.confirm('Are you sure to delete this record?'))
+    //         imagesAPI().delete(id)
+    //             .then(res => refreshmemoryAlbumList())
+    //             .catch(err => console.log(err))
+    // }
 
     const imageCard = data => (
         <div className="card" onClick={() => { showRecordDetails(data) }}>
             <img src={data.imageSrc} className="card-img-top rounded-circle" />
             <div className="card-body">
                 <h5>{data.ImageName}</h5>
-                <span>{data.occupation}</span> <br />
-                <button className="btn btn-light delete-button" onClick={e => onDelete(e, parseInt(data.imageID))}>
-                    <i className="far fa-trash-alt"></i>
-                </button>
+                <span>{data.imageSrc}</span> <br />
+                {/* <button className="btn btn-light delete-button" onClick={e => onDelete(e, parseInt(data.imageID))}> */}
+                <i className="far fa-trash-alt"></i>
+                {/* </button> */}
             </div>
         </div>
     )
