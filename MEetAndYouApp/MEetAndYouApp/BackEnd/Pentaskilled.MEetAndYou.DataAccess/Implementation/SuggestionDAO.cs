@@ -27,6 +27,14 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
         }
 
 
+        /// <summary>
+        /// Parse a JSON object and turn it into a collection of Event objects
+        /// </summary>
+        /// <param name="data"> the JSON object to be parse into objects</param>
+        /// <param name="limit"> the amount of objects that will be parse into the collection, default at 10</param>
+        /// <returns>  
+        ///     A collection of Event objects with the specificy limit. 
+        /// </returns>
         public  ICollection<Event> ParseJSON(JObject data, int limit = 10)
         {
             //Get the category of the events
@@ -71,6 +79,13 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             return eventList;
         }
 
+        /// <summary>
+        /// Add an Event object to the database in the Events table
+        /// </summary>
+        /// <param name="e"> the Event object to be saved into the database </param>
+        /// <returns>  
+        ///     A BaseResponse object that has the status of the operation and message. 
+        /// </returns>
         public async Task<BaseResponse> SaveEvent(Event e)
         {
             string sucessMessage = "Saving Event was successful.";
@@ -92,6 +107,14 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             return new BaseResponse(sucessMessage, true);
         }
 
+        /// <summary>
+        /// Add multiple Event objects to an existing Itinerary. 
+        /// </summary>
+        /// <param name="events"> the list of events to be added to the itinerary </param>
+        /// <param name="itinID"> the ID of the itinerary to store the Events </param>
+        /// <returns>  
+        ///     A BaseResponse object that has the status of the operation and message. 
+        /// </returns>
         public async Task<BaseResponse> SaveEventAsync(List<Event> events, int itinID)
         {
             string message = "Saving Event failed.";
@@ -134,7 +157,12 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             return new BaseResponse(message, isSuccessful);
         }
 
-        // Method to get a random category
+        /// <summary>
+        /// Return a random Category object from the database 
+        /// </summary>
+        /// <returns>  
+        ///     Return a Category object
+        /// </returns>
         public async Task<Category> GetRandomCategory()
         {
             //return repo.Items.OrderBy(o => Guid.NewGuid()).First();
@@ -142,6 +170,12 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             return randCategory;
         }
 
+        /// <summary>
+        /// Get all the available Category in the database
+        /// </summary>
+        /// <returns>  
+        ///     Returns a CategoryResponse object with status, message and a list of Category
+        /// </returns>
         // Method to get all category for input check
         public async Task<CategoryResponse> GetAllCategory()
         {
@@ -165,6 +199,14 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             return new CategoryResponse(sucessMessage, true, categories);
         }
 
+
+        /// <summary>
+        /// Convert a string represent a date to a DateTime object
+        /// </summary>
+        /// <param name="date"> the string that represent the date </param>
+        /// <returns>  
+        ///     Return a DateTime object parse from the string. 
+        /// </returns>
         public DateTime DateConversion(string date)
         {
             CultureInfo ci = new CultureInfo("en-US");
@@ -181,6 +223,14 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             return result;
         }
 
+        /// <summary>
+        /// Check to see if the user owns a certain claim itinerary
+        /// </summary>
+        /// <param name="userID"> the user ID that make the claim </param>
+        /// <param name="itinID"> the ID of the itinerary </param>
+        /// <returns>  
+        ///     A BaseResponse object that has the status of the operation and message. 
+        /// </returns>
         public async Task<BaseResponse> isUserOwner(int userID, int itineraryID)
         {
             BaseResponse baseResponse;
@@ -208,6 +258,14 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             return baseResponse;
         }
 
+        /// <summary>
+        /// Remove an Event from a specific itinerary. 
+        /// </summary>
+        /// <param name="itinID"> the itinerary to remove the Event from </param>
+        /// <param name="eventID"> the ID of the Event to be removed from the Iinerary </param>
+        /// <returns>  
+        ///     A BaseResponse object that has the status of the operation and message. 
+        /// </returns>
         public async Task<BaseResponse> DeleteEventAsync(int itinID, int eventID)
         {
             string message = "Delete Event failed.";
@@ -254,6 +312,13 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             return new BaseResponse(message, isSuccessful);
         }
 
+        /// <summary>
+        /// Add a List of Itinerary to the dataabase. 
+        /// </summary>
+        /// <param name="itineraries"> the list of Itinerary to be added to the itinerary </param>
+        /// <returns>  
+        ///     A BaseResponse object that has the status of the operation and message. 
+        /// </returns>
         public async Task<BaseResponse> AddItineraryAsync(List<Itinerary> itineraries)
         {
             string message = "Adding Itineraries failed.";
@@ -288,6 +353,36 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
                 return new BaseResponse("Adding Itineraries failed. \n" + ex.Message, false);
             }
             return new BaseResponse(message, isSuccessful);
+        }
+
+        /// <summary>
+        /// Get all Itineraries belongs to a user given userID
+        /// </summary>
+        /// <param name="userID"> the userID to get the Itinerary </param>
+        /// <returns>  
+        ///     A ItineraryResponse object that has the status of the operation, message and a list of Itinerary 
+        /// </returns>
+        public async Task<ItineraryResponse> GetUserItineraries(int userID)
+        {
+            List<Itinerary> itineraries = null;
+            string sucessMessage = "Getting all Itineraries was successful.";
+            try
+            {
+                itineraries = await (from itin in _dbContext.Itineraries.Include("Events")
+                                     where itin.ItineraryOwner == userID
+                                     select itin).ToListAsync<Itinerary>();
+            }
+            catch (SqlException ex)
+            {
+                return new ItineraryResponse
+                    ("Getting Itineraries failed due to database error \n" + ex.Message, false, itineraries);
+            }
+            catch (Exception ex)
+            {
+                return new ItineraryResponse
+                    ("Getting Itineraries failed. \n" + ex.Message, false, itineraries);
+            }
+            return new ItineraryResponse(sucessMessage, true, itineraries);
         }
     }
 }

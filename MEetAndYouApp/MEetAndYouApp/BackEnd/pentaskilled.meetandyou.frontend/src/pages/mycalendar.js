@@ -1,29 +1,40 @@
 import React, { useState, Component, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+//import './pages/react'
+
+//import DateTime from 'react-datetime';
+//import "react-datetime/css/react-datetime.css";
+
 
 function MyCalendar() {
     const [value, onChange] = useState(new Date());
     const [itinerary, setItinerary] = useState([]);
-    console.log("test: ", value.getDate())
+    const [date, makeDate] = useState("");
+
+    function createDateString() {
+        let dateString = value.getFullYear() + "-" + value.getMonth() + "-" + value.getDate();
+        makeDate(dateString);
+        console.log("DATE STRING:", dateString);
+    }
+
     //var user = sessionStorage.getItem("userID")
 
     const fetchItinerary = async () => {
-        const formData = new FormData()
-        formData.append("userID", 3)
-
+        //const formData = new FormData()
+        var id = 3
         var requestOptions = {
             method: "POST",
-            headers: {
+            headerss: {
                 'Content-type': 'application/json',
+                'Accept': 'application/json, text/plain, */*'
             },
-            body: formData,
+            //body: JSON.stringify({userID: 3}),
             mode: 'cors'
         };
 
-        await fetch(`https://localhost:9000/Calendar`, requestOptions).then(
-            response => console.log("Viv look: ", response.json())
-        )
+        await fetch(`https://meetandyou.me:8001/Calendar?userID=`+id, requestOptions).then(response => response.text())
+            .then(body => console.log(body))
     }
 
     useEffect(() => {

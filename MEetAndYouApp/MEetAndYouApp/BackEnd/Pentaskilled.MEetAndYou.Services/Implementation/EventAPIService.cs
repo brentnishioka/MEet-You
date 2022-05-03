@@ -34,6 +34,15 @@ namespace Pentaskilled.MEetAndYou.Services.Implementation
             _eventsAPIkey = _configuration["EventsAPI:ServiceApiKey"];
         }
 
+        /// <summary>
+        /// Get a JObject that contains the events return by SerpAPI 
+        /// </summary>
+        /// <param name="category"> the category of Events to be use to query</param>
+        /// <param name="location"> the city of the Events </param>
+        /// <param name="date"> the date of the wanted Events </param>
+        /// <returns>  
+        ///     Return a JObject that contains the JSON objects of events base on the input
+        /// </returns>
         public JObject GetEventByCategory(string category, string location, DateTime date)
         {
             String apiKey = _eventsAPIkey;
@@ -60,6 +69,13 @@ namespace Pentaskilled.MEetAndYou.Services.Implementation
             return result;
         }
 
+        /// <summary>
+        /// Get a JObject that contains the events return by SerpAPI 
+        /// </summary>
+        /// <param name="category"> the category of Events to be use to query</param>
+        /// <returns>  
+        ///     Return a JObject that contains the JSON objects of events base on the input
+        /// </returns>
         //To use to get events of random category
         public JObject GetEventByCategory(string category)
         {
