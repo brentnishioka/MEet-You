@@ -40,11 +40,18 @@ namespace Pentaskilled.MEetAndYou.Services.Implementation
             return Regex.IsMatch(s, @"^[a-zA-Z]+$");
         }
 
+        // An extensions is valid if it contains only these letters
+
         public static bool IsValidExtension(string s)
         {
-            if (s.Equals("jpg") s == "jpeg" || s = "png"){
+            if (s.Equals("jpg") ){
                 return true;
             }
+            if (s.Equals("png"))
+                return true;
+            if (s.Equals("jpg"))
+                return true;
+
 
             return false;
         }

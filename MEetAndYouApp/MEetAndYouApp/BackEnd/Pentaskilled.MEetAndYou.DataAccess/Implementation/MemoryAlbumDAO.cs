@@ -31,24 +31,23 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
         {
             Image imageModel;
 
-
             // Execute a LINQ-to-Entity query
-             imageModel = await
+            imageModel = await
                 (from image in _dbContext.Images
                  where image.ImageName == imageName
                  select image).FirstAsync<Image>();
-/*
+
             // If imageModel is null, set error message and isSuccessful to false 
             if (imageModel == null)
             {
-                return new MemoryAlbumResponse("Unable to find image by name", false, imageModel.);
+                return new MemoryAlbumResponse("Unable to find image by name", false, imageModel.Itinerary.Images.ToList());
             }
 
             // Successfully pulled imageModel from context using user email
             else
             {
-                return new MemoryAlbumResponse("Successfully found image by name", true, imageModel);
-            }*/
+                return new MemoryAlbumResponse("Successfully found image by name", true, imageModel.Itinerary.Images.ToList());
+            }
             return null;
         }
         public async Task<MemoryAlbumResponse> AddImageToItineraryAsync(Image imageRecord, int itineraryID)

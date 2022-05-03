@@ -29,5 +29,10 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
 
         public IFormFile ImageFile { get; set; }
         public virtual Itinerary Itinerary { get; set; }
+
+        public static implicit operator Image(List<Image> v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

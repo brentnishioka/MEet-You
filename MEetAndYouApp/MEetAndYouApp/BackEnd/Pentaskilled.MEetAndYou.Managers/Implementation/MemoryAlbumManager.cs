@@ -28,7 +28,7 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
             _dbContext = dbContext;
         }
 
-        public Task<MemoryAlbumResponse> AddImagesToItineraryAsync(string imageName, string imageExtension, string imagePath, int itineraryID)
+        public async Task<MemoryAlbumResponse> AddImagesToItineraryAsync(string imageName, string imageExtension, string imagePath, int itineraryID)
         {
             MemoryAlbumResponse memoryAlbumResponse;
             try
@@ -41,10 +41,13 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
                 if (!isValidImageName) { return new MemoryAlbumResponse("Invalid image name", false, null); }
 
 
-            }
-            catch
-            {
 
+                memoryAlbumResponse = await _memoryAlbumDAO.AddImageToItineraryAsync(imageRecord, imageName,, imageName, imageExtension);
+
+            }
+            catch (Exception ex)
+            {
+                return new MemoryAlbumResponse("Add image in Manager failed: \n" + ex.Message, false, null);
             }
 
             return memoryAlbumResponse;
