@@ -10,21 +10,24 @@ import Categories from './pages/categories';
 import Events from './pages/events';
 import Getrandomsuggestion from './pages/getrandomsuggestion';
 import CreateItinerary from "./pages/itinerary";
+import Userpd from "./pages/Userprofiledashboard"
+
 
 
 function App() {
     return (
         <Router>
             <Navbar />
-            <Routes>            
+            <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
-                <Route path="/calendar" element={<MyCalendar/>} />
+                <Route path="/calendar" element={<MyCalendar />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/categories" element={<Categories />} />
                 <Route path="/events" element={<Events />} />
-                <Route path="/getrandomsuggestion" element={<Getrandomsuggestion />}/>
+                <Route path="/getrandomsuggestion" element={<Getrandomsuggestion />} />
                 <Route path="/itinerary" element={<CreateItinerary />} />
+                <Route path="/userprofiledashboard" element={<Userpd />} />
             </Routes>
         </Router>
     );

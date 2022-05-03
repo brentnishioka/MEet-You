@@ -29,6 +29,9 @@ const Navbar = () => {
                     <NavLink to='/itinerary' activeStyle={{ color: 'black' }}>
                         Create Itinerary
                     </NavLink>
+                    <NavLink to='/userprofiledashboard' activeStyle={{ color: 'black' }}>
+                        User Profile Dashboard
+                    </NavLink>
 
                     {/* Second Nav */}
                     {/* <NavBtnLink to='/sign-in'>Sign In</NavBtnLink> */}
