@@ -6,7 +6,6 @@ function Hyperlink() {
     const [itinID, setItinID] = useState();
     const [email, setEmail] = useState("");
     const [permission, setPermission] = useState("")
-    const [response, setResponse] = useState();
     const [message, setMessage] = useState("");
 
     const AddUser = async (request) => {
@@ -24,7 +23,6 @@ function Hyperlink() {
             const encodedEmail = encodeURIComponent(email);
             const res = await fetch('https://localhost:9000/AddUser?userID=' + userID + '&itineraryID=' + itinID + '&email=' + encodedEmail + '&permission=' + permission, requestOptions);
             const AddUserRes = await res.json();
-            setResponse(AddUserRes)
             setData(AddUserRes.data)
             setMessage(AddUserRes.message)
             console.log(AddUserRes)
@@ -49,7 +47,6 @@ function Hyperlink() {
             const encodedEmail = encodeURIComponent(email);
             const res = await fetch('https://localhost:9000/RemoveUser?userID=' + userID + '&itineraryID=' + itinID + '&email=' + encodedEmail + '&permission=' + permission, requestOptions);
             const DeleteUserRes = await res.json();
-            setResponse(DeleteUserRes)
             setData(DeleteUserRes.data)
             setMessage(DeleteUserRes.message)
             console.log(DeleteUserRes)
@@ -84,24 +81,26 @@ function Hyperlink() {
                 </tbody>
             </table>
             <label>
-                <p>Enter your user ID</p>
-                <input type="text" placeholder="User ID" maxLength="1" onChange={e => setUserID(e.target.value)} />
+                <p>Enter your user ID:</p>
+                <input type="text" placeholder="User ID" maxLength="1000" onChange={e => setUserID(e.target.value)} />
             </label>
             <label>
-                <p>Enter an itinerary ID </p>
-                <input type="text" placeholder="Itinerary ID" maxLength="1" onChange={e => setItinID(e.target.value)} />
+                <p>Enter an itinerary ID: </p>
+                <input type="text" placeholder="Itinerary ID" maxLength="1000" onChange={e => setItinID(e.target.value)} />
             </label>
             <label>
-                <p>Enter an email </p>
+                <p>Enter an email: </p>
                 <input type="text" placeholder="Email" maxLength="30" onChange={e => setEmail(e.target.value)} />
             </label>
             <label>
-                <p>Enter a permission (View/Edit) </p>
+                <p>Enter a permission: (View/Edit) </p>
                 <input type="text" placeholder="Permission" maxLength="30" onChange={e => setPermission(e.target.value)} />
             </label>
 
+            <p></p>
+
             <div>
-                <button type="button" id="AddUser" onClick={AddUser}> Add</button>
+                <button type="button" id="AddUser" onClick={AddUser}> Add</button> &nbsp;&nbsp;&nbsp;
                 <button type="button" id="RemoveUser" onClick={RemoveUser}> Remove</button>
             </div>
             
