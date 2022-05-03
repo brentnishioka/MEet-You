@@ -23,6 +23,9 @@ const Navbar = () => {
                     <NavLink to='/calendar' activeStyle={{ color: 'black' }}>
                         Calendar
                     </NavLink>
+                    <NavLink to='/rating' activeStyle={{ color: 'black' }}>
+                        Event Rating
+                    </NavLink>
                     <NavLink to='/getrandomsuggestion' activeStyle={{ color: 'black' }}>
                         RandomSuggestion
                     </NavLink>

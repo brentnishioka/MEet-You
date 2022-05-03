@@ -10,43 +10,76 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
     [ApiController]
     public class RatingController : ControllerBase
     {
-        private readonly AuthorizationManager _authorizationManager;
+        //private readonly AuthorizationManager _authorizationManager;
         private readonly IRatingManager _ratingManager;
         private readonly MEetAndYouDBContext _dbcontext;
 
-        public RatingController(AuthorizationManager authzManager, IRatingManager _ratingManager, MEetAndYouDBContext dbcontext)
+        public RatingController(IRatingManager _ratingManager, MEetAndYouDBContext dbcontext)
         {
-            _authorizationManager = authzManager;
+            //_authorizationManager = authzManager;
             this._ratingManager = _ratingManager;
             _dbcontext = dbcontext;
         }
 
+        [HttpGet]
+        [Route("GetUserItinerary")]
+        public ActionResult<ItineraryResponse> GetUserItinerary(int userID, int itineraryID)
+        {
+            //var userID = model.userID;
+            //var itineraryID = model.itineraryID;
+            ItineraryResponse getItineraryResult = _ratingManager.RetrieveUserItinerary(userID, itineraryID);
+            return getItineraryResult;
+        }
+
         [HttpPost]
         [Route("PostRatingCreation")]
-        public ActionResult<BaseResponse> PostRatingCreation(int eventID, int itineraryID, int userRating)
+        public ActionResult<BaseResponse> PostRatingCreation([FromBody] UserEventRatingJSON model)
         {
-            throw new NotImplementedException();
+            var eventID = model.eventID;
+            var itineraryID = model.itineraryID;
+            var userRating = model.userRating;
+            BaseResponse postRatingCreationResult = _ratingManager.CreateRating(eventID, itineraryID, userRating);
+            return postRatingCreationResult;
         }
 
         [HttpPost]
         [Route("PostNoteCreaton")]
         public ActionResult<BaseResponse> PostNoteCreaton(int itineraryID, string noteContent)
         {
-            throw new NotImplementedException();
+            BaseResponse postNoteCreationResult = _ratingManager.CreateItineraryNote(itineraryID, noteContent);
+            return postNoteCreationResult;
         }
 
         [HttpPut]
         [Route("PutRatingModification")]
-        public ActionResult<BaseResponse> PutRatingModification(int eventID, int itineraryID, int userRating)
+        public ActionResult<BaseResponse> PutRatingModification([FromBody] UserEventRatingJSON model)
         {
-            throw new NotImplementedException();
+            var eventID = model.eventID;
+            var itineraryID = model.itineraryID;
+            var userRating = model.userRating;
+            BaseResponse putRatingModificationResult = _ratingManager.ModifyRating(eventID, itineraryID, userRating);
+            return putRatingModificationResult;
         }
 
         [HttpPut]
         [Route("PutNoteModification")]
         public ActionResult<BaseResponse> PutNoteModification(int itineraryID, string noteContent)
         {
-            throw new NotImplementedException();
+            BaseResponse putNoteModificationResult = _ratingManager.ModifyItineraryNote(itineraryID, noteContent);
+            return putNoteModificationResult;
         }
+    }
+
+    public class UserEventRatingJSON
+    {
+        public int eventID { get; set; }
+        public int itineraryID { get; set; }
+        public int userRating { get; set; }
+    }
+
+    public class UserItinID
+    {
+        public int userID { get; set; }
+        public int itineraryID { get; set; }
     }
 }
