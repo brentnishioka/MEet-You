@@ -56,8 +56,13 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
 
         public BaseResponse ModifyRating(int eventID, int itineraryID, int userRating)
         {
-            UserEventRating userEventRating = new UserEventRating(eventID, itineraryID, userRating);
-            BaseResponse modifyRatingResult = _ratingDAO.ModifyRatingInDBAsync(userEventRating).Result;
+            // First, check to see if the event already has an existing rating.
+            UserEventRating existingEventRating = _dbcontext.UserEventRatings.Where(x => x.EventId == eventID && x.ItineraryId == itineraryID).FirstOrDefault();
+            if (existingEventRating != null)
+            {
+                existingEventRating.UserRating = userRating;
+            }
+            BaseResponse modifyRatingResult = _ratingDAO.ModifyRatingInDBAsync(existingEventRating).Result;
             return modifyRatingResult;
         }
     }
