@@ -18,10 +18,12 @@ function MyCalendar() {
     const [event, setEvent] = useState();
     const [eventCal, setEventCal] = useState()
 
-    const fetchItinerary = async () => { 
-        const dateString = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
+    const fetchItinerary = async () => {
+        console.log("MONTH", date.getMonth());
+        const dateString = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+        console.log("datestring: ", dateString)
 
-        var id = 9;
+        var id = 5;
         //var id = sessionStorage.getItem("userID")
         var requestOptions = {
             method: "POST",
@@ -31,7 +33,7 @@ function MyCalendar() {
             },
             mode: 'cors'
         };
-
+        console.log(date);
         await fetch(`https://localhost:9000/Calendar?userID=` + id + "&date=" + dateString, requestOptions)
             .then(response => response.json())
             .then(response => setItinerary(response.data))
