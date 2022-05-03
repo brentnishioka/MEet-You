@@ -74,7 +74,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
                 // Checks if existing users in itinerary is less than 5
                 if (uniqueUsers == 5)
                 { 
-                    return new HyperlinkResponse("Max users reached, please remove a user", true, itin.UserItineraries.ToList());
+                    return new HyperlinkResponse("Max users reached, please remove a user", true, itin.UserItineraries.ToList(), GetAllEmailsAsync(itin.UserItineraries.ToList()).Result);
                 }
 
                 // Add user if it does not exist in DB
@@ -90,19 +90,19 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
 
                 else
                 {
-                    return new HyperlinkResponse("User already added", false, itin.UserItineraries.ToList());
+                    return new HyperlinkResponse("User already added", false, itin.UserItineraries.ToList(), new List<string>());
                 }
             }
             catch (DbUpdateException)
             {
-                return new HyperlinkResponse("Database failed to add user", false, new List<UserItinerary>());
+                return new HyperlinkResponse("Database failed to add user", false, new List<UserItinerary>(), new List<string>());
             }
             catch (NullReferenceException)
             {
-                return new HyperlinkResponse("Database could not find user", false, new List<UserItinerary>());
+                return new HyperlinkResponse("Database could not find user", false, new List<UserItinerary>(), new List<string>());
             }
 
-            return new HyperlinkResponse("User successfully added", true, itin.UserItineraries.ToList());
+            return new HyperlinkResponse("User successfully added", true, itin.UserItineraries.ToList(), GetAllEmailsAsync(itin.UserItineraries.ToList()).Result);
         }
 
         public async Task<HyperlinkResponse> RemoveUserFromItineraryAsync(UserAccountRecord userAccountRecord, int itineraryID, string permission)
@@ -133,20 +133,20 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
 
                 else
                 {
-                    return new HyperlinkResponse("User is not in itinerary", false, itin.UserItineraries.ToList());
+                    return new HyperlinkResponse("User is not in itinerary", false, itin.UserItineraries.ToList(), GetAllEmailsAsync(itin.UserItineraries.ToList()).Result);
                 }
                 
             }
             catch (DbUpdateException)
             {
-                return new HyperlinkResponse("Database failed to remove user", false, new List<UserItinerary>());
+                return new HyperlinkResponse("Database failed to remove user", false, new List<UserItinerary>(), new List<string>());
             }
             catch (NullReferenceException)
             {
-                return new HyperlinkResponse("Database could not find user", false, new List<UserItinerary>());
+                return new HyperlinkResponse("Database could not find user", false, new List<UserItinerary>(), new List<string>());
             }
 
-            return new HyperlinkResponse("User successfully removed", true, itin.UserItineraries.ToList());
+            return new HyperlinkResponse("User successfully removed", true, itin.UserItineraries.ToList(), GetAllEmailsAsync(itin.UserItineraries.ToList()).Result);
         }
 
         public async Task<HyperlinkResponse> isUserOwnerAsync(int userID, int itineraryID)
@@ -160,21 +160,43 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
 
                 // Compares user ID with itinerary owner's ID
                 if (userID == itin.ItineraryOwner)
-                {
-                    response = new HyperlinkResponse("Authorized to modify user in itinerary", true, itin.UserItineraries.ToList());
+                { 
+                    response = new HyperlinkResponse("Authorized to modify user in itinerary", true, itin.UserItineraries.ToList(), GetAllEmailsAsync(itin.UserItineraries.ToList()).Result);
                 }
                 else
                 {
-                    response = new HyperlinkResponse("Not Authorized to modify user in itinerary", false, new List<UserItinerary>());
+                    response = new HyperlinkResponse("Not Authorized to modify user in itinerary", false, new List<UserItinerary>(), new List<string>());
                 }
 
             }
             catch (SqlException)
             {
-                return new HyperlinkResponse("Could not find itinerary", false, new List<UserItinerary>());
+                return new HyperlinkResponse("Could not find itinerary", false, new List<UserItinerary>(), new List<string>());
             }
 
             return response;
+        }
+
+        // Get all emails associated with an itinerary
+        public async Task<List<string>> GetAllEmailsAsync(List<UserItinerary> userItineraries)
+        { 
+            List<string> emails;
+
+            try
+            {
+                // LINQ to find associated emails
+                emails = await
+                    (from s in _dbContext.UserAccountRecords
+                     from od in userItineraries
+                     where s.UserId == od.UserId
+                     select s.UserEmail).ToListAsync();
+            }
+            catch (SqlException)
+            {
+                return new List<string>();
+            }
+
+            return emails;
         }
     }
 }
