@@ -4,6 +4,7 @@ import 'react-calendar/dist/Calendar.css';
 import ICalendarLink from "react-icalendar-link";
 import './calendarStyling.css'
 import Select from 'react-select';
+
 //import Button from 'react-bootstrap/Button';
 //import 'bootstrap/dist/css/bootstrap.min.css';
 //import 'bootstrap/dist/css/bootstrap-grid.min.css';
@@ -73,7 +74,7 @@ function MyCalendar() {
         }    
 
         return (
-            <div>
+            <div classname="table">             
                 <ICalendarLink event={eventtest}> Add to calendar </ICalendarLink>
             </div>
         )       
@@ -93,7 +94,7 @@ function MyCalendar() {
             
         return (
 
-            <div>
+            <div className = "table">
                 <p></p>
             Which event would you like export as an ics file ?
                 <Select
@@ -183,17 +184,15 @@ function MyCalendar() {
     );*/
 
     return (
-        <div>
-            <div className = "calendar-container">
-                <Calendar onChange={setDate} value={date} />
-                TESTSST
-                <p></p>
-                
-                   
-            </div>
-            <button type="button" onClick={fetchItinerary}>See Events Planned For This Day</button>
+        <div classname= "overall-calendar"> 
+           <Calendar onChange={setDate} value={date} />
+            
+            <div className="see-events-button" style={{ float: 'left' }}  >
+                <button type="button" onClick={fetchItinerary}>See Events Planned For This Day</button>           
+            </div>       
             {test}
             {eventCal}
+
         </div>
 
     );
