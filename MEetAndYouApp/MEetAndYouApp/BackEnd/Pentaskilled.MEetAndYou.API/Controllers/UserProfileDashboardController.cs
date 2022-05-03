@@ -9,23 +9,24 @@ using Pentaskilled.MEetAndYou.Managers.Implementation;
 using Pentaskilled.MEetAndYou.Services.Contracts;
 
 
+
 namespace Pentaskilled.MEetAndYou.API.Controllers
 {
-    [Route("api/[controller")]
+    [Route("api/[controller]")]
     [ApiController]
     public class UserProfileDashboardController : ControllerBase
     {
-         private AuthorizationManager authorizationManager;
-         private ItineraryDAO itineraryDAO;
-         private UPDManager updManager;
-         private UserDAO userDAO;
+         // private IAuthorizationManager authorizationManager;
+         private ItineraryDAO _itineraryDAO;
+         private UPDManager _updManager;
+         private UserDAO _userDAO;
 
-        public UserProfileDashboardController(AuthorizationManager authorizationManager, ItineraryDAO itineraryDAO, UPDManager updManager, UserDAO userDAO)
+        public UserProfileDashboardController(ItineraryDAO itineraryDAO, UPDManager updManager, UserDAO userDAO)
         {
-            this.authorizationManager = authorizationManager;
-            this.itineraryDAO = itineraryDAO;
-            this.updManager = updManager;
-            this.userDAO = userDAO;                         
+            //this.authorizationManager = authorizationManager;
+            _itineraryDAO = itineraryDAO;
+            _updManager = updManager;
+            _userDAO = userDAO;                         
         }
 
 
@@ -35,10 +36,7 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
         [Route("/GetUPDData")]
         public async Task<ActionResult<UPData>> GetUPDData(int id)
         {
-            UPDManager manager = new UPDManager(itineraryDAO, userDAO);
-            UPData userData = await manager.GetUPData(id);   
-            return Ok(userData);    
-
+            return _updManager.GetUPData(id).Result;   
         }
     }
 }

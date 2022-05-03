@@ -64,13 +64,18 @@ builder.Services.AddSingleton<AuthnManager>();
 builder.Services.AddSingleton<CopyManager>();
 builder.Services.AddSingleton<IAuthorizationManager, AuthorizationManager>();
 builder.Services.AddSingleton<ICalendarManager, CalendarManager>();
+builder.Services.AddSingleton<IRatingManager, RatingManager>();
+builder.Services.AddSingleton<IRatingService, RatingService>();
+builder.Services.AddSingleton<IRatingDAO, RatingDAO>();
+builder.Services.AddSingleton<ILogDAO, LogDAO>();
 builder.Services.AddSingleton<CopyItineraryDAO>();
+builder.Services.AddScoped<UserEventRating>();
+builder.Services.AddScoped<ItineraryNote>();
 builder.Services.AddSingleton<ISuggestionManager, SuggestionManager>();
 builder.Services.AddSingleton<ISuggestionDAO, SuggestionDAO>();
-builder.Services.AddSingleton<IHyperlinkManager, HyperlinkManager>();
-builder.Services.AddSingleton<IHyperlinkDAO, HyperlinkDAO>();
 builder.Services.AddSingleton<IAPIService, EventAPIService>();
 //builder.Services.AddSingleton<Configuration>();
+builder.Services.AddTransient<MEetAndYouDBContext>();
 
 builder.Services.AddSingleton<ICalendarDAO, CalendarDAO>();
 

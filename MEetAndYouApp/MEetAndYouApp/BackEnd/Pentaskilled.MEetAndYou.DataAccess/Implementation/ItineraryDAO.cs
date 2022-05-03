@@ -6,42 +6,59 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Pentaskilled.MEetAndYou.Entities.DBModels;
-
+using Pentaskilled.MEetAndYou.Entities.Models;
+using Pentaskilled.MEetAndYou.DataAccess.Contracts;
 namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
 {
-public class ItineraryDAO : ICalendarDAO
-{    
-    private MEetAndYouDBContext _dbContext;
-
-
-    public ItineraryDAO(MEetAndYouDBContext dbContext)
+    public class ItineraryDAO : IItineraryDAO
     {
-            this._dbContext = dbContext;
-    }
+        private MEetAndYouDBContext _dbContext;
 
-    public async Task<List<Itinerary>> GetUserItineraries(int userID)
-    { 
-        List<Itinerary> itineraries;
-        try
+
+        public ItineraryDAO()
         {
-            itineraries =
-            (from itin in _dbContext.Itineraries.Include("ItineraryOwnerNavigation")
-                where itin.ItineraryOwner == userID
-                select itin).ToList<Itinerary>();
+            _dbContext = new MEetAndYouDBContext();
         }
-        catch (SqlException ex)
+
+        public ItineraryDAO(MEetAndYouDBContext dbContext)
         {
-            Console.WriteLine("Sql exception occur when getting itinerary");
-            Console.WriteLine(ex.Message);
-            return null;
+            this._dbContext = dbContext;
         }
-        catch (Exception ex)
+
+        public Task<BaseResponse> ChangeItineraryName(string name)
         {
-            Console.WriteLine("Exception occur when trying to get itinerary by ID");
-            Console.WriteLine(ex.Message);
-            return null;
+            throw new NotImplementedException();
         }
-        return itineraries;
-    }
+
+        public Task<BaseResponse> ChangeItineraryRating(int rating)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Itinerary> GetUserItineraries(int userID)
+        {
+            List<Itinerary> itineraries;
+            try
+            {
+                itineraries =
+                (from itin in _dbContext.Itineraries.Include("ItineraryOwnerNavigation")
+                 where itin.ItineraryOwner == userID
+                 select itin).ToList<Itinerary>();
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("Sql exception occur when getting itinerary");
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception occur when trying to get itinerary by ID");
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+            return itineraries;
+        }
+
     }
 }

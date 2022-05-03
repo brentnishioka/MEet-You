@@ -27,5 +27,10 @@ namespace Pentaskilled.MEetAndYou.Entities.Models
         {
             return itineraries;
         }
+
+        public override string ToString()
+        {
+            return $"UserID: {_userAccount.UserId}\nEmail: {_userAccount.UserEmail}\nPhoneNumber:{_userAccount.UserPhoneNum}";
+        }
     }
 }

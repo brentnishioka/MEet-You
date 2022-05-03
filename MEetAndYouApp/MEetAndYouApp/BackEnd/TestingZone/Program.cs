@@ -98,15 +98,15 @@ public class Program
         Task<HyperlinkResponse> response = hyperlinkManager.AddUserToItineraryAsync(8, 9, "viviand2465@gmail.com", "View");
         //Task<HyperlinkResponse> response = hyperlinkManager.RemoveUserFromItineraryAsync(8, 9, "viviand2465@gmail.com", "View");
 
-        if (response.Result.Data != null)
-        {
-            Console.WriteLine("Number of records in UserItineraries: " + response.Result.Data.UserItineraries.Count);
+        //if (response.Result.Data != null)
+        //{
+        //    Console.WriteLine("Number of records in UserItineraries: " + response.Result.Data.UserItineraries.Count);
 
-            foreach (var record in response.Result.Data.UserItineraries)
-            {
-                Console.WriteLine(string.Format("{0} {1} {2}", record.ItineraryId, record.UserId, record.PermissionName));
-            }
-        }
+        //    foreach (var record in response.Result.Data.UserItineraries)
+        //    {
+        //        Console.WriteLine(string.Format("{0} {1} {2}", record.ItineraryId, record.UserId, record.PermissionName));
+        //    }
+        //}
 
         // secret api key from https://serpapi.com/dashboard
         //String apiKey = "";
@@ -217,24 +217,24 @@ public class Program
         //    Console.WriteLine("Itinerary Name: " + itin.ItineraryName);
         //}
 
-        string date = "2022-05-15";
-        DateTime dateTime = DateConversion(date);
-        Event temp = new Event {
-            EventName = "Hello world",
-            Address = "123 street",
-            Description = "coffee meetings",
-            EventDate = dateTime
-        };
-        Category catObj = new Category("Food and Drink");
-        temp.CategoryNames.Add(catObj);
+        //string date = "2022-05-15";
+        //DateTime dateTime = DateConversion(date);
+        //Event temp = new Event {
+        //    EventName = "Hello world",
+        //    Address = "123 street",
+        //    Description = "coffee meetings",
+        //    EventDate = dateTime
+        //};
+        //Category catObj = new Category("Food and Drink");
+        //temp.CategoryNames.Add(catObj);
 
-        Console.WriteLine(temp.CategoryNames.First().CategoryName);
+        //Console.WriteLine(temp.CategoryNames.First().CategoryName);
     }
 
-    public static DateTime DateConversion(string date)
-    {
-        CultureInfo ci = new CultureInfo("en-US");
-        return DateTime.Parse(date, ci);
+    //public static DateTime DateConversion(string date)
+    //{
+    //    CultureInfo ci = new CultureInfo("en-US");
+    //    return DateTime.Parse(date, ci);
 
-    }
+    //}
 }

@@ -27,5 +27,10 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
         public virtual ICollection<UserItinerary> UserItineraries { get; set; }
 
         public virtual ICollection<Event> Events { get; set; }
+
+        public override string ToString()
+        {
+            return $"ID: {ItineraryId}\nName: {ItineraryName}\nRating: {Rating}\nOwner: {ItineraryOwner}";
+        }
     }
 }
