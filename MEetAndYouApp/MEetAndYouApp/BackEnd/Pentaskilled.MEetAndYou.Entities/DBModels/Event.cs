@@ -33,6 +33,7 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
         // Temporary method to solve circular reference between Itinerary and Event
         [System.Text.Json.Serialization.JsonIgnore]
         public virtual ICollection<Category> CategoryNames { get; set; }
+        [System.Text.Json.Serialization.JsonIgnore]
         public virtual ICollection<Itinerary> Itineraries { get; set; }
     }
 }

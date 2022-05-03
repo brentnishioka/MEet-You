@@ -9,16 +9,16 @@ namespace Pentaskilled.MEetAndYou.Entities.Models
 {
     public class UPData
     {
-        private UserAccountEntity _userAccount;
+        private UserAccountRecord _userAccount;
         private List<Itinerary> itineraries;
 
-        public UPData(UserAccountEntity user, List<Itinerary> itineraries)
+        public UPData(UserAccountRecord user, List<Itinerary> itineraries)
         {
             this._userAccount = user;
             this.itineraries = itineraries;
         }
 
-        public UserAccountEntity GetUserAccount()
+        public UserAccountRecord GetUserAccount()
         {
             return _userAccount; 
         }

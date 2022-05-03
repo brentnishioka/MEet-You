@@ -157,5 +157,27 @@ namespace Pentaskiled.MEetAndYou.API.Controllers
             BaseResponse response = await _suggestionManager.AddItineraryAsync(itineraries);
             return response;
         }
+
+        [HttpGet]
+        [Route("/GetUserItineraries")]
+        public async Task<ActionResult<ItineraryResponse>> GetUserItineraries(int userID)
+        {
+            //if (token == null)
+            //{
+            //    return BadRequest("Invalid Token");
+            //}
+            //bool isAuthroized = _authzManager.IsAuthorized();
+            //if (isAuthroized == false)
+            //{
+            //    return BadRequest("Not authorized");
+            //    throw new HttpResponseException();
+            //}
+            //else
+            //{
+            //    // Call the manager to execute the feature. 
+            //}
+            ItineraryResponse result = await _suggestionManager.GetUserItineraries(userID);
+            return result;
+        }
     }
 }

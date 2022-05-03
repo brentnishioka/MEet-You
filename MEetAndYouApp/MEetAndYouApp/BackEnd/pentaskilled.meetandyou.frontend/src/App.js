@@ -1,11 +1,17 @@
 import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import './App.css';
 import Navbar from "./Components/Navbar";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import SignUp from './pages/signup';
+import Login from './pages/signin';
 import Home from './pages/home'
 import MyCalendar from './pages/mycalendar';
 import MemoryAlbum from './pages/memoryalbum';
+import Categories from './pages/categories';
+import Events from './pages/events';
+import Getrandomsuggestion from './pages/getrandomsuggestion';
+import CreateItinerary from "./pages/itinerary";
+import Userpd from "./pages/Userprofiledashboard"
 
 import MemoryAlbumList from './pages/memoryalbumlist';
 
@@ -13,11 +19,19 @@ function App() {
     return (
         <Router>
             <Navbar />
-            <Routes>            
-                <Route path="/home" element={<Home/>} />
-                <Route path="/calendar" element={<MyCalendar/>} />
-                <Route path="/signup" element={<SignUp/>} />
-                <Route path="/memoryalbumlist" element={<MemoryAlbumList/>} />
+            <Routes>
+                <Route path="/home" element={<Home />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/calendar" element={<MyCalendar />} />
+                <Route path="/signup" element={<SignUp />} />
+                <Route path="/memoryalbumlist" element={<MemoryAlbumList />} />
+                <Route path="/categories" element={<Categories />} />
+                <Route path="/events" element={<Events />} />
+                <Route path="/getrandomsuggestion" element={<Getrandomsuggestion />} />
+                <Route path="/itinerary" element={<CreateItinerary />} />
+                <Route path="/userprofiledashboard" element={<Userpd />} />
+                
+             
                 {/* <Route path="/memoryalbumlist" element={<MemoryAlbum/>} /> */}
 
             </Routes>

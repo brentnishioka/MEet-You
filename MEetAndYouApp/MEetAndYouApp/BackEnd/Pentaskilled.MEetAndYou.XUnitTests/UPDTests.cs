@@ -30,7 +30,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         [Fact]
         public void checkItineraryDAO()
         {
-            IItineraryDAO iDAO = new IItineraryDAO(new MEetAndYouDBContext());
+            ItineraryDAO iDAO = new ItineraryDAO(new MEetAndYouDBContext());
 
             List<Itinerary> itineraryList = iDAO.GetUserItineraries(1).Result;
 

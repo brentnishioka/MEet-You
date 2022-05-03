@@ -18,11 +18,20 @@ const Navbar = () => {
             <Nav>
                 <Bars />
                 <NavMenu>
-                    <NavLink to='/' activeStyle>
+                    <NavLink to='/' activeStyle={{ color: 'black' }}>
                         Home
                     </NavLink>
-                    <NavLink to='/calendar' activeStyle>
+                    <NavLink to='/calendar' activeStyle={{ color: 'black' }}>
                         Calendar
+                    </NavLink>
+                    <NavLink to='/getrandomsuggestion' activeStyle={{ color: 'black' }}>
+                        RandomSuggestion
+                    </NavLink>
+                    <NavLink to='/itinerary' activeStyle={{ color: 'black' }}>
+                        Create Itinerary
+                    </NavLink>
+                    <NavLink to='/userprofiledashboard' activeStyle={{ color: 'black' }}>
+                        User Profile Dashboard
                     </NavLink>
 
                     <NavLink to='/memoryalbumlist' activeStyle>
@@ -33,7 +42,7 @@ const Navbar = () => {
                     {/* <NavBtnLink to='/sign-in'>Sign In</NavBtnLink> */}
                 </NavMenu>
                 <NavBtn>
-                    <NavBtnLink to='/signup'>Sign up</NavBtnLink>
+                    <NavBtnLink to='/login'>Login</NavBtnLink>
                 </NavBtn>
             </Nav>
         </>
