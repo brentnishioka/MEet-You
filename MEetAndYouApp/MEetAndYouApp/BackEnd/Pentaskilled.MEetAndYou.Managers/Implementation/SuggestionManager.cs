@@ -28,6 +28,15 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
             _eventAPIService = eventAPIService;
         }
 
+        /// <summary>
+        /// Get a list of events base on the locaion, category and the date
+        /// </summary>
+        /// <param name="category"> the category of Events to be use to query</param>
+        /// <param name="location"> the city of the Events </param>
+        /// <param name="date"> the date of the wanted Events </param>
+        /// <returns>  
+        ///     Return a JObject that contains the JSON objects of events base on the input
+        /// </returns>
         public async Task<SuggestionResponse> GetEvents(string category, string location, DateTime date)
         {
             string successfulMessage = "Get Events was successful.";
@@ -62,6 +71,15 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
             return new SuggestionResponse(successfulMessage, true, eventList);
         }
 
+        /// <summary>
+        /// Add multiple Event objects to an existing Itinerary after checking to see if is owner
+        /// </summary>
+        /// <param name="events"> the list of events to be added to the itinerary </param>
+        /// <param name="itinID"> the ID of the itinerary to store the Events </param>
+        /// <param name="userID"> the ID of the itinerary's owner </param>
+        /// <returns>  
+        ///     A BaseResponse object that has the status of the operation and message. 
+        /// </returns>
         public async Task<BaseResponse> SaveEventAsync(List<Event> events, int itinID, int userID)
         {
             BaseResponse response;
@@ -83,6 +101,13 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
             return response;
         }
 
+        /// <summary>
+        /// Generate a pseudo random category and fetch a List of Events from the API
+        /// </summary>
+        /// <returns>  
+        ///     A SuggestionResponse object that has the status of the operation, message and the 
+        ///     list of Events 
+        /// </returns>
         public async Task<SuggestionResponse> GetRandomEventsAsync()
         {
             string successfulMessage = "Get Random Events was successful.";
@@ -110,12 +135,26 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
             return new SuggestionResponse(successfulMessage, true, eventList);
         }
 
+        /// <summary>
+        /// Generate a random Category
+        /// </summary>
+        /// <returns>  
+        ///     Return a random Category object
+        /// </returns>
         public async Task<Category> GetRandomCategory()
         {
             Category category = await _suggestionDAO.GetRandomCategory();
             return category;
         }
 
+        /// <summary>
+        /// Check to see if the string category is valid with the data in the database. 
+        /// </summary>
+        /// <param name="category"> the string category to be validated </param>
+        /// <returns>  
+        ///     return true if category exist in the database
+        ///     else return false if category does not exist in the database
+        /// </returns>
         public async Task<bool> IsInCategory(string category)
         {
             CategoryResponse response = await _suggestionDAO.GetAllCategory();
@@ -132,6 +171,15 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
 
         }
 
+        /// <summary>
+        /// Remove an Event from a user specific category after checking to see if the user is the owner
+        /// </summary>
+        /// <param name="eventID"> the ID of the Events to be removed from the itinerary </param>
+        /// <param name="itinID"> the ID of the itinerary to remove the Event from </param>
+        /// <param name="userID"> the ID of the itinerary's owner </param>
+        /// <returns>  
+        ///     A BaseResponse object that has the status of the operation and message. 
+        /// </returns>
         public async Task<BaseResponse> DeleteEventAsync(int itinID, int eventID, int userID)
         {
             BaseResponse response;
@@ -154,6 +202,13 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
             return response;
         }
 
+        /// <summary>
+        /// Add a new itinerary to the database
+        /// </summary>
+        /// <param name="itineraries"> the List of Itinerary objects to be added to the database </param>
+        /// <returns>  
+        ///     A BaseResponse object that has the status of the operation and message. 
+        /// </returns>
         public async Task<BaseResponse> AddItineraryAsync(List<Itinerary> itineraries)
         {
             BaseResponse response;
@@ -170,6 +225,13 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
             return response;
         }
 
+        /// <summary>
+        /// Get a list of Itinerary own by a specific user using userID
+        /// </summary>
+        /// <param name="userID"> the ID of the user </param>
+        /// <returns>  
+        ///     A BaseResponse object that has the status of the operation and message. 
+        /// </returns>
         public async Task<ItineraryResponse> GetUserItineraries(int userID)
         {
             ItineraryResponse response = await _suggestionDAO.GetUserItineraries(userID);
