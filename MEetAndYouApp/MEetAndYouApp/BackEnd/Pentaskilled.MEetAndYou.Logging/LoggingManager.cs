@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Pentaskilled.MEetAndYou.Logging;
-using Pentaskilled.MEetAndYou.Entities;
+﻿using Pentaskilled.MEetAndYou.Entities;
 
 namespace Pentaskilled.MEetAndYou.Logging
 {
@@ -12,7 +6,7 @@ namespace Pentaskilled.MEetAndYou.Logging
     {
         private readonly ILoggingService _eventLogServ;
 
-        public LoggingManager(ILoggingService _eventLogServ) 
+        public LoggingManager(ILoggingService _eventLogServ)
         {
             this._eventLogServ = _eventLogServ;
         }
@@ -26,8 +20,7 @@ namespace Pentaskilled.MEetAndYou.Logging
         /// <returns> Returns true if the logging process executed successfully false if otherwise. </returns>
         public async Task<bool> BeginLogProcess(string category, LogLevel logLevel, string message)
         {
-            return await Task.Run(async () =>
-            {
+            return await Task.Run(async () => {
                 try
                 {
                     DateTime currentDateTime = DateTime.UtcNow;
@@ -55,8 +48,7 @@ namespace Pentaskilled.MEetAndYou.Logging
         /// <returns> Returns true if the logging process executed successfully false if otherwise. </returns>
         public async Task<bool> BeginLogProcess(string category, LogLevel logLevel, int userId, string message)
         {
-            return await Task.Run(async () =>
-            {
+            return await Task.Run(async () => {
                 try
                 {
                     DateTime currentDateTime = DateTime.UtcNow;

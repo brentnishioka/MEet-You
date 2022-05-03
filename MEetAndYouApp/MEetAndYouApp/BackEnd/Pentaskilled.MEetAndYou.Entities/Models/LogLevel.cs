@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Pentaskilled.MEetAndYou.Entities
 {
@@ -13,7 +9,7 @@ namespace Pentaskilled.MEetAndYou.Entities
         Warning,
         Error
     }
-    
+
     public class LogLevelDict
     {
         public Dictionary<string, LogLevel> logLvlDict { get; set; }

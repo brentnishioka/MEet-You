@@ -7,6 +7,7 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
     {
         public Event()
         {
+            UserEventRatings = new HashSet<UserEventRating>();
             CategoryNames = new HashSet<Category>();
             Itineraries = new HashSet<Itinerary>();
         }
@@ -28,9 +29,10 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
         public double? Price { get; set; }
         public DateTime? EventDate { get; set; }
 
-        public virtual ICollection<Category> CategoryNames { get; set; }
+        public virtual ICollection<UserEventRating> UserEventRatings { get; set; }
         // Temporary method to solve circular reference between Itinerary and Event
         [System.Text.Json.Serialization.JsonIgnore]
+        public virtual ICollection<Category> CategoryNames { get; set; }
         public virtual ICollection<Itinerary> Itineraries { get; set; }
     }
 }

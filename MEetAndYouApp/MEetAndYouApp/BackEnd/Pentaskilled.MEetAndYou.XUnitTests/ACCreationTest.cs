@@ -1,11 +1,9 @@
-﻿using Xunit;
-using Pentaskilled.MEetAndYou.DataAccess;
+﻿using System;
+using System.Diagnostics;
+using Pentaskilled.MEetAndYou.DataAccess.Implementation;
 using Pentaskilled.MEetAndYou.Entities;
 using Pentaskilled.MEetAndYou.Managers;
-using System;
-using System.Diagnostics;
-using System.IO;
-using Pentaskilled.MEetAndYou.DataAccess.Implementation;
+using Xunit;
 
 namespace Pentaskilled.MEetAndYou.XUnitTests
 {
@@ -22,7 +20,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             string phoneNumber = "4084802175";
 
             stopWatch.Start();
-            
+
             string createResult = _ACManager.BeginAccountCreation(email, password, phoneNumber);
             stopWatch.Stop();
             Console.WriteLine(createResult);
@@ -34,22 +32,22 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         [Fact]
         public void AvailableUserName()
         {
- 
-                Stopwatch stopWatch = new();
-                int expectedTime = 15;
-                AccountCreationManager _ACManager = new AccountCreationManager();
-                string email = "viviand2465@gmail.com";
-                string password = "joshiscool!";
-                string phoneNumber = "4084802185";
 
-                stopWatch.Start();
+            Stopwatch stopWatch = new();
+            int expectedTime = 15;
+            AccountCreationManager _ACManager = new AccountCreationManager();
+            string email = "viviand2465@gmail.com";
+            string password = "joshiscool!";
+            string phoneNumber = "4084802185";
 
-                string createResult = _ACManager.CheckAccountAvailability(email, password, phoneNumber);
-                stopWatch.Stop();
+            stopWatch.Start();
 
-                Assert.Equal("Username is available.", createResult);
-                //Assert.True(stopWatch.Elapsed.TotalSeconds <= expectedTime);
-            
+            string createResult = _ACManager.CheckAccountAvailability(email, password, phoneNumber);
+            stopWatch.Stop();
+
+            Assert.Equal("Username is available.", createResult);
+            //Assert.True(stopWatch.Elapsed.TotalSeconds <= expectedTime);
+
         }
 
         [Fact]
@@ -61,7 +59,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
 
             Stopwatch stopWatch = new();
             int expectedTime = 15;
-           
+
 
             user.Active = Convert.ToInt32("0");
 
