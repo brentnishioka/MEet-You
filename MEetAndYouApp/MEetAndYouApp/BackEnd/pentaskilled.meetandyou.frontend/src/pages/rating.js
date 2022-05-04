@@ -1,26 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import ItineraryComponent from "../Components/ItineraryComponent";
 
 function Rating() {
     const [userInputItinID, setUserInputItinID] = useState(null);
+    const idInputForm = useRef(null);
 
-    function handleSubmit(e) {
+    function validateID(id) {
+        try {
+            Number.isInteger(id);
+        }
+        catch(error) {
+            console.log('The inputted value is not a valid id.')
+        }
+    }
+
+    const handleClick = (e) => {
         e.preventDefault();
+        const input = idInputForm;
+        setUserInputItinID(input.current.value);
     }
 
     return (
         <>
             <div className="formDiv">
-                <form onSubmit={handleSubmit}>
+                <form>
                     <fieldset>
                         <legend>Enter an itinerary ID</legend>
-                        <input onChange={e => setUserInputItinID(e.target.value)} placeholder="ID Number" />
-                        <button>Get Itinerary</button>
+                        <input ref={idInputForm} placeholder="ID Number" />
+                        <button onClick={e => handleClick(e)}>Get Itinerary</button>
                     </fieldset>
                 </form>
             </div>
             <div className="itineraryDiv">
-                <ItineraryComponent itineraryID={userInputItinID}/>
+                <ItineraryComponent inputtedItinID={userInputItinID} />
             </div>
         </>
     );
