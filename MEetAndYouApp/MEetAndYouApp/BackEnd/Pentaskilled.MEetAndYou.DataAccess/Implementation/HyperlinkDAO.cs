@@ -178,9 +178,9 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
         }
 
         // Get all emails associated with an itinerary
-        public async Task<List<string>> GetAllEmailsAsync(List<UserItinerary> userItineraries)
+        public async Task<List<String>> GetAllEmailsAsync(List<UserItinerary> userItineraries)
         { 
-            List<string> emails;
+            List<string> emails = new List<string>();
             List<int> userIDs;
 
             try
@@ -188,11 +188,14 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
                 // Map list of UserItinerary to list of user IDs
                 userIDs = userItineraries.Select(a => a.UserId).ToList();
 
-                // Pull list of associated emails
-                emails = await
-                     (from user in _dbContext.UserAccountRecords
-                     where userIDs.Contains(user.UserId)
-                     select user.UserEmail).ToListAsync();
+                foreach (var id in userIDs)
+                {
+                    // Find UserAccountRecord by id
+                    UserAccountRecord user = await _dbContext.UserAccountRecords.FindAsync(id);
+                    emails.Add(user.UserEmail);
+                }
+
+                return emails;
             }
             catch (SqlException)
             {
@@ -202,8 +205,6 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             {
                 return new List<string>();
             }
-
-            return emails;
         }
     }
 }
