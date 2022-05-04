@@ -10,6 +10,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Contracts
 {
     public interface IRatingDAO
     {
+        Task<ItineraryResponse> GetUserItinerary(int userID, int itineraryID);
         Task<BaseResponse> AddRatingInDBAsync(UserEventRating userRating);
         Task<BaseResponse> ModifyRatingInDBAsync(UserEventRating userRating);
         Task<BaseResponse> AddNoteInDBAsync(ItineraryNote itineraryNote);

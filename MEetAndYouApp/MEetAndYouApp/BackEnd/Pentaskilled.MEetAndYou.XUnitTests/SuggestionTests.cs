@@ -24,7 +24,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         private readonly ITestOutputHelper _output;
         private MEetAndYouDBContext _dbContext;
         public static DbContextOptions<MEetAndYouDBContext> dbContextOptions { get; }
-        public static string connectionString = "Data Source=DESKTOP-0QA4EN0\\SQLEXPRESS;Initial Catalog=MEetAndYou-DB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;";
+        public static string connectionString = "Data Source=meetandyou-db.cyakceoi9n4j.us-west-1.rds.amazonaws.com;Initial Catalog=MEetAndYou-DB;User Id=admin;Password=TeostraLunastraAlatreon;Connect Timeout=30;TrustServerCertificate=True;";
         private readonly string _eventsAPIkey = "";
         static SuggestionTests()
         {
@@ -66,6 +66,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             // Assert
             Assert.True(response.IsSuccessful);
         }
+
 
         [Theory]
         [InlineData(3, 5, 3)]

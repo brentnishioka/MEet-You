@@ -6,7 +6,7 @@ import SignUp from './pages/signup';
 import Login from './pages/signin';
 import Home from './pages/home'
 import MyCalendar from './pages/mycalendar';
-import MemoryAlbum from './pages/memoryalbum';
+import Rating from "./pages/rating";
 import Categories from './pages/categories';
 import Events from './pages/events';
 import Getrandomsuggestion from './pages/getrandomsuggestion';
@@ -23,6 +23,7 @@ function App() {
                 <Route path="/home" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/calendar" element={<MyCalendar />} />
+                <Route path="/rating" element={<Rating />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/memoryalbumlist" element={<MemoryAlbumList />} />
                 <Route path="/categories" element={<Categories />} />

@@ -7,10 +7,10 @@ using Pentaskilled.MEetAndYou.Entities.DBModels;
 
 namespace Pentaskilled.MEetAndYou.Entities.Models
 {
-    public class UPData
+    public class UPData 
     {
-        private UserAccountRecord _userAccount;
-        private List<Itinerary> itineraries;
+        public UserAccountRecord _userAccount;
+        public List<Itinerary> itineraries;
 
         public UPData(UserAccountRecord user, List<Itinerary> itineraries)
         {
@@ -26,6 +26,11 @@ namespace Pentaskilled.MEetAndYou.Entities.Models
         public List<Itinerary> getUserItineraries()
         {
             return itineraries;
+        }
+
+        public override string ToString()
+        {
+            return $"UserID: {_userAccount.UserId}\nEmail: {_userAccount.UserEmail}\nPhoneNumber:{_userAccount.UserPhoneNum}";
         }
     }
 }

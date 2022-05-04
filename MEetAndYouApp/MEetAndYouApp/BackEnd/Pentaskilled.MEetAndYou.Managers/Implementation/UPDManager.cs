@@ -17,6 +17,11 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
         private UserDAO _userDAO;
         
         
+        public UPDManager()
+        {
+            this._itineraryDAO = new ItineraryDAO();
+            this._userDAO = new UserDAO();
+        }
 
         public UPDManager(ItineraryDAO iDAO, UserDAO userDAO)
         {
@@ -28,9 +33,10 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
            account information, both pieces of data are wrapped ina a UPData object.*/
         public async Task<UPData> GetUPData(int userID)
         {
-            List<Itinerary> itineraries = await this._itineraryDAO.GetUserItineraries(userID);
+            List<Itinerary> itineraries = this._itineraryDAO.GetUserItineraries(userID);
             UserAccountRecord user = await _userDAO.getUserAccount(userID);
-            return new UPData(user, itineraries);
+            UPData userData = new UPData(user, itineraries);
+            return userData;
         }
 
 

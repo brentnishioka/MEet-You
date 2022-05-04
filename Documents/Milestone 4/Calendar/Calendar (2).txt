@@ -1,0 +1,61 @@
+title Calendar Feature
+
+participant FrontEnd #BCD6F2
+participant CalendarController #F2C5BC
+participant AuthorizationManager #BCF2F1
+participant CalendarManager #DAF7A6
+participant CalendarDAO #D8BCF2
+participant ItineraryResponse #EEEEEE
+participant Microsoft SQL Server #F2F1BC
+
+activecolor FrontEnd #BCD6F2
+activecolor CalendarController #F2C5BC
+activecolor AuthorizationManager #BCF2F1
+activecolor CalendarManager #DAF7A6
+activecolor CalendarDAO #D8BCF2
+activecolor ItineraryResponse #EEEEEE
+activecolor Microsoft SQL Server #F2F1BC
+
+autoactivation
+entryspacing 0.9
+CalendarController->AuthorizationManager:Dependency Injection: new AuthorizationManager()
+AuthorizationManager->AuthorizationManager:Authorization( )
+AuthorizationManager-->CalendarController:return _authzManager
+
+CalendarController->CalendarManager: Dependency Injection: new CalendarManager()
+CalendarManager->CalendarManager: CalendarManager()
+CalendarManager->CalendarDAO: Dependency Injection: new CalendarDAO()
+CalendarDAO->CalendarDAO: CalendarDAO()
+CalendarDAO -->CalendarManager: return CalendarDAO instance
+CalendarManager-->CalendarController:return _calendarManager
+
+
+
+FrontEnd->CalendarController:HTTP Header(int userID, string token, string claimRole)\n           (int userID, string date)
+
+CalendarController->CalendarController: async Task<ActionResult<ItineraryResponse>> GetItineraries(int userID, string date)
+group if (token == null)
+CalendarController-->FrontEnd:return BadRequest("Invalid Token")
+end 
+CalendarController->CalendarController:bool isAuthorized = _authzManager.IsAuthorized\n(int userID, string token, string claimRole)
+
+group if (isAuthorized == false)
+CalendarController-->FrontEnd:return BadRequest("User is not authorized to use this feature")
+end
+
+group else
+
+CalendarController->CalendarManager:async Task<ActionResult<ItineraryResponse>> CalendarManager.GetItineraries(int userID, string date)
+
+CalendarManager-> CalendarDAO:async Task<ItineraryResponse> CalendarDAO.GetUserItineraries(int userID, DateTime date)
+CalendarDAO->Microsoft SQL Server:from itin in _dbContext.Itineraries.Include("Events") \nfrom e in itin.Events \nwhere itin.ItineraryOwner == userID &&\n((DateTime)e.EventDate).Year.Equals(date.Year) &&\n((DateTime)e.EventDate).Month.Equals(date.Month) &&\n((DateTime)e.EventDate).Day.Equals(date.Day)\nselect itin).ToListAsync<Itinerary>();
+Microsoft SQL Server->Microsoft SQL Server: SQL Commands
+
+Microsoft SQL Server-->CalendarDAO: List<Itinerary> itineraries
+CalendarDAO ->ItineraryResponse:new ItineraryResponse(string message, bool isSuccessful, List<Itinerary> data)
+ItineraryResponse->ItineraryResponse: ItineraryResponse(string message, bool isSuccessful, List<Itinerary> data)
+ItineraryResponse--> CalendarDAO: return ItineraryResponse
+CalendarDAO-->CalendarManager:ItineraryResponse
+CalendarManager-->CalendarController:ItineraryResponse
+CalendarController-->FrontEnd:ItineraryResponse
+end

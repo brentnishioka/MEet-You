@@ -25,24 +25,45 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
             _dbcontext = dbcontext;
         }
 
+        public ItineraryResponse RetrieveUserItinerary(int userID, int itineraryID)
+        {
+            ItineraryResponse getUserItineraryResult = _ratingDAO.GetUserItinerary(userID, itineraryID).Result;
+            return getUserItineraryResult;
+        }
+
         public BaseResponse CreateItineraryNote(int itineraryID, string noteContent)
         {
-            throw new NotImplementedException();
+            ItineraryNote itineraryNote = new ItineraryNote(itineraryID, noteContent);
+            BaseResponse addNoteResult = _ratingDAO.AddNoteInDBAsync(itineraryNote).Result;
+            return addNoteResult;
         }
 
         public BaseResponse CreateRating(int eventID, int itineraryID, int userRating)
         {
-            throw new NotImplementedException();
+            UserEventRating userEventRating = new UserEventRating(eventID, itineraryID, userRating);
+            BaseResponse addRatingResult = _ratingDAO.AddRatingInDBAsync(userEventRating).Result;
+            //BaseResponse logAddRatingResult = _ratingService.LogCreatedNoteAsync(userEventRating);
+            return addRatingResult;
+            //throw new NotImplementedException();
         }
 
         public BaseResponse ModifyItineraryNote(int itineraryID, string noteContent)
         {
-            throw new NotImplementedException();
+            ItineraryNote itineraryNote = new ItineraryNote(itineraryID, noteContent);
+            BaseResponse modifyNoteResult = _ratingDAO.ModifyNoteInDBAsync(itineraryNote).Result;
+            return modifyNoteResult;
         }
 
         public BaseResponse ModifyRating(int eventID, int itineraryID, int userRating)
         {
-            throw new NotImplementedException();
+            // First, check to see if the event already has an existing rating.
+            UserEventRating existingEventRating = _dbcontext.UserEventRatings.Where(x => x.EventId == eventID && x.ItineraryId == itineraryID).FirstOrDefault();
+            if (existingEventRating != null)
+            {
+                existingEventRating.UserRating = userRating;
+            }
+            BaseResponse modifyRatingResult = _ratingDAO.ModifyRatingInDBAsync(existingEventRating).Result;
+            return modifyRatingResult;
         }
     }
 }
