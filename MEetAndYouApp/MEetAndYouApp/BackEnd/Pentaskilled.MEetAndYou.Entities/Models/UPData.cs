@@ -7,10 +7,10 @@ using Pentaskilled.MEetAndYou.Entities.DBModels;
 
 namespace Pentaskilled.MEetAndYou.Entities.Models
 {
-    public class UPData
+    public class UPData 
     {
-        private UserAccountRecord _userAccount;
-        private List<Itinerary> itineraries;
+        public UserAccountRecord _userAccount;
+        public List<Itinerary> itineraries;
 
         public UPData(UserAccountRecord user, List<Itinerary> itineraries)
         {

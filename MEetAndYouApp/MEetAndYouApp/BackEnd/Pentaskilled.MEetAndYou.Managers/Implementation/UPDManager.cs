@@ -35,7 +35,8 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
         {
             List<Itinerary> itineraries = this._itineraryDAO.GetUserItineraries(userID);
             UserAccountRecord user = await _userDAO.getUserAccount(userID);
-            return new UPData(user, itineraries);
+            UPData userData = new UPData(user, itineraries);
+            return userData;
         }
 
 
