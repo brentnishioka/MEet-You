@@ -14,6 +14,8 @@ import CreateItinerary from "./pages/itinerary";
 import Userpd from "./pages/Userprofiledashboard"
 
 
+import Hyperlink from './pages/hyperlink';
+import MemoryAlbumList from './pages/memoryalbumlist';
 
 function App() {
     return (
@@ -25,14 +27,17 @@ function App() {
                 <Route path="/calendar" element={<MyCalendar />} />
                 <Route path="/rating" element={<Rating />} />
                 <Route path="/signup" element={<SignUp />} />
+                <Route path="/memoryalbumlist" element={<MemoryAlbumList />} />
                 <Route path="/categories" element={<Categories />} />
                 <Route path="/events" element={<Events />} />
                 <Route path="/getrandomsuggestion" element={<Getrandomsuggestion />} />
                 <Route path="/itinerary" element={<CreateItinerary />} />
                 <Route path="/userprofiledashboard" element={<Userpd />} />
+                <Route path="/share" element={<Hyperlink />} />
             </Routes>
         </Router>
     );
 }
 
 export default App;
+

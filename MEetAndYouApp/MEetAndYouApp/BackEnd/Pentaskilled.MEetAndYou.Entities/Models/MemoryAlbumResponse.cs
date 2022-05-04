@@ -5,20 +5,25 @@ using System.Text;
 using System.Threading.Tasks;
 using Pentaskilled.MEetAndYou.Entities.DBModels;
 
+
 namespace Pentaskilled.MEetAndYou.Entities.Models
 {
-    public class HyperlinkResponse : BaseResponse
+    public class MemoryAlbumResponse : BaseResponse
     {
-        public List<UserItinerary> Data { get; set; }
+        private List<Image> _data;
 
-        public List<string> Emails { get; set; }
+        public List<Image> Data { get; set; }
 
-        public HyperlinkResponse(string message, bool isSuccessful, List<UserItinerary> data, List<string> emails)
+        public MemoryAlbumResponse(string v, bool v1) : base()
+        {
+            Data = new List<Image>();
+        }
+
+        public MemoryAlbumResponse(string message, bool isSuccessful, List<Image> data)
         {
             Message = message;
             IsSuccessful = isSuccessful;
             Data = data;
-            Emails = emails;
         }
     }
 }

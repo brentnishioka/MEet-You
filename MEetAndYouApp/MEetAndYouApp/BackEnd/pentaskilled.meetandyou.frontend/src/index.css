@@ -11,3 +11,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.invalid-field{
+  border-color: #dc3545;
+  color: #dc3545;
+  background-color: #fff;
+}
