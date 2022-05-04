@@ -9,8 +9,9 @@ import UserInfo from '../Components/UserProfileDashboard/UserInfo';
 function Userpd() {
     return (
         <div>
-            <ProfilePic profileImage="https://cdn.survivetheark.com/uploads/monthly_2020_08/MONKE.jpg.bbd7c9dd8e82715c52d14f2ec3fd524b.jpg" />
+            <ProfilePic profileImage="" />
             <UserInfo firstName={"raymond"} lastName={"guevara"} userName={"raymondgggg"} email={"email@mail.com"} />
+            
         </div>);
 }
 

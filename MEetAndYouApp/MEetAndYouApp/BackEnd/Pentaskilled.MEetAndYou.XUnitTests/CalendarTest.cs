@@ -68,12 +68,12 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             Assert.True(actual != null);
         }
 
-        [Theory]
-        [InlineData(9, "2022-04-28")]
-        public async void GetItineraryManagerTest(int userID, string date)
-        {
-            ICalendarManager calendarManager = new CalendarManager(_dbContext);
-        }
+        //[Theory]
+        //[InlineData(9, "2022-04-28")]
+        //public async void GetItineraryManagerTest(int userID, string date)
+        //{
+        //    ICalendarManager calendarManager = new CalendarManager(_dbContext);
+        //}
 
     }
 }

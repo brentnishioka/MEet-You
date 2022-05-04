@@ -14,15 +14,15 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
     [ApiController]
     public class UPDController : ControllerBase
     {
-        private ItineraryDAO _itineraryDAO;
+        private IItineraryDAO _itineraryDAO;
         private UPDManager _updManager;
-        private UserDAO _userDAO;
+        private IUserDAO _userDAO;
         private MEetAndYouDBContext _context;
-        private SuggestionManager _suggestionManager;
+        private ISuggestionManager _suggestionManager;
 
 
 
-        public UPDController(ItineraryDAO itineraryDAO, UPDManager updManager, UserDAO userDAO, MEetAndYouDBContext dBContext, SuggestionManager suggestionManager)
+        public UPDController(IItineraryDAO itineraryDAO, UPDManager updManager, IUserDAO userDAO, MEetAndYouDBContext dBContext, ISuggestionManager suggestionManager)
         {
             //this.authorizationManager = authorizationManager;
             _itineraryDAO = itineraryDAO;
@@ -34,11 +34,11 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
         }
 
         [HttpGet]
-        [Route("GetUPDData")]
-        public Task<ActionResult<ItineraryResponse>> GetUPDData(int id)
+        [Route("/GetUPDData")]
+        public async Task<ActionResult<ItineraryResponse>> GetUPDData(int id)
         {
-            ItineraryResponse result = _suggestionManager.GetUserItineraries(id);
+            ItineraryResponse result = await _suggestionManager.GetUserItineraries(id);
             return result;
-        }
+        } 
     }
 }
