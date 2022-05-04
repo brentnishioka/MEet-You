@@ -27,6 +27,20 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
             _dbContext = dbContext;
         }
 
+        /// <summary>
+        /// Adds a user to an itinerary with the following procedure:
+        ///    1. Validate input of the arguments
+        ///    2. Check to see if the User is the owner of the itinerary
+        ///    3. Pull UserAccountRecord using an email
+        ///    4. Add the user to the associated itinerary
+        /// </summary>
+        /// <param name="userID"> the ID of the itinerary's owner </param>
+        /// <param name="itineraryID"> the ID of the itinerary to add a user </param>
+        /// <param name="email"> the email of the added user </param>
+        /// <param name="permission"> the permission of the added user </param>
+        /// <returns>  
+        ///     A HyperlinkResponse object containting a message, operation status, and list of UserItinerary & Emails
+        /// </returns>
         public async Task<HyperlinkResponse> AddUserToItineraryAsync(int userID, int itineraryID, string email, string permission)
         {
             HyperlinkResponse hyperResponse;
@@ -71,6 +85,20 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
             return hyperResponse;
         }
 
+        /// <summary>
+        /// Removes a user from an itinerary with the following procedure:
+        ///    1. Validate input of the arguments
+        ///    2. Check to see if the User is the owner of the itinerary
+        ///    3. Pull UserAccountRecord using an email
+        ///    4. Add the user to the associated itinerary
+        /// </summary>
+        /// <param name="userID"> the ID of the itinerary's owner </param>
+        /// <param name="itineraryID"> the ID of the itinerary to remove a user </param>
+        /// <param name="email"> the email of the removed user </param>
+        /// <param name="permission"> the permission of the removed user </param>
+        /// <returns>  
+        ///     A HyperlinkResponse object containting a message, operation status, and list of UserItinerary & Emails
+        /// </returns>
         public async Task<HyperlinkResponse> RemoveUserFromItineraryAsync(int userID, int itineraryID, string email, string permission)
         {
             HyperlinkResponse hyperResponse;

@@ -22,6 +22,13 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             _dbContext = dbContext;
         }
 
+        /// <summary>
+        /// Pull a UserAccountRecord object from databse by email
+        /// </summary>
+        /// <param name="email"> the email of the UserAccountRecord to be pulled </param>
+        /// <returns>  
+        ///     A UserAccountRecord object
+        /// </returns>
         public async Task<UserAccountRecordResponse> GetUserAccountRecordAsync(string email)
         {
             UserAccountRecord userAccountRecord;
@@ -45,6 +52,15 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             }
         }
 
+        /// <summary>
+        /// Adds a user to an associated itinerary
+        /// </summary>
+        /// <param name="userAccountRecord"> the UserAccountRecord to add to an itinerary </param>
+        /// <param name="itineraryID"> the ID of the itinerary to add a user </param>
+        /// <param name="permission"> the permission of the add user </param>
+        /// <returns>  
+        ///     A HyperlinkResponse object containting a message, operation status, and list of UserItinerary & Emails
+        /// </returns>
         public async Task<HyperlinkResponse> AddUserToItineraryAsync(UserAccountRecord userAccountRecord, int itineraryID, string permission)
         {
             Itinerary itin;
@@ -105,6 +121,15 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             return new HyperlinkResponse("User successfully added", true, itin.UserItineraries.ToList(), GetAllEmailsAsync(itin.UserItineraries.ToList()).Result);
         }
 
+        /// <summary>
+        /// Removes a user to an associated itinerary
+        /// </summary>
+        /// <param name="userAccountRecord"> the UserAccountRecord to remove from an itinerary </param>
+        /// <param name="itineraryID"> the ID of the itinerary to remove a user </param>
+        /// <param name="permission"> the permission of the removed user </param>
+        /// <returns>  
+        ///     A HyperlinkResponse object containting a message, operation status, and list of UserItinerary & Emails
+        /// </returns>
         public async Task<HyperlinkResponse> RemoveUserFromItineraryAsync(UserAccountRecord userAccountRecord, int itineraryID, string permission)
         {
             Itinerary itin;
@@ -184,7 +209,13 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             return response;
         }
 
-        // Get all emails associated with an itinerary
+        /// <summary>
+        /// Retrieves all the user's emails given a list of UserItinterary
+        /// </summary>
+        /// <param name="userItineraries"> the list of UserItinerary objects </param>
+        /// <returns>  
+        ///     A list of email strings
+        /// </returns>
         public async Task<List<String>> GetAllEmailsAsync(List<UserItinerary> userItineraries)
         { 
             List<string> emails = new List<string>();
