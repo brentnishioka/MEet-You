@@ -7,37 +7,37 @@ function MemoryAlbumList() {
     const [memoryAlbumList, setmemoryAlbumList] = useState([])
     const [recordForEdit, setRecordForEdit] = useState(null)
 
-    const [imageID, setImageID] = useState();
-    const [imageName, setImageName] = useState();
+    
+    const [imageName, setImageName] = useState("");
     const [imageExtension, setExtension] = useState("");
-    const [imagePath, setPath] = useState("")
-    const [response, setResponse] = useState();
+    const [imagePath, setPath] = useState("");
+    const [itineraryID, setitineraryID] = useState();
+
+    const [response, setResponse] = useState("");
     useEffect(() => {
         refreshmemoryAlbumList();
     }, [])
 
 
-    const createImages = async (request) => {
+    const AddImages = async(request) => {
         const requestOptions = {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Credentials': true
-            }
+            headers: { 'Content-Type': 'application/json' }
         }
 
-        console.log("Image ID:", imageID)
         console.log("Image Name", imageName)
         console.log("Image Extension", imageExtension)
         console.log("Image Path:", imagePath)
+        console.log("Itinerary ID:", itineraryID)
 
         try {
-            const res = await fetch('https://localhost:9000/MemoryAlbum', requestOptions);
+            const res = await fetch('https://localhost:9000/MemoryAlbum/PostImages?ImageName=' + imageName + '&ImageExtension=' + imageExtension + '&ImagePath=' + imagePath + '&itineraryID=' + itineraryID, requestOptions);
             const AddedImage = await res.json();
-            // setResponse(AddedImage.data)
-            // console.log(AddedImage)
-            return AddedImage
+
+            setmemoryAlbumList(AddedImage.data)
+            setResponse(AddedImage.response)
+            console.log(AddedImage)
+      
         }
         catch (error) {
             console.log('error');
@@ -45,26 +45,52 @@ function MemoryAlbumList() {
     }
 
 
+    const RemoveImage = async (request) => {
+        const requestOptions = {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' }
+        }
 
-    const getImages = async () => {
+        console.log("Image Name", imageName)
+        console.log("Itinerary ID:", itineraryID)
+
+        try {
+            const res = await fetch('https://localhost:9000/MemoryAlbum/DeleteImage?/' + itineraryID + '?ImageName=' + imageName, requestOptions);
+            const DeletedImage = await res.json();
+
+            setmemoryAlbumList(DeletedImage.data)
+            setResponse(DeletedImage.response)
+            console.log(DeletedImage)
+
+        }
+        catch (error) {
+            console.log('error');
+        }
+    }
+
+    const GetImage = async (request) => {
         const requestOptions = {
             method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Credentials': true
-            }
+            headers: { 'Content-Type': 'application/json' }
         }
+
+       
+        console.log("Itinerary ID:", itineraryID)
+
         try {
-            const res = await fetch('https://localhost:9000/MemoryAlbum');
-            const suggestionResponse = await res.json();
-            return suggestionResponse
+            const res = await fetch('https://localhost:9000/MemoryAlbum/GetImage?/' + itineraryID , requestOptions);
+            const RequestedImage = await res.json();
+
+            setmemoryAlbumList(RequestedImage.data)
+            setResponse(RequestedImage.response)
+            console.log(RequestedImage)
+
         }
         catch (error) {
             console.log('error');
         }
     }
-
+   
 
     // function displayPostResponse() {
     //     if (postRes.isSuccessful === false) {
@@ -75,7 +101,7 @@ function MemoryAlbumList() {
     //     }
     // }
     function refreshmemoryAlbumList() {
-        getImages()
+        GetImage()
             .then(res => {
                 setmemoryAlbumList(res.data)
             })
@@ -84,7 +110,7 @@ function MemoryAlbumList() {
 
     const addOrEdit = (formData, onSuccess) => {
         if (formData.get('imageID') == "0")
-            createImages(formData)
+            AddImages(formData)
                 .then(res => {
                     onSuccess();
                     refreshmemoryAlbumList();
@@ -111,6 +137,9 @@ function MemoryAlbumList() {
     //             .then(res => refreshmemoryAlbumList())
     //             .catch(err => console.log(err))
     // }
+
+ 
+   
 
     const imageCard = data => (
         <div className="card" onClick={() => { showRecordDetails(data) }}>

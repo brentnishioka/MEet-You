@@ -18,7 +18,7 @@ namespace Pentaskilled.MEetAndYou.Managers.Contracts
     3. Pull UserAccountRecord using an email
     4. Add the user to the associated itinerary
 */
-        Task<MemoryAlbumResponse> AddImagesToItineraryAsync(string imageName, string imageExtension, string imagePath, int itineraryID);
+        public BaseResponse AddImagesToItineraryAsync(string imageName, string imageExtension, string imagePath, int itineraryID);
         /*  
             Removes a user to an itinerary with the following procedure:
             1. Validate input of the arguments

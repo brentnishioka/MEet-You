@@ -21,6 +21,7 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
 
         private readonly MEetAndYouDBContext _dbContext;
         private readonly IMemoryAlbumDAO _memoryAlbumDAO;
+        //private readonly IMem
 
         public MemoryAlbumManager(IMemoryAlbumDAO memoryAlbumDAO, MEetAndYouDBContext dbContext)
         {
@@ -28,36 +29,14 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
             _dbContext = dbContext;
         }
 
-        public async Task<MemoryAlbumResponse> AddImagesToItineraryAsync(string imageName, string imageExtension, string imagePath, int itineraryID)
+        public BaseResponse AddImagesToItineraryAsync( string imageName, string imageExtension, string imagePath, int itineraryID)
         {
-            MemoryAlbumResponse memoryAlbumResponse;
-            try
-            {
-                //Validate inputs
-                bool isValidImageName = Validator.IsValidString(imageName);
-                if (!isValidImageName) { return new MemoryAlbumResponse("Invalid image name", false,null); }
+            Image imageRecord = new Image(imageName, imageExtension, imagePath, itineraryID);
+            BaseResponse addImages =  _memoryAlbumDAO.AddImageToItineraryAsync(imageName,imageExtension, imagePath, itineraryID).Result;
 
-                bool isExtension = Validator.IsValidExtension(imageName);
-                if (!isValidImageName) { return new MemoryAlbumResponse("Invalid image name", false, null); }
+            return addImages;
+           
 
-
-
-                memoryAlbumResponse = await _memoryAlbumDAO.GetImageRecordAsync(imageName);
-                if (memoryAlbumResponse.IsSuccessful == false)
-                {
-                    return new MemoryAlbumResponse(memoryAlbumResponse.Message, false, null);
-                }
-
-
-                memoryAlbumResponse = await _memoryAlbumDAO.AddImageToItineraryAsync(memoryAlbumResponse.Data,itineraryID );
-
-            }
-            catch (Exception ex)
-            {
-                return new MemoryAlbumResponse("Add image in Manager failed: \n" + ex.Message, false, null);
-            }
-
-            return memoryAlbumResponse;
         }
 
         public async Task<MemoryAlbumResponse> RemoveImagesFromItineraryAsync(string imageName, string imageExtension, string imagePath, int itineraryID)
@@ -74,14 +53,14 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
 
 
 
-                memoryAlbumResponse = await _memoryAlbumDAO.GetImageRecordAsync(imageName);
+                memoryAlbumResponse = await _memoryAlbumDAO.GetImageRecordAsync(itineraryID);
                 if (memoryAlbumResponse.IsSuccessful == false)
                 {
                     return new MemoryAlbumResponse(memoryAlbumResponse.Message, false, null);
                 }
 
 
-                memoryAlbumResponse = await _memoryAlbumDAO.RemoveImageFromItineraryAsync(memoryAlbumResponse.Data, itineraryID);
+                memoryAlbumResponse = await _memoryAlbumDAO.RemoveImageFromItineraryAsync(imageName, itineraryID);
 
             }
             catch (Exception ex)
@@ -91,5 +70,7 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
 
             return memoryAlbumResponse;
         }
+
+
     }
 }

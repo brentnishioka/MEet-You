@@ -27,37 +27,52 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             _dbContext = new MEetAndYouDBContext();
         }
 
-        public async Task<MemoryAlbumResponse> GetImageRecordAsync(string imageName)
+        public async Task<MemoryAlbumResponse> GetImageRecordAsync(int itineraryID)
         {
-            Image imageModel;
+            List<Image> distinctList = null;
+            string message = "Get Images in DAO images is successful";
+            bool isSuccessful = true;
+
 
             // Execute a LINQ-to-Entity query
-            imageModel = await
-                (from image in _dbContext.Images
-                 where image.ImageName == imageName
-                 select image).FirstAsync<Image>();
-
-            // If imageModel is null, set error message and isSuccessful to false 
-            if (imageModel == null)
+            try
             {
-                return new MemoryAlbumResponse("Unable to find image by name", false, imageModel.Itinerary.Images.ToList());
-            }
+                List<Image> images = await (
+                 from image in _dbContext.Images
+                 where image.ItineraryId == itineraryID
+                 select image).ToListAsync<Image>();
 
-            // Successfully pulled imageModel from context using user email
-            else
-            {
-                return new MemoryAlbumResponse("Successfully found image by name", true, imageModel.Itinerary.Images.ToList());
+
+                distinctList = images.Distinct().ToList();
+
+                if (distinctList == null)
+                {
+                    return new MemoryAlbumResponse("No images found for the itineraryID" + itineraryID, isSuccessful, null);
+                }
+
+                return new MemoryAlbumResponse(message, isSuccessful, distinctList);
+
             }
-            return null;
+            catch (SqlException ex)
+            {
+                return new MemoryAlbumResponse
+                    ("Sql exception occur when getting itinerary \n" + ex.Message, false, distinctList);
+            }
+            catch (Exception ex)
+            {
+                return new MemoryAlbumResponse
+                ("Exception occur when trying to get itinerary by ID \n" + ex.Message, false, distinctList);
+            }
         }
-        public async Task<MemoryAlbumResponse> AddImageToItineraryAsync(Image imageRecord, int itineraryID)
+
+        public async Task<MemoryAlbumResponse> AddImageToItineraryAsync(string ImageName, string ImageExtension, string ImagePath, int itineraryID)
         {
             Itinerary itin;
+
             Image imageModel;
             try
             {
-                itin = await _dbContext.Itineraries.Include(i => i.UserItineraries).FirstOrDefaultAsync(i => i.ItineraryId == itineraryID);
-                imageModel = new Image(imageRecord.ImageName, imageRecord.ImageExtension, imageRecord.ImagePath, itineraryID);
+                imageModel = new Image(ImageName, ImageExtension, ImagePath, itineraryID);
 
                 var uniqueImages = await
                    (from images in _dbContext.Images
@@ -72,11 +87,10 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
                 if (uniqueImages < 10)
                 {
                     // Add object to context
-                    itin.Images.Add(imageModel);
-                    _dbContext.Entry(itin).State = EntityState.Modified;
+                    _dbContext.Entry(imageModel).State = EntityState.Added;
 
                     // Save changes to context
-                    await _dbContext.SaveChangesAsync();
+                    var image = await _dbContext.SaveChangesAsync();
                 }
                 else
                 {
@@ -96,32 +110,43 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
                 return new MemoryAlbumResponse("Database could not find image", false, null);
             }
 
-            return new MemoryAlbumResponse("Image successfully added", true, itin.Images.ToList());
+            return new MemoryAlbumResponse("Image successfully added", true, _dbContext.Images.ToList());
         }
 
-        public async Task<MemoryAlbumResponse> RemoveImageFromItineraryAsync(Image imageRecord, int itineraryID)
+        public async Task<MemoryAlbumResponse> RemoveImageFromItineraryAsync(string imageName, int itineraryID)
         {
             Itinerary itin;
             Image imageModel;
+            string message = "Delete Images in DAO images is successful";
+            bool isSuccessful = true;
             try
             {
-                // Find associated itinerary
-                itin = await _dbContext.Itineraries.Include(i => i.UserItineraries).FirstOrDefaultAsync(i => i.ItineraryId == itineraryID);
 
-                // Create Image object to be removed
-                imageModel = new Image(imageRecord.ImageName, imageRecord.ImageExtension, imageRecord.ImagePath, itineraryID);
+                List<Image> distinctList = null;
 
-                // Find object from context
-                var image = await _dbContext.Images.FirstOrDefaultAsync(i => i == imageModel);
+                List<Image> images = await (
+                 from image in _dbContext.Images
+                 where image.ItineraryId == itineraryID && image.ImageName == imageName
+                 select image).ToListAsync<Image>();
+                 distinctList = images.Distinct().ToList();
 
+                foreach(Image image in distinctList)
+                {
+                    _dbContext.Entry(image).State = EntityState.Deleted;
+                }
+
+                await _dbContext.SaveChangesAsync();
+               
+
+                return new MemoryAlbumResponse(message, isSuccessful, distinctList);
             }
             catch (DbUpdateException)
             {
-                return new MemoryAlbumResponse("Database failed to remove user", false, null);
+                return new MemoryAlbumResponse("Database failed to remove image", false, null);
             }
             catch (NullReferenceException)
             {
-                return new MemoryAlbumResponse("Database could not find user", false, null);
+                return new MemoryAlbumResponse("Database could not find image", false, null);
             }
             return new MemoryAlbumResponse("Image is successfully removed", true, itin.Images.ToList());
 

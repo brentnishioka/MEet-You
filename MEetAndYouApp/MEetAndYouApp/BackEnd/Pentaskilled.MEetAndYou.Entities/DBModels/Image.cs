@@ -12,13 +12,13 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
 
         }
 
-        public Image(string imageName, string imageExtension, string imagePath, int itineraryID)
-        {
 
-            ImageName = imageName;  
-            ImageExtension = imageExtension;    
+        public Image( string imageName, string imageExtension, string imagePath, int itineraryID)
+        {
+            ImageName = imageName;
+            ImageExtension = imageExtension;
             ImagePath = imagePath;
-            ItineraryId = itineraryID;  
+            ItineraryId = itineraryID;
         }
 
         public int ImageId { get; set; }
@@ -27,8 +27,8 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
         public string ImagePath { get; set; }
         public int ItineraryId { get; set; }
 
-        public IFormFile ImageFile { get; set; }
-        public virtual Itinerary Itinerary { get; set; }
+/*        public IFormFile ImageFile { get; set; }
+*/        public virtual Itinerary Itinerary { get; set; }
 
         public static implicit operator Image(List<Image> v)
         {

@@ -10,14 +10,15 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Contracts
 {
     public interface IMemoryAlbumDAO
     {
-        Task<MemoryAlbumResponse> GetImageRecordAsync(string imageName);
-        
+        Task<MemoryAlbumResponse> GetImageRecordAsync(int itineraryID);
+/*        Task<List<Image>> GetImageRecordAsync(int itineraryID);
+*/
         // Given an itineraryID, adds a imageRecord to the itinerary by using navigation from EF
         // Adds the UserAccountID and Itinerary to junction table UserItinerary
-        Task<MemoryAlbumResponse> AddImageToItineraryAsync(Image imageRecord, int itineraryID);
+        Task<MemoryAlbumResponse> AddImageToItineraryAsync(string ImageName, string ImageExtension, string ImagePath, int itineraryID);
 
         // Given an itineraryID, removes a imageRecord from the itinerary by using navigation from EF
         // Removes the UserAccountID and Itinerary from junction table UserItinerary
-        Task<MemoryAlbumResponse> RemoveImageFromItineraryAsync(Image imageRecord, int itineraryID);
+        Task<MemoryAlbumResponse> RemoveImageFromItineraryAsync(string imageName, int itineraryID);
     }
 }

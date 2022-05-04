@@ -42,5 +42,21 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             _dbContext = new MEetAndYouDBContext(dbContextOptions);
         }
 
+        [Theory]
+        [InlineData("Alfred")]
+
+        public async void GetExistingImage(string name)
+        {
+            MemoryAlbumDAO albumDAO = new MemoryAlbumDAO(_dbContext);
+            Image imageRecord = new Image();
+
+
+            _output.WriteLine("Pulling image form image record");
+            MemoryAlbumResponse memoryAlbumResponse = await albumDAO.GetImageRecordAsync(name);
+            _output.WriteLine(memoryAlbumResponse.Message);
+
+            Assert.True(memoryAlbumResponse.IsSuccessful);
+        }
+
     }
 }

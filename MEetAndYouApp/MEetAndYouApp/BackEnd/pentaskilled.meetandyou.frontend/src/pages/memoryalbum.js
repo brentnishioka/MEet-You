@@ -71,7 +71,6 @@ function MemoryAlbum(props) {
         e.preventDefault()
         if (validate()) {
             const formData = new FormData()
-            formData.append('imageID', values.imageID)
             formData.append('imageName', values.imageName)
             formData.append('imageExtension', values.imageName.split('.').pop())
             formData.append('imagePath', values.imagePath)

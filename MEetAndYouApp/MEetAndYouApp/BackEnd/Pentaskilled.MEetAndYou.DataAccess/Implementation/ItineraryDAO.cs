@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Pentaskilled.MEetAndYou.Entities.DBModels;
+using Pentaskilled.MEetAndYou.Entities.Models;
 
 namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
 {
@@ -19,7 +20,12 @@ public class ItineraryDAO : ICalendarDAO
             this._dbContext = dbContext;
     }
 
-    public async Task<List<Itinerary>> GetUserItineraries(int userID)
+        public DateTime DateConversion(string date)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<List<Itinerary>> GetUserItineraries(int userID)
     { 
         List<Itinerary> itineraries;
         try
@@ -43,5 +49,10 @@ public class ItineraryDAO : ICalendarDAO
         }
         return itineraries;
     }
+
+        public Task<ItineraryResponse> GetUserItineraries(int userID, DateTime date)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
