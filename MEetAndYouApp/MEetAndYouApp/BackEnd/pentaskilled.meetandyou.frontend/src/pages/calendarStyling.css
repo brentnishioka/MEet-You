@@ -1,5 +1,9 @@
-﻿.react-calendar {
-    
+﻿body {
+    background-image: url(../images/map2.jpg);
+}
+
+
+.react-calendar { 
     width: 350px;
     max-width: 100%;
     border: 0.3px solid #a0a096;
@@ -99,6 +103,7 @@
 .table-hover {
     margin-left:500px;  
     margin-top: 30px;
+    background: white;
 }
 
 .see-events-button {
@@ -126,7 +131,6 @@
 }
 
 .add-calendar {
-    background: white;
     margin-left: 500px;
     margin-top: 10px;
 }
