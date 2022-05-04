@@ -68,19 +68,10 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             Assert.True(actual != null);
         }
 
-<<<<<<< Updated upstream
-        //[Theory]
-        //[InlineData(9, "2022-04-28")]
-        //public async void GetItineraryManagerTest(int userID, string date)
-        //{
-        //    ICalendarManager calendarManager = new CalendarManager(_dbContext);
-        //}
-=======
         [Theory]
         [InlineData(9, "2022-05-06")]
         public async void GetItineraryManagerTest(int userID, string date)
         {
->>>>>>> Stashed changes
 
             //Arrange 
             ICalendarDAO calendarDAO = new CalendarDAO(_dbContext);
