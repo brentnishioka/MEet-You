@@ -169,7 +169,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
                 }
 
             }
-            catch (SqlException)
+            catch (NullReferenceException)
             {
                 return new HyperlinkResponse("Could not find itinerary", false, new List<UserItinerary>(), new List<string>());
             }
