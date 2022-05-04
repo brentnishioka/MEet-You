@@ -71,8 +71,8 @@ function MemoryAlbum(props) {
         e.preventDefault()
         if (validate()) {
             const formData = new FormData()
-            formData.append('imageName', values.imageName)
-            formData.append('imageExtension', values.imageName.split('.').pop())
+            formData.append('imageName', e.target.files[0])
+            formData.append('imageExtension', e.target.files[0].split('.').pop())
             formData.append('imagePath', values.imagePath)
             formData.append('imageFile', values.imageFile)
             addOrEdit(formData, resetForm)
@@ -89,18 +89,18 @@ function MemoryAlbum(props) {
             <form autoComplete="off" noValidate onSubmit={handleFormSubmit}>
                 <div className="card">
                     <img src={values.imagePath} alt="preview" className="card-img-top" />
-            
+
                     <div className="card-body">
                         <div className="form-group">
                             <input type="file" accept="image/*" className={"form-control-file" + applyErrorClass('imagePath')}
                                 onChange={showPreview} id="image-uploader" />
                         </div>
-                        {/* <div className="form-group">
-                            <input className={"form-control" + applyErrorClass('imageName')} placeholder="Image Name" name="imageName"
-                                value={values.imageName}
+                         <div className="form-group">
+                            <input className={"form-control"} placeholder="Itinerary ID" name="itineraryID"
+                                value={values.itineraryID}
                                 onChange={handleInputChange} />
                         </div>
-                        <div className="form-group">
+                        {/*<div className="form-group">
                             <input className="form-control" placeholder="Image Extension" name="imageExtension"
                                 value={values.imageExtension}
                                 onChange={handleInputChange} />
@@ -115,6 +115,7 @@ function MemoryAlbum(props) {
         </>
 
     )
+
 
 }
 

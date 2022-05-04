@@ -43,19 +43,20 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         }
 
         [Theory]
-        [InlineData("Alfred")]
+        [InlineData(6)]
 
-        public async void GetExistingImage(string name)
+        public async void GetNonExistingItineraryImage(int itineraryID)
         {
             MemoryAlbumDAO albumDAO = new MemoryAlbumDAO(_dbContext);
+            MemoryAlbumResponse response;
             Image imageRecord = new Image();
 
 
             _output.WriteLine("Pulling image form image record");
-            MemoryAlbumResponse memoryAlbumResponse = await albumDAO.GetImageRecordAsync(name);
-            _output.WriteLine(memoryAlbumResponse.Message);
+            response = await albumDAO.GetImageRecordAsync(11);
+            _output.WriteLine(response.Message);
 
-            Assert.True(memoryAlbumResponse.IsSuccessful);
+            Assert.False(response.IsSuccessful);
         }
 
     }

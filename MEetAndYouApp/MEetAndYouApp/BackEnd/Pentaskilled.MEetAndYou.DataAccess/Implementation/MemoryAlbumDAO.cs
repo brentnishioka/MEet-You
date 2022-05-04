@@ -27,6 +27,13 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             _dbContext = new MEetAndYouDBContext();
         }
 
+        /// <summary>
+        /// Gets an Image object from the database in the Images table
+        /// </summary>
+        /// <param name="itineraryID"> Itinerary value to be locate </param>
+        /// <returns>  
+        ///     A MemoryAlbumResponse object that has the status of the operation and message. 
+        /// </returns>
         public async Task<MemoryAlbumResponse> GetImageRecordAsync(int itineraryID)
         {
             List<Image> distinctList = null;
@@ -65,6 +72,13 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             }
         }
 
+        /// <summary>
+        /// Adds an Image object from the database in the Images table
+        /// </summary>
+        /// <param name="itineraryID"> Itinerary value to be locate </param>
+        /// <returns>  
+        ///     A MemoryAlbumResponse object that has the status of the operation and message. 
+        /// </returns>
         public async Task<MemoryAlbumResponse> AddImageToItineraryAsync(string ImageName, string ImageExtension, string ImagePath, int itineraryID)
         {
             Itinerary itin;
@@ -83,8 +97,17 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
                         grp.Key.ImageId,
                     }).CountAsync();
 
+                var uniqueNames = await
+               (from images in _dbContext.Images
+                where images.ImageName == ImageName
+                group images by new { images.ImageName } into grp
+                select new {
+                    grp.Key.ImageName,
+
+                }).CountAsync();
+
                 // Add user if existing users in itinerary is less than 5
-                if (uniqueImages < 10)
+                if (uniqueImages < 10 && uniqueNames < 0)
                 {
                     // Add object to context
                     _dbContext.Entry(imageModel).State = EntityState.Added;
@@ -113,6 +136,13 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             return new MemoryAlbumResponse("Image successfully added", true, _dbContext.Images.ToList());
         }
 
+        /// <summary>
+        /// Removes an Image object from the database in the Images table
+        /// </summary>
+        /// <param name="itineraryID"> Itinerary value to be locate </param>
+        /// <returns>  
+        ///     A MemoryAlbumResponse object that has the status of the operation and message. 
+        /// </returns>
         public async Task<MemoryAlbumResponse> RemoveImageFromItineraryAsync(string imageName, int itineraryID)
         {
             Itinerary itin;
@@ -123,7 +153,8 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             {
 
                 List<Image> distinctList = null;
-
+                
+                //Acquires list of Image objects that match parameter conditions
                 List<Image> images = await (
                  from image in _dbContext.Images
                  where image.ItineraryId == itineraryID && image.ImageName == imageName
