@@ -15,17 +15,19 @@ import Userpd from "./pages/Userprofiledashboard"
 
 
 import Hyperlink from './pages/hyperlink';
+import MemoryAlbumList from './pages/memoryalbumlist';
 
 function App() {
     return (
         <Router>
             <Navbar />
             <Routes>
-                <Route path="/" element={<Home />} />
+                <Route path="/home" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/calendar" element={<MyCalendar />} />
                 <Route path="/rating" element={<Rating />} />
                 <Route path="/signup" element={<SignUp />} />
+                <Route path="/memoryalbumlist" element={<MemoryAlbumList />} />
                 <Route path="/categories" element={<Categories />} />
                 <Route path="/events" element={<Events />} />
                 <Route path="/getrandomsuggestion" element={<Getrandomsuggestion />} />
@@ -38,3 +40,4 @@ function App() {
 }
 
 export default App;
+

@@ -39,5 +39,21 @@ namespace Pentaskilled.MEetAndYou.Services.Implementation
         {
             return Regex.IsMatch(s, @"^[a-zA-Z]+$") && (s.ToLower().Contains("view") || s.ToLower().Contains("edit"));
         }
+
+        // An extensions is valid if it contains only these letters
+
+        public static bool IsValidExtension(string s)
+        {
+            if (s.Contains("jpg") ){
+                return true;
+            }
+            if (s.Contains("png"))
+                return true;
+            if (s.Contains("jpg"))
+                return true;
+
+
+            return false;
+        }
     }
 }
