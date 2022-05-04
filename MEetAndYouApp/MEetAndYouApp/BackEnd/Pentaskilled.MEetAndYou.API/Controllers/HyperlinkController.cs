@@ -50,10 +50,17 @@ namespace Pentaskiled.MEetAndYou.API.Controllers
             //{
             //    // Call the manager to execute the feature. 
             //}
+            try
+            {
+                HyperlinkResponse response = await _hyperlinkManager.AddUserToItineraryAsync(userID, itineraryID, email, permission);
 
-            HyperlinkResponse response = await _hyperlinkManager.AddUserToItineraryAsync(userID, itineraryID, email, permission);
-          
-            return response;
+                return response;
+            }
+
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpDelete]
@@ -76,9 +83,17 @@ namespace Pentaskiled.MEetAndYou.API.Controllers
             //    // Call the manager to execute the feature. 
             //}
 
-            HyperlinkResponse response = await _hyperlinkManager.RemoveUserFromItineraryAsync(userID, itineraryID, email, permission);
+            try
+            {
+                HyperlinkResponse response = await _hyperlinkManager.RemoveUserFromItineraryAsync(userID, itineraryID, email, permission);
 
-            return response;
+                return response;
+            }
+
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

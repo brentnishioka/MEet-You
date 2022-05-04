@@ -37,6 +37,9 @@ const Navbar = () => {
                         User Profile Dashboard
                     </NavLink>
 
+                    <NavLink to='/share' activeStyle>
+                        Share
+                    </NavLink>
                     <NavLink to='/memoryalbumlist' activeStyle>
                         Memory Album
                     </NavLink>

@@ -2,7 +2,7 @@ import React, { useState, Component, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import ICalendarLink from "react-icalendar-link";
-import './calendarStyling.css'
+import '../images/calendarStyling.css'
 import Select from 'react-select';
 
 //import Button from 'react-bootstrap/Button';
@@ -33,7 +33,7 @@ function MyCalendar() {
             mode: 'cors'
         };
         console.log(date);
-        await fetch(`https://localhost:9000/Calendar?userID=` + id + "&date=" + dateString, requestOptions)
+        await fetch(`https://meetandyou.me:8001/Calendar?userID=` + id + "&date=" + dateString, requestOptions)
             .then(response => response.json())
             .then(response => setItinerary(response.data))
     }

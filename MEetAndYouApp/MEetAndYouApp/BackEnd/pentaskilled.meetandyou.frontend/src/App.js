@@ -13,6 +13,8 @@ import Getrandomsuggestion from './pages/getrandomsuggestion';
 import CreateItinerary from "./pages/itinerary";
 import Userpd from "./pages/Userprofiledashboard"
 
+
+import Hyperlink from './pages/hyperlink';
 import MemoryAlbumList from './pages/memoryalbumlist';
 
 function App() {
@@ -20,7 +22,7 @@ function App() {
         <Router>
             <Navbar />
             <Routes>
-                <Route path="/home" element={<Home />} />
+                <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/calendar" element={<MyCalendar />} />
                 <Route path="/rating" element={<Rating />} />
@@ -31,10 +33,7 @@ function App() {
                 <Route path="/getrandomsuggestion" element={<Getrandomsuggestion />} />
                 <Route path="/itinerary" element={<CreateItinerary />} />
                 <Route path="/userprofiledashboard" element={<Userpd />} />
-                
-             
-                {/* <Route path="/memoryalbumlist" element={<MemoryAlbum/>} /> */}
-
+                <Route path="/share" element={<Hyperlink />} />
             </Routes>
         </Router>
     );
