@@ -120,16 +120,23 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
                 // Find object from context
                 var user = await _dbContext.UserItineraries.FirstOrDefaultAsync(u => u == userItinerary);
 
-                // Remove if userItinerary exists
+                // Remove if user exists in userItinerary
                 if (itin.UserItineraries.Contains(user))
                 {
                     // Remove object from context
                     itin.UserItineraries.Remove(user);
-                    _dbContext.Entry(itin).State = EntityState.Modified;
+                    _dbContext.Entry(itin.UserItineraries).State = EntityState.Modified;
+
+                    // Check if owner has no permissions
+                    if (itin.UserItineraries.Where(a => a.UserId == user.UserId).Count() == 0)
+                    {
+                        itin.UserItineraries.Add(user);
+                        return new HyperlinkResponse("Owner must have at least one permission", false, itin.UserItineraries.ToList(), GetAllEmailsAsync(itin.UserItineraries.ToList()).Result);
+                    }
 
                     // Save changes to context
                     await _dbContext.SaveChangesAsync();
-                }    
+                }
 
                 else
                 {

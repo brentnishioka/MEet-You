@@ -37,7 +37,7 @@ namespace Pentaskilled.MEetAndYou.Services.Implementation
         // A string is valid if it contains only letters
         public static bool IsValidString(string s)
         {
-            return Regex.IsMatch(s, @"^[a-zA-Z]+$");
+            return Regex.IsMatch(s, @"^[a-zA-Z]+$") && (s.ToLower().Contains("view") || s.ToLower().Contains("edit"));
         }
     }
 }

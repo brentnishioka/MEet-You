@@ -88,11 +88,11 @@ function Hyperlink() {
             </table>
             <label>
                 <p>Enter your user ID:</p>
-                <input type="text" placeholder="User ID" maxLength="1000" onChange={e => setUserID(e.target.value)} />
+                <input type="text" placeholder="User ID" onChange={e => setUserID(e.target.value)} />
             </label>
             <label>
                 <p>Enter an itinerary ID: </p>
-                <input type="text" placeholder="Itinerary ID" maxLength="1000" onChange={e => setItinID(e.target.value)} />
+                <input type="text" placeholder="Itinerary ID" maxLength="50" onChange={e => setItinID(e.target.value)} />
             </label>
             <label>
                 <p>Enter an email: </p>
@@ -110,7 +110,7 @@ function Hyperlink() {
                 <button type="button" id="RemoveUser" onClick={RemoveUser}> Remove</button>
             </div>
             
-            <p>Modying user itinerary response: </p>
+            <p>Modifying user itinerary response: </p>
             {message}
         </div>
 

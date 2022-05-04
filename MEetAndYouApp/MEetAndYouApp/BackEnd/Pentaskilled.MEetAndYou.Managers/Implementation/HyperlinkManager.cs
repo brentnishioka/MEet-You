@@ -90,7 +90,6 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
                 bool isValidPermission = Validator.IsValidString(permission);
                 if (!isValidPermission) { return new HyperlinkResponse("Invalid permission", false, new List<UserItinerary>(), new List<string>()); }
 
-
                 // Check to see if the user own the itinerary
                 hyperResponse = await _hyperlinkDAO.isUserOwnerAsync(userID, itineraryID);
                 if (hyperResponse.IsSuccessful == false)
