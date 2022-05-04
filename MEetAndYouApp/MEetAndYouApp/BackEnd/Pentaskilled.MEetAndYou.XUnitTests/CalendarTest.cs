@@ -30,8 +30,8 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         private readonly ITestOutputHelper _output;
         private MEetAndYouDBContext _dbContext;
         public static DbContextOptions<MEetAndYouDBContext> dbContextOptions { get; }
-        public static string connectionString = "Data Source=DESKTOP-0QA4EN0\\SQLEXPRESS;Initial Catalog=MEetAndYou-DB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;";
-        private readonly string _eventsAPIkey = "";
+        public static string connectionString = "Data Source=meetandyou-db.cyakceoi9n4j.us-west-1.rds.amazonaws.com;Initial Catalog=MEetAndYou-DB;User Id=admin;Password=TeostraLunastraAlatreon;Connect Timeout=30;TrustServerCertificate=True;";
+        
         static CalendarTest()
         {
             dbContextOptions = new DbContextOptionsBuilder<MEetAndYouDBContext>()
@@ -46,7 +46,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         }
 
         [Theory]
-        [InlineData(9, "2022-04-28")]
+        [InlineData(9, "2022-05-06")]
         public async void GetItinerayDAOTest(int userID, string date)
         {
             //Arrange
@@ -68,12 +68,31 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             Assert.True(actual != null);
         }
 
+<<<<<<< Updated upstream
         //[Theory]
         //[InlineData(9, "2022-04-28")]
         //public async void GetItineraryManagerTest(int userID, string date)
         //{
         //    ICalendarManager calendarManager = new CalendarManager(_dbContext);
         //}
+=======
+        [Theory]
+        [InlineData(9, "2022-05-06")]
+        public async void GetItineraryManagerTest(int userID, string date)
+        {
+>>>>>>> Stashed changes
 
+            //Arrange 
+            ICalendarDAO calendarDAO = new CalendarDAO(_dbContext);
+            ICalendarManager calendarManager = new CalendarManager(calendarDAO, _dbContext);
+
+            //Act 
+            _output.WriteLine("Getting itineraries from CalendarManager...");
+            ItineraryResponse itinResponse = await calendarManager.LoadUserItineraries(userID, date);
+            _output.WriteLine(itinResponse.Message);
+
+            //Assert
+            Assert.True(itinResponse.IsSuccessful);           
+        }
     }
 }
