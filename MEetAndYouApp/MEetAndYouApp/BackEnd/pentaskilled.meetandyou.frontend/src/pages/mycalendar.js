@@ -9,8 +9,6 @@ import Select from 'react-select';
 //import 'bootstrap/dist/css/bootstrap.min.css';
 //import 'bootstrap/dist/css/bootstrap-grid.min.css';
 
-
-
 function MyCalendar() {
     const [date, setDate] = useState(new Date());
     const [itinerary, setItinerary] = useState([]);
@@ -20,10 +18,11 @@ function MyCalendar() {
 
     const fetchItinerary = async () => {
         console.log("MONTH", date.getMonth());
+        //const dateString = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
         const dateString = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
         console.log("datestring: ", dateString)
 
-        var id = 5;
+        var id = 8;
         //var id = sessionStorage.getItem("userID")
         var requestOptions = {
             method: "POST",
@@ -52,16 +51,12 @@ function MyCalendar() {
                 allEvents.push(
                     [itinerary[i].events[j].eventName,
                     itinerary[i].events[j].address,
-                    date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate(),
+                        date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate(),
                     itinerary[i].events[j].description]
                 )
             }
         }
-        //console.log(allEvents);
-        //console.log("index", index)
-     
-        //must call event variable here
-        //must add all events to 1 array.
+
         var test = allEvents[index]
 
         const eventtest = {
@@ -76,7 +71,7 @@ function MyCalendar() {
         }    
 
         return (
-            <div classname="table">             
+            <div className = "add-calendar">             
                 <ICalendarLink event={eventtest}> Add to calendar </ICalendarLink>
             </div>
         )       
@@ -95,17 +90,15 @@ function MyCalendar() {
         }
             
         return (
-
-            <div className = "table">
+            <div className = "select">
                 <p></p>
-            Which event would you like export as an ics file ?
+                Which event would you like export as an ics file ?
                 <Select
+                   
                     options={eventNames}
                     closeMenuOnSelect={true}
                     onChange={handleChange} />
-
-            </div>
-            
+            </div>       
         )
     }
 
@@ -118,7 +111,7 @@ function MyCalendar() {
                     <tr>
                         <td align='center'>{itinerary[i].events[j].eventName}</td>
                         <td align='center'>{itinerary[i].events[j].address}</td>
-                        <td align='center'>{date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate()}</td>
+                        <td align='center'>{date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()}</td>
                         <td align='center'>{itinerary[i].events[j].description}</td>
                     </tr> 
                 )        
@@ -126,10 +119,10 @@ function MyCalendar() {
         }
 
         return (
-            <div className = "table">
+            <div>
             <table
                 style={{ "borderCollapse": "collapse", "padding": "5px", "width": "50%", "border": "1px solid black" }}
-                className="table table-hover">
+                className="table-hover">
                 <thead style={{ "borderCollapse": "collapse", "padding": "5px", "width": "50%", "border": "1px solid black" }}>
                     <tr style={{ "borderCollapse": "collapse", "padding": "5px", "width": "50%", "border": "1px solid black" }}>
                     
@@ -144,9 +137,7 @@ function MyCalendar() {
                     {rows}
                 </tbody>
             </table>
-
-            {eventOptions()}
-                
+            {eventOptions()}                
             </div>
             
         )
@@ -155,7 +146,7 @@ function MyCalendar() {
     function showNoItineraries() {
         setEventCal(null);
         return (
-            <div>
+            <div className="no-events">
                 You do not have any events planned for this day.             
             </div>
         )
@@ -175,28 +166,16 @@ function MyCalendar() {
         displayItinerary();
     }, [itinerary]);
 
-    /*return (
-        <div>
-            <Calendar onChange={setDate} value={date} />
-
-            <button type="button" onClick={fetchItinerary}>See Events Planned For This Day</button>             
-            {test}
-            {eventCal}
-        </div>
-    );*/
 
     return (
-        <div classname= "overall-calendar"> 
-           <Calendar onChange={setDate} value={date} />
-            
+        <div>    
+            <Calendar onChange={setDate} value={date} />         
             <div className="see-events-button" style={{ float: 'left' }}  >
-                <button type="button" onClick={fetchItinerary}>See Events Planned For This Day</button>           
-            </div>       
+                <button type="button" onClick={fetchItinerary}>See Events Planned For This Day</button>
+            </div>
             {test}
             {eventCal}
-
         </div>
-
     );
 }
 

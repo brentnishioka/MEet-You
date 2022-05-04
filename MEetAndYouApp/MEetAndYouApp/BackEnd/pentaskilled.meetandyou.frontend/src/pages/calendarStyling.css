@@ -2,25 +2,14 @@
     
     width: 350px;
     max-width: 100%;
-    background: white;
     border: 0.3px solid #a0a096;
     font-family: Arial, Helvetica, sans-serif;
     line-height: 1.125em;
-    float: left;    
+    position: absolute;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     margin-left: 75px;
-    margin-top: 10px;
-}
-
-.see-events-button {
-    float: left;
-    margin-top: 10px;
-    
-}
-
-.overall-calendar {
-    flex-direction:column;
+    margin-top: 30px;
 }
 
 .react-calendar--doubleView {
@@ -107,7 +96,39 @@
         background: #7b8FCF;
     }
 
-.table {
-    margin-left:350px;
+.table-hover {
+    margin-left:500px;  
     margin-top: 30px;
 }
+
+.see-events-button {
+    margin-left: 75px; 
+    margin-top: 350px;
+}
+
+.no-events {
+    margin-top: 390px;
+    margin-left: 75px;
+    position: fixed;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.test {
+    margin-left: 500px;
+    margin-block-start: 20px;
+    margin-top: 300px;
+}
+
+.select {
+    margin-left: 500px;
+    margin-top: 0px;
+    width: 500px;
+}
+
+.add-calendar {
+    background: white;
+    margin-left: 500px;
+    margin-top: 10px;
+}
+
+

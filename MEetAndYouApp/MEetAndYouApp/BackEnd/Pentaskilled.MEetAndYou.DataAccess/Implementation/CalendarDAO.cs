@@ -26,7 +26,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             _dbContext = dbContext;
         }
 
-        public async Task<ItineraryResponse> GetUserItineraries(int userID, DateTime date)
+        public async Task<ItineraryResponse> GetItineraries(int userID, DateTime date)
         {
             List<Itinerary> distinctList = null;
             string message = "Get User in DAO itineraries is successful.";
@@ -42,7 +42,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                      ((DateTime)e.EventDate).Day.Equals(date.Day)
                      select itin).ToListAsync<Itinerary>();
 
-                distinctList = itineraries.Distinct().ToList();
+                distinctList = itineraries.Distinct().ToList(); //Makes sure you don't get duplicate events
                 if(distinctList == null)
                 {
                     return new ItineraryResponse("No itinerary found for user" + userID, isSuccessful, distinctList);
