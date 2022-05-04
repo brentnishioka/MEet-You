@@ -44,12 +44,12 @@ namespace Pentaskilled.MEetAndYou.Services.Implementation
 
         public static bool IsValidExtension(string s)
         {
-            if (s.Contains("jpg") ){
+            if (s.Equals("jpg") ){
                 return true;
             }
-            if (s.Contains("png"))
+            if (s.Equals("png"))
                 return true;
-            if (s.Contains("jpg"))
+            if (s.Equals("jpg"))
                 return true;
 
 
