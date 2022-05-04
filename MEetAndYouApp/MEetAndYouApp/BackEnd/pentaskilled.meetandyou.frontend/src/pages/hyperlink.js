@@ -88,11 +88,11 @@ function Hyperlink() {
             </table>
             <label>
                 <p>Enter your user ID:</p>
-                <input type="text" placeholder="User ID" onChange={e => setUserID(e.target.value)} />
+                <input type="number" placeholder="User ID" onChange={e => setUserID(e.target.value)} />
             </label>
             <label>
                 <p>Enter an itinerary ID: </p>
-                <input type="text" placeholder="Itinerary ID" maxLength="50" onChange={e => setItinID(e.target.value)} />
+                <input type="number" placeholder="Itinerary ID" maxLength="50" onChange={e => setItinID(e.target.value)} />
             </label>
             <label>
                 <p>Enter an email: </p>
