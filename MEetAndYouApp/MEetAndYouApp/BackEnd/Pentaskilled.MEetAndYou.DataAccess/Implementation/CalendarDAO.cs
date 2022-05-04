@@ -26,21 +26,15 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             _dbContext = dbContext;
         }
 
-        public async Task<ItineraryResponse> GetUserItineraries(int userID, DateTime date)
+        public async Task<ItineraryResponse> GetItineraries(int userID, DateTime date)
         {
-            //var dbcontext = new MEetAndYouDBContext();
             List<Itinerary> distinctList = null;
             string message = "Get User in DAO itineraries is successful.";
             bool isSuccessful = true;
             try
             {
-                //itineraries = await
-                //(from itin in _dbContext.Itineraries.Include("Events")
-                // where itin.ItineraryOwner == userID
-                // select itin).ToListAsync<Itinerary>();
-
                 List<Itinerary>  itineraries = await
-                    (from itin in _dbContext.Itineraries.Include("Events")
+                    (from itin in _dbContext.Itineraries.Include("Events") //Gets all itineraries with events from the day the user clicked on
                      from e in itin.Events
                      where itin.ItineraryOwner == userID &&
                      ((DateTime)e.EventDate).Year.Equals(date.Year) &&
@@ -48,13 +42,13 @@ namespace Pentaskilled.MEetAndYou.DataAccess
                      ((DateTime)e.EventDate).Day.Equals(date.Day)
                      select itin).ToListAsync<Itinerary>();
 
-                distinctList = itineraries.Distinct().ToList();
+                distinctList = itineraries.Distinct().ToList(); //Makes sure you don't get duplicate events
                 if(distinctList == null)
                 {
                     return new ItineraryResponse("No itinerary found for user" + userID, isSuccessful, distinctList);
                 }
             }
-            catch (SqlException ex)
+            catch (SqlException ex) //Returns the error message if an exception occured
             {
                 return new ItineraryResponse
                     ("Sql exception occur when getting itinerary \n" + ex.Message, false, distinctList);

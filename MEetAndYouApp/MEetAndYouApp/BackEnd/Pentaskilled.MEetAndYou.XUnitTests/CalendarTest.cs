@@ -1,14 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Pentaskilled.MEetAndYou.DataAccess;
+using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json.Linq;
+using Pentaskilled.MEetAndYou.DataAccess.Contracts;
+using Pentaskilled.MEetAndYou.DataAccess.Implementation;
 using Pentaskilled.MEetAndYou.Entities.DBModels;
 using Pentaskilled.MEetAndYou.Entities.Models;
+using Pentaskilled.MEetAndYou.Managers.Implementation;
+using Pentaskilled.MEetAndYou.Managers;
+using Pentaskilled.MEetAndYou.Managers.Contracts;
+using Pentaskilled.MEetAndYou.Services.Contracts;
+using Pentaskilled.MEetAndYou.Services.Implementation;
+using Pentaskilled.MEetAndYou.DataAccess;
+using Pentaskilled.MEetAndYou.DataAccess.Contracts;
+using Pentaskilled.MEetAndYou.DataAccess.Implementation;
 using Xunit;
 using Xunit.Abstractions;
+
 
 namespace Pentaskilled.MEetAndYou.XUnitTests
 {
@@ -43,7 +56,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             ItineraryResponse actual = null;
 
             //Act
-            actual = await calendardDAO.GetUserItineraries(userID, dateTime);
+            actual = await calendardDAO.GetItineraries(userID, dateTime);
             _output.WriteLine("The size of the array: " + actual.Data.Count);
             foreach (Itinerary itin in actual.Data)
             {
@@ -54,5 +67,13 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             //Assert
             Assert.True(actual != null);
         }
+
+        [Theory]
+        [InlineData(9, "2022-04-28")]
+        public async void GetItineraryManagerTest(int userID, string date)
+        {
+            ICalendarManager calendarManager = new CalendarManager(_dbContext);
+        }
+
     }
 }

@@ -8,7 +8,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
 {
     public interface ICalendarDAO
     {
-        Task<ItineraryResponse> GetUserItineraries(int userID, DateTime date);
+        Task<ItineraryResponse> GetItineraries(int userID, DateTime date);
         DateTime DateConversion(string date);
     }
 }
