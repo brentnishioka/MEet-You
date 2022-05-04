@@ -23,12 +23,18 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
 
         [HttpGet]
         [Route("GetUserItinerary")]
-        public ActionResult<ItineraryResponse> GetUserItinerary(int userID, int itineraryID)
+        public async Task<ActionResult<ItineraryResponse>> GetUserItinerary(int userID, int itineraryID)
         {
-            //var userID = model.userID;
-            //var itineraryID = model.itineraryID;
-            ItineraryResponse getItineraryResult = _ratingManager.RetrieveUserItinerary(userID, itineraryID);
+            ItineraryResponse getItineraryResult = await _ratingManager.RetrieveUserItinerary(userID, itineraryID);
             return getItineraryResult;
+        }
+
+        [HttpGet]
+        [Route("GetUserEventRatings")]
+        public async Task<ActionResult<RatingResponse>> GetUserEventRatings(int itineraryID)
+        {
+            RatingResponse getRatingResult = await _ratingManager.RetrieveUserRatings(itineraryID);
+            return getRatingResult;
         }
 
         [HttpPost]
@@ -75,11 +81,5 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
         public int eventID { get; set; }
         public int itineraryID { get; set; }
         public int userRating { get; set; }
-    }
-
-    public class UserItinID
-    {
-        public int userID { get; set; }
-        public int itineraryID { get; set; }
     }
 }

@@ -3,11 +3,22 @@ import EventCard from "../EventCard";
 
 function ItineraryComponent({ itineraryID }) {
     const [userItinerary, setUserItinerary] = useState(null);
+    const [eventRatings, setEventRatings] = useState(null);
     // const [userInputItinID] = useState(itineraryID);
 
     const fetchItinerary = async () => {
 
-        var requestOptions = {
+        var itinRequestOptions = {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': true
+            },
+            mode: 'cors'
+        };
+
+        var ratingRequestOptions = {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
@@ -18,9 +29,19 @@ function ItineraryComponent({ itineraryID }) {
         };
 
         try {
-            const res = await fetch(`https://localhost:9000/api/Rating/GetUserItinerary?userID=5&itineraryID=7`, requestOptions)
-            const itineraryResponse = await res.json()
+            const itinRes = await fetch(`https://localhost:9000/api/Rating/GetUserItinerary?userID=5&itineraryID=7`, itinRequestOptions)
+            const itineraryResponse = await itinRes.json()
             setUserItinerary(itineraryResponse.data);
+        }
+        catch (error) {
+            console.log('error');
+        }
+
+        try {
+            const rateRes = await fetch(`https://localhost:9000/api/Rating/GetUserEventRatings?itineraryID=7`, ratingRequestOptions)
+            const ratingResponse = await rateRes.json()
+            // console.log(ratingResponse)
+            setEventRatings(ratingResponse.data);
         }
         catch (error) {
             console.log('error');

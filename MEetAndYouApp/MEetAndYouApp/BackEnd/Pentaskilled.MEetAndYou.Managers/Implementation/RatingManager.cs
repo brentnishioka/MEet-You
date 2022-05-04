@@ -25,10 +25,16 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
             _dbcontext = dbcontext;
         }
 
-        public ItineraryResponse RetrieveUserItinerary(int userID, int itineraryID)
+        public async Task<ItineraryResponse> RetrieveUserItinerary(int userID, int itineraryID)
         {
-            ItineraryResponse getUserItineraryResult = _ratingDAO.GetUserItinerary(userID, itineraryID).Result;
+            ItineraryResponse getUserItineraryResult = await _ratingDAO.GetUserItinerary(userID, itineraryID);
             return getUserItineraryResult;
+        }
+
+        public async Task<RatingResponse> RetrieveUserRatings(int itineraryID)
+        {
+            RatingResponse getUserRatingsResult = await _ratingDAO.GetUserEventRatings(itineraryID);
+            return getUserRatingsResult;
         }
 
         public BaseResponse CreateItineraryNote(int itineraryID, string noteContent)

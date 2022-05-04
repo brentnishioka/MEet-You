@@ -42,7 +42,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             return new ItineraryResponse("The itinerary was retrieved successfully.", true, itinerary);
         }
 
-        public async Task<RatingResponse> GetUserEventRatings(int userID, int itineraryID)
+        public async Task<RatingResponse> GetUserEventRatings(int itineraryID)
         {
             List<UserEventRating> userEventRatings = null;
             try
