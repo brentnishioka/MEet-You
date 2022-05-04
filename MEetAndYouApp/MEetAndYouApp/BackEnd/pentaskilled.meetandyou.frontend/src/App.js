@@ -14,6 +14,7 @@ import CreateItinerary from "./pages/itinerary";
 import Userpd from "./pages/Userprofiledashboard"
 
 
+import Hyperlink from './pages/hyperlink';
 
 function App() {
     return (
@@ -30,6 +31,7 @@ function App() {
                 <Route path="/getrandomsuggestion" element={<Getrandomsuggestion />} />
                 <Route path="/itinerary" element={<CreateItinerary />} />
                 <Route path="/userprofiledashboard" element={<Userpd />} />
+                <Route path="/share" element={<Hyperlink />} />
             </Routes>
         </Router>
     );

@@ -24,5 +24,8 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
 
         // Compares the userID with the ownerID of the itinerary
         Task<HyperlinkResponse> isUserOwnerAsync(int userID, int itineraryID);
+
+        // Get all emails associated with an itinerary
+        Task<List<string>> GetAllEmailsAsync(List<UserItinerary> userItineraries);
     }
 }

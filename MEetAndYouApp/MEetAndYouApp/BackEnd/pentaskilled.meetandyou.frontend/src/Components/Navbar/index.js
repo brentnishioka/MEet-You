@@ -36,6 +36,9 @@ const Navbar = () => {
                         User Profile Dashboard
                     </NavLink>
 
+                    <NavLink to='/share' activeStyle>
+                        Share
+                    </NavLink>
                     {/* Second Nav */}
                     {/* <NavBtnLink to='/sign-in'>Sign In</NavBtnLink> */}
                 </NavMenu>
