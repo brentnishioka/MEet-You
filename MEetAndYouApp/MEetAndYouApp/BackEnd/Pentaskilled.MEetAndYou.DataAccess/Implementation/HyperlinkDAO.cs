@@ -88,7 +88,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
                      }).CountAsync();
                 
                 // Checks if existing users in itinerary is less than 5
-                if (uniqueUsers == 5)
+                if (uniqueUsers > 5)
                 { 
                     return new HyperlinkResponse("Max users reached, please remove a user", true, itin.UserItineraries.ToList(), GetAllEmailsAsync(itin.UserItineraries.ToList()).Result);
                 }
