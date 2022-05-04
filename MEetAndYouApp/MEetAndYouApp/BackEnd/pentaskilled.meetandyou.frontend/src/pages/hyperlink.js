@@ -22,7 +22,7 @@ function Hyperlink() {
 
         try {
             const encodedEmail = encodeURIComponent(email);
-            const res = await fetch('https://localhost:9000/AddUser?userID=' + userID + '&itineraryID=' + itinID + '&email=' + encodedEmail + '&permission=' + permission, requestOptions);
+            const res = await fetch('https://meetandyou.me:8001/AddUser?userID=' + userID + '&itineraryID=' + itinID + '&email=' + encodedEmail + '&permission=' + permission, requestOptions);
             const AddUserRes = await res.json();
             setData(AddUserRes.data)
             setEmailData(AddUserRes.emails)
@@ -74,7 +74,7 @@ function Hyperlink() {
             <div>
             <table
                 style={{ "borderCollapse": "collapse", "padding": "5px", "width": "100%", "border": "1px solid black" }}
-                className="table table-hover">
+                className="table table-hover2">
                 <thead style={{ "borderCollapse": "collapse", "padding": "5px", "width": "100%", "border": "1px solid black" }}>
                     <tr style={{ "borderCollapse": "collapse", "padding": "5px", "width": "100%", "border": "1px solid black" }}>
                         <th> Itinerary ID </th>
