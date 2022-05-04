@@ -71,6 +71,7 @@ function Hyperlink() {
 
     return (
         <div>
+            <div>
             <table
                 style={{ "borderCollapse": "collapse", "padding": "5px", "width": "100%", "border": "1px solid black" }}
                 className="table table-hover">
@@ -85,7 +86,8 @@ function Hyperlink() {
                 <tbody>
                     {rows}
                 </tbody>
-            </table>
+                </table>
+            </div>
             <label>
                 <p>Enter your user ID:</p>
                 <input type="number" placeholder="User ID" onChange={e => setUserID(e.target.value)} />

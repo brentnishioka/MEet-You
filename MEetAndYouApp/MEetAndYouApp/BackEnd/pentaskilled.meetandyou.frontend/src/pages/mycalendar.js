@@ -2,7 +2,7 @@ import React, { useState, Component, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import ICalendarLink from "react-icalendar-link";
-import './calendarStyling.css'
+import '../images/calendarStyling.css'
 import Select from 'react-select';
 
 //import Button from 'react-bootstrap/Button';
