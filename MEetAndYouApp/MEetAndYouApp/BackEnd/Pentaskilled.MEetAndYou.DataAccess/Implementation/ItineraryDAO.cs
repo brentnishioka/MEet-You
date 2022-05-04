@@ -25,15 +25,36 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             this._dbContext = dbContext;
         }
 
-        public Task<BaseResponse> ChangeItineraryName(string name)
+        /// <summary>
+        /// Method to change the Itinerary name in the database 
+        /// </summary>
+        /// <param name="itineraryID"> The category of the log. </param>
+        /// <param name="name"> The level of the log. </param
+        /// <returns> Returns true if the logging process executed successfully false if otherwise. </returns>
+        public Task<BaseResponse> ChangeItineraryName(int itineraryID, string name)
         {
             throw new NotImplementedException();
         }
 
-        public Task<BaseResponse> ChangeItineraryRating(int itineraryID)
+
+        /// <summary>
+        /// Method to change the user itinerary rating in the database.
+        /// </summary>
+        /// <param name="itineraryID"> ID of itinerary for db query </param>
+        /// <param name="rating"> new rating for itinerary </param>
+        /// <returns> Base response object that will be forwarded to the front end using api </returns>
+        public Task<BaseResponse> ChangeItineraryRating(int itineraryID, int rating)
         {
             throw new NotImplementedException();
         }
+
+
+
+        /// <summary>
+        /// Method to get user itineraries from the database.
+        /// </summary>
+        /// <param name="userID"> The category of the log. </param>
+        /// <returns> List of Itineraries pertaining to the user </returns>
         public List<Itinerary> GetUserItineraries(int userID)
         {
             List<Itinerary> itineraries;
@@ -58,7 +79,6 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             }
             return itineraries;
         }
-
 
     }
 }

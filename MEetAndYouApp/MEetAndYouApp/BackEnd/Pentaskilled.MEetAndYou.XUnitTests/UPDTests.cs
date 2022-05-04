@@ -40,7 +40,10 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             _dbcontext = new MEetAndYouDBContext(DbContextOptions);
         }
 
-        
+
+        /// <summary>
+        /// Test to see if the itinerary from the user is fetched from the database
+        /// </summary>
         [Fact]
         public void checkItineraryDAO()
         {
@@ -55,7 +58,9 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             Assert.True(valid);
         }
 
-
+        /// <summary>
+        /// Test to see the user's information is fetched from the database
+        /// </summary>
         [Fact]
         public void checkUserRecordDAO()
         {
@@ -70,6 +75,10 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             Assert.True(valid);
         }
 
+
+        /// <summary>
+        /// Test to see if the user data along with itineraries are fetched from the database and wrapped in a UPData object.
+        /// </summary>
         [Fact]
         public void checkGetUPData()
         {

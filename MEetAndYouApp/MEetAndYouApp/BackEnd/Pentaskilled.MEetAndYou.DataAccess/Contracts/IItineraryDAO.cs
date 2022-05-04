@@ -12,9 +12,9 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Contracts
     {
         List<Itinerary> GetUserItineraries(int userID);
 
-        Task<BaseResponse> ChangeItineraryName(string name);
+        Task<BaseResponse> ChangeItineraryName(int itineraryID,string name);
 
-        Task<BaseResponse> ChangeItineraryRating(int rating);
+        Task<BaseResponse> ChangeItineraryRating(int itineraryID,int rating);
 
 
 

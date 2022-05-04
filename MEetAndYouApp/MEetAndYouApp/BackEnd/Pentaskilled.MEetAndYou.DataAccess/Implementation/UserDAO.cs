@@ -23,7 +23,11 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             this._dbContext = _dbContext;
         }
 
-
+        /// <summary>
+        /// Method to get user account info from the database
+        /// </summary>
+        /// <param name="userID"> id of the user</param>
+        /// <returns> User account record </returns>
         public async Task<UserAccountRecord> getUserAccount(int userID)
         {
             return await _dbContext.UserAccountRecords.FindAsync(userID);

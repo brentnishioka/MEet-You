@@ -1,6 +1,7 @@
 import React from 'react';
 import ProfilePic from '../Components/UserProfileDashboard/ProfilePic';
 import UserInfo from '../Components/UserProfileDashboard/UserInfo';
+import ProfileItinerary from './profileItinerary';
 
 /**
  * 
@@ -11,7 +12,8 @@ function Userpd() {
         <div>
             <ProfilePic profileImage="" />
             <UserInfo firstName={"raymond"} lastName={"guevara"} userName={"raymondgggg"} email={"email@mail.com"} />
-            
+            <ProfileItinerary />
+
         </div>);
 }
 

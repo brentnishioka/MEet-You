@@ -43,7 +43,9 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
 
         }
 
-
+        /// <summary>
+        /// Test to see if email is successfully updated for the user.
+        /// </summary>
         [Fact]
         public void checkEmailUpdate()
         {
@@ -66,6 +68,9 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
 
         }
 
+        /// <summary>
+        /// Test to see if phone number for user is updated.
+        /// </summary>
         [Fact]
         public void checkPhoneUpdate()
         {
