@@ -93,6 +93,8 @@ builder.Services.AddSingleton<ISuggestionDAO, SuggestionDAO>();
 builder.Services.AddSingleton<IAPIService, EventAPIService>();
 builder.Services.AddSingleton<IMemoryAlbumDAO, MemoryAlbumDAO >();
 builder.Services.AddSingleton<IMemoryAlbumManager, MemoryAlbumManager>();
+builder.Services.AddSingleton<IHyperlinkDAO, HyperlinkDAO>();
+builder.Services.AddSingleton<IHyperlinkManager, HyperlinkManager>();
 
 
 //builder.Services.AddSingleton<Configuration>();
