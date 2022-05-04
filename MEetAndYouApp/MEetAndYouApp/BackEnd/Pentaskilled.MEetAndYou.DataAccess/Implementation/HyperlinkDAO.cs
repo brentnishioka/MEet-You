@@ -23,7 +23,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
         }
 
         /// <summary>
-        /// Pull a UserAccountRecord object from databse by email
+        /// Pulls a UserAccountRecord object from databse by email
         /// </summary>
         /// <param name="email"> the email of the UserAccountRecord to be pulled </param>
         /// <returns>  
@@ -139,25 +139,24 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
                 // Find associated itinerary
                 itin = await _dbContext.Itineraries.Include(i => i.UserItineraries).FirstOrDefaultAsync(i => i.ItineraryId == itineraryID);
 
+                // Do not modify if userAccountRecord ID matches Itinerary owner's ID
+                if (userAccountRecord.UserId == itin.ItineraryOwner)
+                {
+                    return new HyperlinkResponse("Unable to remove owner permissions", false, itin.UserItineraries.ToList(), GetAllEmailsAsync(itin.UserItineraries.ToList()).Result);
+                }
+
                 // Create userItinerary object to be removed
                 UserItinerary userItinerary = new UserItinerary(userAccountRecord.UserId, itineraryID, permission);
 
                 // Find object from context
-                var user = await _dbContext.UserItineraries.FirstOrDefaultAsync(u => u == userItinerary);
+                var user = await _dbContext.UserItineraries.FirstOrDefaultAsync(u => u == userItinerary); 
 
                 // Remove if user exists in userItinerary
                 if (itin.UserItineraries.Contains(user))
                 {
                     // Remove object from context
                     itin.UserItineraries.Remove(user);
-                    _dbContext.Entry(itin.UserItineraries).State = EntityState.Modified;
-
-                    // Check if owner has no permissions
-                    if (itin.UserItineraries.Where(a => a.UserId == user.UserId).Count() == 0)
-                    {
-                        itin.UserItineraries.Add(user);
-                        return new HyperlinkResponse("Owner must have at least one permission", false, itin.UserItineraries.ToList(), GetAllEmailsAsync(itin.UserItineraries.ToList()).Result);
-                    }
+                    _dbContext.Entry(itin).State = EntityState.Modified;
 
                     // Save changes to context
                     await _dbContext.SaveChangesAsync();
