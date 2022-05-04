@@ -27,48 +27,48 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
 
         public async Task<ItineraryResponse> RetrieveUserItinerary(int userID, int itineraryID)
         {
-            ItineraryResponse getUserItineraryResult = await _ratingDAO.GetUserItinerary(userID, itineraryID);
+            ItineraryResponse getUserItineraryResult = await _ratingDAO.GetUserItineraryAsync(userID, itineraryID);
             return getUserItineraryResult;
         }
 
         public async Task<RatingResponse> RetrieveUserRatings(int itineraryID)
         {
-            RatingResponse getUserRatingsResult = await _ratingDAO.GetUserEventRatings(itineraryID);
+            RatingResponse getUserRatingsResult = await _ratingDAO.GetUserEventRatingsAsync(itineraryID);
             return getUserRatingsResult;
         }
 
-        public BaseResponse CreateItineraryNote(int itineraryID, string noteContent)
+        public async Task<BaseResponse> CreateItineraryNote(int itineraryID, string noteContent)
         {
             ItineraryNote itineraryNote = new ItineraryNote(itineraryID, noteContent);
-            BaseResponse addNoteResult = _ratingDAO.AddNoteInDBAsync(itineraryNote).Result;
+            BaseResponse addNoteResult = await _ratingDAO.AddNoteInDBAsync(itineraryNote);
             return addNoteResult;
         }
 
-        public BaseResponse CreateRating(int eventID, int itineraryID, int userRating)
+        public async Task<BaseResponse> CreateRating(int eventID, int itineraryID, int userRating)
         {
             UserEventRating userEventRating = new UserEventRating(eventID, itineraryID, userRating);
-            BaseResponse addRatingResult = _ratingDAO.AddRatingInDBAsync(userEventRating).Result;
+            BaseResponse addRatingResult = await _ratingDAO.AddRatingInDBAsync(userEventRating);
             //BaseResponse logAddRatingResult = _ratingService.LogCreatedNoteAsync(userEventRating);
             return addRatingResult;
             //throw new NotImplementedException();
         }
 
-        public BaseResponse ModifyItineraryNote(int itineraryID, string noteContent)
+        public async Task<BaseResponse> ModifyItineraryNote(int itineraryID, string noteContent)
         {
             ItineraryNote itineraryNote = new ItineraryNote(itineraryID, noteContent);
-            BaseResponse modifyNoteResult = _ratingDAO.ModifyNoteInDBAsync(itineraryNote).Result;
+            BaseResponse modifyNoteResult = await _ratingDAO.ModifyNoteInDBAsync(itineraryNote);
             return modifyNoteResult;
         }
 
-        public BaseResponse ModifyRating(int eventID, int itineraryID, int userRating)
+        public async Task<BaseResponse> ModifyRating(int eventID, int itineraryID, int userRating)
         {
             // First, check to see if the event already has an existing rating.
-            UserEventRating existingEventRating = _dbcontext.UserEventRatings.Where(x => x.EventId == eventID && x.ItineraryId == itineraryID).FirstOrDefault();
+            UserEventRating existingEventRating = await _dbcontext.UserEventRatings.FindAsync(eventID, itineraryID);
             if (existingEventRating != null)
             {
                 existingEventRating.UserRating = userRating;
             }
-            BaseResponse modifyRatingResult = _ratingDAO.ModifyRatingInDBAsync(existingEventRating).Result;
+            BaseResponse modifyRatingResult = await _ratingDAO.ModifyRatingInDBAsync(existingEventRating);
             return modifyRatingResult;
         }
     }

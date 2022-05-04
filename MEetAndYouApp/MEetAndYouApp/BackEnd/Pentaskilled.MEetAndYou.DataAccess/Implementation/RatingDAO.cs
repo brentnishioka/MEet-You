@@ -20,7 +20,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             _dbcontext = dbcontext;
         }
 
-        public async Task<ItineraryResponse> GetUserItinerary(int userID, int itineraryID)
+        public async Task<ItineraryResponse> GetUserItineraryAsync(int userID, int itineraryID)
         {
             List<Itinerary> itinerary = null;
             try
@@ -42,7 +42,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             return new ItineraryResponse("The itinerary was retrieved successfully.", true, itinerary);
         }
 
-        public async Task<RatingResponse> GetUserEventRatings(int itineraryID)
+        public async Task<RatingResponse> GetUserEventRatingsAsync(int itineraryID)
         {
             List<UserEventRating> userEventRatings = null;
             try

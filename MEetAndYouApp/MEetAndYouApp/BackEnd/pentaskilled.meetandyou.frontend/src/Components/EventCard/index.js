@@ -1,10 +1,49 @@
 import React, { useEffect, useState } from "react";
 import LocationPin from "../LocationPin";
+import DisplayLocationPin from "../LocationPin/DisplayLocationPin"
 
 function EventCard({ event, itineraryID }) {
     const [userRating, setUserRating] = useState(null);
+    const [fetchedEventRatings, setFetchedEventRatings] = useState(null);
+    const [currentEventRating, setCurrentEventRating] = useState(null);
     const [currentEventID] = useState(event.eventId);
     const [currentItineraryID] = useState(itineraryID);
+
+    const fetchUserEventRating = async () => {
+
+        var ratingRequestOptions = {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': true
+            },
+            mode: 'cors'
+        };
+
+        try {
+            const rateRes = await fetch(`https://localhost:9000/api/Rating/GetUserEventRatings?itineraryID=${encodeURIComponent(currentItineraryID)}`, ratingRequestOptions)
+            const ratingResponse = await rateRes.json()
+            console.log('System response: ', ratingResponse)
+            setFetchedEventRatings(ratingResponse.data);
+        }
+        catch (error) {
+            console.log('error');
+        }
+    }
+    // console.log(fetchedEventRatings && fetchedEventRatings[0].userRating)
+    
+    // const updateEventRatings = fetchedEventRatings && fetchedEventRatings.map((rating) => {
+    //     if(currentEventID === rating.eventId && currentItineraryID === rating.itineraryId)
+    //     setCurrentEventRating(rating.userRating);
+    // })
+
+    const getCurrentEventRating = fetchedEventRatings && fetchedEventRatings.map((rating) => {
+        if(currentEventID === rating.eventId && currentItineraryID === rating.itineraryId) {
+            return (rating.userRating)
+        }
+    })
+
     
     const createUserEventRating = async () => {
 
@@ -62,13 +101,15 @@ function EventCard({ event, itineraryID }) {
     }
 
     useEffect(() => {
+        fetchUserEventRating();
         // createUserEventRating();
-        modifyUserEventRating();
-    })
+        // modifyUserEventRating();
+    }, [])
 
     return (
         <div>
             <h4>Event Name: {event.eventName}</h4>
+            <DisplayLocationPin eventRating={getCurrentEventRating}/>
             <LocationPin rating={userRating} onRating={(userRating) => setUserRating(userRating)} />
             <p>Address: {event.address}</p>
             <p>Description: {event.description}</p>

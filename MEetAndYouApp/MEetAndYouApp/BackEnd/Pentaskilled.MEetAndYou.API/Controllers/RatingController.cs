@@ -39,39 +39,39 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
 
         [HttpPost]
         [Route("PostRatingCreation")]
-        public ActionResult<BaseResponse> PostRatingCreation([FromBody] UserEventRatingJSON model)
+        public async Task<ActionResult<BaseResponse>> PostRatingCreation([FromBody] UserEventRatingJSON model)
         {
             var eventID = model.eventID;
             var itineraryID = model.itineraryID;
             var userRating = model.userRating;
-            BaseResponse postRatingCreationResult = _ratingManager.CreateRating(eventID, itineraryID, userRating);
+            BaseResponse postRatingCreationResult = await _ratingManager.CreateRating(eventID, itineraryID, userRating);
             return postRatingCreationResult;
         }
 
         [HttpPost]
         [Route("PostNoteCreaton")]
-        public ActionResult<BaseResponse> PostNoteCreaton(int itineraryID, string noteContent)
+        public async Task<ActionResult<BaseResponse>> PostNoteCreaton(int itineraryID, string noteContent)
         {
-            BaseResponse postNoteCreationResult = _ratingManager.CreateItineraryNote(itineraryID, noteContent);
+            BaseResponse postNoteCreationResult = await _ratingManager.CreateItineraryNote(itineraryID, noteContent);
             return postNoteCreationResult;
         }
 
         [HttpPut]
         [Route("PutRatingModification")]
-        public ActionResult<BaseResponse> PutRatingModification([FromBody] UserEventRatingJSON model)
+        public async Task<ActionResult<BaseResponse>> PutRatingModification([FromBody] UserEventRatingJSON model)
         {
             var eventID = model.eventID;
             var itineraryID = model.itineraryID;
             var userRating = model.userRating;
-            BaseResponse putRatingModificationResult = _ratingManager.ModifyRating(eventID, itineraryID, userRating);
+            BaseResponse putRatingModificationResult = await _ratingManager.ModifyRating(eventID, itineraryID, userRating);
             return putRatingModificationResult;
         }
 
         [HttpPut]
         [Route("PutNoteModification")]
-        public ActionResult<BaseResponse> PutNoteModification(int itineraryID, string noteContent)
+        public async Task<ActionResult<BaseResponse>> PutNoteModification(int itineraryID, string noteContent)
         {
-            BaseResponse putNoteModificationResult = _ratingManager.ModifyItineraryNote(itineraryID, noteContent);
+            BaseResponse putNoteModificationResult = await _ratingManager.ModifyItineraryNote(itineraryID, noteContent);
             return putNoteModificationResult;
         }
     }
