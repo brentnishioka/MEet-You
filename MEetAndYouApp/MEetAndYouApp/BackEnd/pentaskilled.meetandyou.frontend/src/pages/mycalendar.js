@@ -33,7 +33,7 @@ function MyCalendar() {
             mode: 'cors'
         };
         console.log(date);
-        await fetch(`https://localhost:9000/Calendar?userID=` + id + "&date=" + dateString, requestOptions)
+        await fetch(`https://meetandyou.me:8001/Calendar?userID=` + id + "&date=" + dateString, requestOptions)
             .then(response => response.json())
             .then(response => setItinerary(response.data))
     }
