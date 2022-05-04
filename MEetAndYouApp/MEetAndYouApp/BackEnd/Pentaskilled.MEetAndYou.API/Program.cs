@@ -70,6 +70,9 @@ builder.Services.AddControllers();
 //Dependency injection for Controllers
 builder.Services.AddSingleton<AuthnManager>();
 builder.Services.AddSingleton<CopyManager>();
+builder.Services.AddSingleton<UPDManager>();
+builder.Services.AddSingleton<ItineraryDAO>();
+builder.Services.AddSingleton<UserDAO>();
 builder.Services.AddSingleton<IAuthorizationManager, AuthorizationManager>();
 builder.Services.AddSingleton<ICalendarManager, CalendarManager>();
 builder.Services.AddSingleton<IRatingManager, RatingManager>();
