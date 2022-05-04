@@ -12,7 +12,7 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UPD : ControllerBase
+    public class UPDController : ControllerBase
     {
         private ItineraryDAO _itineraryDAO;
         private UPDManager _updManager;
@@ -21,7 +21,7 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
 
 
 
-        public UPD(ItineraryDAO itineraryDAO, UPDManager updManager, UserDAO userDAO, MEetAndYouDBContext dBContext)
+        public UPDController(ItineraryDAO itineraryDAO, UPDManager updManager, UserDAO userDAO, MEetAndYouDBContext dBContext)
         {
             //this.authorizationManager = authorizationManager;
             _itineraryDAO = itineraryDAO;

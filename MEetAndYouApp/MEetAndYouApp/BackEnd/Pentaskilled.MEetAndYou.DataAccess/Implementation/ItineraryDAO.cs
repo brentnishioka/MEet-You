@@ -30,34 +30,32 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             throw new NotImplementedException();
         }
 
-        public Task<BaseResponse> ChangeItineraryRating(int rating)
+        public Task<BaseResponse> ChangeItineraryRating(int itineraryID)
         {
             throw new NotImplementedException();
         }
 
-        public List<Itinerary> GetUserItineraries(int userID)
+        public async Task<ItineraryResponse> GetUserItineraries(int userID)
         {
-            List<Itinerary> itineraries;
+            List<Itinerary> itineraries = null;
+            string sucessMessage = "Getting all Itineraries was successful.";
             try
             {
-                itineraries =
-                (from itin in _dbContext.Itineraries.Include("ItineraryOwnerNavigation")
-                 where itin.ItineraryOwner == userID
-                 select itin).ToList<Itinerary>();
+                itineraries = await (from itin in _dbContext.Itineraries.Include("Events")
+                                     where itin.ItineraryOwner == userID
+                                     select itin).ToListAsync<Itinerary>();
             }
             catch (SqlException ex)
             {
-                Console.WriteLine("Sql exception occur when getting itinerary");
-                Console.WriteLine(ex.Message);
-                return null;
+                return new ItineraryResponse
+                    ("Getting Itineraries failed due to database error \n" + ex.Message, false, itineraries);
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception occur when trying to get itinerary by ID");
-                Console.WriteLine(ex.Message);
-                return null;
+                return new ItineraryResponse
+                    ("Getting Itineraries failed. \n" + ex.Message, false, itineraries);
             }
-            return itineraries;
+            return new ItineraryResponse(sucessMessage, true, itineraries);
         }
 
     }
