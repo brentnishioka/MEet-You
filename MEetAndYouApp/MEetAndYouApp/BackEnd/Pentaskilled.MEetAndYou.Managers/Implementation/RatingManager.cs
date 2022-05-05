@@ -63,12 +63,8 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
         public async Task<BaseResponse> ModifyRating(int eventID, int itineraryID, int userRating)
         {
             // First, check to see if the event already has an existing rating.
-            UserEventRating existingEventRating = await _dbcontext.UserEventRatings.FindAsync(eventID, itineraryID);
-            if (existingEventRating != null)
-            {
-                existingEventRating.UserRating = userRating;
-            }
-            BaseResponse modifyRatingResult = await _ratingDAO.ModifyRatingInDBAsync(existingEventRating);
+            UserEventRating userEventRating = new UserEventRating(eventID, itineraryID, userRating);
+            BaseResponse modifyRatingResult = await _ratingDAO.ModifyRatingInDBAsync(userEventRating);
             return modifyRatingResult;
         }
     }

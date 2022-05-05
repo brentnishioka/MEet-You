@@ -4,12 +4,13 @@ import DisplayLocationPin from "../LocationPin/DisplayLocationPin"
 
 function EventCard({ event, itineraryID }) {
     const [userRating, setUserRating] = useState(null);
+    const [respMessage, setRespMessage] = useState(null);
     const [fetchedEventRatings, setFetchedEventRatings] = useState(null);
-    const [currentEventRating, setCurrentEventRating] = useState(null);
     const [currentEventID] = useState(event.eventId);
     const [currentItineraryID] = useState(itineraryID);
 
     const fetchUserEventRating = async () => {
+        var ratingRequestURL = `https://localhost:9000/api/Rating/GetUserEventRatings?itineraryID=${encodeURIComponent(currentItineraryID)}`
 
         var ratingRequestOptions = {
             method: "GET",
@@ -22,27 +23,23 @@ function EventCard({ event, itineraryID }) {
         };
 
         try {
-            const rateRes = await fetch(`https://localhost:9000/api/Rating/GetUserEventRatings?itineraryID=${encodeURIComponent(currentItineraryID)}`, ratingRequestOptions)
+            const rateRes = await fetch(ratingRequestURL, ratingRequestOptions)
             const ratingResponse = await rateRes.json()
             setFetchedEventRatings(ratingResponse.data);
-            setCurrentEventRating(ratingResponse.data.userRating)
+            setRespMessage(ratingResponse.message);
         }
         catch (error) {
             console.log('error');
         }
     }
 
-    // console.log(fetchedEventRatings && fetchedEventRatings[0].userRating)
-    
-    // const updateEventRatings = fetchedEventRatings && fetchedEventRatings.map((rating) => {
-    //     if(currentEventID === rating.eventId && currentItineraryID === rating.itineraryId)
-    //     setCurrentEventRating(rating.userRating);
-    // })
-
-    const getCurrentEventRating = fetchedEventRatings && fetchedEventRatings.indexOf(currentEventRating)
-
+    const getCurrentEventRating = fetchedEventRatings && fetchedEventRatings.find((rating) => {
+        if (rating.eventId === currentEventID)
+        return(rating.userRating)
+    })
 
     const createUserEventRating = async () => {
+        var requestURL = 'https://localhost:9000/api/Rating/PostRatingCreation'
 
         var requestOptions = {
             method: "POST",
@@ -60,7 +57,7 @@ function EventCard({ event, itineraryID }) {
         };
 
         try {
-            await fetch('https://localhost:9000/api/Rating/PostRatingCreation', requestOptions).then(
+            await fetch(requestURL, requestOptions).then(
                 response => console.log("System response: ", response.json())
             )
         }
@@ -71,6 +68,7 @@ function EventCard({ event, itineraryID }) {
     }
 
     const modifyUserEventRating = async () => {
+        var requestURL = 'https://localhost:9000/api/Rating/PutRatingModification'
 
         var requestOptions = {
             method: "PUT",
@@ -88,7 +86,7 @@ function EventCard({ event, itineraryID }) {
         };
 
         try {
-            await fetch('https://localhost:9000/api/Rating/PutRatingModification', requestOptions).then(
+            await fetch(requestURL, requestOptions).then(
                 response => console.log("System response: ", response.json())
             )
         }
@@ -99,9 +97,16 @@ function EventCard({ event, itineraryID }) {
 
     useEffect(() => {
         fetchUserEventRating();
-        // createUserEventRating();
-        // modifyUserEventRating();
     }, [])
+
+    useEffect(() => {
+        if (getCurrentEventRating === undefined) {
+            createUserEventRating();
+        }
+        else {
+            modifyUserEventRating();
+        }
+    }, [userRating])
 
     return (
         <div>

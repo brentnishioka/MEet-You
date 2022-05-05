@@ -67,6 +67,12 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
         {
             try
             {
+                var local = _dbcontext.Set<UserEventRating>().Local
+                    .FirstOrDefault(entry => entry.ItineraryId.Equals(userRating.ItineraryId) && entry.EventId.Equals(userRating.EventId));
+                if (local != null)
+                {
+                    _dbcontext.Entry(local).State = EntityState.Detached;
+                }
                 _dbcontext.Entry(userRating).State = EntityState.Added;
                 int addRatingResult = await _dbcontext.SaveChangesAsync();
             }
@@ -85,16 +91,22 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
         {
             try
             {
+                var local = _dbcontext.Set<UserEventRating>().Local
+                    .FirstOrDefault(entry => entry.ItineraryId.Equals(userRating.ItineraryId) && entry.EventId.Equals(userRating.EventId));
+                if (local != null)
+                {
+                    _dbcontext.Entry(local).State = EntityState.Detached;
+                }
                 _dbcontext.Entry(userRating).State = EntityState.Modified;
                 int modifyRatingResult = await _dbcontext.SaveChangesAsync();
             }
             catch (SqlException ex)
             {
-                return new BaseResponse("An error occurred when modifying the rating in the database.", false);
+                return new BaseResponse("An error occurred when modifying the rating in the database." + ex.Message, false);
             }
             catch (Exception ex)
             {
-                return new BaseResponse("The rating could not be modified.", false);
+                return new BaseResponse("The rating could not be modified. " + ex.Message, false);
             }
             return new BaseResponse("The rating was successfully modified.", true);
         }
