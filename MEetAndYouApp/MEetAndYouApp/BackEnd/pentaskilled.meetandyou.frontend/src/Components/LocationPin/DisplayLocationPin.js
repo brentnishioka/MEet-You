@@ -3,6 +3,7 @@ import { FaLocationArrow } from "react-icons/fa"
 
 const DisplayLocationPin = ({ eventRating }) => {
     console.log(eventRating)
+
     return (
         <div>
             <h5>Current Rating:</h5>

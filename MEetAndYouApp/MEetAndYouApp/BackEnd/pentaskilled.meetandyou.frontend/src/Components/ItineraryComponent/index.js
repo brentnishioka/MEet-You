@@ -4,7 +4,7 @@ import EventCard from "../EventCard";
 function ItineraryComponent({ inputtedItinID }) {
     const [userItinerary, setUserItinerary] = useState(null);
 
-    let userId = 9;
+    let userId = 5;
 
     const fetchItinerary = async () => {
 
