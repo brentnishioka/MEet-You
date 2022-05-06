@@ -3,12 +3,24 @@ import React, { useEffect, useRef, useState } from "react";
 function NoteComponent({ itineraryID }) {
     const [note, setNote] = useState(null);
     const [fetchedNoteContent, setFetchedNoteContent] = useState(null);
+    const [isNoteLengthValid, setIsNoteLengthValid] = useState(true);
     const noteInputBox = useRef(null);
+
+    const checkNoteLength = (length) => {
+        if (length <= 300) {
+            setIsNoteLengthValid(true);
+        }
+        else {
+            setIsNoteLengthValid(false);
+        }
+    }
 
     const handleClick = (e) => {
         e.preventDefault();
         const input = noteInputBox;
-        setNote(input.current.value);
+        const currentTextInput = input.current.value;
+        checkNoteLength(currentTextInput.length);
+        isNoteLengthValid && setNote(input.current.value);
     }
 
     const fetchUserNote = async () => {
@@ -38,8 +50,6 @@ function NoteComponent({ itineraryID }) {
         if (content.itineraryId === itineraryID)
         return(content.noteContent)
     })
-
-    // console.log('getCurrentNoteContent: ', getCurrentNoteContent)
 
     const postUserNote = async () => {
         const requestURL = 'https://localhost:9000/api/Rating/PostNoteCreaton'
@@ -88,7 +98,6 @@ function NoteComponent({ itineraryID }) {
         try {
             const res = await fetch(requestURL, putNoteRequestOptions)
             const noteResponse = await res.json()
-            // console.log(noteResponse.data)
         }
         catch (error) {
             console.log(error)
@@ -100,7 +109,7 @@ function NoteComponent({ itineraryID }) {
     }, [])
 
     useEffect(() => {
-        if (getCurrentNoteContent === undefined) {
+        if (isNoteLengthValid && getCurrentNoteContent === undefined) {
             postUserNote();
         }
         else {
@@ -108,20 +117,28 @@ function NoteComponent({ itineraryID }) {
         }
     }, [note])
 
-    return (
-        <>
-            <div>
-                <h5>Current Note Content:</h5>
-                <p>{getCurrentNoteContent}</p>
-            </div>
-            <div>
-                <textarea ref={noteInputBox} name="paragraph_text" cols="50" rows="10" />
-            </div>
-            <div>
-                <button onClick={e => handleClick(e)}>Submit Note</button>
-            </div>
-        </>
-    );
+    if (isNoteLengthValid) {
+        return (
+            <>
+                <div>
+                    <h5>Current Note Content:</h5>
+                    <p>{getCurrentNoteContent}</p>
+                </div>
+                <div>
+                    <textarea ref={noteInputBox} name="paragraph_text" cols="50" rows="10" maxLength="300" />
+                </div>
+                <div>
+                    <button onClick={e => handleClick(e)}>Submit Note</button>
+                </div>
+            </>
+        );
+    }
+    else {
+        return (
+            <>Invalid note length.</>
+        );
+    }
 }
+
 
 export default NoteComponent;
