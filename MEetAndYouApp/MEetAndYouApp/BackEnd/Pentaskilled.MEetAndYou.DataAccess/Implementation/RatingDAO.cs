@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Pentaskilled.MEetAndYou.DataAccess.Contracts;
@@ -44,6 +45,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
 
         public async Task<RatingResponse> GetUserEventRatingsAsync(int itineraryID)
         {
+            Thread.Sleep(200);
             List<UserEventRating> userEventRatings = null;
             try
             {
@@ -63,17 +65,41 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             return new RatingResponse("The user's event ratings were retrieved successfully.", true, userEventRatings);
         }
 
+        public async Task<NoteResponse> GetUserItineraryNoteAsync(int itineraryID)
+        {
+            List<ItineraryNote> itineraryNote = null;
+            try
+            {
+                itineraryNote = await
+                    (from notes in _dbcontext.ItineraryNotes
+                     where notes.ItineraryId == itineraryID
+                     select notes).ToListAsync<ItineraryNote>();
+            }
+            catch (SqlException ex)
+            {
+                return new NoteResponse("An error occurred when retrieving the user's notes from the database." + ex.Message, false, itineraryNote);
+            }
+            catch (Exception ex)
+            {
+                return new NoteResponse("An error occurred when retrieving the user's event ratings." + ex.Message, false, itineraryNote);
+            }
+            return new NoteResponse("The user's itinerary note was retrieved successfully.", true, itineraryNote);
+        }
+
         public async Task<BaseResponse> AddRatingInDBAsync(UserEventRating userRating)
         {
             try
             {
-                var local = _dbcontext.Set<UserEventRating>().Local
-                    .FirstOrDefault(entry => entry.ItineraryId.Equals(userRating.ItineraryId) && entry.EventId.Equals(userRating.EventId));
-                if (local != null)
-                {
-                    _dbcontext.Entry(local).State = EntityState.Detached;
-                }
-                _dbcontext.Entry(userRating).State = EntityState.Added;
+                var task = Task.Run(() => {
+                    var local = _dbcontext.Set<UserEventRating>().Local
+                        .FirstOrDefault(entry => entry.ItineraryId.Equals(userRating.ItineraryId) && entry.EventId.Equals(userRating.EventId));
+                    if (local != null)
+                    {
+                        _dbcontext.Entry(local).State = EntityState.Detached;
+                    }
+                    _dbcontext.Entry(userRating).State = EntityState.Added;
+                });
+                await task;
                 int addRatingResult = await _dbcontext.SaveChangesAsync();
             }
             catch (SqlException ex)
@@ -91,13 +117,16 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
         {
             try
             {
-                var local = _dbcontext.Set<UserEventRating>().Local
-                    .FirstOrDefault(entry => entry.ItineraryId.Equals(userRating.ItineraryId) && entry.EventId.Equals(userRating.EventId));
-                if (local != null)
-                {
-                    _dbcontext.Entry(local).State = EntityState.Detached;
-                }
-                _dbcontext.Entry(userRating).State = EntityState.Modified;
+                var task = Task.Run(() => {
+                    var local = _dbcontext.Set<UserEventRating>().Local
+                        .FirstOrDefault(entry => entry.ItineraryId.Equals(userRating.ItineraryId) && entry.EventId.Equals(userRating.EventId));
+                    if (local != null)
+                    {
+                        _dbcontext.Entry(local).State = EntityState.Detached;
+                    }
+                    _dbcontext.Entry(userRating).State = EntityState.Modified;
+                });
+                await task;
                 int modifyRatingResult = await _dbcontext.SaveChangesAsync();
             }
             catch (SqlException ex)
@@ -115,7 +144,16 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
         {
             try
             {
-                _dbcontext.Entry(itineraryNote).State = EntityState.Added;
+                var task = Task.Run(() => {
+                    var local = _dbcontext.Set<ItineraryNote>().Local
+                        .FirstOrDefault(entry => entry.ItineraryId.Equals(itineraryNote.ItineraryId));
+                    if (local != null)
+                    {
+                        _dbcontext.Entry(local).State = EntityState.Detached;
+                    }
+                    _dbcontext.Entry(itineraryNote).State = EntityState.Added;
+                });
+                await task;
                 int addRatingResult = await _dbcontext.SaveChangesAsync();
             }
             catch (SqlException ex)
@@ -133,7 +171,16 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
         {
             try
             {
-                _dbcontext.Entry(itineraryNote).State = EntityState.Modified;
+                var task = Task.Run(() => {
+                    var local = _dbcontext.Set<ItineraryNote>().Local
+                        .FirstOrDefault(entry => entry.ItineraryId.Equals(itineraryNote.ItineraryId));
+                    if (local != null)
+                    {
+                        _dbcontext.Entry(local).State = EntityState.Detached;
+                    }
+                    _dbcontext.Entry(itineraryNote).State = EntityState.Modified;
+                });
+                await task;
                 int modifyRatingResult = await _dbcontext.SaveChangesAsync();
             }
             catch (SqlException ex)

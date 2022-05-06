@@ -37,6 +37,14 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
             return getRatingResult;
         }
 
+        [HttpGet]
+        [Route("GetUserNote")]
+        public async Task<ActionResult<NoteResponse>> GetUserNote(int itineraryID)
+        {
+            NoteResponse getNoteResult = await _ratingManager.RetrieveUserNote(itineraryID);
+            return getNoteResult;
+        }
+
         [HttpPost]
         [Route("PostRatingCreation")]
         public async Task<ActionResult<BaseResponse>> PostRatingCreation([FromBody] UserEventRatingJSON model)
@@ -50,8 +58,10 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
 
         [HttpPost]
         [Route("PostNoteCreaton")]
-        public async Task<ActionResult<BaseResponse>> PostNoteCreaton(int itineraryID, string noteContent)
+        public async Task<ActionResult<BaseResponse>> PostNoteCreaton([FromBody] ItineraryNoteJSON model)
         {
+            int itineraryID = model.itineraryID;
+            string noteContent = model.noteContent;
             BaseResponse postNoteCreationResult = await _ratingManager.CreateItineraryNote(itineraryID, noteContent);
             return postNoteCreationResult;
         }
@@ -69,8 +79,10 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
 
         [HttpPut]
         [Route("PutNoteModification")]
-        public async Task<ActionResult<BaseResponse>> PutNoteModification(int itineraryID, string noteContent)
+        public async Task<ActionResult<BaseResponse>> PutNoteModification([FromBody] ItineraryNoteJSON model)
         {
+            int itineraryID = model.itineraryID;
+            string noteContent = model.noteContent;
             BaseResponse putNoteModificationResult = await _ratingManager.ModifyItineraryNote(itineraryID, noteContent);
             return putNoteModificationResult;
         }
@@ -81,5 +93,11 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
         public int eventID { get; set; }
         public int itineraryID { get; set; }
         public int userRating { get; set; }
+    }
+
+    public class ItineraryNoteJSON
+    {
+        public int itineraryID { get; set; }
+        public string noteContent { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import EventCard from "../EventCard";
+import NoteComponent from "../NoteComponent/NoteComponent";
 
 function ItineraryComponent({ inputtedItinID }) {
     const [userItinerary, setUserItinerary] = useState(null);
@@ -7,6 +8,7 @@ function ItineraryComponent({ inputtedItinID }) {
     let userId = 5;
 
     const fetchItinerary = async () => {
+        const requestURL = `https://localhost:9000/api/Rating/GetUserItinerary?userID=${encodeURIComponent(userId)}&itineraryID=${encodeURIComponent(inputtedItinID)}`
 
         var itinRequestOptions = {
             method: "GET",
@@ -19,7 +21,7 @@ function ItineraryComponent({ inputtedItinID }) {
         };
 
         try {
-            const itinRes = await fetch(`https://localhost:9000/api/Rating/GetUserItinerary?userID=${encodeURIComponent(userId)}&itineraryID=${encodeURIComponent(inputtedItinID)}`, itinRequestOptions)
+            const itinRes = await fetch(requestURL, itinRequestOptions)
             const itineraryResponse = await itinRes.json()
             setUserItinerary(itineraryResponse.data);
         }
@@ -49,6 +51,7 @@ function ItineraryComponent({ inputtedItinID }) {
         <>
             <div>
                 <h2>Itinerary: {userItinerary[0].itineraryName}</h2>
+                <NoteComponent itineraryID={userItinerary[0].itineraryId}/>
                 {displayEvents}
             </div>
         </>

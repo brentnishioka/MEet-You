@@ -11,6 +11,7 @@ namespace Pentaskilled.MEetAndYou.Managers.Contracts
     {
         Task<ItineraryResponse> RetrieveUserItinerary(int userID, int itineraryID);
         Task<RatingResponse> RetrieveUserRatings(int itineraryID);
+        Task<NoteResponse> RetrieveUserNote(int itineraryID);
         Task<BaseResponse> CreateRating(int eventID, int itineraryID, int userRating);
         Task<BaseResponse> ModifyRating(int eventID, int itineraryID, int userRating);
         Task<BaseResponse> CreateItineraryNote(int itineraryID, string noteContent);

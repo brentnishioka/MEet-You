@@ -37,6 +37,12 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
             return getUserRatingsResult;
         }
 
+        public async Task<NoteResponse> RetrieveUserNote(int itineraryID)
+        {
+            NoteResponse getUserNoteResult = await _ratingDAO.GetUserItineraryNoteAsync(itineraryID);
+            return getUserNoteResult;
+        }
+
         public async Task<BaseResponse> CreateItineraryNote(int itineraryID, string noteContent)
         {
             ItineraryNote itineraryNote = new ItineraryNote(itineraryID, noteContent);

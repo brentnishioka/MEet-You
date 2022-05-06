@@ -38,6 +38,10 @@ function EventCard({ event, itineraryID }) {
         return(rating.userRating)
     })
 
+    const convertDate = () => {
+        return(event.eventDate);
+    }
+
     const createUserEventRating = async () => {
         var requestURL = 'https://localhost:9000/api/Rating/PostRatingCreation'
 
@@ -115,8 +119,8 @@ function EventCard({ event, itineraryID }) {
             <LocationPin rating={userRating} onRating={(userRating) => setUserRating(userRating)} />
             <p>Address: {event.address}</p>
             <p>Description: {event.description}</p>
-            <p>Date: {event.eventDate}</p>
-            <p>Price: ${event.price}</p>
+            <p>Date: {new Date(event.eventDate).toLocaleString('en-US', {hour12: false})}</p>
+            <p>Price: ${event.price === null ? '0' : event.price}</p>
         </div>
     );
 }
