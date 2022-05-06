@@ -2,10 +2,20 @@ import React, { useEffect, useState } from "react";
 import EventCard from "../EventCard";
 import NoteComponent from "../NoteComponent/NoteComponent";
 
-function ItineraryComponent({ inputtedItinID }) {
+function ItineraryComponent({ inputtedItinID, isInputValid }) {
     const [userItinerary, setUserItinerary] = useState(null);
+    const [isLengthValid, setIsLengthValid] = useState(null);
 
     let userId = 5;
+
+    const validateLength = (length) => {
+        if (length > 0) {
+            setIsLengthValid(true);
+        }
+        else {
+            setIsLengthValid(false);
+        }
+    }
 
     const fetchItinerary = async () => {
         const requestURL = `https://localhost:9000/api/Rating/GetUserItinerary?userID=${encodeURIComponent(userId)}&itineraryID=${encodeURIComponent(inputtedItinID)}`
@@ -23,6 +33,7 @@ function ItineraryComponent({ inputtedItinID }) {
         try {
             const itinRes = await fetch(requestURL, itinRequestOptions)
             const itineraryResponse = await itinRes.json()
+            validateLength(itineraryResponse.data.length)
             setUserItinerary(itineraryResponse.data);
         }
         catch (error) {
@@ -31,14 +42,14 @@ function ItineraryComponent({ inputtedItinID }) {
     }
 
     useEffect(() => {
-        fetchItinerary();
+        isInputValid && fetchItinerary();
     }, [inputtedItinID])
 
     if (!userItinerary) {
         return <>Loading Itinerary...</>;
     }
 
-    const displayEvents = userItinerary[0].events.map((event) =>
+    const displayEvents = isLengthValid && userItinerary[0].events.map((event) =>
         <div>
             <EventCard
                 event={event}
@@ -47,15 +58,23 @@ function ItineraryComponent({ inputtedItinID }) {
         </div>
     )
 
-    return (
-        <>
-            <div>
-                <h2>Itinerary: {userItinerary[0].itineraryName}</h2>
-                <NoteComponent itineraryID={userItinerary[0].itineraryId}/>
-                {displayEvents}
-            </div>
-        </>
-    );
+    if (isLengthValid) {
+        return (
+            <>
+                <div>
+                    <h2>Itinerary: {userItinerary[0].itineraryName}</h2>
+                    <NoteComponent itineraryID={userItinerary[0].itineraryId}/>
+                    {displayEvents}
+                </div>
+            </>
+        );
+    }
+    else {
+        return (
+            <>Could not retrieve itinerary.</>
+        );
+    }
+
 }
 
 export default ItineraryComponent;

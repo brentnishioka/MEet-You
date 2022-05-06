@@ -3,21 +3,24 @@ import ItineraryComponent from "../Components/ItineraryComponent";
 
 function Rating() {
     const [userInputItinID, setUserInputItinID] = useState(null);
+    const [isInputValid, setIsInputValid] = useState(true);
     const idInputForm = useRef(null);
 
-    function validateID(id) {
-        try {
-            Number.isInteger(id);
+    const validateID = (id) => {
+        if (!isNaN(id) && id > 0) {
+            setIsInputValid(true);
         }
-        catch(error) {
-            console.log('The inputted value is not a valid id.')
+        else {
+            setIsInputValid(false);
         }
     }
 
     const handleClick = (e) => {
         e.preventDefault();
         const input = idInputForm;
-        setUserInputItinID(input.current.value);
+        const currentInput = input.current.value;
+        validateID(currentInput);
+        isInputValid && setUserInputItinID(currentInput);
     }
 
     return (
@@ -32,7 +35,7 @@ function Rating() {
                 </form>
             </div>
             <div className="itineraryDiv">
-                <ItineraryComponent inputtedItinID={userInputItinID} />
+                <ItineraryComponent inputtedItinID={userInputItinID} isInputValid={isInputValid} />
             </div>
         </>
     );
