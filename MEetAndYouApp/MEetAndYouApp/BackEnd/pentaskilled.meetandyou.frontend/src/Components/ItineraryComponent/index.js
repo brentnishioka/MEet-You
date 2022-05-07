@@ -8,7 +8,7 @@ function ItineraryComponent({ inputtedItinID, isInputValid }) {
 
     let userId = 5;
 
-    const validateLength = (length) => {
+    const isValidDataLength = (length) => {
         if (length > 0) {
             setIsLengthValid(true);
         }
@@ -17,8 +17,17 @@ function ItineraryComponent({ inputtedItinID, isInputValid }) {
         }
     }
 
+    const isUserIDValid = () => {
+        if (userId > 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     const fetchItinerary = async () => {
-        const requestURL = `https://localhost:9000/api/Rating/GetUserItinerary?userID=${encodeURIComponent(userId)}&itineraryID=${encodeURIComponent(inputtedItinID)}`
+        const requestURL = `https://localhost:9000/api/Rating/GetUserItinerary?userID=${encodeURIComponent(isUserIDValid && userId)}&itineraryID=${encodeURIComponent(inputtedItinID)}`
 
         var itinRequestOptions = {
             method: "GET",
@@ -33,7 +42,7 @@ function ItineraryComponent({ inputtedItinID, isInputValid }) {
         try {
             const itinRes = await fetch(requestURL, itinRequestOptions)
             const itineraryResponse = await itinRes.json()
-            validateLength(itineraryResponse.data.length)
+            isValidDataLength(itineraryResponse.data.length)
             setUserItinerary(itineraryResponse.data);
         }
         catch (error) {

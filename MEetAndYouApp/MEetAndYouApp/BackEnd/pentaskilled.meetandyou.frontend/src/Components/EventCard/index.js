@@ -9,8 +9,35 @@ function EventCard({ event, itineraryID }) {
     const [currentEventID] = useState(event.eventId);
     const [currentItineraryID] = useState(itineraryID);
 
+    const isValidEventID = () => {
+        if (currentEventID > 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    const isValidItineraryID = () => {
+        if (itineraryID > 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    const isValidEventRating = () => {
+        if (userRating >= 1 && userRating <= 5) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     const fetchUserEventRating = async () => {
-        var ratingRequestURL = `https://localhost:9000/api/Rating/GetUserEventRatings?itineraryID=${encodeURIComponent(currentItineraryID)}`
+        var ratingRequestURL = `https://localhost:9000/api/Rating/GetUserEventRatings?itineraryID=${encodeURIComponent(isValidItineraryID && currentItineraryID)}`
 
         var ratingRequestOptions = {
             method: "GET",
@@ -53,9 +80,9 @@ function EventCard({ event, itineraryID }) {
                 'Access-Control-Allow-Credentials': true
             },
             body: JSON.stringify({
-                eventID: currentEventID,
-                itineraryID: currentItineraryID,
-                userRating: userRating
+                eventID: isValidEventID && currentEventID,
+                itineraryID: isValidItineraryID && currentItineraryID,
+                userRating: isValidEventRating && userRating
             }),
             mode: 'cors'
         };
@@ -82,9 +109,9 @@ function EventCard({ event, itineraryID }) {
                 'Access-Control-Allow-Credentials': true
             },
             body: JSON.stringify({
-                eventID: currentEventID,
-                itineraryID: currentItineraryID,
-                userRating: userRating
+                eventID: isValidEventID && currentEventID,
+                itineraryID: isValidItineraryID && currentItineraryID,
+                userRating: isValidEventRating && userRating
             }),
             mode: 'cors'
         };

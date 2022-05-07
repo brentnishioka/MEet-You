@@ -6,7 +6,8 @@ function Rating() {
     const [isInputValid, setIsInputValid] = useState(true);
     const idInputForm = useRef(null);
 
-    const validateID = (id) => {
+    // Validates the itinerary ID.
+    const isValidItineraryID = (id) => {
         if (!isNaN(id) && id > 0) {
             setIsInputValid(true);
         }
@@ -19,7 +20,7 @@ function Rating() {
         e.preventDefault();
         const input = idInputForm;
         const currentInput = input.current.value;
-        validateID(currentInput);
+        isValidItineraryID(currentInput);
         isInputValid && setUserInputItinID(currentInput);
     }
 

@@ -23,175 +23,204 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
 
         public async Task<ItineraryResponse> GetUserItineraryAsync(int userID, int itineraryID)
         {
-            List<Itinerary> itinerary = null;
-            try
+            if (userID > 0 && itineraryID > 0)
             {
-                itinerary = await
-                    (from itin in _dbcontext.Itineraries.Include("Events")
-                     where itin.ItineraryOwner == userID && itin.ItineraryId == itineraryID
-                     select itin).ToListAsync<Itinerary>();
-            }
-            catch (SqlException ex)
-            {
-                return new ItineraryResponse("An error occurred when retrieving the itinerary from the database." + ex.Message, false, itinerary);
-            }
-            catch (Exception ex)
-            {
-                return new ItineraryResponse("An error occurred when retrieving the itineraries." + ex.Message, false, itinerary);
-            }
+                List<Itinerary> itinerary = null;
+                try
+                {
+                    itinerary = await
+                        (from itin in _dbcontext.Itineraries.Include("Events")
+                         where itin.ItineraryOwner == userID && itin.ItineraryId == itineraryID
+                         select itin).ToListAsync<Itinerary>();
+                }
+                catch (SqlException ex)
+                {
+                    return new ItineraryResponse("An error occurred when retrieving the itinerary from the database." + ex.Message, false, itinerary);
+                }
+                catch (Exception ex)
+                {
+                    return new ItineraryResponse("An error occurred when retrieving the itineraries." + ex.Message, false, itinerary);
+                }
 
-            return new ItineraryResponse("The itinerary was retrieved successfully.", true, itinerary);
+                return new ItineraryResponse("The itinerary was retrieved successfully.", true, itinerary);
+            }
+            return new ItineraryResponse("The itineraries could not be fetched successfully because the given user ID or itinerary ID were invalid.", false, null);
         }
 
         public async Task<RatingResponse> GetUserEventRatingsAsync(int itineraryID)
         {
             Thread.Sleep(200);
-            List<UserEventRating> userEventRatings = null;
-            try
+            if (itineraryID > 0)
             {
-                userEventRatings = await
-                    (from ratings in _dbcontext.UserEventRatings
-                     where ratings.ItineraryId == itineraryID
-                     select ratings).ToListAsync<UserEventRating>();
+                List<UserEventRating> userEventRatings = null;
+                try
+                {
+                    userEventRatings = await
+                        (from ratings in _dbcontext.UserEventRatings
+                         where ratings.ItineraryId == itineraryID
+                         select ratings).ToListAsync<UserEventRating>();
+                }
+                catch (SqlException ex)
+                {
+                    return new RatingResponse("An error occurred when retrieving the user's event ratings from the database." + ex.Message, false, userEventRatings);
+                }
+                catch (Exception ex)
+                {
+                    return new RatingResponse("An error occurred when retrieving the user's event ratings." + ex.Message, false, userEventRatings);
+                }
+                return new RatingResponse("The user's event ratings were retrieved successfully.", true, userEventRatings);
             }
-            catch (SqlException ex)
-            {
-                return new RatingResponse("An error occurred when retrieving the user's event ratings from the database." + ex.Message, false, userEventRatings);
-            }
-            catch (Exception ex)
-            {
-                return new RatingResponse("An error occurred when retrieving the user's event ratings." + ex.Message, false, userEventRatings);
-            }
-            return new RatingResponse("The user's event ratings were retrieved successfully.", true, userEventRatings);
+            return new RatingResponse("The ratings could not be fetched successfully because the given itinerary ID is invalid.", false, null);
         }
 
         public async Task<NoteResponse> GetUserItineraryNoteAsync(int itineraryID)
         {
-            List<ItineraryNote> itineraryNote = null;
-            try
+            if (itineraryID > 0)
             {
-                itineraryNote = await
-                    (from notes in _dbcontext.ItineraryNotes
-                     where notes.ItineraryId == itineraryID
-                     select notes).ToListAsync<ItineraryNote>();
+                List<ItineraryNote> itineraryNote = null;
+                try
+                {
+                    itineraryNote = await
+                        (from notes in _dbcontext.ItineraryNotes
+                         where notes.ItineraryId == itineraryID
+                         select notes).ToListAsync<ItineraryNote>();
+                }
+                catch (SqlException ex)
+                {
+                    return new NoteResponse("An error occurred when retrieving the user's notes from the database." + ex.Message, false, itineraryNote);
+                }
+                catch (Exception ex)
+                {
+                    return new NoteResponse("An error occurred when retrieving the user's event ratings." + ex.Message, false, itineraryNote);
+                }
+                return new NoteResponse("The user's itinerary note was retrieved successfully.", true, itineraryNote);
             }
-            catch (SqlException ex)
-            {
-                return new NoteResponse("An error occurred when retrieving the user's notes from the database." + ex.Message, false, itineraryNote);
-            }
-            catch (Exception ex)
-            {
-                return new NoteResponse("An error occurred when retrieving the user's event ratings." + ex.Message, false, itineraryNote);
-            }
-            return new NoteResponse("The user's itinerary note was retrieved successfully.", true, itineraryNote);
+            return new NoteResponse("The notes could not be fetched successfully because the given itinerary ID is invalid.", false, null);
         }
 
         public async Task<BaseResponse> AddRatingInDBAsync(UserEventRating userRating)
         {
-            try
+            if (userRating.EventId > 0 && userRating.ItineraryId > 0 && (userRating.UserRating >= 1 && userRating.UserRating <= 5))
             {
-                var task = Task.Run(() => {
-                    var local = _dbcontext.Set<UserEventRating>().Local
-                        .FirstOrDefault(entry => entry.ItineraryId.Equals(userRating.ItineraryId) && entry.EventId.Equals(userRating.EventId));
-                    if (local != null)
-                    {
-                        _dbcontext.Entry(local).State = EntityState.Detached;
-                    }
-                    _dbcontext.Entry(userRating).State = EntityState.Added;
-                });
-                await task;
-                int addRatingResult = await _dbcontext.SaveChangesAsync();
+                try
+                {
+                    var task = Task.Run(() => {
+                        var local = _dbcontext.Set<UserEventRating>().Local
+                            .FirstOrDefault(entry => entry.ItineraryId.Equals(userRating.ItineraryId) && entry.EventId.Equals(userRating.EventId));
+                        if (local != null)
+                        {
+                            _dbcontext.Entry(local).State = EntityState.Detached;
+                        }
+                        _dbcontext.Entry(userRating).State = EntityState.Added;
+                    });
+                    await task;
+                    int addRatingResult = await _dbcontext.SaveChangesAsync();
+                }
+                catch (SqlException ex)
+                {
+                    return new BaseResponse("An error occurred when adding the rating to the database.", false);
+                }
+                catch (Exception ex)
+                {
+                    return new BaseResponse("The rating could not be added.", false);
+                }
+                return new BaseResponse("The rating was successfully added.", true);
             }
-            catch (SqlException ex)
-            {
-                return new BaseResponse("An error occurred when adding the rating to the database.", false);
-            }
-            catch (Exception ex)
-            {
-                return new BaseResponse("The rating could not be added.", false);
-            }
-            return new BaseResponse("The rating was successfully added.", true);
+            return new BaseResponse("The rating could not be created successfully because either the given event ID, itinerary ID, or user rating were invalid.", false);
         }
+    
 
         public async Task<BaseResponse> ModifyRatingInDBAsync(UserEventRating userRating)
         {
-            try
+            if (userRating.EventId > 0 && userRating.ItineraryId > 0 && (userRating.UserRating >= 1 && userRating.UserRating <= 5))
             {
-                var task = Task.Run(() => {
-                    var local = _dbcontext.Set<UserEventRating>().Local
-                        .FirstOrDefault(entry => entry.ItineraryId.Equals(userRating.ItineraryId) && entry.EventId.Equals(userRating.EventId));
-                    if (local != null)
-                    {
-                        _dbcontext.Entry(local).State = EntityState.Detached;
-                    }
-                    _dbcontext.Entry(userRating).State = EntityState.Modified;
-                });
-                await task;
-                int modifyRatingResult = await _dbcontext.SaveChangesAsync();
+                try
+                {
+                    var task = Task.Run(() => {
+                        var local = _dbcontext.Set<UserEventRating>().Local
+                            .FirstOrDefault(entry => entry.ItineraryId.Equals(userRating.ItineraryId) && entry.EventId.Equals(userRating.EventId));
+                        if (local != null)
+                        {
+                            _dbcontext.Entry(local).State = EntityState.Detached;
+                        }
+                        _dbcontext.Entry(userRating).State = EntityState.Modified;
+                    });
+                    await task;
+                    int modifyRatingResult = await _dbcontext.SaveChangesAsync();
+                }
+                catch (SqlException ex)
+                {
+                    return new BaseResponse("An error occurred when modifying the rating in the database." + ex.Message, false);
+                }
+                catch (Exception ex)
+                {
+                    return new BaseResponse("The rating could not be modified. " + ex.Message, false);
+                }
+                return new BaseResponse("The rating was successfully modified.", true);
             }
-            catch (SqlException ex)
-            {
-                return new BaseResponse("An error occurred when modifying the rating in the database." + ex.Message, false);
-            }
-            catch (Exception ex)
-            {
-                return new BaseResponse("The rating could not be modified. " + ex.Message, false);
-            }
-            return new BaseResponse("The rating was successfully modified.", true);
+            return new BaseResponse("The rating could not be modified successfully because either the given event ID, itinerary ID, or user rating were invalid.", false);
         }
 
         public async Task<BaseResponse> AddNoteInDBAsync(ItineraryNote itineraryNote)
         {
-            try
+            if (itineraryNote.ItineraryId > 0 && itineraryNote.NoteContent != null)
             {
-                var task = Task.Run(() => {
-                    var local = _dbcontext.Set<ItineraryNote>().Local
-                        .FirstOrDefault(entry => entry.ItineraryId.Equals(itineraryNote.ItineraryId));
-                    if (local != null)
-                    {
-                        _dbcontext.Entry(local).State = EntityState.Detached;
-                    }
-                    _dbcontext.Entry(itineraryNote).State = EntityState.Added;
-                });
-                await task;
-                int addRatingResult = await _dbcontext.SaveChangesAsync();
+                try
+                {
+                    var task = Task.Run(() => {
+                        var local = _dbcontext.Set<ItineraryNote>().Local
+                            .FirstOrDefault(entry => entry.ItineraryId.Equals(itineraryNote.ItineraryId));
+                        if (local != null)
+                        {
+                            _dbcontext.Entry(local).State = EntityState.Detached;
+                        }
+                        _dbcontext.Entry(itineraryNote).State = EntityState.Added;
+                    });
+                    await task;
+                    int addRatingResult = await _dbcontext.SaveChangesAsync();
+                }
+                catch (SqlException ex)
+                {
+                    return new BaseResponse("An error occurred when adding the note to the database.", false);
+                }
+                catch (Exception ex)
+                {
+                    return new BaseResponse("The note could not be added.", false);
+                }
+                return new BaseResponse("The note was successfully added.", true);
             }
-            catch (SqlException ex)
-            {
-                return new BaseResponse("An error occurred when adding the note to the database.", false);
-            }
-            catch (Exception ex)
-            {
-                return new BaseResponse("The note could not be added.", false);
-            }
-            return new BaseResponse("The note was successfully added.", true);
+            return new BaseResponse("The note could not be created successfully because either the given itinerary ID or note contents were not valid.", false);
         }
 
         public async Task<BaseResponse> ModifyNoteInDBAsync(ItineraryNote itineraryNote)
         {
-            try
+            if (itineraryNote.ItineraryId > 0 && itineraryNote.NoteContent != null)
             {
-                var task = Task.Run(() => {
-                    var local = _dbcontext.Set<ItineraryNote>().Local
-                        .FirstOrDefault(entry => entry.ItineraryId.Equals(itineraryNote.ItineraryId));
-                    if (local != null)
-                    {
-                        _dbcontext.Entry(local).State = EntityState.Detached;
-                    }
-                    _dbcontext.Entry(itineraryNote).State = EntityState.Modified;
-                });
-                await task;
-                int modifyRatingResult = await _dbcontext.SaveChangesAsync();
+                try
+                {
+                    var task = Task.Run(() => {
+                        var local = _dbcontext.Set<ItineraryNote>().Local
+                            .FirstOrDefault(entry => entry.ItineraryId.Equals(itineraryNote.ItineraryId));
+                        if (local != null)
+                        {
+                            _dbcontext.Entry(local).State = EntityState.Detached;
+                        }
+                        _dbcontext.Entry(itineraryNote).State = EntityState.Modified;
+                    });
+                    await task;
+                    int modifyRatingResult = await _dbcontext.SaveChangesAsync();
+                }
+                catch (SqlException ex)
+                {
+                    return new BaseResponse("An error occurred when modifying the note in the database.", false);
+                }
+                catch (Exception ex)
+                {
+                    return new BaseResponse("The note could not be modified.", false);
+                }
+                return new BaseResponse("The note was successfully modified.", true);
             }
-            catch (SqlException ex)
-            {
-                return new BaseResponse("An error occurred when modifying the note in the database.", false);
-            }
-            catch (Exception ex)
-            {
-                return new BaseResponse("The note could not be modified.", false);
-            }
-            return new BaseResponse("The note was successfully modified.", true);
+            return new BaseResponse("The note could not be modified successfully because either the given itinerary ID or note contents were not valid.", false);
         }
     }
 }

@@ -4,9 +4,11 @@ function NoteComponent({ itineraryID }) {
     const [note, setNote] = useState(null);
     const [fetchedNoteContent, setFetchedNoteContent] = useState(null);
     const [isNoteLengthValid, setIsNoteLengthValid] = useState(true);
+    const [noteResponseLength, setNoteResponseLength] = useState(0);
     const noteInputBox = useRef(null);
 
-    const checkNoteLength = (length) => {
+    // Validates the length of the note text box.
+    const isValidNoteLength = (length) => {
         if (length <= 300) {
             setIsNoteLengthValid(true);
         }
@@ -15,16 +17,26 @@ function NoteComponent({ itineraryID }) {
         }
     }
 
+    // Validates the itinerary ID.
+    const isValidItineraryID = () => {
+        if (itineraryID > 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     const handleClick = (e) => {
         e.preventDefault();
         const input = noteInputBox;
         const currentTextInput = input.current.value;
-        checkNoteLength(currentTextInput.length);
+        isValidNoteLength(currentTextInput.length);
         isNoteLengthValid && setNote(input.current.value);
     }
 
     const fetchUserNote = async () => {
-        const requestURL = `https://localhost:9000/api/Rating/GetUserNote?itineraryID=${encodeURIComponent(itineraryID)}`
+        const requestURL = `https://localhost:9000/api/Rating/GetUserNote?itineraryID=${encodeURIComponent(isValidItineraryID && itineraryID)}`
 
         var noteRequestOptions = {
             method: "GET",
@@ -40,6 +52,7 @@ function NoteComponent({ itineraryID }) {
             const res = await fetch(requestURL, noteRequestOptions)
             const noteResponse = await res.json();
             setFetchedNoteContent(noteResponse.data);
+            setNoteResponseLength(noteResponse.data.length)
         }
         catch (error) {
             console.log(error)
@@ -48,7 +61,7 @@ function NoteComponent({ itineraryID }) {
 
     const getCurrentNoteContent = fetchedNoteContent && fetchedNoteContent.map((content) => {
         if (content.itineraryId === itineraryID)
-        return(content.noteContent)
+            return (content.noteContent)
     })
 
     const postUserNote = async () => {
@@ -62,8 +75,8 @@ function NoteComponent({ itineraryID }) {
                 'Access-Control-Allow-Credentials': true
             },
             body: JSON.stringify({
-                itineraryID: itineraryID,
-                noteContent: note
+                itineraryID: isValidItineraryID && itineraryID,
+                noteContent: isValidNoteLength && note
             }),
             mode: 'cors'
         };
@@ -89,8 +102,8 @@ function NoteComponent({ itineraryID }) {
                 'Access-Control-Allow-Credentials': true
             },
             body: JSON.stringify({
-                itineraryID: itineraryID,
-                noteContent: note
+                itineraryID: isValidItineraryID && itineraryID,
+                noteContent: isValidNoteLength && note
             }),
             mode: 'cors'
         };
@@ -109,7 +122,7 @@ function NoteComponent({ itineraryID }) {
     }, [])
 
     useEffect(() => {
-        if (isNoteLengthValid && getCurrentNoteContent === undefined) {
+        if (noteResponseLength === 0) {
             postUserNote();
         }
         else {
@@ -135,7 +148,12 @@ function NoteComponent({ itineraryID }) {
     }
     else {
         return (
-            <>Invalid note length.</>
+            <>
+                <div>
+                    <h5>Current Note Content:</h5>
+                </div>
+                <p>Invalid note length.</p>
+            </>
         );
     }
 }
