@@ -68,6 +68,7 @@ function NoteComponent({ itineraryID }) {
             return (content.noteContent)
     })
 
+    // Makes an HTTP Post request to post the user's inputted note.
     const postUserNote = async () => {
         const requestURL = 'https://meetandyou.me:8001/api/Rating/PostNoteCreaton'
 
@@ -95,6 +96,7 @@ function NoteComponent({ itineraryID }) {
         }
     }
 
+    // Makes an HTTP Put request to update the user's inputted note.
     const putUserNote = async () => {
         const requestURL = 'https://meetandyou.me:8001/api/Rating/PutNoteModification'
 
