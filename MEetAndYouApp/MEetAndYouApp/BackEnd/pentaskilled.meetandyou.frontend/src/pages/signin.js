@@ -30,7 +30,7 @@ export default function Login() {
             },
             mode: 'cors'
         };
-        await fetch("https://localhost:9000/Login/SignIn?userEmail=" + email + "&userPassword=" + password, requestOptions)
+        await fetch("https://meetandyou.me:8001/Login/SignIn?userEmail=" + email + "&userPassword=" + password, requestOptions)
             .then(response => {
                 response.text()
                 //sessionStorage.setItem('userID', response.data.userID)

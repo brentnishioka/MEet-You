@@ -17,12 +17,19 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
         public int Rating { get; set; }
         public int ItineraryOwner { get; set; }
 
+        [System.Text.Json.Serialization.JsonIgnore]
         public virtual UserAccountRecord ItineraryOwnerNavigation { get; set; }
         public virtual ItineraryNote ItineraryNote { get; set; }
         public virtual ICollection<Image> Images { get; set; }
         public virtual ICollection<UserEventRating> UserEventRatings { get; set; }
+
         public virtual ICollection<UserItinerary> UserItineraries { get; set; }
 
         public virtual ICollection<Event> Events { get; set; }
+
+        public override string ToString()
+        {
+            return $"ID: {ItineraryId}\nName: {ItineraryName}\nRating: {Rating}\nOwner: {ItineraryOwner}";
+        }
     }
 }

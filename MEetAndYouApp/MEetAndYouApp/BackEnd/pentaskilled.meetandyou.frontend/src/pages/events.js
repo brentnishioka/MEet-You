@@ -17,13 +17,13 @@ function Events() {
 
     const saveEvent = async (request, itinID, userID) => {
         try {
-            const res = await fetch('https://localhost:9000/SaveEvent?itinID=' + itinID + '&userID=' + userID, request)
+            const res = await fetch('https://meetandyou.me:8001/SaveEvent?itinID=' + itinID + '&userID=' + userID, request)
             const saveEventRes = await res.json();
             setpostRes(saveEventRes)
             console.log(saveEventRes)
         }
         catch (error) {
-            console.log('error');
+            console.log('error when saving events');
         }
     }
 
@@ -41,13 +41,14 @@ function Events() {
 
     const getData = async () => {
         try {
-            const res = await fetch("https://localhost:9000/GetEvent?category=" + location.state.categories[0].label + "&location=" + city + " " + state + "&date= " + date);
+            console.log("Category: ", location.state.categories.label)
+            const res = await fetch("https://meetandyou.me:8001/GetEvent?category=" + location.state.categories.label + "&location=" + city + " " + state + "&date= " + date);
             const suggestionResponse = await res.json();
             setData(suggestionResponse.data);
             console.log(suggestionResponse);
         }
         catch (error) {
-            console.log('error');
+            console.log('error when getting suggestion', error.message);
         }
     }
 
@@ -177,23 +178,23 @@ function Events() {
             </table>
             <label>
                 <p>Enter an event ID </p>
-                <input type="text" placeholder="ex: 5" maxlength="10" onChange={e => seteventID(e.target.value)} />
+                <input type="text" placeholder="ex: 5" maxLength="10" onChange={e => seteventID(e.target.value)} />
                 {console.log("The value of eventID", eventID)}
             </label>
             <label>
                 <p>Enter an itinerary ID </p>
-                <input type="text" placeholder="ex: 2" maxlength="10" onChange={e => setitintID(e.target.value)} />
+                <input type="text" placeholder="ex: 2" maxLength="10" onChange={e => setitintID(e.target.value)} />
                 {console.log("The value of itinID", itinID)}
             </label>
             <label>
                 <p>Enter an your userID </p>
-                <input type="text" placeholder="ex: 2" maxlength="10" onChange={e => setuserID(e.target.value)} />
+                <input type="text" placeholder="ex: 2" maxLength="10" onChange={e => setuserID(e.target.value)} />
                 {console.log("The value of itinID", userID)}
             </label>
             <button type="button" id="SaveEvent" onClick={AddEvent}> Save Event</button>
 
             <p>Saving event response: </p>
-            {postMsg}
+            {/* {postMsg} */}
         </div>
 
     )
