@@ -22,7 +22,7 @@ namespace Pentaskilled.MEetAndYou.Managers
 
         public async Task<ItineraryResponse> LoadUserItineraries(int userID, string date)
         {
-            DateTime datetime = _calendarDAO.DateConversion(date);
+            DateTime datetime = _calendarDAO.DateConversion(date); //Converts string date into datetime object to match backend
             ItineraryResponse userItineraries = await _calendarDAO.GetItineraries(userID, datetime);
 
             return userItineraries;

@@ -1,13 +1,38 @@
 import React, { useEffect, useState } from "react";
 import EventCard from "../EventCard";
+import NoteComponent from "../NoteComponent/NoteComponent";
 
-function ItineraryComponent({ itineraryID }) {
+function ItineraryComponent({ inputtedItinID, isInputValid }) {
     const [userItinerary, setUserItinerary] = useState(null);
-    // const [userInputItinID] = useState(itineraryID);
+    const [isLengthValid, setIsLengthValid] = useState(null);
 
+    let userId = 5;
+
+    // Validates the length of the data returned from fetching the user's itineraries.
+    const isValidDataLength = (length) => {
+        if (length > 0) {
+            setIsLengthValid(true);
+        }
+        else {
+            setIsLengthValid(false);
+        }
+    }
+
+    // Validates the user's ID.
+    const isUserIDValid = () => {
+        if (userId > 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    // Makes an HTTP Get request to retrieve the user's itineraries.
     const fetchItinerary = async () => {
+        const requestURL = `https://meetandyou.me:8001/api/Rating/GetUserItinerary?userID=${encodeURIComponent(isUserIDValid && userId)}&itineraryID=${encodeURIComponent(inputtedItinID)}`
 
-        var requestOptions = {
+        var itinRequestOptions = {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
@@ -18,8 +43,11 @@ function ItineraryComponent({ itineraryID }) {
         };
 
         try {
-            const res = await fetch(`https://localhost:9000/api/Rating/GetUserItinerary?userID=5&itineraryID=7`, requestOptions)
-            const itineraryResponse = await res.json()
+            const itinRes = await fetch(requestURL, itinRequestOptions)
+            const itineraryResponse = await itinRes.json()
+
+            // Input validation for the data's length
+            isValidDataLength(itineraryResponse.data.length)
             setUserItinerary(itineraryResponse.data);
         }
         catch (error) {
@@ -28,14 +56,16 @@ function ItineraryComponent({ itineraryID }) {
     }
 
     useEffect(() => {
-        fetchItinerary();
-    }, [])
+        isInputValid && fetchItinerary();
+    }, [inputtedItinID])
 
+    // Default content upon page load, changes once valid itinerary ID is provided.
     if (!userItinerary) {
         return <>Loading Itinerary...</>;
     }
 
-    const displayEvents = userItinerary[0].events.map((event) =>
+    // Displays all the events on an itinerary.
+    const displayEvents = isLengthValid && userItinerary[0].events.map((event) =>
         <div>
             <EventCard
                 event={event}
@@ -44,14 +74,23 @@ function ItineraryComponent({ itineraryID }) {
         </div>
     )
 
-    return (
-        <>
-            <div>
-                <h2>Itinerary: {userItinerary[0].itineraryName}</h2>
-                {displayEvents}
-            </div>
-        </>
-    );
+    if (isLengthValid) {
+        return (
+            <>
+                <div>
+                    <h2>Itinerary: {userItinerary[0].itineraryName}</h2>
+                    <NoteComponent itineraryID={userItinerary[0].itineraryId}/>
+                    {displayEvents}
+                </div>
+            </>
+        );
+    }
+    else {
+        return (
+            <>Could not retrieve itinerary.</>
+        );
+    }
+
 }
 
 export default ItineraryComponent;

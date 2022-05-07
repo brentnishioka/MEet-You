@@ -15,11 +15,6 @@ function Hyperlink() {
             headers: { 'Content-Type': 'application/json' }
         }
 
-        console.log("User ID:", userID)
-        console.log("Itinerary ID:", itinID)
-        console.log("Email:", email)
-        console.log("Permission:", permission)
-
         try {
             const encodedEmail = encodeURIComponent(email);
             const res = await fetch('https://meetandyou.me:8001/AddUser?userID=' + userID + '&itineraryID=' + itinID + '&email=' + encodedEmail + '&permission=' + permission, requestOptions);
@@ -27,7 +22,6 @@ function Hyperlink() {
             setData(AddUserRes.data)
             setEmailData(AddUserRes.emails)
             setMessage(AddUserRes.message)
-            console.log(AddUserRes)
         }
         catch (error) {
             console.log('error');
@@ -40,11 +34,6 @@ function Hyperlink() {
             headers: { 'Content-Type': 'application/json' }
         }
 
-        console.log("User ID:", userID)
-        console.log("Itinerary ID:", itinID)
-        console.log("Email:", email)
-        console.log("Permission:", permission)
-
         try {
             const encodedEmail = encodeURIComponent(email);
             const res = await fetch('https://meetandyou.me:8001/RemoveUser?userID=' + userID + '&itineraryID=' + itinID + '&email=' + encodedEmail + '&permission=' + permission, requestOptions);
@@ -52,7 +41,6 @@ function Hyperlink() {
             setData(DeleteUserRes.data)
             setEmailData(DeleteUserRes.emails)
             setMessage(DeleteUserRes.message)
-            console.log(DeleteUserRes)
         }
         catch (error) {
             console.log('error');

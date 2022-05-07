@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { FaLocationArrow } from "react-icons/fa"
 
 const LocationPin = ({ rating, onRating }) => {
-    // const [rating, setRating] = useState(null);
     const [hover, setHover] = useState(null);
     return (
         <div>
+            <h5>New Rating:</h5>
             {[...Array(5)].map((locationArrow, i) => {
                 const userRating = i + 1;
 
