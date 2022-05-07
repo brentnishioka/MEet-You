@@ -30,7 +30,7 @@ function ItineraryComponent({ inputtedItinID, isInputValid }) {
 
     // Makes an HTTP Get request to retrieve the user's itineraries.
     const fetchItinerary = async () => {
-        const requestURL = `https://localhost:9000/api/Rating/GetUserItinerary?userID=${encodeURIComponent(isUserIDValid && userId)}&itineraryID=${encodeURIComponent(inputtedItinID)}`
+        const requestURL = `https://meetandyou.me:8001/api/Rating/GetUserItinerary?userID=${encodeURIComponent(isUserIDValid && userId)}&itineraryID=${encodeURIComponent(inputtedItinID)}`
 
         var itinRequestOptions = {
             method: "GET",

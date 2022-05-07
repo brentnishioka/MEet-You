@@ -37,7 +37,7 @@ function NoteComponent({ itineraryID }) {
 
     // Makes an HTTP Get request to retrieve the user's notes.
     const fetchUserNote = async () => {
-        const requestURL = `https://localhost:9000/api/Rating/GetUserNote?itineraryID=${encodeURIComponent(isValidItineraryID && itineraryID)}`
+        const requestURL = `https://meetandyou.me:8001/api/Rating/GetUserNote?itineraryID=${encodeURIComponent(isValidItineraryID && itineraryID)}`
 
         var noteRequestOptions = {
             method: "GET",
@@ -69,7 +69,7 @@ function NoteComponent({ itineraryID }) {
     })
 
     const postUserNote = async () => {
-        const requestURL = 'https://localhost:9000/api/Rating/PostNoteCreaton'
+        const requestURL = 'https://meetandyou.me:8001/api/Rating/PostNoteCreaton'
 
         var postNoteRequestOptions = {
             method: "POST",
@@ -96,7 +96,7 @@ function NoteComponent({ itineraryID }) {
     }
 
     const putUserNote = async () => {
-        const requestURL = 'https://localhost:9000/api/Rating/PutNoteModification'
+        const requestURL = 'https://meetandyou.me:8001/api/Rating/PutNoteModification'
 
         var putNoteRequestOptions = {
             method: "PUT",
