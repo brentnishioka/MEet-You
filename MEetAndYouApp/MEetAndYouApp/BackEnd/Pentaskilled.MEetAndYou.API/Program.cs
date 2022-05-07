@@ -20,17 +20,16 @@ using System.Web.Http;
 using System.Web.Cors;
 
 var builder = WebApplication.CreateBuilder(args);
-
+/*var MSO = "MEetAndYouPolicy";
 // Add services to the container.
-/*builder.Services.AddCors(options => 
-{
+builder.Services.AddCors(options => {
     options.AddPolicy("MEetAndYouPolicy",
         policy => {
             policy.WithOrigins("https://localhost:3000/");
-                      });
+        });
 });
-*/
 
+*/
 //Add API key
 var eventsApiKey = builder.Configuration["EventsAPI:ServiceApiKey"];
 
@@ -92,6 +91,12 @@ builder.Services.AddScoped<ItineraryNote>();
 builder.Services.AddSingleton<ISuggestionManager, SuggestionManager>();
 builder.Services.AddSingleton<ISuggestionDAO, SuggestionDAO>();
 builder.Services.AddSingleton<IAPIService, EventAPIService>();
+builder.Services.AddSingleton<IMemoryAlbumDAO, MemoryAlbumDAO >();
+builder.Services.AddSingleton<IMemoryAlbumManager, MemoryAlbumManager>();
+builder.Services.AddSingleton<IHyperlinkDAO, HyperlinkDAO>();
+builder.Services.AddSingleton<IHyperlinkManager, HyperlinkManager>();
+
+
 //builder.Services.AddSingleton<Configuration>();
 builder.Services.AddTransient<MEetAndYouDBContext>();
 
@@ -137,6 +142,7 @@ if (app.Environment.IsProduction())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 
 // Add global Cors policies
 app.UseCors(x => x

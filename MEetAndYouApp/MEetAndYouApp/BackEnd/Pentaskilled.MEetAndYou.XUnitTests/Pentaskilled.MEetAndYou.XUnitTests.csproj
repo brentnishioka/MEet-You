@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Pentaskilled.MEetAndYou.API\Pentaskilled.MEetAndYou.API.csproj" />
     <ProjectReference Include="..\Pentaskilled.MEetAndYou.DataAccess\Pentaskilled.MEetAndYou.DataAccess.csproj" />
     <ProjectReference Include="..\Pentaskilled.MEetAndYou.DomainModels\Pentaskilled.MEetAndYou.DomainModels.csproj" />
     <ProjectReference Include="..\Pentaskilled.MEetAndYou.Entities\Pentaskilled.MEetAndYou.Entities.csproj" />

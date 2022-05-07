@@ -27,6 +27,13 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             this._dbContext = new MEetAndYouDBContext();
         }
 
+
+        /// <summary>
+        /// Method to update the user email in the database.
+        /// </summary>
+        /// <param name="id"> id of the user</param>
+        /// <param name="email"> new email to replace current email </param
+        /// <returns> base response object pertaining to the status of the update</returns>
         public async Task<BaseResponse> updateUserEmail(int id,string email)
         {
             string message = "Email update failed";
@@ -51,11 +58,23 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             return new BaseResponse(message, isSuccessful);
         }
 
+        /// <summary>
+        /// method to update the user password in the database.
+        /// </summary>
+        /// <param name="id"> id of the user</param>
+        /// <param name="password"> new password to replace current</param
+        /// <returns> Base response object pertaining to the status of password update </returns>
         public async Task<BaseResponse> updateUserPassword(int id, string password)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Method to update the user phone in the database
+        /// </summary>
+        /// <param name="id"> id of the user</param>
+        /// <param name="phone"> new phone number to replace current </param
+        /// <returns> Base response object pertaining to the status of phone update </returns>
         public async Task<BaseResponse> updateUserPhone(int id, string phone)
         {
             string message = "Phone update failed";

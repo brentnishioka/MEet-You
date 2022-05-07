@@ -67,6 +67,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             Assert.True(response.IsSuccessful);
         }
 
+
         [Theory]
         [InlineData(3, 5, 3)]
         public async void SaveEventsManagerTest(int numEvent, int itinID, int userID)

@@ -1,4 +1,5 @@
 import React from 'react';
+import MemoryAlbumList from '../../pages/memoryalbumlist';
 
 import {
     Nav,
@@ -34,6 +35,13 @@ const Navbar = () => {
                     </NavLink>
                     <NavLink to='/userprofiledashboard' activeStyle={{ color: 'black' }}>
                         User Profile Dashboard
+                    </NavLink>
+
+                    <NavLink to='/share' activeStyle>
+                        Share
+                    </NavLink>
+                    <NavLink to='/memoryalbumlist' activeStyle>
+                        Memory Album
                     </NavLink>
 
                     {/* Second Nav */}

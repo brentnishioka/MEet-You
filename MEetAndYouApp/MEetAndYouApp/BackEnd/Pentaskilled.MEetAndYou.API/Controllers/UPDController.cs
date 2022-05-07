@@ -32,7 +32,11 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
             _suggestionManager = suggestionManager;
 
         }
-
+        /// <summary>
+        /// HTTP get method for fetching the itineraries of the user 
+        /// </summary>
+        /// <param name="id"> id of the user</param
+        /// <returns> Itinerary response</returns>
         [HttpGet]
         [Route("/GetUPDData")]
         public async Task<ActionResult<ItineraryResponse>> GetUPDData(int id)

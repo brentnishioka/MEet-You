@@ -1,7 +1,6 @@
 ﻿body {
-    background-image: url(../images/map2.jpg);
+    background-image: url(./map2.jpg);
 }
-
 
 .react-calendar { 
     width: 350px;
