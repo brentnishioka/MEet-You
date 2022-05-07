@@ -8,6 +8,7 @@ function ItineraryComponent({ inputtedItinID, isInputValid }) {
 
     let userId = 5;
 
+    // Validates the length of the data returned from fetching the user's itineraries.
     const isValidDataLength = (length) => {
         if (length > 0) {
             setIsLengthValid(true);
@@ -17,6 +18,7 @@ function ItineraryComponent({ inputtedItinID, isInputValid }) {
         }
     }
 
+    // Validates the user's ID.
     const isUserIDValid = () => {
         if (userId > 0) {
             return true;
@@ -26,6 +28,7 @@ function ItineraryComponent({ inputtedItinID, isInputValid }) {
         }
     }
 
+    // Makes an HTTP Get request to retrieve the user's itineraries.
     const fetchItinerary = async () => {
         const requestURL = `https://localhost:9000/api/Rating/GetUserItinerary?userID=${encodeURIComponent(isUserIDValid && userId)}&itineraryID=${encodeURIComponent(inputtedItinID)}`
 
@@ -42,6 +45,8 @@ function ItineraryComponent({ inputtedItinID, isInputValid }) {
         try {
             const itinRes = await fetch(requestURL, itinRequestOptions)
             const itineraryResponse = await itinRes.json()
+
+            // Input validation for the data's length
             isValidDataLength(itineraryResponse.data.length)
             setUserItinerary(itineraryResponse.data);
         }
@@ -54,10 +59,12 @@ function ItineraryComponent({ inputtedItinID, isInputValid }) {
         isInputValid && fetchItinerary();
     }, [inputtedItinID])
 
+    // Default content upon page load, changes once valid itinerary ID is provided.
     if (!userItinerary) {
         return <>Loading Itinerary...</>;
     }
 
+    // Displays all the events on an itinerary.
     const displayEvents = isLengthValid && userItinerary[0].events.map((event) =>
         <div>
             <EventCard

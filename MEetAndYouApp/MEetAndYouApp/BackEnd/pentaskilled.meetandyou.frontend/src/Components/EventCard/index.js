@@ -9,6 +9,7 @@ function EventCard({ event, itineraryID }) {
     const [currentEventID] = useState(event.eventId);
     const [currentItineraryID] = useState(itineraryID);
 
+    // Validates the event ID.
     const isValidEventID = () => {
         if (currentEventID > 0) {
             return true;
@@ -18,6 +19,7 @@ function EventCard({ event, itineraryID }) {
         }
     }
 
+    // Validates the itinerary ID.
     const isValidItineraryID = () => {
         if (itineraryID > 0) {
             return true;
@@ -27,6 +29,7 @@ function EventCard({ event, itineraryID }) {
         }
     }
 
+    // Validates the event's rating.
     const isValidEventRating = () => {
         if (userRating >= 1 && userRating <= 5) {
             return true;
@@ -36,6 +39,7 @@ function EventCard({ event, itineraryID }) {
         }
     }
 
+    // 
     const fetchUserEventRating = async () => {
         var ratingRequestURL = `https://localhost:9000/api/Rating/GetUserEventRatings?itineraryID=${encodeURIComponent(isValidItineraryID && currentItineraryID)}`
 

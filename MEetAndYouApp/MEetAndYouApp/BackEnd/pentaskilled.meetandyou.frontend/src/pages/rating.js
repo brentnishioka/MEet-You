@@ -16,10 +16,13 @@ function Rating() {
         }
     }
 
+    // Handles the 'Get Itinerary' button's click
     const handleClick = (e) => {
         e.preventDefault();
         const input = idInputForm;
         const currentInput = input.current.value;
+
+        // Input validation for the itinerary ID text field
         isValidItineraryID(currentInput);
         isInputValid && setUserInputItinID(currentInput);
     }

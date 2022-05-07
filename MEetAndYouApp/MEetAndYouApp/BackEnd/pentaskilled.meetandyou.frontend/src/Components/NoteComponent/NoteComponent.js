@@ -35,6 +35,7 @@ function NoteComponent({ itineraryID }) {
         isNoteLengthValid && setNote(input.current.value);
     }
 
+    // Makes an HTTP Get request to retrieve the user's notes.
     const fetchUserNote = async () => {
         const requestURL = `https://localhost:9000/api/Rating/GetUserNote?itineraryID=${encodeURIComponent(isValidItineraryID && itineraryID)}`
 
@@ -52,6 +53,8 @@ function NoteComponent({ itineraryID }) {
             const res = await fetch(requestURL, noteRequestOptions)
             const noteResponse = await res.json();
             setFetchedNoteContent(noteResponse.data);
+
+            // Input validation for the note's length
             setNoteResponseLength(noteResponse.data.length)
         }
         catch (error) {
@@ -59,6 +62,7 @@ function NoteComponent({ itineraryID }) {
         }
     }
 
+    // Helper method to get the current itinerary's note content.
     const getCurrentNoteContent = fetchedNoteContent && fetchedNoteContent.map((content) => {
         if (content.itineraryId === itineraryID)
             return (content.noteContent)
