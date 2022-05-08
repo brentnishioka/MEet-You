@@ -22,11 +22,7 @@ function MyCalendar() {
         const dateString = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
         console.log("datestring: ", dateString)
 
-<<<<<<< HEAD
-        var id = 3;
-=======
         var id = 9;
->>>>>>> 2c047419d934f1c6d5002e8dd1fb0541121c21c1
         //var id = sessionStorage.getItem("userID")
         var requestOptions = {
             method: "POST",
