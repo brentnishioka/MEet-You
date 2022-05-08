@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using Pentaskilled.MEetAndYou.Entities;
-using Pentaskilled.MEetAndYou.Entities.DBModels;
-using Pentaskilled.MEetAndYou.Entities.Models;
 
 namespace Pentaskilled.MEetAndYou.DataAccess
 {
@@ -15,17 +10,6 @@ namespace Pentaskilled.MEetAndYou.DataAccess
     {
         // TODO: move this to our config file instead of it being directly in the code.
         private string _connectionString;
-        private readonly MEetAndYouDBContext _dbContext;
-
-        public UMDAO()
-        {
-            _dbContext = new MEetAndYouDBContext();
-        }
-
-        public UMDAO(MEetAndYouDBContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
 
         // GetConnectionString() from https://docs.microsoft.com/en-us/dotnet/api/system.data.sqlclient.sqlconnection.connectionstring?view=dotnet-plat-ext-6.0
         static private string GetConnectionString()
@@ -216,86 +200,65 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             return isSuccessfullyDeleted;
         }
 
-        public async Task<BaseResponse> DeleteAccAsync(UserAccountEntity userAcc)
+        public Task<bool> DeleteAcc(UserAccountEntity userAcc)
         {
-            int userID = userAcc.UserID;
-            List<Itinerary> userItineraries;
-            List<EventLog> userLogs;
+            _connectionString = GetConnectionString();
+            int userID;
+            bool isUserDel;
+            bool isRemovedFromUserRoles;
 
             try
             {
-                // Find all of the user's itineraries
-                userItineraries = await
-                    (from itin in _dbContext.Itineraries.Include("Events")
-                    where itin.ItineraryOwner == userID
-                    select itin).ToListAsync<Itinerary>();
-
-                // Loop through each itinerary and delete the information in all tables
-                foreach (Itinerary itin in userItineraries)
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                // First, need to get the user's ID from the DB using their email.
+                using (SqlCommand command = new SqlCommand("SELECT [MEetAndYou].[GetUserID](@email)", connection))
                 {
-                    // Get the current itinerary's ID
-                    int itineraryID = itin.ItineraryId;
+                    command.CommandType = CommandType.Text;
+                    command.Parameters.Add("@email", SqlDbType.VarChar).Value = userAcc.Email;
 
-                    // Retrieve all entries for given itinerary ID from the UserItinerary table to be deleted.
-                    _dbContext.UserItineraries.RemoveRange(_dbContext.UserItineraries.Where(x => x.ItineraryId == itineraryID));
-
-                    // Retrieve all images for given itinerary ID from the UserItinerary table to be deleted.
-                    _dbContext.Images.RemoveRange(_dbContext.Images.Where(x => x.ItineraryId == itineraryID));
-
-                    // Retrieve all user event ratings for given itinerary ID from the UserItinerary table to be deleted.
-                    _dbContext.UserEventRatings.RemoveRange(_dbContext.UserEventRatings.Where(x => x.ItineraryId == itineraryID));
-
-                    // Retrieve all itinerary note for given itinerary ID from the UserItinerary table to be deleted.
-                    _dbContext.ItineraryNotes.RemoveRange(_dbContext.ItineraryNotes.Where(x => x.ItineraryId == itineraryID));
-
-                    // Delete all events from an itinerary
-                    foreach (Event userEvent in itin.Events)
-                    {
-                        //Find the Event
-                        Event e = await _dbContext.Events.FindAsync(userEvent.EventId);
-                        //Console.Write("EventID: " + e.EventId + " " + "Event Name: " + e.EventName);
-
-                        //Remove event from the itinerary
-                        itin.Events.Remove(e);
-                        _dbContext.Entry(e).State = EntityState.Deleted;
-                    }
-
-                    // Removes the given itinerary
-                    _dbContext.Itineraries.Remove(itin);
-                    _dbContext.Entry(itin).State = EntityState.Deleted;
+                    connection.Open();
+                    userID = (int)command.ExecuteScalar();
+                    connection.Close();
                 }
 
-                // Retrieve all user event logs from logs table to be deleted.
-                _dbContext.EventLogs.RemoveRange(_dbContext.EventLogs.Where(x => x.UserId == userID));
+                if (userID == null)
+                {
+                    throw new Exception();
+                }
 
-                // Find the user account record in the database
-                UserAccountRecord currentUser = await _dbContext.UserAccountRecords.FindAsync(userID);
+                // Then, we need to delete it from our UserRoles table.
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                using (SqlCommand command = new SqlCommand("[MEetAndYou].[DeleteUserFromUserRoles]", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.Add("@id", SqlDbType.Int).Value = userID;
 
-                // Remove any roles the current user has to our system
-                _dbContext.Roles.RemoveRange(_dbContext.Roles.Where(x => x.Users == currentUser));
+                    connection.Open();
+                    isRemovedFromUserRoles = Convert.ToBoolean(command.ExecuteNonQuery());
+                    connection.Close();
+                }
 
-                // Remove the current user from the database
-                _dbContext.UserAccountRecords.Remove(currentUser);
-                _dbContext.Entry(currentUser).State = EntityState.Deleted;
+                // Error check to see if the user was successfully removed from the roles table.
+                if (!isRemovedFromUserRoles)
+                {
+                    throw new Exception();
+                }
 
-                // Gets the token assocaited with given user ID
-                UserToken uToken = await 
-                    (from token in _dbContext.UserTokens
-                     where token.UserId == userID
-                     select token).FirstOrDefaultAsync<UserToken>();
+                // Then, take that ID and delete from the database.
+                isUserDel = IsUserDeleted(userID);
 
-                // Removes the token from the database
-                _dbContext.UserTokens.Remove(uToken);
-                _dbContext.Entry(uToken).State = EntityState.Deleted;
-
-                int result = await _dbContext.SaveChangesAsync();
-
+                // Error check to see if the user was successfully removed from the user accounts table.
+                if (!isUserDel)
+                {
+                    throw new Exception();
+                }
             }
             catch (Exception ex)
             {
-                return new BaseResponse("The user's account could not be deleted.", false);
+                return Task.FromResult(false);
             }
-            return new BaseResponse("The user's account was successfully deleted.", true);
+
+            return Task.FromResult(Convert.ToBoolean(isUserDel));
         }
 
         /// <summary>

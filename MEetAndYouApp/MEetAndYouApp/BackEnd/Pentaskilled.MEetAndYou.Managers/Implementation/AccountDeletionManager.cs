@@ -1,44 +1,39 @@
 ﻿using System;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using Pentaskilled.MEetAndYou.DataAccess;
 using Pentaskilled.MEetAndYou.Entities;
-using Pentaskilled.MEetAndYou.Entities.Models;
-using Pentaskilled.MEetAndYou.Managers.Contracts;
 
 namespace Pentaskilled.MEetAndYou.Managers
 {
-    public class AccountDeletionManager : IAccountDeletionManager
+    public class AccountDeletionManager
     {
         private readonly IUMDAO _umDAO;
         private UserAccountEntity uAcc;
 
-        public AccountDeletionManager(IUMDAO umDAO)
+        public AccountDeletionManager()
         {
-            _umDAO = umDAO;
+            _umDAO = new UMDAO();
             uAcc = new UserAccountEntity();
         }
 
-        public async Task<BaseResponse> DeleteUser(int userID)
+        public bool DeleteUser(string json)    // Pass in the parameters from the API controller (id, token?)
         {
-            // Validation check to ensure the user ID is a positive integer value.
-            if (userID > 0)
+            try
             {
-                try
-                {
-                    uAcc.UserID = userID;
-                    BaseResponse result = await _umDAO.DeleteAccAsync(uAcc);
-                    return result;
-                }
-                catch (Exception ex)
-                {
-                    return new BaseResponse("The user's account could not be deleted.", false);
-                }
+                char[] delimiters = { ':', ',', '{', '}' };
+                string jsonNoWS = Regex.Replace(json, @"\s+", "");
+                String[] result = jsonNoWS.Split(delimiters);
+
+                string userEmail = Convert.ToString(result[2]);
+                string userToken = Convert.ToString(result[4]);
+                uAcc.Email = userEmail;
+                _umDAO.DeleteAcc(uAcc);
             }
-            else
+            catch (Exception ex)
             {
-                return new BaseResponse("The user ID provided was invalid.", false);
+                return false;
             }
+            return true;
         }
     }
 }
