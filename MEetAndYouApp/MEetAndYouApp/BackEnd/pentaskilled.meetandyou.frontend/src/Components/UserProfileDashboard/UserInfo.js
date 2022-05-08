@@ -6,6 +6,12 @@ import React from "react";
  * @returns JSX table displaying the user account information
  */
 function UserInfo({ firstName, lastName, userName, email }) {
+
+
+
+
+
+    
     return (
         <div>
             <table>

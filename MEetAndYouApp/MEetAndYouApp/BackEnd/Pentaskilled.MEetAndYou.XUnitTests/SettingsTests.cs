@@ -28,7 +28,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         private MEetAndYouDBContext _dbContext;
 
         public static DbContextOptions<MEetAndYouDBContext> dbContextOptions { get; }
-        public static string connectionString = "Data Source=meetandyou-db.cyakceoi9n4j.us-west-1.rds.amazonaws.com;Initial Catalog=MEetAndYou-DB;User Id=admin;Password=AlatreonFatalisVelkhana;Connect Timeout=30;TrustServerCertificate=True;";
+        public static string connectionString = "Data Source=meetandyou-db.cyakceoi9n4j.us-west-1.rds.amazonaws.com;Initial Catalog=MEetAndYou-DB;User Id=admin;Password=NergiganteRajangPaolumu;Connect Timeout=30;TrustServerCertificate=True;";
 
         static SettingsTests()
         {
@@ -60,7 +60,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         [Fact]
         public void checkPasswordUpdate()
         {
-            BaseResponse response = settingsDAO.updateUserPassword(5, "password").Result;
+            BaseResponse response = settingsDAO.updateUserPassword(5, "rayray").Result;
             _outputHelper.WriteLine(response.Message);
             Assert.True(response.IsSuccessful);
         }
@@ -96,6 +96,13 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             BaseResponse response = settingsDAO.enableUserAccount(5).Result;
             _outputHelper.WriteLine(response.Message);
             Assert.True(response.IsSuccessful);
+        }
+
+        [Fact]
+        public void createUser()
+        {
+            UMDAO uMDAO = new UMDAO();
+            
         }
 
         ///// <summary>
