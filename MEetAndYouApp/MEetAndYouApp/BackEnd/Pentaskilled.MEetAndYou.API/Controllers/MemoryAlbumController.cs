@@ -44,9 +44,7 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
                 MemoryAlbumResponse getImages = await _memoryAlbumDAO.GetImageRecordAsync(id);
                 return getImages;
             }
-
-
-            catch (Exception ex)
+               catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }

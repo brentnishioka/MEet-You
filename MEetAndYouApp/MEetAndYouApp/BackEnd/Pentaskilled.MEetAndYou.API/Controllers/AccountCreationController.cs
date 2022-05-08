@@ -13,8 +13,7 @@ using Pentaskilled.MEetAndYou.DataAccess;
 using Pentaskilled.MEetAndYou.Managers.Contracts;
 using Pentaskilled.MEetAndYou.DataAccess.Contracts;
 using Pentaskilled.MEetAndYou.Entities.Models;
-
-
+using Pentaskilled.MEetAndYou.Managers;
 namespace Pentaskilled.MEetAndYou.API.Controllers
 {
     [Route("[controller]")]
@@ -23,14 +22,26 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
     public class AccountCreationController
     {
         private readonly MEetAndYouDBContext _dbcontext;
-        private readonly IAccountCreationManager _memoryAlbumManager;
-        private readonly IMemoryAlbumDAO _memoryAlbumDAO;
+        private readonly AccountCreationManager _accountCreationManager;
+        private readonly IAccountCreation _accountCreationDAO;
 
-        public AccountCreationController(MEetAndYouDBContext context, IMemoryAlbumManager memoryAlbumManager, IMemoryAlbumDAO memoryAlbumDAO)
+        public AccountCreationController(MEetAndYouDBContext context, AccountCreationManager accountCreationManager, IAccountCreation accountCreationDAO)
         {
             _dbcontext = context;
-            this._memoryAlbumManager = memoryAlbumManager;
-            this._memoryAlbumDAO = memoryAlbumDAO;
+            this._accountCreationManager = accountCreationManager;
+            this._accountCreationDAO = accountCreationDAO;
         }
+
+        [HttpPost]
+        [Route("/PostAccount")]
+        public async Task<ActionResult<BaseResponse>> PostEvent(string email, string password, string phoneNumber)
+        {
+          
+                BaseResponse result = await _accountCreationManager.BeginAccountCreation(email, password, phoneNumber);
+                return result;
+            
+        }
+
+
     }
 }

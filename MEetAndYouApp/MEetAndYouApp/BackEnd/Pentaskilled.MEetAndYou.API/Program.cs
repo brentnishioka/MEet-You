@@ -93,6 +93,9 @@ builder.Services.AddSingleton<ISuggestionDAO, SuggestionDAO>();
 builder.Services.AddSingleton<IAPIService, EventAPIService>();
 builder.Services.AddSingleton<IMemoryAlbumDAO, MemoryAlbumDAO >();
 builder.Services.AddSingleton<IMemoryAlbumManager, MemoryAlbumManager>();
+builder.Services.AddSingleton<AccountCreationManager>();
+builder.Services.AddSingleton<IAccountCreation,AccountCreationDAO>();
+
 
 
 //builder.Services.AddSingleton<Configuration>();
