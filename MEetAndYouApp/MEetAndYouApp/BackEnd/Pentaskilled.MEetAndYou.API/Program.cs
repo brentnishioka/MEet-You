@@ -69,9 +69,12 @@ builder.Services.AddControllers();
 //Dependency injection for Controllers
 builder.Services.AddSingleton<AuthnManager>();
 builder.Services.AddSingleton<CopyManager>();
-builder.Services.AddSingleton<UPDManager>();
+builder.Services.AddSingleton<IUPDManager,UPDManager>();
 builder.Services.AddScoped<IItineraryDAO,ItineraryDAO>();
 builder.Services.AddSingleton<IUserDAO,UserDAO>();
+builder.Services.AddSingleton<IUPDDAO,UPDDAO>();
+builder.Services.AddSingleton<IUPDService, UPDService>();
+
 builder.Services.AddSingleton<IAuthorizationManager, AuthorizationManager>();
 builder.Services.AddSingleton<ICalendarManager, CalendarManager>();
 builder.Services.AddSingleton<IRatingManager, RatingManager>();
