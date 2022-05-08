@@ -1,39 +1,44 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Pentaskilled.MEetAndYou.DataAccess;
 using Pentaskilled.MEetAndYou.Entities;
+using Pentaskilled.MEetAndYou.Entities.Models;
+using Pentaskilled.MEetAndYou.Managers.Contracts;
 
 namespace Pentaskilled.MEetAndYou.Managers
 {
-    public class AccountDeletionManager
+    public class AccountDeletionManager : IAccountDeletionManager
     {
         private readonly IUMDAO _umDAO;
         private UserAccountEntity uAcc;
 
-        public AccountDeletionManager()
+        public AccountDeletionManager(IUMDAO umDAO)
         {
-            _umDAO = new UMDAO();
+            _umDAO = umDAO;
             uAcc = new UserAccountEntity();
         }
 
-        public bool DeleteUser(string json)    // Pass in the parameters from the API controller (id, token?)
+        public async Task<BaseResponse> DeleteUser(int userID)
         {
-            try
+            // Validation check to ensure the user ID is a positive integer value.
+            if (userID > 0)
             {
-                char[] delimiters = { ':', ',', '{', '}' };
-                string jsonNoWS = Regex.Replace(json, @"\s+", "");
-                String[] result = jsonNoWS.Split(delimiters);
-
-                string userEmail = Convert.ToString(result[2]);
-                string userToken = Convert.ToString(result[4]);
-                uAcc.Email = userEmail;
-                _umDAO.DeleteAcc(uAcc);
+                try
+                {
+                    uAcc.UserID = userID;
+                    BaseResponse result = await _umDAO.DeleteAccAsync(uAcc);
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    return new BaseResponse("The user's account could not be deleted.", false);
+                }
             }
-            catch (Exception ex)
+            else
             {
-                return false;
+                return new BaseResponse("The user ID provided was invalid.", false);
             }
-            return true;
         }
     }
 }
