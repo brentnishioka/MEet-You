@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Pentaskilled.MEetAndYou.Entities;
+using Pentaskilled.MEetAndYou.Entities.Models;
 
 namespace Pentaskilled.MEetAndYou.DataAccess
 {
@@ -17,7 +18,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
 
         bool IsUserDisabled(int id);
 
-        Task<bool> DeleteAcc(UserAccountEntity uAcc);
+        Task<BaseResponse> DeleteAccAsync(UserAccountEntity uAcc);
 
         bool IsUserEnabled(int id);
 
