@@ -75,6 +75,10 @@ builder.Services.AddSingleton<IUserDAO,UserDAO>();
 builder.Services.AddSingleton<IUPDDAO,UPDDAO>();
 builder.Services.AddSingleton<IUPDService, UPDService>();
 
+builder.Services.AddSingleton<ISettingsDAO, SettingsDAO>();
+builder.Services.AddSingleton<ISettingService, SettingService>();
+builder.Services.AddSingleton<ISettingsManager, SettingManager>();
+
 builder.Services.AddSingleton<IAuthorizationManager, AuthorizationManager>();
 builder.Services.AddSingleton<ICalendarManager, CalendarManager>();
 builder.Services.AddSingleton<IRatingManager, RatingManager>();

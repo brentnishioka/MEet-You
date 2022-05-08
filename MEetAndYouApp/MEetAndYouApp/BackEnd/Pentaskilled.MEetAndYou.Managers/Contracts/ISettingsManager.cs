@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Pentaskilled.MEetAndYou.Entities.Models;
 
-namespace Pentaskilled.MEetAndYou.DataAccess.Contracts
+namespace Pentaskilled.MEetAndYou.Managers.Contracts
 {
-    public interface ISettingsDAO
-    { 
+    public interface ISettingsManager
+    {
         Task<BaseResponse> updateUserEmail(int id, string email);
         Task<BaseResponse> updateUserPhone(int id, string phone);
         Task<BaseResponse> updateUserPassword(int id, string password);
@@ -20,6 +20,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Contracts
         Task<BaseResponse> enableUserAccount(int id);
 
 
-                
+
+
     }
 }
