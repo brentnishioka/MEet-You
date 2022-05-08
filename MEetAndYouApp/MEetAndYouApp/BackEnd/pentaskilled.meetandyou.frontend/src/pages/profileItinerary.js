@@ -9,7 +9,7 @@ function ProfileItinerary({}){
     const getData = async () => {
         try {
             var id = 5
-            const res = await fetch('https://localhost:9000/GetUPDData?id=' + id);
+            const res = await fetch('https://meetandyou.me:8001/GetUPDData?id=' + id);
             const response = await res.json();
             setData(response.data);
             console.log(response);
