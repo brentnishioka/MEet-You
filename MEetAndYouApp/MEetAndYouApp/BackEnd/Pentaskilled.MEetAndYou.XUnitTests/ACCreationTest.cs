@@ -16,7 +16,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             Stopwatch stopWatch = new();
             int expectedTime = 15;
             AccountCreationManager _ACManager = new AccountCreationManager();
-            string email = "DIGEON2465@gmail.com";
+            string email = "DIGEO465@gmail.com";
             string password = "joshiscoolIO!";
             string phoneNumber = "4084802175";
 
