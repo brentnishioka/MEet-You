@@ -29,6 +29,7 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
            account information, both pieces of data are wrapped ina a UPData object.*/
         public async Task<UPDataResponse> GetUPData(int userID)
         {
+            // TODO: make it so the UPDataResponse includes things like the rating of itinerary, 
             if (userID > 0)
             {
                 ItineraryResponse iResponse = await _updService.GetItinerary(userID);
