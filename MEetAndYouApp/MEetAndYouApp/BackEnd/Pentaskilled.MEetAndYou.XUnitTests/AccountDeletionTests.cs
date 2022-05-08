@@ -14,7 +14,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         private readonly ITestOutputHelper _output;
         private MEetAndYouDBContext _dbContext;
         public static DbContextOptions<MEetAndYouDBContext> dbContextOptions { get; }
-        public static string connectionString = "Data Source=meetandyou-db.cyakceoi9n4j.us-west-1.rds.amazonaws.com;Initial Catalog=MEetAndYou-DB;User Id=admin;Password=AlatreonFatalisVelkhana;Connect Timeout=30;TrustServerCertificate=True;";
+        public static string connectionString = "Filler connection string";
 
         static AccountDeletionTests()
         {
