@@ -12,7 +12,7 @@ function Userpd() {
         <div>
             <ProfilePic profileImage="" />
             <UserInfo firstName={"raymond"} lastName={"guevara"} userName={"raymondgggg"} email={"email@mail.com"} />
-            <ProfileItinerary />
+            {/* <ProfileItinerary /> */}
 
         </div>);
 }
