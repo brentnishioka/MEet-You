@@ -23,7 +23,6 @@ export default function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         var requestOptions = {
-
             method: "POST",
             headers: {
                 'Content-type': 'application/json',
@@ -31,13 +30,12 @@ export default function Login() {
             },
             mode: 'cors'
         };
-        await fetch("https://meetandyou.me:8001/Login/SignIn?userEmail=" + email + "&userPassword=" + password, requestOptions)
-            .then(response => {
-                response.text()
-                //sessionStorage.setItem('userID', response.data.userID)
-            })
-            .then(body => console.log(body))
-       
+        var res = await fetch("https://localhost:9000/Login/SignIn?userEmail=" + email + "&userPassword=" + password, requestOptions)
+        var loginResponse = await res.json();
+        sessionStorage.setItem('userID', loginResponse && loginResponse.userID)
+        sessionStorage.setItem('token', loginResponse && loginResponse.token)
+        sessionStorage.setItem('roles', loginResponse && loginResponse.roles)
+
         navigate("/");
     }
 
