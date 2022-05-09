@@ -33,7 +33,7 @@ function MyCalendar() {
             mode: 'cors'
         };
         console.log(date);
-        await fetch(`https://meetandyou.me:8001/Calendar?userID=` + id + "&date=" + dateString, requestOptions)
+        await fetch(`https://localhost:9000/Calendar?userID=` + id + "&date=" + dateString, requestOptions)
             .then(response => response.json())
             .then(response => setItinerary(response.data))
     }
@@ -121,10 +121,10 @@ function MyCalendar() {
         return (
             <div>
             <table
-                style={{ "borderCollapse": "collapse", "padding": "5px", "width": "50%", "border": "1px solid black" }}
+                style={{ "borderCollapse": "collapse", "padding": "5px", "width": "60%", "border": "1px solid black" }}
                 className="table-hover">
-                <thead style={{ "borderCollapse": "collapse", "padding": "5px", "width": "50%", "border": "1px solid black" }}>
-                    <tr style={{ "borderCollapse": "collapse", "padding": "5px", "width": "50%", "border": "1px solid black" }}>
+                <thead style={{ "borderCollapse": "collapse", "padding": "5px", "width": "60%", "border": "1px solid black" }}>
+                    <tr style={{ "borderCollapse": "collapse", "padding": "5px", "width": "60%", "border": "1px solid black" }}>
                     
                             <th> Event</th>
                             <th> Address </th>

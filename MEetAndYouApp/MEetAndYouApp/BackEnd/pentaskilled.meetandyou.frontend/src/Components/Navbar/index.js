@@ -42,10 +42,7 @@ const Navbar = () => {
                     </NavLink>
                     <NavLink to='/memoryalbumlist' activeStyle>
                         Memory Album
-                    </NavLink>
-
-                    {/* Second Nav */}
-                    {/* <NavBtnLink to='/sign-in'>Sign In</NavBtnLink> */}
+                    </NavLink>                  
                 </NavMenu>
                 <NavBtn>
                     <NavBtnLink to='/login'>Login</NavBtnLink>

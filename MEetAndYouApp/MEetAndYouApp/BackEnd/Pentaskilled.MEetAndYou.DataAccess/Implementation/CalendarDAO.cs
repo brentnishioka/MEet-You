@@ -60,7 +60,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess
             }
             return new ItineraryResponse(message, isSuccessful, distinctList);
         }
-        public DateTime DateConversion(string date)
+        public DateTime DateConversion(string date) //Parses the datetime object
         {
             CultureInfo ci = new CultureInfo("en-US");
             return DateTime.Parse(date, ci);
