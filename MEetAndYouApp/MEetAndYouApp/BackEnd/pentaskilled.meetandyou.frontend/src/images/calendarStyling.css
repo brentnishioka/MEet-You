@@ -157,6 +157,7 @@
 
 label, input {
     margin-left: 5px;
+    display: inline-block;
 }
 
 .login-wrapper {
