@@ -1,13 +1,13 @@
-import useToken from "./useToken";
+import useSessionData from "./useSessionData";
 import { NavBtnLink } from "../Navbar/NavbarElements";
 import { useNavigate } from "react-router-dom";
 
 function useAuthStatus() {
-    const { token } = useToken();
+    const { token, userID } = useSessionData();
     const navigate = useNavigate();
 
     const handleLogoutClick = async () => {
-        var userID = sessionStorage.getItem('userID')
+        var currentUserID = userID;
 
         var requestOptions = {
             method: "DELETE",
@@ -18,7 +18,7 @@ function useAuthStatus() {
             mode: 'cors'
         };
 
-        var res = await fetch('https://localhost:9000/Login/SignOut?userID=' + userID, requestOptions);
+        var res = await fetch('https://localhost:9000/Login/SignOut?userID=' + currentUserID, requestOptions);
         var logoutResponse = await res.json()
 
         sessionStorage.clear()

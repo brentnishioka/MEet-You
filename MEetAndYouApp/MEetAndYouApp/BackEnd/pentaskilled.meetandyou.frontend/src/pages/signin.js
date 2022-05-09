@@ -2,13 +2,13 @@ import React, { useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import 'react-phone-number-input/style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import useToken from '../Components/hooks/useToken';
+import useSessionData from '../Components/hooks/useSessionData';
 
 export default function Login() {
     //useStates for login
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const {setToken} = useToken();
+    const {setToken, setUserID, setRoles} = useSessionData();
 
 
     //useStates for account registration
@@ -34,9 +34,9 @@ export default function Login() {
         };
         var res = await fetch("https://localhost:9000/Login/SignIn?userEmail=" + email + "&userPassword=" + password, requestOptions)
         var loginResponse = await res.json();
-        sessionStorage.setItem('userID', loginResponse && loginResponse.userID)
-        setToken(loginResponse && loginResponse.token)
-        sessionStorage.setItem('roles', loginResponse && loginResponse.roles)
+        setUserID(loginResponse && loginResponse.userID);
+        setToken(loginResponse && loginResponse.token);
+        setRoles(loginResponse && loginResponse.roles);
 
         navigate("/");
         window.location.reload()
