@@ -12,7 +12,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Contracts
 
         public Task<UserAccountRecord> getUserAccount(int userID);
 
-
+        Task<int> GetRegisteredCount(DateTime date);
 
 
 

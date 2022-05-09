@@ -95,7 +95,8 @@ builder.Services.AddSingleton<IMemoryAlbumDAO, MemoryAlbumDAO >();
 builder.Services.AddSingleton<IMemoryAlbumManager, MemoryAlbumManager>();
 builder.Services.AddSingleton<IHyperlinkDAO, HyperlinkDAO>();
 builder.Services.AddSingleton<IHyperlinkManager, HyperlinkManager>();
-
+builder.Services.AddSingleton<IUADManager, UADManager>();
+builder.Services.AddSingleton<IUADDAO, IUADDAO>();
 
 //builder.Services.AddSingleton<Configuration>();
 builder.Services.AddTransient<MEetAndYouDBContext>();
