@@ -21,7 +21,9 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
         public int ItineraryId { get; set; }
         public int UserRating { get; set; }
 
+        [System.Text.Json.Serialization.JsonIgnore]
         public virtual Event Event { get; set; }
+        [System.Text.Json.Serialization.JsonIgnore]
         public virtual Itinerary Itinerary { get; set; }
     }
 }

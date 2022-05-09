@@ -34,13 +34,13 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
 
             try
             {
-                /*token = Request.Headers["token"];
+                /*token = Request.Headers["token"]; //Takes in the userID from the browser session storage
                 userIDToken = Request.Headers["userID"];
                 role = Request.Headers["roles"];
                 //userToken = Request.Headers[];
 
 
-                if (token == null)                 
+                if (token == null)  //Checks if token is null  
                 {
                     return BadRequest("Null token");
                 }
