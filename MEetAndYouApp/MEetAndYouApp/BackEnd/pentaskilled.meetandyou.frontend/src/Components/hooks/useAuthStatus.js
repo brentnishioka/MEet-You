@@ -7,19 +7,19 @@ function useAuthStatus() {
     const navigate = useNavigate();
 
     const handleLogoutClick = async () => {
-        // var userID = sessionStorage.getItem('userID')
+        var userID = sessionStorage.getItem('userID')
 
-        // var requestOptions = {
-        //     method: "DELETE",
-        //     headers: {
-        //         'Content-type': 'application/json',
-        //         'Accept': 'application/json, text/plain, */*'
-        //     },
-        //     mode: 'cors'
-        // };
+        var requestOptions = {
+            method: "DELETE",
+            headers: {
+                'Content-type': 'application/json',
+                'Accept': 'application/json, text/plain, */*'
+            },
+            mode: 'cors'
+        };
 
-        // var res = await fetch('https://localhost:9000/Login/SignOut?userID=' + userID, requestOptions);
-        // var logoutResponse = await res.json()
+        var res = await fetch('https://localhost:9000/Login/SignOut?userID=' + userID, requestOptions);
+        var logoutResponse = await res.json()
 
         sessionStorage.clear()
         navigate('/')
