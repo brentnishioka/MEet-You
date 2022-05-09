@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Pentaskilled.MEetAndYou.DataAccess;
 using Pentaskilled.MEetAndYou.DataAccess.Implementation;
 using Pentaskilled.MEetAndYou.Entities;
+using Pentaskilled.MEetAndYou.Entities.Models;
 using Pentaskilled.MEetAndYou.Services.Contracts;
 using Pentaskilled.MEetAndYou.Services.Implementation;
+using Pentaskilled.MEetAndYou.Services.Contracts;
 
 namespace Pentaskilled.MEetAndYou.Managers
 {
@@ -19,7 +22,7 @@ namespace Pentaskilled.MEetAndYou.Managers
         /// <param name="phoneNumber">User given phone number</param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public string CheckAccountAvailability(string email, string password, string phoneNumber)
+        public string CheckAccountAvailability(string email)
         {
             try
             {
@@ -30,19 +33,16 @@ namespace Pentaskilled.MEetAndYou.Managers
                 AccountCreationDAO ACManager = new AccountCreationDAO();
 
                 user.Email = email;
-                user.Password = password;
-                user.PhoneNumber = phoneNumber;
-                user.RegisterDate = DateTime.UtcNow.ToString();
-                user.Active = Convert.ToInt32("0");
 
-                if (_UMManager.VerifyUserInfo(user.Email, user.Password, user.PhoneNumber) == "User info is successfully verified.")
+                if (!ACManager.DoesEmailExist(user).Result)
                 {
-                    if (!ACManager.DoesEmailExist(user).Result)
-                    {
-                        return "Username is available.";
-                    }
-
+                    return "Username is available.";
                 }
+                else
+                {
+                    return "Username is not available.";
+                }
+
 
 
 
@@ -51,7 +51,7 @@ namespace Pentaskilled.MEetAndYou.Managers
             {
                 throw new Exception();
             }
-            return "Username is not available.";
+         
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Pentaskilled.MEetAndYou.Managers
         /// <param name="phoneNumber">User given phone number</param>
         /// <returns>Successful account creation</returns>
         /// <exception cref="Exception"></exception>
-        public string BeginAccountCreation(string email, string password, string phoneNumber)
+        public async Task<BaseResponse> BeginAccountCreation(string email, string password, string phoneNumber)
         {
 
             try
@@ -79,46 +79,35 @@ namespace Pentaskilled.MEetAndYou.Managers
                 user.RegisterDate = DateTime.UtcNow.ToString();
                 user.Active = Convert.ToInt32("0");
                 string accountCreated = "";
-                string userOTP = _authnService.generateOTP();
+                /*string userOTP = _authnService.generateOTP();*/
 
-                bool isUnActivated = false;
+             /*   bool isUnActivated = false;
                 string result = "";
+*/
+                //bool IsAccountCreated = false;
 
-                bool IsAccountCreated = false;
-
-                if (CheckAccountAvailability(email, password, phoneNumber) == "Username is available.")
+                if (CheckAccountAvailability(email) == "Username is available.")
                 {
-                    accountCreated = UMManager.BeginCreateUser(email, password, phoneNumber, user.RegisterDate, user.Active.ToString());
 
-                    if (accountCreated != "User account was successfully created")
+                    if (_UMManager.VerifyUserInfo(email, password, phoneNumber) != "User info is successfully verified.")
                     {
-                        IsAccountCreated = uMDAO.IsUserCreated(user);
-                    }
-                }
-                else if (CheckAccountAvailability(email, password, phoneNumber) == "Username is not available.")
-                {
-                    return "Username not available";
-
-                }
-
-                //_UMManager._UMService.IsUserCreated(user);
-                if (IsAccountCreated)
-                {
-
-                    _authnService.sendOTP(user.PhoneNumber, userOTP);
-
-                    string OTP = Console.ReadLine();
-
-                    _accountCreation.UpdateAccountActivity(user);
-                    if (userOTP.Equals(OTP)) ///&& !(isUnActivated = _accountCreation.RemoveUnActivatedAccount(user).Result))
-                    {
-                        return "Registration successful";
+                        return new BaseResponse(_UMManager.VerifyUserInfo(email, password, phoneNumber), false);
                     }
                     else
                     {
-                        _accountCreation.RemoveUnActivatedAccount(user);
-                        return "Account creation timed out. Please try again";
+                        accountCreated = UMManager.BeginCreateUser(email, password, phoneNumber, user.RegisterDate, user.Active.ToString());
+/*
+                        if (accountCreated != "User account was successfully created")
+                        {
+                            IsAccountCreated = uMDAO.IsUserCreated(user);
+                        }*/
                     }
+
+
+                }
+                else
+                {
+                    return new BaseResponse("Username is not available.", false);
                 }
 
 
@@ -128,7 +117,7 @@ namespace Pentaskilled.MEetAndYou.Managers
                 throw new Exception();
             }
 
-            return "Account Creation Successful";
+            return new BaseResponse("Account Creation Successful", true);
         }
 
 

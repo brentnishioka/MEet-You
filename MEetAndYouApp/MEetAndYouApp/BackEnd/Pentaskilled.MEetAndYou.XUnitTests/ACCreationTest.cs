@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using Pentaskilled.MEetAndYou.DataAccess.Implementation;
 using Pentaskilled.MEetAndYou.Entities;
+using Pentaskilled.MEetAndYou.Entities.Models;
 using Pentaskilled.MEetAndYou.Managers;
 using Xunit;
 
@@ -10,22 +11,22 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
     public class ACCreationTest
     {
         [Fact]
-        public void AccountRegistration()
+        public async void AccountRegistration()
         {
             Stopwatch stopWatch = new();
             int expectedTime = 15;
             AccountCreationManager _ACManager = new AccountCreationManager();
-            string email = "DIGEON2465@gmail.com";
+            string email = "DIGEO465@gmail.com";
             string password = "joshiscoolIO!";
             string phoneNumber = "4084802175";
 
             stopWatch.Start();
 
-            string createResult = _ACManager.BeginAccountCreation(email, password, phoneNumber);
+            BaseResponse createResult = await _ACManager.BeginAccountCreation(email, password, phoneNumber);
             stopWatch.Stop();
             Console.WriteLine(createResult);
 
-            Assert.Equal("Account Creation Successful", createResult);
+            Assert.Equal("Account Creation Successful", createResult.Message);
             //Assert.True(stopWatch.Elapsed.TotalSeconds <= expectedTime);
         }
 
@@ -36,16 +37,35 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             Stopwatch stopWatch = new();
             int expectedTime = 15;
             AccountCreationManager _ACManager = new AccountCreationManager();
-            string email = "viviand2465@gmail.com";
-            string password = "joshiscool!";
-            string phoneNumber = "4084802185";
+            string email = "viviand24651@gmail.com";
+
 
             stopWatch.Start();
 
-            string createResult = _ACManager.CheckAccountAvailability(email, password, phoneNumber);
+            string createResult = _ACManager.CheckAccountAvailability(email);
             stopWatch.Stop();
 
             Assert.Equal("Username is available.", createResult);
+            //Assert.True(stopWatch.Elapsed.TotalSeconds <= expectedTime);
+
+        }
+
+        [Fact]
+        public void UnAvailableUserName()
+        {
+
+            Stopwatch stopWatch = new();
+            int expectedTime = 15;
+            AccountCreationManager _ACManager = new AccountCreationManager();
+            string email = "jdcramos@gmail.com";
+
+
+            stopWatch.Start();
+
+            string createResult = _ACManager.CheckAccountAvailability(email);
+            stopWatch.Stop();
+
+            Assert.Equal("Username is not available.", createResult);
             //Assert.True(stopWatch.Elapsed.TotalSeconds <= expectedTime);
 
         }
