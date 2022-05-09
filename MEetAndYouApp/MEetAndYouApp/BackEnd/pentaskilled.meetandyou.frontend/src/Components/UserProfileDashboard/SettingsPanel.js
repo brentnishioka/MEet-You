@@ -55,10 +55,10 @@ function SettingsIcon(){
 
     // Return your Settings Pane
     return (
-        <SettingsPane items={menu} settings={settings} onPaneLeave={leavePaneHandler}>
+        <SettingsPane items={menu} index="/" settings={settings} onPaneLeave={leavePaneHandler}>
             <SettingsMenu headline="General Settings" />
             <SettingsContent closeButtonClass="secondary" saveButtonClass="primary" header={true}>
-                <SettingsPage >
+                <SettingsPage handler="../index">
                     <fieldset className="form-group">
                         <label for="profileName">Name: </label>
                         <input type="text" className="form-control" name="mysettings.general.name" placeholder="Name" id="general.ame" onChange={settingsChanged} defaultValue={settings['mysettings.general.name']} />
@@ -73,7 +73,7 @@ function SettingsIcon(){
                         </select>
                     </fieldset>
                 </SettingsPage>
-                <SettingsPage options={dynamicOptionsForProfilePage} />
+                <SettingsPage handler="../index" options={dynamicOptionsForProfilePage} />
             </SettingsContent>
         </SettingsPane>
     );
