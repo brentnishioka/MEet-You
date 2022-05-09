@@ -145,11 +145,11 @@ if (app.Environment.IsProduction())
 
 
 // Add global Cors policies
-app.UseCors(x => x
-    .AllowAnyMethod()
-    .AllowAnyHeader()
-    .SetIsOriginAllowed(origin => true)
-    .AllowCredentials());
+//app.UseCors(x => x
+//    .AllowAnyMethod()
+//    .AllowAnyHeader()
+//    .SetIsOriginAllowed(origin => true)
+//    .AllowCredentials());
 
 app.MapGet("/", () => eventsApiKey);
 

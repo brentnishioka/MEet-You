@@ -99,7 +99,8 @@ namespace Pentaskilled.MEetAndYou.Managers
             {
                 return authnResponse;
             }
-            throw new Exception("Hello World");
+            return new AuthnResponse(-1, userToken, null);
+            //throw new Exception("Hello World");
         }
 
         public bool SignOut(int userID)

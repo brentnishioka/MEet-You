@@ -26,7 +26,7 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
             }
             catch (Exception ex)
             {
-                response = false;
+                return BadRequest("Verification met a problem!");
             }
             return response;
         }
