@@ -12,8 +12,6 @@ import Events from './pages/events';
 import Getrandomsuggestion from './pages/getrandomsuggestion';
 import CreateItinerary from "./pages/itinerary";
 import Userpd from "./pages/Userprofiledashboard"
-import SettingsPage from "./pages/Settings";
-import SettingsIcon from "./Components/UserProfileDashboard/SettingsPanel";
 import Settings from "./pages/Settings";
 
 

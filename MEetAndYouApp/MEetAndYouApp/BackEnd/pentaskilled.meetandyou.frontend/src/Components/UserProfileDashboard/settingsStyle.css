@@ -31,7 +31,7 @@
     top: 0;
     opacity: 0.85;
     transform: translateZ(0px);
-    background-color: rgb(0, 0, 0);
+    background-color: rgb(210, 197, 112);
 }
 
 .md-modal .settings-pane {
@@ -90,10 +90,10 @@ form.settings {
 
 .settings .settings-left {
     border-radius: 5px 0 0 5px;
-    background-color: #3f3f3f;
+    background-color: #dfc486;
     color: #fff;
     font-weight: 600;
-    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 0 rgba(232, 228, 113, 0.05), inset 0 -1px 0 rgba(232, 227, 136, 0.1);
     box-sizing: border-box;
     width: 190px;
     flex-shrink: 0;
@@ -122,7 +122,7 @@ form.settings {
     background-position: 0 100%;
     background-size: 100%, auto;
     background-repeat: no-repeat;
-    border: 1px solid #2e3136;
+    border: 1px solid #3f3514;
     border-radius: 0 5px 5px 0;
     border-left: none;
     -webkit-box-orient: vertical;
@@ -242,7 +242,7 @@ ul.settings-menu li.menu-item a {
     text-decoration: none;
     font-weight: 500;
     padding: 8px 6px 10px 20px;
-    color: hsla(0, 0%, 100%, 0.3);
+    color: hsla(0, 0%, 0%, 0.3);
     font-size: 14px;
     line-height: 1.25em;
     white-space: nowrap;
