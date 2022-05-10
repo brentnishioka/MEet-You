@@ -3,11 +3,12 @@
 import { SettingsPane, SettingsPage, SettingsContent, SettingsMenu } from 'react-settings-pane'
 import "../Components/UserProfileDashboard/settingsStyle.css"
 import React, {useState} from "react";
+import Button from '../Components/UserProfileDashboard/Button';
 
 export default function Settings() {
-    
-
-
+    const [email, setEmail] = useState(null)
+    const [phone, setPhone] = useState(null)
+    const [password, setPassword] = useState(null)
 
     // But here is an example of how it should look like:
     let settings = {
@@ -22,15 +23,15 @@ export default function Settings() {
     const menu = [
         {
             title: 'Profile Info',          // Title that is displayed as text in the menu
-            url: '/settings/general'  // Identifier (url-slug)
+            url: '/settings/profile_info'  // Identifier (url-slug)
         },
         {
             title: 'Disable Account',
-            url: '/settings/profile' // change url 
+            url: '/settings/disable_account' // change url 
         },
         {
             title: 'Delete Account',
-            url: 'setttings/delete'
+            url: '/setttings/delete_account'
         }
     ];
 
@@ -193,26 +194,34 @@ export default function Settings() {
 
     // Return Settings Pane
     return (
-        <SettingsPane items={menu} index="/settings/general" settings={settings} onPaneLeave={leavePaneHandler}>
+        <SettingsPane items={menu} index="/settings/profile_info" settings={settings} onPaneLeave={leavePaneHandler}>
             <SettingsMenu headline="Account Setttings" />
             <SettingsContent closeButtonClass="secondary" saveButtonClass="primary" header={true}>
-                <SettingsPage handler="/settings/general">
+                <SettingsPage handler="/settings/profile_info">
                     <fieldset className="form-group">
                         <label for="profileName">Name: </label>
                         <input type="text" className="form-control" name="mysettings.general.name" placeholder="Name" id="general.ame" onChange={settingsChanged} defaultValue={settings['mysettings.general.name']} />
+                        <Button>Change</Button>
                     </fieldset>
                     <fieldset className="form-group">
                         <label for="ChangeNumber">Phone Number: </label>
                         <input type="text" className="form-control" name="mysettings.general.name" placeholder="Phone Number" id="general.ame" onChange={settingsChanged} defaultValue={settings['mysettings.general.name']} />
+                        <Button>Change</Button>
                     </fieldset>
                     <fieldset className="form-group">
                         <label for="Change Password">Password: </label>
                         <input type="password" className="form-control" name="mysettings.general.name" placeholder="Name" id="general.ame" onChange={settingsChanged} defaultValue={settings['mysettings.general.name']} />
+                        <Button>Change</Button>
                     </fieldset>
                 </SettingsPage>
-                <SettingsPage handler="insert disable functionality" options={dynamicOptionsForProfilePage} />
+                <SettingsPage handler="/settings/disable_account">
+                    <Button>Disable Account</Button>
+                </SettingsPage>
+                <SettingsPage handler="/setttings/delete_account">
+                    <Button>Delete Account</Button>
+                </SettingsPage>
+
             </SettingsContent>
         </SettingsPane>
     )
-    
 }
