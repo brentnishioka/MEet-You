@@ -73,9 +73,6 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
                 // Create userItinerary object to be added
                 UserItinerary userItinerary = new UserItinerary(userAccountRecord.UserId, itineraryID, permission);
 
-                // Find object from context
-                var user = await _dbContext.UserItineraries.FirstOrDefaultAsync(u => u == userItinerary);
-
                 // LINQ to find count of unique users of an itinerary
                 var uniqueUsers = await
                     (from u in _dbContext.UserItineraries
@@ -85,18 +82,12 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
                      {
                          grp.Key.ItineraryId,
                          grp.Key.UserId,
-                     }).CountAsync();
-                
-                // Checks if existing users in itinerary is more than 5
-                if (uniqueUsers > 5)
-                { 
-                    return new HyperlinkResponse("Max users reached, please remove a user", true, itin.UserItineraries.ToList(), GetAllEmailsAsync(itin.UserItineraries.ToList()).Result);
-                }
-
-                // Add user if it does not exist in DB
-                if (!itin.UserItineraries.Contains(user))
+                     }).ToListAsync();
+               
+                // Checks if existing users in itinerary is less than or equal to 5
+                if (uniqueUsers.Count() < 5)
                 {
-                    // Add object to context
+                    // Add user if it does not exist in DB
                     itin.UserItineraries.Add(userItinerary);
                     _dbContext.Entry(itin).State = EntityState.Modified;
 
@@ -104,9 +95,31 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
                     await _dbContext.SaveChangesAsync();
                 }
 
-                else
+                else if (itin.UserItineraries.Contains(userItinerary))
                 {
                     return new HyperlinkResponse("User already added", false, itin.UserItineraries.ToList(), GetAllEmailsAsync(itin.UserItineraries.ToList()).Result);
+                }
+
+                else
+                {
+                    // Map list of UserItinerary to list of user IDs
+                    var userIDs = uniqueUsers.Select(a => a.UserId).ToList();
+
+                    // Add if user has an existing permission with max users reached
+                    if (userIDs.Contains(userItinerary.UserId))
+                    {
+                        // Add user if it does not exist in DB
+                        itin.UserItineraries.Add(userItinerary);
+                        _dbContext.Entry(itin).State = EntityState.Modified;
+
+                        // Save changes to context
+                        await _dbContext.SaveChangesAsync();
+                    }
+
+                    else
+                    {
+                        return new HyperlinkResponse("Max users reached, please remove a user", true, itin.UserItineraries.ToList(), GetAllEmailsAsync(itin.UserItineraries.ToList()).Result);
+                    }
                 }
             }
             catch (DbUpdateException)
