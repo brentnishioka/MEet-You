@@ -182,3 +182,12 @@ label, input {
     margin-top: 60px;
 }
 
+.home-select {
+    width: 500px;
+    margin-left: 480px;
+}
+
+.home-button {
+    margin-left: 30px;
+}
+
