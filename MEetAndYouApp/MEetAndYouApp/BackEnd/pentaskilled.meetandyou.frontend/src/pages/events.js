@@ -235,7 +235,7 @@ function Events() {
             <button type="button" id="SaveEvent" onClick={AddEvent}> Save Event</button>
 
             <p>Saving event response: </p>
-            {/* {postMsg} */}
+            {postMsg}
         </div>
 
     )

@@ -26,10 +26,10 @@ function CreateItinerary(){
 
     function displayPostResponse() {
         if (postRes.isSuccessful === false){
-            setpostMsg( <p>Save selected event failed, please try again</p>)
+            setpostMsg( <p>Save selected itinerary failed, please try again</p>)
         }
         else {
-            setpostMsg( <p>Save selected event was successful</p>)
+            setpostMsg( <p>Save selected itinerary was successful</p>)
         }
     }
 
