@@ -27,5 +27,10 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
         public virtual ICollection<UserToken> UserTokens { get; set; }
         [System.Text.Json.Serialization.JsonIgnore]
         public virtual ICollection<Role> Roles { get; set; }
+
+        public override string ToString()
+        {
+            return $"ID: {UserId}\nEmail: {UserEmail}\nPhone Number: {UserPhoneNum}";
+        }
     }
 }

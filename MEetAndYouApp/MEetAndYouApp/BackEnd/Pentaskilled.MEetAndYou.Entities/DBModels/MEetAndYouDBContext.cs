@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using System.Configuration;
 using Microsoft.EntityFrameworkCore;
 
@@ -33,7 +34,7 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
         {
             if (!optionsBuilder.IsConfigured)
             {
-                //optionsBuilder.UseSqlServer("Data Source=DESKTOP-0QA4EN0\SQLEXPRESS;Initial Catalog=MEetAndYou-DB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;");
+                //optionsBuilder.UseSqlServer("Data Source=DESKTOP-RM9387O;Initial Catalog=MEetAndYou-DB;Integrated Security=True");
                 //optionsBuilder.UseSqlServer(System.Configuration.ConfigurationManager.ConnectionStrings["MEetAndYouDatabase"].ConnectionString);
                 optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["MEetAndYouDatabase"].ConnectionString);
             }

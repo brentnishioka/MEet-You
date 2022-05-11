@@ -3,6 +3,14 @@ using Pentaskilled.MEetAndYou.DataAccess;
 using Pentaskilled.MEetAndYou.Entities.DBModels;
 using Pentaskilled.MEetAndYou.Managers;
 using Pentaskilled.MEetAndYou.DataAccess.Implementation;
+using Pentaskilled.MEetAndYou.Managers.Contracts;
+using Pentaskilled.MEetAndYou.Managers.Implementation;
+using Pentaskilled.MEetAndYou.Services.Contracts;
+using Pentaskilled.MEetAndYou.Services.Implementation;
+using Pentaskilled.MEetAndYou.DataAccess.Contracts;
+using Pentaskilled.MEetAndYou.Logging;
+using Pentaskilled.MEetAndYou.DataAccess;
+using Pentaskilled.MEetAndYou.Entities;
 using Pentaskilled.MEetAndYou.Services.Implementation;
 using Pentaskilled.MEetAndYou.Managers.Contracts;
 using Pentaskilled.MEetAndYou.Managers.Implementation;
@@ -12,17 +20,16 @@ using System.Web.Http;
 using System.Web.Cors;
 
 var builder = WebApplication.CreateBuilder(args);
-
+/*var MSO = "MEetAndYouPolicy";
 // Add services to the container.
-/*builder.Services.AddCors(options => 
-{
+builder.Services.AddCors(options => {
     options.AddPolicy("MEetAndYouPolicy",
         policy => {
             policy.WithOrigins("https://localhost:3000/");
-                      });
+        });
 });
-*/
 
+*/
 //Add API key
 var eventsApiKey = builder.Configuration["EventsAPI:ServiceApiKey"];
 
@@ -62,13 +69,36 @@ builder.Services.AddControllers();
 //Dependency injection for Controllers
 builder.Services.AddSingleton<AuthnManager>();
 builder.Services.AddSingleton<CopyManager>();
+builder.Services.AddSingleton<UPDManager>();
+builder.Services.AddScoped<IItineraryDAO,ItineraryDAO>();
+builder.Services.AddSingleton<IUserDAO,UserDAO>();
 builder.Services.AddSingleton<IAuthorizationManager, AuthorizationManager>();
 builder.Services.AddSingleton<ICalendarManager, CalendarManager>();
+builder.Services.AddSingleton<IRatingManager, RatingManager>();
+builder.Services.AddSingleton<IRatingService, RatingService>();
+builder.Services.AddSingleton<IRatingDAO, RatingDAO>();
+
+builder.Services.AddSingleton<ILogDAO, LogDAO>();
+
+builder.Services.AddSingleton<LoggingManager>();
+builder.Services.AddSingleton<ILoggingService, LoggingService>();
+builder.Services.AddSingleton<ILogDAO, LogDAO>();
+builder.Services.AddSingleton<Log>();
+
 builder.Services.AddSingleton<CopyItineraryDAO>();
+builder.Services.AddScoped<UserEventRating>();
+builder.Services.AddScoped<ItineraryNote>();
 builder.Services.AddSingleton<ISuggestionManager, SuggestionManager>();
 builder.Services.AddSingleton<ISuggestionDAO, SuggestionDAO>();
 builder.Services.AddSingleton<IAPIService, EventAPIService>();
+builder.Services.AddSingleton<IMemoryAlbumDAO, MemoryAlbumDAO >();
+builder.Services.AddSingleton<IMemoryAlbumManager, MemoryAlbumManager>();
+builder.Services.AddSingleton<IHyperlinkDAO, HyperlinkDAO>();
+builder.Services.AddSingleton<IHyperlinkManager, HyperlinkManager>();
+
+
 //builder.Services.AddSingleton<Configuration>();
+builder.Services.AddTransient<MEetAndYouDBContext>();
 
 builder.Services.AddSingleton<ICalendarDAO, CalendarDAO>();
 
@@ -113,12 +143,13 @@ if (app.Environment.IsProduction())
     app.UseSwaggerUI();
 }
 
+
 // Add global Cors policies
-app.UseCors(x => x
-    .AllowAnyMethod()
-    .AllowAnyHeader()
-    .SetIsOriginAllowed(origin => true)
-    .AllowCredentials());
+//app.UseCors(x => x
+//    .AllowAnyMethod()
+//    .AllowAnyHeader()
+//    .SetIsOriginAllowed(origin => true)
+//    .AllowCredentials());
 
 app.MapGet("/", () => eventsApiKey);
 

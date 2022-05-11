@@ -1,0 +1,92 @@
+title Hyperlink Sharing LLD (Add User)
+
+participant FrontEnd #lightgreen
+participant HyperlinkController #lightpink
+participant AuthorizationManager #lightsalmon
+participant HyperlinkManager #lightgreen
+participant Validator #lightyellow
+participant HyperlinkDAO #lightblue
+participant HyperlinkResponse #lightcoral
+participant MicrosoftSQL Server #gray
+
+activecolor FrontEnd #lightgreen
+activecolor HyperlinkController #lightpink
+activecolor AuthorizationManager #lightsalmon
+activecolor HyperlinkManager #lightgreen
+activecolor Validator #lightyellow
+activecolor HyperlinkDAO #lightblue
+activecolor HyperlinkResponse #lightcoral
+activecolor MicrosoftSQL Server #gray
+
+autoactivation 
+HyperlinkController->AuthorizationManager:Dependency Injection: new AuthorizationManager( )
+AuthorizationManager->AuthorizationManager:AuthorizationManager( )
+AuthorizationManager-->HyperlinkController:return _authzManager
+
+HyperlinkController->HyperlinkManager:Dependency Injection: new HyperlinkManager( )
+HyperlinkManager->HyperlinkManager:HyperlinkManager( )
+//Instantiate classes
+HyperlinkManager->HyperlinkDAO: new HyperlinkDAO( )
+HyperlinkDAO->HyperlinkDAO:HyperlinkDAO( )
+HyperlinkDAO-->HyperlinkManager:return _hyperlinkDAO
+HyperlinkManager-->HyperlinkController:return _hyperlinkManager
+
+
+FrontEnd->HyperlinkController:HTTP Header(int userID, string token, string claimRole) \n(string email, int itineraryID, string permission)
+
+
+HyperlinkController->HyperlinkController:ActionResult<HyperlinkResponse> AddUser( )
+group if (token == null)
+HyperlinkController-->FrontEnd:throw new BadRequest("Invalid Token")
+end 
+HyperlinkController->HyperlinkController:bool isAuthorized = _authzManager.IsAuthorized\n(int userID, string token, string claimRole)
+
+group if (isAuthorized == false)
+HyperlinkController-->FrontEnd:throw new BadRequest\n("Not authorized to use access this feature")
+end
+
+group else
+HyperlinkManager->HyperlinkManager:HyperlinkResponse HyperlinkManager.AddUserToItinerary\n(int userID, int itineraryID, string email, string permission)
+
+// Input Validation Errors
+alt #red If user ID is false
+HyperlinkManager->Validator:static bool IsValidNumericality(int useriD)
+Validator-->HyperlinkManager:return false
+HyperlinkManager->HyperlinkResponse:return new HyperlinkResponse("", false, new List<UserItinerary>, new List<string>)
+HyperlinkResponse->HyperlinkResponse:new HyperlinkResponse("", false, new List<UserItinerary>, new List<string>)
+HyperlinkResponse-->HyperlinkManager:return hyperlinkResponse
+HyperlinkManager-->HyperlinkController:return hyperlinkResponse
+HyperlinkController-->FrontEnd:return hyperlinkResponse
+end
+
+alt #red If itinerary ID is false
+HyperlinkManager->Validator:static bool IsValidNumericality(int itineraryID)
+Validator-->HyperlinkManager:return false
+HyperlinkManager->HyperlinkResponse:return new HyperlinkResponse("", false, new List<UserItinerary>, new List<string>)
+HyperlinkResponse->HyperlinkResponse:new HyperlinkResponse("", false, new List<UserItinerary>, new List<string>)
+HyperlinkResponse-->HyperlinkManager:return hyperlinkResponse
+HyperlinkManager-->HyperlinkController:return hyperlinkResponse
+HyperlinkController-->FrontEnd:return hyperlinkResponse
+end
+
+alt #red If email is false
+HyperlinkManager->Validator:static bool IsValidEmail(string email)
+Validator-->HyperlinkManager:return false
+HyperlinkManager->HyperlinkResponse:return new HyperlinkResponse("Email is invalid", false, new List<UserItinerary>, new List<string>)
+HyperlinkResponse->HyperlinkResponse:new HyperlinkResponse("", false, new List<UserItinerary>, new List<string>)
+HyperlinkResponse-->HyperlinkManager:return hyperlinkResponse
+HyperlinkManager-->HyperlinkController:return hyperlinkResponse
+HyperlinkController-->FrontEnd:return hyperlinkResponse
+end 
+
+alt #red If permission is false
+HyperlinkManager->Validator:static bool IsValidPermission(string email)
+Validator-->HyperlinkManager:return false
+HyperlinkManager->HyperlinkResponse:return new HyperlinkResponse("Email is invalid", false, new List<UserItinerary>, new List<string>)
+HyperlinkResponse->HyperlinkResponse:new HyperlinkResponse("", false, new List<UserItinerary>, new List<string>)
+HyperlinkResponse-->HyperlinkManager:return hyperlinkResponse
+HyperlinkManager-->HyperlinkController:return hyperlinkResponse
+HyperlinkController-->FrontEnd:return hyperlinkResponse
+end 
+
+end 
