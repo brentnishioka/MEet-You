@@ -7,7 +7,7 @@ const RequireAuth = () => {
     const { token, userID, roles } = useSessionData();
 
     const isValidSessionData = async () => {
-        if (roles?.includes('Admin')) {
+        if (roles.includes('Admin')) {
             // Fetch auth credentials for admin
             // try {
             //     var requestOptions = {
