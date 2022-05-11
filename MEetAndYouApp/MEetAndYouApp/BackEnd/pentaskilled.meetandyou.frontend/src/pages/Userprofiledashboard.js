@@ -1,6 +1,8 @@
 import React from 'react';
+import ItineraryComponent from '../Components/ItineraryComponent';
 import ProfilePic from '../Components/UserProfileDashboard/ProfilePic';
 import UserInfo from '../Components/UserProfileDashboard/UserInfo';
+import Itineraries from '../Components/UserProfileDashboard/UserItineraries';
 import ProfileItinerary from './profileItinerary';
 
 /**
@@ -12,8 +14,7 @@ function Userpd() {
         <div>
             <ProfilePic profileImage="" />
             <UserInfo />
-            {/* <ProfileItinerary /> */}
-
+            {/* <Itineraries /> */}
         </div>);
 }
 

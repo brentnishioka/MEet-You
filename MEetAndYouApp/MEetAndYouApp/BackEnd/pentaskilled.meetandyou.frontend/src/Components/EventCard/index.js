@@ -12,6 +12,7 @@ function EventCard({ event, itineraryID }) {
     // Validates the event ID.
     const isValidEventID = () => {
         if (currentEventID > 0) {
+            // Validates the length of the data returned from fetching the user's itinerari
             return true;
         }
         else {

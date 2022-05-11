@@ -1,19 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import EventCard from "../EventCard";
+import NoteComponent from "../NoteComponent/NoteComponent";
 
-/**
- * 
- * @returns JSX representation of individual user itinerary that will be displayed to the user
- */
-function UserItinerary({}){
+function Itinerary({id}) {
     
 
-    <div>
 
 
 
-    </div>
+    return (
+        <>
+            <div>
+                {/* <h2>Itinerary: {[0].itineraryName}</h2>
+                <NoteComponent itineraryID={itin[0].itineraryId} /> */}
+                {data}
+            </div>
+        </>
+    );
 }
 
-
-
-export default UserItinerary;
+export default Itinerary;
