@@ -18,6 +18,7 @@ namespace Pentaskilled.MEetAndYou.Entities.DBModels
         public int ItineraryId { get; set; }
         public string NoteContent { get; set; }
 
+        [System.Text.Json.Serialization.JsonIgnore]
         public virtual Itinerary Itinerary { get; set; }
     }
 }

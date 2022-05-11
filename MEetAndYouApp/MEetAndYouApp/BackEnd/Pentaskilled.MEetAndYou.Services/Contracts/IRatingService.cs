@@ -10,9 +10,12 @@ namespace Pentaskilled.MEetAndYou.Services.Contracts
 {
     public interface IRatingService
     {
-        Task<BaseResponse> LogCreatedRatingAsync(UserEventRating userRating, int userID);
-        Task<BaseResponse> LogModifiedRatingAsync(UserEventRating userRating, int userID);
-        Task<BaseResponse> LogCreatedNoteAsync(ItineraryNote itineraryNote, int userID);
-        Task<BaseResponse> LogModifiedNoteAsync(ItineraryNote itineraryNote, int userID);
+        Task<ItineraryResponse> GetItineraryService(int userID, int itineraryID);
+        Task<RatingResponse> GetUserRatingsService(int itineraryID);
+        Task<NoteResponse> GetNoteService(int itineraryID);
+        Task<BaseResponse> CreateRatingService(UserEventRating userRating);
+        Task<BaseResponse> ModifyRatingService(UserEventRating userRating);
+        Task<BaseResponse> CreateNoteService(ItineraryNote itineraryNote);
+        Task<BaseResponse> ModifyNoteService(ItineraryNote itineraryNote);
     }
 }
