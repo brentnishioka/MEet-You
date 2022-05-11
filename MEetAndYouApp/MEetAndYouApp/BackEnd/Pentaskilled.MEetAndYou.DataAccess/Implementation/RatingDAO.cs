@@ -187,8 +187,11 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
                          where notes.ItineraryId == itineraryNote.ItineraryId
                          select notes).ToListAsync<ItineraryNote>();
 
-                    _dbcontext.Entry(itineraryNotes[0]).State = EntityState.Deleted;
-                    int deletionResult = await _dbcontext.SaveChangesAsync();
+                    if (itineraryNotes != null)
+                    {
+                        _dbcontext.Entry(itineraryNotes[0]).State = EntityState.Deleted;
+                        int deletionResult = await _dbcontext.SaveChangesAsync();
+                    }
 
                     var local = _dbcontext.Set<ItineraryNote>().Local
                         .FirstOrDefault(entry => entry.ItineraryId.Equals(itineraryNote.ItineraryId));
