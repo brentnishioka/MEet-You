@@ -239,7 +239,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
                 }
                 catch (Exception ex)
                 {
-                    return new BaseResponse("The note could not be modified.", false);
+                    return new BaseResponse("The note could not be modified." + ex.Message, false);
                 }
                 return new BaseResponse("The note was successfully modified.", true);
             }

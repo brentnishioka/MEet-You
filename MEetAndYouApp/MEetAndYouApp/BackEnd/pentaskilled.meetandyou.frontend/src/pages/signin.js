@@ -38,8 +38,10 @@ export default function Login() {
         setToken(loginResponse && loginResponse.token);
         setRoles(loginResponse && loginResponse.roles);
 
-        navigate("/");
-        window.location.reload()
+        if (loginResponse.userID && loginResponse.token && loginResponse.roles) {
+            navigate("/");
+            window.location.reload()
+        }
     }
 
     const handleSignUp = async (e) => {
