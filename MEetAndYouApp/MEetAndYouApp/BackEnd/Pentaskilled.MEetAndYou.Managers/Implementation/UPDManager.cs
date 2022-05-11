@@ -7,38 +7,39 @@ using Pentaskilled.MEetAndYou.Entities.Models;
 using Pentaskilled.MEetAndYou.Entities.DBModels;
 using Pentaskilled.MEetAndYou.DataAccess.Implementation;
 using Microsoft.EntityFrameworkCore;
-
+using Pentaskilled.MEetAndYou.Managers.Contracts;
+using Pentaskilled.MEetAndYou.DataAccess.Contracts;
+using Pentaskilled.MEetAndYou.Services.Contracts;
 
 namespace Pentaskilled.MEetAndYou.Managers.Implementation
 {
-    public class UPDManager
+    public class UPDManager : IUPDManager
     {
-        private ItineraryDAO _itineraryDAO;
-        private UserDAO _userDAO;
-        
-        
-        public UPDManager()
-        {
-            this._itineraryDAO = new ItineraryDAO();
-            this._userDAO = new UserDAO();
-        }
+        private readonly IUPDService _updService;
+        private readonly MEetAndYouDBContext _dbcontext;
 
-        public UPDManager(ItineraryDAO iDAO, UserDAO userDAO)
+
+        public UPDManager(IUPDService updservice, MEetAndYouDBContext dbcontext)
         {
-            this._itineraryDAO = iDAO;
-            this._userDAO = userDAO;
+            this._updService = updservice;
+            this._dbcontext = dbcontext;
         }
 
         /* Method to get that the list of itineraries associated with the user along with the 
            account information, both pieces of data are wrapped ina a UPData object.*/
-        public async Task<UPData> GetUPData(int userID)
+        public async Task<UPDataResponse> GetUPData(int userID)
         {
-            List<Itinerary> itineraries = this._itineraryDAO.GetUserItineraries(userID);
-            UserAccountRecord user = await _userDAO.getUserAccount(userID);
-            UPData userData = new UPData(user, itineraries);
-            return userData;
+            // TODO: make it so the UPDataResponse includes things like the rating of itinerary, 
+            if (userID > 0)
+            {
+                ItineraryResponse iResponse = await _updService.GetItinerary(userID);
+                UserAccountRecordResponse uResponse = await _updService.GetUser(userID);
+                UPDataResponse upDataResponse = new UPDataResponse("UPD data gathered successfully", true, uResponse, iResponse.Data);
+                return upDataResponse;
+            }
+            return new UPDataResponse("UPD data gathering failed manager layer", false, null, null);
+           
         }
-
 
     }
 }
