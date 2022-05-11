@@ -117,17 +117,14 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             {
                 try
                 {
-                    var task = Task.Run(() => {
-                        var local = _dbcontext.Set<UserEventRating>().Local
-                            .FirstOrDefault(entry => entry.ItineraryId.Equals(userRating.ItineraryId) && entry.EventId.Equals(userRating.EventId));
-                        // Prevents conflicts with DBContext object configuration.
-                        if (local != null)
-                        {
-                            _dbcontext.Entry(local).State = EntityState.Detached;
-                        }
-                        _dbcontext.Entry(userRating).State = EntityState.Added;
-                    });
-                    await task;
+                    var local = _dbcontext.Set<UserEventRating>().Local
+                        .FirstOrDefault(entry => entry.ItineraryId.Equals(userRating.ItineraryId) && entry.EventId.Equals(userRating.EventId));
+                    // Prevents conflicts with DBContext object configuration.
+                    if (local != null)
+                    {
+                        _dbcontext.Entry(local).State = EntityState.Detached;
+                    }
+                    _dbcontext.Entry(userRating).State = EntityState.Added;
                     int addRatingResult = await _dbcontext.SaveChangesAsync();
                 }
                 catch (SqlException ex)
@@ -151,17 +148,15 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             {
                 try
                 {
-                    var task = Task.Run(() => {
-                        var local = _dbcontext.Set<UserEventRating>().Local
-                            .FirstOrDefault(entry => entry.ItineraryId.Equals(userRating.ItineraryId) && entry.EventId.Equals(userRating.EventId));
-                        // Prevents conflicts with DBContext object configuration.
-                        if (local != null)
-                        {
-                            _dbcontext.Entry(local).State = EntityState.Detached;
-                        }
-                        _dbcontext.Entry(userRating).State = EntityState.Modified;
-                    });
-                    await task;
+  
+                    var local = _dbcontext.Set<UserEventRating>().Local
+                        .FirstOrDefault(entry => entry.ItineraryId.Equals(userRating.ItineraryId) && entry.EventId.Equals(userRating.EventId));
+                    // Prevents conflicts with DBContext object configuration.
+                    if (local != null)
+                    {
+                        _dbcontext.Entry(local).State = EntityState.Detached;
+                    }
+                    _dbcontext.Entry(userRating).State = EntityState.Modified;
                     int modifyRatingResult = await _dbcontext.SaveChangesAsync();
                 }
                 catch (SqlException ex)
@@ -183,19 +178,29 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             // Input validation for the ID and note content.
             if (itineraryNote.ItineraryId > 0 && itineraryNote.NoteContent != null)
             {
+                List<ItineraryNote> itineraryNotes = null;
                 try
                 {
-                    var task = Task.Run(() => {
-                        var local = _dbcontext.Set<ItineraryNote>().Local
-                            .FirstOrDefault(entry => entry.ItineraryId.Equals(itineraryNote.ItineraryId));
-                        // Prevents conflicts with DBContext object configuration.
-                        if (local != null)
-                        {
-                            _dbcontext.Entry(local).State = EntityState.Detached;
-                        }
-                        _dbcontext.Entry(itineraryNote).State = EntityState.Added;
-                    });
-                    await task;
+                    // LINQ query to get the note which matches the given itinerary ID
+                    itineraryNotes = await
+                        (from notes in _dbcontext.ItineraryNotes
+                         where notes.ItineraryId == itineraryNote.ItineraryId
+                         select notes).ToListAsync<ItineraryNote>();
+
+                    if (itineraryNotes != null)
+                    {
+                        _dbcontext.Entry(itineraryNotes[0]).State = EntityState.Deleted;
+                        int deletionResult = await _dbcontext.SaveChangesAsync();
+                    }
+
+                    var local = _dbcontext.Set<ItineraryNote>().Local
+                        .FirstOrDefault(entry => entry.ItineraryId.Equals(itineraryNote.ItineraryId));
+                    // Prevents conflicts with DBContext object configuration.
+                    if (local != null)
+                    {
+                        _dbcontext.Entry(local).State = EntityState.Detached;
+                    }
+                    _dbcontext.Entry(itineraryNote).State = EntityState.Added;
                     int addRatingResult = await _dbcontext.SaveChangesAsync();
                 }
                 catch (SqlException ex)
@@ -219,17 +224,14 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             {
                 try
                 {
-                    var task = Task.Run(() => {
-                        var local = _dbcontext.Set<ItineraryNote>().Local
-                            .FirstOrDefault(entry => entry.ItineraryId.Equals(itineraryNote.ItineraryId));
-                        // Prevents conflicts with DBContext object configuration.
-                        if (local != null)
-                        {
-                            _dbcontext.Entry(local).State = EntityState.Detached;
-                        }
-                        _dbcontext.Entry(itineraryNote).State = EntityState.Modified;
-                    });
-                    await task;
+                    var local = _dbcontext.Set<ItineraryNote>().Local
+                        .FirstOrDefault(entry => entry.ItineraryId.Equals(itineraryNote.ItineraryId));
+                    // Prevents conflicts with DBContext object configuration.
+                    if (local != null)
+                    {
+                        _dbcontext.Entry(local).State = EntityState.Detached;
+                    }
+                    _dbcontext.Entry(itineraryNote).State = EntityState.Modified;
                     int modifyRatingResult = await _dbcontext.SaveChangesAsync();
                 }
                 catch (SqlException ex)

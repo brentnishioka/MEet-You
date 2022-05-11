@@ -71,11 +71,13 @@ function ItineraryComponent({ inputtedItinID, isInputValid }) {
 
     // Displays all the events on an itinerary.
     const displayEvents = isLengthValid && userItinerary[0].events.map((event) =>
-        <div>
-            <EventCard
-                event={event}
-                itineraryID={userItinerary[0].itineraryId}
-            />
+        <div style={{padding: 5, margin: 10}}>
+            <span style={{backgroundColor: "white"}}>
+                <EventCard
+                    event={event}
+                    itineraryID={userItinerary[0].itineraryId}
+                />
+            </span>
         </div>
     )
 
@@ -83,9 +85,11 @@ function ItineraryComponent({ inputtedItinID, isInputValid }) {
         return (
             <>
                 <div>
-                    <h2>Itinerary: {userItinerary[0].itineraryName}</h2>
-                    <NoteComponent itineraryID={userItinerary[0].itineraryId}/>
-                    {displayEvents}
+                    <h2 style={{padding: 15, margin: 10, textAlign: "center"}}>Itinerary: {userItinerary[0].itineraryName}</h2>
+                    <NoteComponent itineraryID={userItinerary[0].itineraryId} />
+                    <div>
+                        {displayEvents}
+                    </div>
                 </div>
             </>
         );

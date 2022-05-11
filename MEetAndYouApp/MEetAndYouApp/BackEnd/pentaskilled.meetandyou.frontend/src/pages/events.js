@@ -203,7 +203,7 @@ function Events() {
         <div>
             <table
                 style={{ "borderCollapse": "collapse", "padding": "5px", "width": "100%", "border": "1px solid black" }}
-                className="table table-hover">
+                className="table table-hover2">
                 <thead style={{ "borderCollapse": "collapse", "padding": "5px", "width": "100%", "border": "1px solid black" }}>
                     <tr style={{ "borderCollapse": "collapse", "padding": "5px", "width": "100%", "border": "1px solid black" }}>
                         <th> No. </th>

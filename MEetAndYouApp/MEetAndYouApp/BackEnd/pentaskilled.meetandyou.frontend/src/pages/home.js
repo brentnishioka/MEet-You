@@ -74,7 +74,7 @@ export default function Home() {
                 </div>*/}
             </form>
 
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit)} className = "home-select">
                 
                 <p> Choose categories </p>
                 
@@ -84,7 +84,7 @@ export default function Home() {
                     closeMenuOnSelect={true}
                     onChange={handleChange} />
 
-                <button type="submit">Save</button>
+                <button type="submit" >Save</button>
             </form>
         </div>
     )

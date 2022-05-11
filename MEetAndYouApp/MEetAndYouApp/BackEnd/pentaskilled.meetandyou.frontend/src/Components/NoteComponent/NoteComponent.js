@@ -6,6 +6,8 @@ function NoteComponent({ itineraryID }) {
     const [fetchedNoteContent, setFetchedNoteContent] = useState(null);
     const [isNoteLengthValid, setIsNoteLengthValid] = useState(true);
     const [noteResponseLength, setNoteResponseLength] = useState(0);
+    const [respMessage, setRespMessage] = useState('');
+    const [isSuccessful, setIsSuccessful] = useState(false);
     const noteInputBox = useRef(null);
     const { userID, token, roles } = useSessionData();
 
@@ -97,7 +99,8 @@ function NoteComponent({ itineraryID }) {
         try {
             const res = await fetch(requestURL, postNoteRequestOptions)
             const noteResponse = await res.json()
-            // console.log(noteResponse.data.message)
+            setRespMessage(noteResponse.message)
+            setIsSuccessful(noteResponse.isSuccessful)
         }
         catch (error) {
             console.log(error)
@@ -128,6 +131,8 @@ function NoteComponent({ itineraryID }) {
         try {
             const res = await fetch(requestURL, putNoteRequestOptions)
             const noteResponse = await res.json()
+            setRespMessage(noteResponse.message)
+            setIsSuccessful(noteResponse.isSuccessful)
         }
         catch (error) {
             console.log(error)
@@ -139,13 +144,14 @@ function NoteComponent({ itineraryID }) {
     }, [])
 
     useEffect(() => {
-        if (noteResponseLength === 0) {
-            postUserNote();
-        }
-        else {
-            putUserNote();
-        }
-    }, [note])
+        // if (noteResponseLength === 0) {
+        //     postUserNote();
+        // }
+        // else {
+        //     putUserNote();
+        // }
+        postUserNote();
+    }, [note, respMessage])
 
     if (isNoteLengthValid) {
         return (
@@ -155,11 +161,12 @@ function NoteComponent({ itineraryID }) {
                     <p>{getCurrentNoteContent}</p>
                 </div>
                 <div>
-                    <textarea ref={noteInputBox} name="paragraph_text" cols="50" rows="10" maxLength="300" placeholder="There is a 300 character maximum limit on your note." />
+                    <textarea ref={noteInputBox} name="paragraph_text" cols="50" rows="10" maxLength="300" placeholder="There is a 300 maximum character limit on your note." />
                 </div>
-                <div>
+                <div style={{ padding: 15 }}>
                     <button onClick={e => handleClick(e)}>Submit Note</button>
                 </div>
+                <p style={isSuccessful ? { color: "green" } : { color: "red" }}>{respMessage}</p>
             </>
         );
     }

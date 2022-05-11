@@ -2,6 +2,10 @@
     background-image: url(./map2.jpg);
 }
 
+.table-hover2 {
+    background: white; 
+}
+
 .react-calendar { 
     width: 350px;
     max-width: 100%;
@@ -172,5 +176,18 @@ label, input {
     border-radius: 20px;
     margin-top: 130px;
     padding-right: 0;
+}
+
+.homepage-wrapper {
+    margin-top: 60px;
+}
+
+.home-select {
+    width: 500px;
+    margin-left: 480px;
+}
+
+.home-button {
+    margin-left: 30px;
 }
 
