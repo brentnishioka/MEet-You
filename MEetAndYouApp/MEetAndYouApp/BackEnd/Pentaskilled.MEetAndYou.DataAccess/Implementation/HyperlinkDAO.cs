@@ -180,7 +180,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
 
                 else
                 {
-                    return new HyperlinkResponse("User is not in itinerary", false, itin.UserItineraries.ToList(), GetAllEmailsAsync(itin.UserItineraries.ToList()).Result);
+                    return new HyperlinkResponse("User & permission is not in itinerary", false, itin.UserItineraries.ToList(), GetAllEmailsAsync(itin.UserItineraries.ToList()).Result);
                 }
                 
             }
