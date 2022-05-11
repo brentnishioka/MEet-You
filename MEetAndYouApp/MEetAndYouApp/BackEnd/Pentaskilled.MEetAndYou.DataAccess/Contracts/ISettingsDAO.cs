@@ -13,13 +13,6 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Contracts
         Task<BaseResponse> updateUserPhone(int id, string phone);
         Task<BaseResponse> updateUserPassword(int id, string password);
 
-        Task<BaseResponse> deleteUserAccount(int id);
 
-        Task<BaseResponse> disableUserAccount(int id);
-
-        Task<BaseResponse> enableUserAccount(int id);
-
-
-                
     }
 }

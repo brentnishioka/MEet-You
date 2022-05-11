@@ -37,9 +37,6 @@ const Navbar = () => {
                     <NavLink to='/userprofiledashboard' activeStyle={{ color: 'black' }}>
                         User Profile Dashboard
                     </NavLink>
-                    <NavLink to='/Settings' activeStyle={{ color: 'black' }}>
-                        Settings
-                    </NavLink>
 
                     <NavLink to='/share' activeStyle>
                         Share

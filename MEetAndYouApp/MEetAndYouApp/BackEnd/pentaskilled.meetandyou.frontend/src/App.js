@@ -12,9 +12,6 @@ import Events from './pages/events';
 import Getrandomsuggestion from './pages/getrandomsuggestion';
 import CreateItinerary from "./pages/itinerary";
 import Userpd from "./pages/Userprofiledashboard"
-import Settings from "./pages/Settings";
-
-
 import Hyperlink from './pages/hyperlink';
 import MemoryAlbumList from './pages/memoryalbumlist';
 import Layout from "./Layout";
@@ -26,22 +23,29 @@ function App() {
         <BrowserRouter>
             <Navbar />
             <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/calendar" element={<MyCalendar />} />
-                <Route path="/rating" element={<Rating />} />
-                <Route path="/signup" element={<SignUp />} />
-                <Route path="/memoryalbumlist" element={<MemoryAlbumList />} />
-                <Route path="/categories" element={<Categories />} />
-                <Route path="/events" element={<Events />} />
-                <Route path="/getrandomsuggestion" element={<Getrandomsuggestion />} />
-                <Route path="/itinerary" element={<CreateItinerary />} />
+                <Route path="/" element={<Layout />}>
+                    {/* Global Views */}
+                    <Route path="/" element={<Home />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/signup" element={<SignUp />} />
+                    <Route path="/unauthorized" element={<Unauthorized />} />
 
-                <Route path="/settings" element={<Settings />} />
-                <Route path="/userprofiledashboard" element={<Userpd />} />
-                
-                <Route path="/share" element={<Hyperlink />} />
-                
+                    {/* Protected Views */}
+                    <Route element={<RequireAuth />}>
+                        <Route path="/calendar" element={<MyCalendar />} />
+                        <Route path="/rating" element={<Rating />} />
+                        <Route path="/memoryalbumlist" element={<MemoryAlbumList />} />
+                        <Route path="/categories" element={<Categories />} />
+                        <Route path="/events" element={<Events />} />
+                        <Route path="/getrandomsuggestion" element={<Getrandomsuggestion />} />
+                        <Route path="/itinerary" element={<CreateItinerary />} />
+                        <Route path="/userprofiledashboard" element={<Userpd />} />
+                        <Route path="/share" element={<Hyperlink />} />
+                    </Route>
+
+                    {/* Any Non-existent View */}
+                    <Route path="*" element={<h3>That page does not exist.</h3>} />
+                </Route>
             </Routes>
         </BrowserRouter>
     );

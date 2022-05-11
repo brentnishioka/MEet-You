@@ -24,7 +24,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
         private readonly ITestOutputHelper testOutputHelper;
         private MEetAndYouDBContext _dbcontext;
         public static DbContextOptions<MEetAndYouDBContext> DbContextOptions { get; }
-        public static string connectionString = "Data Source=meetandyou-db.cyakceoi9n4j.us-west-1.rds.amazonaws.com;Initial Catalog=MEetAndYou-DB;User Id=admin;Password=AlatreonFatalisVelkhana;Connect Timeout=30;TrustServerCertificate=True;";
+        public static string connectionString = "Data Source=meetandyou-db.cyakceoi9n4j.us-west-1.rds.amazonaws.com;Initial Catalog=MEetAndYou-DB;User Id=admin;Password=TeostraLunastraAlatreon;Connect Timeout=30;TrustServerCertificate=True;";
 
         static UPDTests()
         {
@@ -33,12 +33,12 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
                 .Options;
         }
         
-        //public UPDTests(ITestOutputHelper testOutputHelper)
-        //{
-        //    this.testOutputHelper = testOutputHelper;
-        //    this._updManager = new UPDManager();
-        //    _dbcontext = new MEetAndYouDBContext(DbContextOptions);
-        //}
+        public UPDTests(ITestOutputHelper testOutputHelper)
+        {
+            this.testOutputHelper = testOutputHelper;
+            this._updManager = new UPDManager();
+            _dbcontext = new MEetAndYouDBContext(DbContextOptions);
+        }
 
 
         /// <summary>
@@ -70,58 +70,28 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             if (user == null)
                 return;
 
-           // testOutputHelper.WriteLine(user.ToString());
+            testOutputHelper.WriteLine(user.ToString());
             valid = true;
             Assert.True(valid);
         }
-
-        
 
 
         /// <summary>
         /// Test to see if the user data along with itineraries are fetched from the database and wrapped in a UPData object.
         /// </summary>
-        //[Fact]
-        //public void checkGetUPData()
-        //{
-        //    bool valid = false;
-        //    UPDManager manager = new UPDManager(new ItineraryDAO(_dbcontext), new UserDAO(_dbcontext));
-        //    UPDataResponse data = manager.GetUPData(5).Result;
-        //    testOutputHelper.WriteLine(data.ToString());
-        //    valid = true;
-        //    Assert.True(valid);
-        //}
+        [Fact]
+        public void checkGetUPData()
+        {
+            bool valid = false;
+            UPDManager manager = new UPDManager(new ItineraryDAO(_dbcontext), new UserDAO(_dbcontext));
+            UPData data = manager.GetUPData(5).Result;
+            testOutputHelper.WriteLine(data.ToString());
+            valid = true;
+            Assert.True(valid);
+        }
 
 
-        // post code review:
-
-        //[Fact]
-        //public void checkUPDDAO1()
-        //{
-        //    bool valid = false;
-        //    try
-        //    {
-        //        UPDDAO uPDDAO = new UPDDAO(_dbcontext);
-        //        ItineraryResponse response = uPDDAO.GetItineraryAsync(3, 4).Result;
-        //        testOutputHelper.WriteLine(response.ToString());
-        //        List<Itinerary> itineraries = response.Data.ToList();
-        //        foreach (Itinerary item in itineraries)
-        //        {
-        //            testOutputHelper.WriteLine(item.ToString());
-        //        }
-        //        valid =true;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        testOutputHelper.WriteLine(ex.ToString());
-        //    }
-
-        //    Assert.True(valid);
-
-        //}
-
-
-
+        
 
 
 
