@@ -35,7 +35,8 @@ namespace Pentaskiled.MEetAndYou.API.Controllers
         [Route("/AddUser")]
         public async Task<ActionResult<HyperlinkResponse>> AddUser(int itineraryID, string email, string permission)
         {
-            bool response;
+            bool isAuthorized;
+
             try
             {
                 var userIDString = Request.Headers["userID"];
@@ -43,17 +44,14 @@ namespace Pentaskiled.MEetAndYou.API.Controllers
                 var userToken = Request.Headers["token"];
                 var role = Request.Headers["roles"];
 
-                response = _authorizationManager.IsAuthorized(userID, userToken, role);
+                isAuthorized = _authorizationManager.IsAuthorized(userID, userToken, role);
 
-                if (response)
+                if (isAuthorized)
                 {
-                    // Input validation for the ID's
-                    if (userID > 0 && itineraryID > 0)
-                    {
-                        HyperlinkResponse hyResponse = await _hyperlinkManager.AddUserToItineraryAsync(userID, itineraryID, email, permission);
-                        return hyResponse;
-                    }
+                    HyperlinkResponse hyResponse = await _hyperlinkManager.AddUserToItineraryAsync(userID, itineraryID, email, permission);
+                    return hyResponse;
                 }
+
                 return BadRequest("You are not authorized to use this feature.");
             }
             catch (Exception ex)
@@ -64,34 +62,30 @@ namespace Pentaskiled.MEetAndYou.API.Controllers
 
         [HttpDelete]
         [Route("/RemoveUser")]
-        public async Task<ActionResult<HyperlinkResponse>> RemoveUser(int userID, int itineraryID, string email, string permission)
+        public async Task<ActionResult<HyperlinkResponse>> RemoveUser(int itineraryID, string email, string permission)
         {
-            //TODO: Implement authorization
-            //if (token == null)
-            //{
-            //    return BadRequest("Invalid Token");
-            //}
-            //bool isAuthroized = _authzManager.IsAuthorized();
-            //if (isAuthroized == false)
-            //{
-            //    return BadRequest("Not authorized");
-            //    throw new HttpResponseException();
-            //}
-            //else
-            //{
-            //    // Call the manager to execute the feature. 
-            //}
+            bool isAuthorized;
 
             try
             {
-                HyperlinkResponse response = await _hyperlinkManager.RemoveUserFromItineraryAsync(userID, itineraryID, email, permission);
+                var userIDString = Request.Headers["userID"];
+                int userID = int.Parse(userIDString);
+                var userToken = Request.Headers["token"];
+                var role = Request.Headers["roles"];
 
-                return response;
+                isAuthorized = _authorizationManager.IsAuthorized(userID, userToken, role);
+
+                // If authorized is true, allow feature access
+                if (isAuthorized)
+                {
+                    HyperlinkResponse hyResponse = await _hyperlinkManager.RemoveUserFromItineraryAsync(userID, itineraryID, email, permission);
+                    return hyResponse;
+                }
+                return BadRequest("You are not authorized to use this feature.");
             }
-
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest("Verification met a problem! " + ex.Message);
             }
         }
     }
