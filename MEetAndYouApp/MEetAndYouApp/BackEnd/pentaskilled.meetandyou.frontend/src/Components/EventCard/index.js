@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import LocationPin from "../LocationPin";
 import DisplayLocationPin from "../LocationPin/DisplayLocationPin"
+import useSessionData from "../hooks/useSessionData";
 
 function EventCard({ event, itineraryID }) {
     const [userRating, setUserRating] = useState(null);
@@ -8,6 +9,7 @@ function EventCard({ event, itineraryID }) {
     const [fetchedEventRatings, setFetchedEventRatings] = useState(null);
     const [currentEventID] = useState(event.eventId);
     const [currentItineraryID] = useState(itineraryID);
+    const { userID, token, roles } = useSessionData();
 
     // Validates the event ID.
     const isValidEventID = () => {
@@ -48,7 +50,10 @@ function EventCard({ event, itineraryID }) {
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Credentials': true
+                'Access-Control-Allow-Credentials': true,
+                'userID': userID,
+                'token': token,
+                'roles': roles
             },
             mode: 'cors'
         };
@@ -82,7 +87,10 @@ function EventCard({ event, itineraryID }) {
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Credentials': true
+                'Access-Control-Allow-Credentials': true,
+                'userID': userID,
+                'token': token,
+                'roles': roles
             },
             body: JSON.stringify({
                 eventID: isValidEventID && currentEventID,
@@ -112,7 +120,10 @@ function EventCard({ event, itineraryID }) {
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Credentials': true
+                'Access-Control-Allow-Credentials': true,
+                'userID': userID,
+                'token': token,
+                'roles': roles
             },
             body: JSON.stringify({
                 eventID: isValidEventID && currentEventID,

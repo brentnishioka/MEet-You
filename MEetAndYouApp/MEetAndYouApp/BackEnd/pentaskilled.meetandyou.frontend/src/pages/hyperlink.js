@@ -38,7 +38,12 @@ function Hyperlink() {
     const RemoveUser = async (request) => {
         const requestOptions = {
             method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' }
+            headers: { 
+                'Content-Type': 'application/json',
+                'userID': userID,
+                'token': token,
+                'roles': roles 
+            }
         }
 
         try {
