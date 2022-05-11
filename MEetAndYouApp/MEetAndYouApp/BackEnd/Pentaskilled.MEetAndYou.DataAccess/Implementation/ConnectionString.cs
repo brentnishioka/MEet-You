@@ -7,7 +7,7 @@
 
         public ConnectionString()
         {
-            _connectionString = @"Data Source=DESKTOP-RM9387O;Initial Catalog=MEetAndYou-DB;Integrated Security=True";
+            _connectionString = @"Data Source=meetandyou-db.cyakceoi9n4j.us-west-1.rds.amazonaws.com;Initial Catalog=MEetAndYou-DB;User Id=admin;Password=AlatreonFatalisVelkhana;Connect Timeout=30;TrustServerCertificate=True;";
         }
         //SQLEXPRESS
 
