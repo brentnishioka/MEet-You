@@ -1,23 +1,30 @@
 import React, { useState } from 'react';
+import useSessionData from '../Components/hooks/useSessionData';
 
 function Hyperlink() {
     const [data, setData] = useState([]);
     const [emailData, setEmailData] = useState([]);
-    const [userID, setUserID] = useState();
     const [itinID, setItinID] = useState();
     const [email, setEmail] = useState("");
     const [permission, setPermission] = useState("")
     const [message, setMessage] = useState("");
+    const { userID, token, roles } = useSessionData();
 
     const AddUser = async (request) => {
+        
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' }
+            headers: { 
+                'Content-Type': 'application/json',
+                'userID': userID,
+                'token': token,
+                'roles': roles 
+            }
         }
 
         try {
             const encodedEmail = encodeURIComponent(email);
-            const res = await fetch('https://meetandyou.me:8001/AddUser?userID=' + userID + '&itineraryID=' + itinID + '&email=' + encodedEmail + '&permission=' + permission, requestOptions);
+            const res = await fetch('https://localhost:9000/AddUser?&itineraryID=' + itinID + '&email=' + encodedEmail + '&permission=' + permission, requestOptions);
             const AddUserRes = await res.json();
             setData(AddUserRes.data)
             setEmailData(AddUserRes.emails)
@@ -36,7 +43,7 @@ function Hyperlink() {
 
         try {
             const encodedEmail = encodeURIComponent(email);
-            const res = await fetch('https://meetandyou.me:8001/RemoveUser?userID=' + userID + '&itineraryID=' + itinID + '&email=' + encodedEmail + '&permission=' + permission, requestOptions);
+            const res = await fetch('https://localhost:9000/RemoveUser?userID=' + userID + '&itineraryID=' + itinID + '&email=' + encodedEmail + '&permission=' + permission, requestOptions);
             const DeleteUserRes = await res.json();
             setData(DeleteUserRes.data)
             setEmailData(DeleteUserRes.emails)
@@ -76,10 +83,6 @@ function Hyperlink() {
                 </tbody>
                 </table>
             </div>
-            <label>
-                <p>Enter your user ID:</p>
-                <input type="number" placeholder="User ID" onChange={e => setUserID(e.target.value)} />
-            </label>
             <label>
                 <p>Enter an itinerary ID: </p>
                 <input type="number" placeholder="Itinerary ID" maxLength="50" onChange={e => setItinID(e.target.value)} />

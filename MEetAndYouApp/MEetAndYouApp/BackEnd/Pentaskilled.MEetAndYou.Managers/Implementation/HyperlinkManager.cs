@@ -48,10 +48,10 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
             try
             {
                 // Validate inputs
-                bool isValidUserID = Validator.IsValidNumericality(userID);
+                bool isValidUserID = Validator.IsValidNumber(userID);
                 if (!isValidUserID) { return new HyperlinkResponse("Invalid user id: must be greater than 0", false, new List<UserItinerary>(), new List<string>()); }
 
-                bool isValidItineraryID = Validator.IsValidNumericality(itineraryID);
+                bool isValidItineraryID = Validator.IsValidNumber(itineraryID);
                 if (!isValidItineraryID) { return new HyperlinkResponse("Invalid itinerary id: must be greater than 0", false, new List<UserItinerary>(), new List<string>()); }
 
                 bool isValidEmail = Validator.IsValidEmail(email);
@@ -106,10 +106,10 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
             try
             {
                 // Validate inputs
-                bool isValidUserID = Validator.IsValidNumericality(userID);
+                bool isValidUserID = Validator.IsValidNumber(userID);
                 if (!isValidUserID) { return new HyperlinkResponse("Invalid user id: must be greater than 0", false, new List<UserItinerary>(), new List<string>()); }
 
-                bool isValidItineraryID = Validator.IsValidNumericality(itineraryID);
+                bool isValidItineraryID = Validator.IsValidNumber(itineraryID);
                 if (!isValidItineraryID) { return new HyperlinkResponse("Invalid itinerary id: must be greater than 0", false, new List<UserItinerary>(), new List<string>()); }
 
                 bool isValidEmail = Validator.IsValidEmail(email);

@@ -240,7 +240,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
 
             // Act
             _output.WriteLine("Validating number....");
-            isValidNumber = Validator.IsValidNumericality(number);
+            isValidNumber = Validator.IsValidNumber(number);
 
             // Assert
             Assert.True(isValidNumber);
@@ -257,7 +257,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
 
             // Act
             _output.WriteLine("Validating number....");
-            isValidNumber = Validator.IsValidNumericality(number);
+            isValidNumber = Validator.IsValidNumber(number);
 
             // Assert
             Assert.False(isValidNumber);
