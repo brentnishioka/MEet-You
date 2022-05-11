@@ -5,7 +5,8 @@ import useSessionData from "../hooks/useSessionData";
 
 function EventCard({ event, itineraryID }) {
     const [userRating, setUserRating] = useState(null);
-    const [respMessage, setRespMessage] = useState(null);
+    const [respMessage, setRespMessage] = useState('');
+    const [isSuccessful, setIsSuccessful] = useState(false);
     const [fetchedEventRatings, setFetchedEventRatings] = useState(null);
     const [currentEventID] = useState(event.eventId);
     const [currentItineraryID] = useState(itineraryID);
@@ -63,7 +64,6 @@ function EventCard({ event, itineraryID }) {
             const rateRes = await fetch(ratingRequestURL, ratingRequestOptions)
             const ratingResponse = await rateRes.json()
             setFetchedEventRatings(ratingResponse.data);
-            setRespMessage(ratingResponse.message);
         }
         catch (error) {
             console.log('error');
@@ -102,9 +102,10 @@ function EventCard({ event, itineraryID }) {
         };
 
         try {
-            await fetch(requestURL, requestOptions).then(
-                response => console.log("System response: ", response.json())
-            )
+            const res = await fetch(requestURL, requestOptions);
+            const ratingResponse = await res.json();
+            setRespMessage(ratingResponse.message);
+            setIsSuccessful(ratingResponse.isSuccessful);
         }
         catch (error) {
             console.log('error');
@@ -135,9 +136,10 @@ function EventCard({ event, itineraryID }) {
         };
 
         try {
-            await fetch(requestURL, requestOptions).then(
-                response => console.log("System response: ", response.json())
-            )
+            const res = await fetch(requestURL, requestOptions);
+            const ratingResponse = await res.json();
+            setRespMessage(ratingResponse.message);
+            setIsSuccessful(ratingResponse.isSuccessful);
         }
         catch (error) {
             console.log('error');
@@ -155,17 +157,18 @@ function EventCard({ event, itineraryID }) {
         else {
             modifyUserEventRating();
         }
-    }, [userRating])
+    }, [userRating, respMessage])
 
     return (
         <div>
-            <h4>Event Name: {event.eventName}</h4>
+            <h4 style={{margin: 10, textAlign: "center"}}>Event Name: {event.eventName}</h4>
             <DisplayLocationPin eventRating={getCurrentEventRating} />
             <LocationPin rating={userRating} onRating={(userRating) => setUserRating(userRating)} />
-            <p>Address: {event.address}</p>
-            <p>Description: {event.description}</p>
-            <p>Date: {new Date(event.eventDate).toLocaleString('en-US', {hour12: false})}</p>
-            <p>Price: ${event.price === null ? '0' : event.price}</p>
+            <p style={isSuccessful ? { color: "green" } : { color: "red" }}>{respMessage}</p>
+            <p style={{margin: 15}}>Address: {event.address}</p>
+            <p style={{margin: 15}}>Description: {event.description}</p>
+            <p style={{margin: 15}}>Date: {new Date(event.eventDate).toLocaleString('en-US', {hour12: false})}</p>
+            <p style={{margin: 15}}>Price: ${event.price === null ? '0' : event.price}</p>
         </div>
     );
 }

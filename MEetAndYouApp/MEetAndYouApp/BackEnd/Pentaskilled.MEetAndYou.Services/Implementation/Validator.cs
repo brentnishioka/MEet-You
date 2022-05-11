@@ -31,7 +31,7 @@ namespace Pentaskilled.MEetAndYou.Services.Implementation
         // A number is valid if it falls in between the range of num1 & num2.
         public static bool IsValidRange(int value, int num1, int num2)
         {
-            return (value > num1 && value < num2) || (value < num2 && value > num1);
+            return (value >= num1 && value <= num2) || (value <= num2 && value >= num1);
         }
 
         public static bool IsValueNull(Object obj)
