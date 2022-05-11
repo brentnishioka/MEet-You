@@ -2,22 +2,44 @@
 // import Sidebar from "../Components/UserProfileDashboard/sidebar"
 import { SettingsPane, SettingsPage, SettingsContent, SettingsMenu } from 'react-settings-pane'
 import "../Components/UserProfileDashboard/settingsStyle.css"
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import Button from '../Components/UserProfileDashboard/Button';
 
 export default function Settings() {
     const [email, setEmail] = useState(null)
     const [phone, setPhone] = useState(null)
     const [password, setPassword] = useState(null)
+    const [response, setResponse] = useState(null)
 
     // But here is an example of how it should look like:
-    let settings = {
-        'mysettings.general.name': 'raymond gu',
-        'mysettings.general.email': 'dstuecken@react-settings-pane.com',
-        'mysettings.general.picture': 'earth',
-        'mysettings.profile.firstname': 'Raymond',
-        'mysettings.profile.lastname': 'Guevara',
-    };
+
+    const getData = async () => {
+        var itinRequestOptions = {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': true
+            },
+            mode: 'cors'
+        };
+
+        try {
+            const res = await fetch("https://localhost:9000/GetUPDData?id=5", itinRequestOptions);
+            const apiRes = await res.json();
+            setResponse(apiRes._userAccount);
+            setEmail(apiRes._userAccount.data.userEmail)
+            setPhone(apiRes._userAccount.data.userPhoneNum)
+            
+            console.log(apiRes._userAccount.data.userEmail);
+        } catch (error) {
+            console.log("Error in settings")
+        }
+    }
+
+
+
+
 
     // Define your menu
     const menu = [
@@ -125,8 +147,8 @@ export default function Settings() {
         }
     }
 
-    const updateUserPassword = async () => {
-        var requesURL = "https://localhost:9000/UpdateUserPassword?userId=5&password=3arcunlock";
+    const updateUserPassword = async (pass) => {
+        var requesURL = "https://localhost:9000/UpdateUserPassword?userId=5&password=" + pass;
 
         var requestOptions = {
             method: "POST",
@@ -148,8 +170,8 @@ export default function Settings() {
 
     }
 
-    const updateUserEmail = async () => {
-        var requesURL = "https://localhost:9000/UpdateUserEmail?userId=5&email=rayray%40rayray.edu";
+    const updateUserEmail = async (email) => {
+        var requesURL = "https://localhost:9000/UpdateUserEmail?userId=5&email=" + email;
 
         var requestOptions = {
             method: "POST",
@@ -170,8 +192,8 @@ export default function Settings() {
 
     }
 
-    const updateUserPhone = async () => {
-        var requesURL = "https://localhost:9000/UpdateUserPhone?userId=5&phone=7438383822";
+    const updateUserPhone = async (phone) => {
+        var requesURL = "https://localhost:9000/UpdateUserPhone?userId=5&phone=" + phone;
 
         var requestOptions = {
             method: "POST",
@@ -191,36 +213,39 @@ export default function Settings() {
         }
     }
 
+    useEffect(() => {
+        getData();
+
+    }, [email]);
 
     // Return Settings Pane
     return (
-        <SettingsPane items={menu} index="/settings/profile_info" settings={settings} onPaneLeave={leavePaneHandler}>
+        <SettingsPane items={menu} index="/settings/profile_info"  onPaneLeave={leavePaneHandler}>
             <SettingsMenu headline="Account Setttings" />
             <SettingsContent closeButtonClass="secondary" saveButtonClass="primary" header={true}>
                 <SettingsPage handler="/settings/profile_info">
                     <fieldset className="form-group">
-                        <label for="profileName">Name: </label>
-                        <input type="text" className="form-control" name="mysettings.general.name" placeholder="Name" id="general.ame" onChange={settingsChanged} defaultValue={settings['mysettings.general.name']} />
-                        <Button>Change</Button>
+                        <label for="profileName">Email: </label>
+                        <input type="text" className="form-control" name="mysettings.general.name" placeholder="Name" id="general.ame" onChange={settingsChanged} defaultValue={email} />
+                        <Button onChange={updateUserEmail(email)}>Change</Button>
                     </fieldset>
                     <fieldset className="form-group">
                         <label for="ChangeNumber">Phone Number: </label>
-                        <input type="text" className="form-control" name="mysettings.general.name" placeholder="Phone Number" id="general.ame" onChange={settingsChanged} defaultValue={settings['mysettings.general.name']} />
-                        <Button>Change</Button>
+                        <input type="text" className="form-control" name="mysettings.general.name" placeholder="Phone Number" id="general.ame" onChange={settingsChanged} defaultValue={phone} />
+                        <Button onChange={updateUserPhone(phone)}>Change</Button>
                     </fieldset>
                     <fieldset className="form-group">
                         <label for="Change Password">Password: </label>
-                        <input type="password" className="form-control" name="mysettings.general.name" placeholder="Name" id="general.ame" onChange={settingsChanged} defaultValue={settings['mysettings.general.name']} />
-                        <Button>Change</Button>
+                        <input type="password" className="form-control" name="mysettings.general.name" placeholder="password" id="general.ame" onChange={settingsChanged} defaultValue={password} />
+                        <Button onChange={updateUserPassword(password)}>Change</Button>
                     </fieldset>
                 </SettingsPage>
                 <SettingsPage handler="/settings/disable_account">
-                    <Button>Disable Account</Button>
+                    <Button onChange={disableUserAccount()}>Disable Account</Button>
                 </SettingsPage>
                 <SettingsPage handler="/setttings/delete_account">
-                    <Button>Delete Account</Button>
+                    <Button onChange={deleteUserAccount()}>Delete Account</Button>
                 </SettingsPage>
-
             </SettingsContent>
         </SettingsPane>
     )
