@@ -3,7 +3,7 @@ import ItineraryComponent from "../ItineraryComponent";
 import Itinerary from "./UserItinerary";
 
 function Itineraries(){
-    const [itineraries, setItineraries] = useState(null);
+    
     const [itineraryIDs,setIDs] = useState(null)
 
     const getData = async () => {
@@ -21,7 +21,7 @@ function Itineraries(){
         try {
             const res = await fetch("https://localhost:9000/GetUPDData?id=5", itinRequestOptions);
             const apiRes = await res.json();
-            setItineraries(apiRes);
+            
             
             var itin = apiRes.itineraries
             
@@ -36,24 +36,32 @@ function Itineraries(){
         }
     }
 
+    const userItineraries = itineraryIDs && itineraryIDs.map((id) =>
+        <Itinerary id={id} />
+
+    )
 
 
     useEffect(() => {
         getData();
         
-        
-    },[]);
+    },[itineraryIDs]);
 
-
-
-    // console.log(itineraries.itineraries)
     
 
-   
+    
+
+    const itineraryStyle = {
+        color: 'blue',
+        padding: '0px 20px'
+    }
+
+
     return (
-        <>
-            <Itinerary data={itineraries} />
-        </>
+        <div className={itineraryStyle}>
+            <Itinerary id={5} />
+            {/* {userItineraries} */}
+        </div>
     );
 };
 

@@ -12,9 +12,9 @@ import ProfileItinerary from './profileItinerary';
 function Userpd() {
     return (
         <div>
-            <ProfilePic profileImage="" />
+            
             <UserInfo />
-            {/* <Itineraries /> */}
+            <Itineraries />
         </div>);
 }
 

@@ -12,7 +12,7 @@ export default function Settings() {
 
     // But here is an example of how it should look like:
     let settings = {
-        'mysettings.general.name': 'raymond guevara',
+        'mysettings.general.name': 'raymond gu',
         'mysettings.general.email': 'dstuecken@react-settings-pane.com',
         'mysettings.general.picture': 'earth',
         'mysettings.profile.firstname': 'Raymond',

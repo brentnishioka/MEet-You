@@ -38,16 +38,24 @@ function UserInfo() {
         getData();
     }, []);
 
+    const infoStyle = {
+        
+        minWidth: 650,
+        color: "blue"
+    }
 
     return (
-        <div>
-            <table>
+        <div style={infoStyle}>
+            <table >
                 <tr>
-                    <td>Email: </td>
-                    <td>{email} </td>
+                    <td><h1>Email:</h1> </td>
+                    <td><h1>{email}</h1> </td>
 
-                    <td>Phone number: </td>
-                    <td>{phone} </td>
+                    
+                </tr>
+                <tr>
+                    <td><h1>Phone: </h1> </td>
+                    <td><h1>{phone}</h1> </td>
                 </tr>
             </table>
         </div>
