@@ -2,6 +2,10 @@
     background-image: url(./map2.jpg);
 }
 
+.table-hover2 {
+    background: white; 
+}
+
 .react-calendar { 
     width: 350px;
     max-width: 100%;
