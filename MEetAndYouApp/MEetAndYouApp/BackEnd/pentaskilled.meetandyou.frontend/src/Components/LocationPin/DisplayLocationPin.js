@@ -5,7 +5,7 @@ const DisplayLocationPin = ({ eventRating }) => {
     
     return (
         <div>
-            <h5>Current Rating:</h5>
+            <h5 style={{margin: 10, textAlign: "center"}}>Current Rating:</h5>
             {[...Array(5)].map((locationArrow, i) => {
                 const userRating = i + 1;
 

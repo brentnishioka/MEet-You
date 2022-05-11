@@ -5,7 +5,7 @@ const LocationPin = ({ rating, onRating }) => {
     const [hover, setHover] = useState(null);
     return (
         <div>
-            <h5>New Rating:</h5>
+            <h5 style={{margin: 10, textAlign: "center"}}>New Rating:</h5>
             {[...Array(5)].map((locationArrow, i) => {
                 const userRating = i + 1;
 
