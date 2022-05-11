@@ -159,13 +159,13 @@ function EventCard({ event, itineraryID }) {
 
     return (
         <div>
-            <h4>Event Name: {event.eventName}</h4>
+            <h4 style={{margin: 10, textAlign: "center"}}>Event Name: {event.eventName}</h4>
             <DisplayLocationPin eventRating={getCurrentEventRating} />
             <LocationPin rating={userRating} onRating={(userRating) => setUserRating(userRating)} />
-            <p>Address: {event.address}</p>
-            <p>Description: {event.description}</p>
-            <p>Date: {new Date(event.eventDate).toLocaleString('en-US', {hour12: false})}</p>
-            <p>Price: ${event.price === null ? '0' : event.price}</p>
+            <p style={{margin: 15}}>Address: {event.address}</p>
+            <p style={{margin: 15}}>Description: {event.description}</p>
+            <p style={{margin: 15}}>Date: {new Date(event.eventDate).toLocaleString('en-US', {hour12: false})}</p>
+            <p style={{margin: 15}}>Price: ${event.price === null ? '0' : event.price}</p>
         </div>
     );
 }
