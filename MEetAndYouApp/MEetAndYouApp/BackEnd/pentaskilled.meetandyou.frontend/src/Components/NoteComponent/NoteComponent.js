@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import useSessionData from "../hooks/useSessionData";
 
 function NoteComponent({ itineraryID }) {
     const [note, setNote] = useState(null);
@@ -6,6 +7,7 @@ function NoteComponent({ itineraryID }) {
     const [isNoteLengthValid, setIsNoteLengthValid] = useState(true);
     const [noteResponseLength, setNoteResponseLength] = useState(0);
     const noteInputBox = useRef(null);
+    const { userID, token, roles } = useSessionData();
 
     // Validates the length of the note text box.
     const isValidNoteLength = (length) => {
@@ -44,7 +46,10 @@ function NoteComponent({ itineraryID }) {
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Credentials': true
+                'Access-Control-Allow-Credentials': true,
+                'userID': userID,
+                'token': token,
+                'roles': roles
             },
             mode: 'cors'
         };
@@ -77,7 +82,10 @@ function NoteComponent({ itineraryID }) {
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Credentials': true
+                'Access-Control-Allow-Credentials': true,
+                'userID': userID,
+                'token': token,
+                'roles': roles
             },
             body: JSON.stringify({
                 itineraryID: isValidItineraryID && itineraryID,
@@ -105,7 +113,10 @@ function NoteComponent({ itineraryID }) {
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Credentials': true
+                'Access-Control-Allow-Credentials': true,
+                'userID': userID,
+                'token': token,
+                'roles': roles
             },
             body: JSON.stringify({
                 itineraryID: isValidItineraryID && itineraryID,

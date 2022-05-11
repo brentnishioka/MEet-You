@@ -9,25 +9,27 @@ const RequireAuth = () => {
     const isValidSessionData = async () => {
         if (roles?.includes('Admin')) {
             // Fetch auth credentials for admin
-            try {
-                var requestOptions = {
-                    method: "GET",
-                    headers: {
-                        'Content-type': 'application/json',
-                        'Accept': 'application/json, text/plain, */*',
-                        'userID': userID,
-                        'token': token,
-                        'roles': roles[0]
-                    },
-                    mode: 'cors'
-                };
-            }
-            catch (error) {
-                console.log(error);
-            }
+            // try {
+            //     var requestOptions = {
+            //         method: "GET",
+            //         headers: {
+            //             'Content-type': 'application/json',
+            //             'Accept': 'application/json, text/plain, */*',
+            //             'userID': userID,
+            //             'token': token,
+            //             'roles': roles
+            //         },
+            //         mode: 'cors'
+            //     };
+            // }
+            // catch (error) {
+            //     console.log(error);
+            // }
         }
         else {
             // Fetch auth credentials for user
+            var requestURL = 'https://localhost:9000/api/Authorization/ValidateUserCredentials'
+
             try {
                 var requestOptions = {
                     method: "GET",
@@ -36,12 +38,12 @@ const RequireAuth = () => {
                         'Accept': 'application/json, text/plain, */*',
                         'userID': userID,
                         'token': token,
-                        'roles': roles[0]
+                        'roles': roles
                     },
                     mode: 'cors'
                 };
     
-                var res = await fetch('https://localhost:9000/api/Authorization/ValidateUserCredentials', requestOptions);
+                var res = await fetch(requestURL, requestOptions);
                 var authorizationResponse = await res.json();
                 setIsUserAuthorized(authorizationResponse);
             }
@@ -52,8 +54,9 @@ const RequireAuth = () => {
     }
 
     const [isUserAuthorized, setIsUserAuthorized] = useState(isValidSessionData());
+    // console.log(isUserAuthorized)
 
-    return isUserAuthorized
+    return isUserAuthorized && userID && token && roles
         ? <Outlet /> 
         : token
             ? <Navigate to="/unauthorized" state={{ from: location }} replace />

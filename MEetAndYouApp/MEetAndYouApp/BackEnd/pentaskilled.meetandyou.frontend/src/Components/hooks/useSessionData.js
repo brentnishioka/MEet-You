@@ -7,8 +7,10 @@ export default function useSessionData() {
     };
 
     const saveToken = userToken => {
-        sessionStorage.setItem('token', userToken);
-        setToken(userToken.token);
+        if (userToken !== null) {
+            sessionStorage.setItem('token', userToken);
+            setToken(userToken.token);
+        }
     };
 
     const getUserID = () => {
@@ -17,8 +19,10 @@ export default function useSessionData() {
     }
 
     const saveUserID = currentUserID => {
-        sessionStorage.setItem('userID', currentUserID);
-        setUserID(currentUserID.userID);
+        if (currentUserID !== null && currentUserID !== 0) {
+            sessionStorage.setItem('userID', currentUserID);
+            setUserID(currentUserID.userID);
+        }
     }
 
     const getUserRoles = () => {
@@ -27,8 +31,10 @@ export default function useSessionData() {
     }
 
     const saveUserRoles = currentRoles => {
-        sessionStorage.setItem('roles', JSON.stringify(currentRoles));
-        setRoles(JSON.stringify(currentRoles));
+        if (currentRoles !== null) {
+            sessionStorage.setItem('roles', JSON.stringify(currentRoles));
+            setRoles(JSON.stringify(currentRoles));
+        }
     }
 
     const [token, setToken] = useState(getToken());
