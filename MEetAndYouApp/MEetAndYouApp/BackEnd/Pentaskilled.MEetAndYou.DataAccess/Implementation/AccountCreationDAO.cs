@@ -22,18 +22,18 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
         public Task<bool> DoesEmailExist(UserAccountEntity user)
         {
             _connectionString = GetConnectionString();
-            bool result;
+            int result;
 
             try
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
-                using (SqlCommand command = new SqlCommand("[MEetAndYou].[VerifyEmailInDB]", connection))
+                using (SqlCommand command = new SqlCommand("SELECT [MEetAndYou].[VerifyEmailInDB] (@email)", connection))
                 {
-                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandType = CommandType.Text;
                     command.Parameters.Add("@email", SqlDbType.VarChar).Value = user.Email;
 
                     connection.Open();
-                    result = Convert.ToBoolean(command.ExecuteNonQuery());
+                    result = (int)command.ExecuteScalar();
                     connection.Close();
                 }
             }
@@ -42,7 +42,7 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             {
                 return Task.FromResult(false);
             }
-            return Task.FromResult(result);
+            return Task.FromResult(Convert.ToBoolean(result));
         }
 
         /// <summary>
