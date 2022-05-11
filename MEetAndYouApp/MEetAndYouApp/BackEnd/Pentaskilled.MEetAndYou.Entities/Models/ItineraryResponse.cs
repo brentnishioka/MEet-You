@@ -24,5 +24,15 @@ namespace Pentaskilled.MEetAndYou.Entities.Models
             IsSuccessful = isSuccessful;
             Data = data;
         }
+
+        public override string ToString()
+        {
+            string data = "";
+            foreach (Itinerary item in Data)
+            {
+                data = data + item.ToString();
+            }
+            return $"Message: {Message}\nIsSuccessful: {IsSuccessful}\nData: {data}";
+        }
     }
 }
