@@ -3,6 +3,7 @@ using Pentaskilled.MEetAndYou.Entities.DBModels;
 using Pentaskilled.MEetAndYou.Entities.Models;
 using Pentaskilled.MEetAndYou.Managers;
 using Pentaskilled.MEetAndYou.Managers.Contracts;
+using Pentaskilled.MEetAndYou.Services.Implementation;
 
 namespace Pentaskilled.MEetAndYou.API.Controllers
 {
@@ -39,7 +40,10 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
                 if (response)
                 {
                     // Input validation for the ID's
-                    if (userID > 0 && itineraryID > 0)
+                    bool isUserIDValid = Validator.IsValidNumber(userID);
+                    bool isItineraryIDValid = Validator.IsValidNumber(itineraryID);
+
+                    if (isUserIDValid && isItineraryIDValid)
                     {
                         ItineraryResponse getItineraryResult = await _ratingManager.RetrieveUserItinerary(userID, itineraryID);
                         return getItineraryResult;
@@ -59,33 +63,34 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
         [Route("GetUserEventRatings")]
         public async Task<ActionResult<RatingResponse>> GetUserEventRatings(int itineraryID)
         {
-            // Input validation for the ID
-            if (itineraryID > 0)
+            bool response;
+            try
             {
-                //string? token;
-                //int userID;
-                //string userToken;
-                //string role;
+                var userIDString = Request.Headers["userID"];
+                int userID = int.Parse(userIDString);
+                var userToken = Request.Headers["token"];
+                var role = Request.Headers["roles"];
 
-                //token = Request.Headers["Token"];
-                //if (token == null)
-                //{
-                //    return BadRequest("Null token");
-                //}
-                ////Splits the token into userID, userToken, and role for Authorization method 
-                //userID = (int)token.Split(",").Select(Int32.Parse).ElementAt(0);
-                //userToken = token.Split(",")[1];
-                //role = token.Split(",")[2];
-                ////Checks if the user is authorized before continuing 
-                //if (!_authorizationManager.IsAuthorized(userID, userToken, role))
-                //{
-                //    return BadRequest("User is not authorized to use this service");
-                //}
+                response = _authzManager.IsAuthorized(userID, userToken, role);
 
-                RatingResponse getRatingResult = await _ratingManager.RetrieveUserRatings(itineraryID);
-                return getRatingResult;
+                if (response)
+                {
+                    // Input validation for the ID
+                    bool isItineraryIDValid = Validator.IsValidNumber(itineraryID);
+
+                    if (isItineraryIDValid)
+                    {
+                        RatingResponse getRatingResult = await _ratingManager.RetrieveUserRatings(itineraryID);
+                        return getRatingResult;
+                    }
+                    return new RatingResponse("The ratings could not be fetched successfully because the given itinerary ID is invalid.", false, null);
+                }
+                return BadRequest("You are not authorized to use this feature.");
             }
-            return new RatingResponse("The ratings could not be fetched successfully because the given itinerary ID is invalid.", false, null);
+            catch (Exception ex)
+            {
+                return BadRequest("Verification met a problem! " + ex.Message);
+            }
         }
 
         // Web API controller to fetch the specified note provided the itinerary's ID.
@@ -93,33 +98,34 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
         [Route("GetUserNote")]
         public async Task<ActionResult<NoteResponse>> GetUserNote(int itineraryID)
         {
-            // Input validation for the ID
-            if (itineraryID > 0)
+            bool response;
+            try
             {
-                //string? token;
-                //int userID;
-                //string userToken;
-                //string role;
+                var userIDString = Request.Headers["userID"];
+                int userID = int.Parse(userIDString);
+                var userToken = Request.Headers["token"];
+                var role = Request.Headers["roles"];
 
-                //token = Request.Headers["Token"];
-                //if (token == null)
-                //{
-                //    return BadRequest("Null token");
-                //}
-                ////Splits the token into userID, userToken, and role for Authorization method 
-                //userID = (int)token.Split(",").Select(Int32.Parse).ElementAt(0);
-                //userToken = token.Split(",")[1];
-                //role = token.Split(",")[2];
-                ////Checks if the user is authorized before continuing 
-                //if (!_authorizationManager.IsAuthorized(userID, userToken, role))
-                //{
-                //    return BadRequest("User is not authorized to use this service");
-                //}
+                response = _authzManager.IsAuthorized(userID, userToken, role);
 
-                NoteResponse getNoteResult = await _ratingManager.RetrieveUserNote(itineraryID);
-                return getNoteResult;
+                if (response)
+                {
+                    // Input validation for the ID
+                    bool isItineraryIDValid = Validator.IsValidNumber(itineraryID);
+
+                    if (isItineraryIDValid)
+                    {
+                        NoteResponse getNoteResult = await _ratingManager.RetrieveUserNote(itineraryID);
+                        return getNoteResult;
+                    }
+                    return new NoteResponse("The notes could not be fetched successfully because the given itinerary ID is invalid.", false, null);
+                }
+                return BadRequest("You are not authorized to use this feature.");
             }
-            return new NoteResponse("The notes could not be fetched successfully because the given itinerary ID is invalid.", false, null);
+            catch (Exception ex)
+            {
+                return BadRequest("Verification met a problem! " + ex.Message);
+            }            
         }
 
         // Web API controller to post/create a user's rating given event's ID, the itinerary's ID, and the rating (1-5) given by the user.
@@ -127,37 +133,40 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
         [Route("PostRatingCreation")]
         public async Task<ActionResult<BaseResponse>> PostRatingCreation([FromBody] UserEventRatingJSON model)
         {
-            var eventID = model.eventID;
-            var itineraryID = model.itineraryID;
-            var userRating = model.userRating;
-
-            // Input validation for the ID's and user rating.
-            if (eventID > 0 && itineraryID > 0 && (userRating >= 1 && userRating <= 5))
+            bool response;
+            try
             {
-                //string? token;
-                //int userID;
-                //string userToken;
-                //string role;
+                var userIDString = Request.Headers["userID"];
+                int userID = int.Parse(userIDString);
+                var userToken = Request.Headers["token"];
+                var role = Request.Headers["roles"];
 
-                //token = Request.Headers["Token"];
-                //if (token == null)
-                //{
-                //    return BadRequest("Null token");
-                //}
-                ////Splits the token into userID, userToken, and role for Authorization method 
-                //userID = (int)token.Split(",").Select(Int32.Parse).ElementAt(0);
-                //userToken = token.Split(",")[1];
-                //role = token.Split(",")[2];
-                ////Checks if the user is authorized before continuing 
-                //if (!_authorizationManager.IsAuthorized(userID, userToken, role))
-                //{
-                //    return BadRequest("User is not authorized to use this service");
-                //}
+                response = _authzManager.IsAuthorized(userID, userToken, role);
 
-                BaseResponse postRatingCreationResult = await _ratingManager.CreateRating(eventID, itineraryID, userRating);
-                return postRatingCreationResult;
+                if (response)
+                {
+                    var eventID = model.eventID;
+                    var itineraryID = model.itineraryID;
+                    var userRating = model.userRating;
+
+                    // Input validation for the ID's and user rating.
+                    bool isEventIDValid = Validator.IsValidNumber(eventID);
+                    bool isItineraryIDValid = Validator.IsValidNumber(itineraryID);
+                    bool isUserRatingValid = Validator.IsValidRange(userRating, 0, 5);
+
+                    if (isEventIDValid && isItineraryIDValid && isUserRatingValid)
+                    {
+                        BaseResponse postRatingCreationResult = await _ratingManager.CreateRating(eventID, itineraryID, userRating);
+                        return postRatingCreationResult;
+                    }
+                    return new BaseResponse("The rating could not be created successfully because either the given event ID, itinerary ID, or user rating were invalid.", false);
+                }
+                return BadRequest("You are not authorized to use this feature.");
             }
-            return new BaseResponse("The rating could not be created successfully because either the given event ID, itinerary ID, or user rating were invalid.", false);
+            catch (Exception ex)
+            {
+                return BadRequest("Verification met a problem! " + ex.Message);
+            }            
         }
 
         // Web API controller to post/create an itinerary note given the itinerary's ID and the content of the note.
@@ -165,36 +174,38 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
         [Route("PostNoteCreaton")]
         public async Task<ActionResult<BaseResponse>> PostNoteCreaton([FromBody] ItineraryNoteJSON model)
         {
-            var itineraryID = model.itineraryID;
-            var noteContent = model.noteContent;
-
-            // Input validation for the ID and note content.
-            if (itineraryID > 0 && noteContent != null)
+            bool response;
+            try
             {
-                //string? token;
-                //int userID;
-                //string userToken;
-                //string role;
+                var userIDString = Request.Headers["userID"];
+                int userID = int.Parse(userIDString);
+                var userToken = Request.Headers["token"];
+                var role = Request.Headers["roles"];
 
-                //token = Request.Headers["Token"];
-                //if (token == null)
-                //{
-                //    return BadRequest("Null token");
-                //}
-                ////Splits the token into userID, userToken, and role for Authorization method 
-                //userID = (int)token.Split(",").Select(Int32.Parse).ElementAt(0);
-                //userToken = token.Split(",")[1];
-                //role = token.Split(",")[2];
-                ////Checks if the user is authorized before continuing 
-                //if (!_authorizationManager.IsAuthorized(userID, userToken, role))
-                //{
-                //    return BadRequest("User is not authorized to use this service");
-                //}
+                response = _authzManager.IsAuthorized(userID, userToken, role);
 
-                BaseResponse postNoteCreationResult = await _ratingManager.CreateItineraryNote(itineraryID, noteContent);
-                return postNoteCreationResult;
+                if (response)
+                {
+                    var itineraryID = model.itineraryID;
+                    var noteContent = model.noteContent;
+
+                    // Input validation for the ID and note content.
+                    bool isItineraryIDValid = Validator.IsValidNumber(itineraryID);
+                    bool isNoteContentValid = Validator.IsValueNull(noteContent);
+
+                    if (itineraryID > 0 && noteContent != null)
+                    {
+                        BaseResponse postNoteCreationResult = await _ratingManager.CreateItineraryNote(itineraryID, noteContent);
+                        return postNoteCreationResult;
+                    }
+                    return new BaseResponse("The note could not be created successfully because either the given itinerary ID or note contents were not valid.", false);
+                }
+                return BadRequest("You are not authorized to use this feature.");
             }
-            return new BaseResponse("The note could not be created successfully because either the given itinerary ID or note contents were not valid.", false);
+            catch (Exception ex)
+            {
+                return BadRequest("Verification met a problem! " + ex.Message);
+            }
         }
 
         // Web API controller to put/update a user's rating given event's ID, the itinerary's ID, and the rating (1-5) given by the user.
@@ -202,37 +213,40 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
         [Route("PutRatingModification")]
         public async Task<ActionResult<BaseResponse>> PutRatingModification([FromBody] UserEventRatingJSON model)
         {
-            var eventID = model.eventID;
-            var itineraryID = model.itineraryID;
-            var userRating = model.userRating;
-
-            // Input validation for the ID's and user rating.
-            if (eventID > 0 && itineraryID > 0 && (userRating >= 1 && userRating <= 5))
+            bool response;
+            try
             {
-                //string? token;
-                //int userID;
-                //string userToken;
-                //string role;
+                var userIDString = Request.Headers["userID"];
+                int userID = int.Parse(userIDString);
+                var userToken = Request.Headers["token"];
+                var role = Request.Headers["roles"];
 
-                //token = Request.Headers["Token"];
-                //if (token == null)
-                //{
-                //    return BadRequest("Null token");
-                //}
-                ////Splits the token into userID, userToken, and role for Authorization method 
-                //userID = (int)token.Split(",").Select(Int32.Parse).ElementAt(0);
-                //userToken = token.Split(",")[1];
-                //role = token.Split(",")[2];
-                ////Checks if the user is authorized before continuing 
-                //if (!_authorizationManager.IsAuthorized(userID, userToken, role))
-                //{
-                //    return BadRequest("User is not authorized to use this service");
-                //}
+                response = _authzManager.IsAuthorized(userID, userToken, role);
 
-                BaseResponse putRatingModificationResult = await _ratingManager.ModifyRating(eventID, itineraryID, userRating);
-                return putRatingModificationResult;
+                if (response)
+                {
+                    var eventID = model.eventID;
+                    var itineraryID = model.itineraryID;
+                    var userRating = model.userRating;
+
+                    // Input validation for the ID's and user rating.
+                    bool isEventIDValid = Validator.IsValidNumber(eventID);
+                    bool isItineraryIDValid = Validator.IsValidNumber(itineraryID);
+                    bool isUserRatingValid = Validator.IsValidRange(userRating, 0, 5);
+
+                    if (isEventIDValid && isItineraryIDValid && isUserRatingValid)
+                    {
+                        BaseResponse putRatingModificationResult = await _ratingManager.ModifyRating(eventID, itineraryID, userRating);
+                        return putRatingModificationResult;
+                    }
+                    return new BaseResponse("The rating could not be modified successfully because either the given event ID, itinerary ID, or user rating were invalid.", false);
+                }
+                return BadRequest("You are not authorized to use this feature.");
             }
-            return new BaseResponse("The rating could not be modified successfully because either the given event ID, itinerary ID, or user rating were invalid.", false);
+            catch (Exception ex)
+            {
+                return BadRequest("Verification met a problem! " + ex.Message);
+            }
         }
 
         // Web API controller to put/update an itinerary note given the itinerary's ID and the content of the note.
@@ -240,37 +254,38 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
         [Route("PutNoteModification")]
         public async Task<ActionResult<BaseResponse>> PutNoteModification([FromBody] ItineraryNoteJSON model)
         {
-
-            var itineraryID = model.itineraryID;
-            var noteContent = model.noteContent;
-
-            // Input validation for the ID and note content.
-            if (itineraryID > 0 && noteContent != null)
+            bool response;
+            try
             {
-                //string? token;
-                //int userID;
-                //string userToken;
-                //string role;
+                var userIDString = Request.Headers["userID"];
+                int userID = int.Parse(userIDString);
+                var userToken = Request.Headers["token"];
+                var role = Request.Headers["roles"];
 
-                //token = Request.Headers["Token"];
-                //if (token == null)
-                //{
-                //    return BadRequest("Null token");
-                //}
-                ////Splits the token into userID, userToken, and role for Authorization method 
-                //userID = (int)token.Split(",").Select(Int32.Parse).ElementAt(0);
-                //userToken = token.Split(",")[1];
-                //role = token.Split(",")[2];
-                ////Checks if the user is authorized before continuing 
-                //if (!_authorizationManager.IsAuthorized(userID, userToken, role))
-                //{
-                //    return BadRequest("User is not authorized to use this service");
-                //}
+                response = _authzManager.IsAuthorized(userID, userToken, role);
 
-                BaseResponse putNoteModificationResult = await _ratingManager.ModifyItineraryNote(itineraryID, noteContent);
-                return putNoteModificationResult;
+                if (response)
+                {
+                    var itineraryID = model.itineraryID;
+                    var noteContent = model.noteContent;
+
+                    // Input validation for the ID and note content.
+                    bool isItineraryIDValid = Validator.IsValidNumber(itineraryID);
+                    bool isNoteContentValid = Validator.IsValueNull(noteContent);
+
+                    if (itineraryID > 0 && noteContent != null)
+                    {
+                        BaseResponse putNoteModificationResult = await _ratingManager.ModifyItineraryNote(itineraryID, noteContent);
+                        return putNoteModificationResult;
+                    }
+                    return new BaseResponse("The note could not be modified successfully because either the given itinerary ID or note contents were not valid.", false);
+                }
+                return BadRequest("You are not authorized to use this feature.");
             }
-            return new BaseResponse("The note could not be modified successfully because either the given itinerary ID or note contents were not valid.", false);
+            catch (Exception ex)
+            {
+                return BadRequest("Verification met a problem! " + ex.Message);
+            }
         }
     }
 

@@ -54,7 +54,6 @@ const RequireAuth = () => {
     }
 
     const [isUserAuthorized, setIsUserAuthorized] = useState(isValidSessionData());
-    // console.log(isUserAuthorized)
 
     return isUserAuthorized && userID && token && roles
         ? <Outlet /> 
