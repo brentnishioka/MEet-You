@@ -41,8 +41,9 @@ function App() {
                         <Route path="/getrandomsuggestion" element={<Getrandomsuggestion />} />
                         <Route path="/itinerary" element={<CreateItinerary />} />
                         <Route path="/userprofiledashboard" element={<Userpd />} />
+                        <Route path="/settings" element={<Settings />} />
                         <Route path="/share" element={<Hyperlink />} />
-                        <Route path="settings" elemnt={<Settings />} />
+                        
                     </Route> 
 
                     {/* Any Non-existent View */}
