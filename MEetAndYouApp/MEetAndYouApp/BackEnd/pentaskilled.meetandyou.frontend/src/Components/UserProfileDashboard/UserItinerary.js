@@ -13,7 +13,7 @@ function Itinerary({id}) {
             <div>
                 {/* <h2>Itinerary: {[0].itineraryName}</h2>
                 <NoteComponent itineraryID={itin[0].itineraryId} /> */}
-                {data}
+                {/* {data} */}
             </div>
         </>
     );

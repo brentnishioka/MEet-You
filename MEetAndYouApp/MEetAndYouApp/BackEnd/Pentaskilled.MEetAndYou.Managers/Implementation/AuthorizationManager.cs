@@ -32,7 +32,6 @@ namespace Pentaskilled.MEetAndYou.Managers
         /// </returns>
         public bool IsAuthorized(int userID, string userToken, string role)
         {
-
             try
             {
                 // Verify to see if the user already signed in 

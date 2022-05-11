@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, BrowserRouter } from "react-router-dom";
 import './App.css';
 import Navbar from "./Components/Navbar";
 import SignUp from './pages/signup';
@@ -17,10 +17,13 @@ import Settings from "./pages/Settings";
 
 import Hyperlink from './pages/hyperlink';
 import MemoryAlbumList from './pages/memoryalbumlist';
+import Layout from "./Layout";
+import RequireAuth from "./Components/RequireAuth";
+import Unauthorized from "./pages/unauthorized"
 
 function App() {
     return (
-        <Router>
+        <BrowserRouter>
             <Navbar />
             <Routes>
                 <Route path="/" element={<Home />} />
@@ -40,7 +43,7 @@ function App() {
                 <Route path="/share" element={<Hyperlink />} />
                 
             </Routes>
-        </Router>
+        </BrowserRouter>
     );
 }
 
