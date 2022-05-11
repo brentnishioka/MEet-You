@@ -86,6 +86,12 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
                          grp.Key.UserId,
                      }).ToListAsync();
 
+                // Checks if user is already associated with itinerary
+                if (itin.UserItineraries.Contains(user))
+                {
+                    return new HyperlinkResponse("User already added", false, itin.UserItineraries.ToList(), GetAllEmailsAsync(itin.UserItineraries.ToList()).Result);
+                }
+
                 // Checks if existing users in itinerary is less than or equal to 5
                 if (uniqueUsers.Count() < 5)
                 {
@@ -95,11 +101,6 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
 
                     // Save changes to context
                     await _dbContext.SaveChangesAsync();
-                }
-
-                else if (itin.UserItineraries.Contains(userItinerary))
-                {
-                    return new HyperlinkResponse("User already added", false, itin.UserItineraries.ToList(), GetAllEmailsAsync(itin.UserItineraries.ToList()).Result);
                 }
 
                 else
