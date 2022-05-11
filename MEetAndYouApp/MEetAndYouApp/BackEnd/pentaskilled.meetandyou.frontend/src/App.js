@@ -17,6 +17,7 @@ import MemoryAlbumList from './pages/memoryalbumlist';
 import Layout from "./Layout";
 import RequireAuth from "./Components/RequireAuth";
 import Unauthorized from "./pages/unauthorized"
+import Settings from "./pages/Settings";
 
 function App() {
     return (
@@ -41,7 +42,8 @@ function App() {
                         <Route path="/itinerary" element={<CreateItinerary />} />
                         <Route path="/userprofiledashboard" element={<Userpd />} />
                         <Route path="/share" element={<Hyperlink />} />
-                    </Route>
+                        <Route path="settings" elemnt={<Settings />} />
+                    </Route> 
 
                     {/* Any Non-existent View */}
                     <Route path="*" element={<h3>That page does not exist.</h3>} />
