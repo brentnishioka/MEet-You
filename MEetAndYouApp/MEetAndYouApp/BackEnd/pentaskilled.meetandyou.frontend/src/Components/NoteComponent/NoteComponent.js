@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import useSessionData from "../hooks/useSessionData";
 
 function NoteComponent({ itineraryID }) {
     const [note, setNote] = useState(null);
@@ -6,6 +7,7 @@ function NoteComponent({ itineraryID }) {
     const [isNoteLengthValid, setIsNoteLengthValid] = useState(true);
     const [noteResponseLength, setNoteResponseLength] = useState(0);
     const noteInputBox = useRef(null);
+    const { userID, token, roles } = useSessionData();
 
     // Validates the length of the note text box.
     const isValidNoteLength = (length) => {
@@ -37,14 +39,17 @@ function NoteComponent({ itineraryID }) {
 
     // Makes an HTTP Get request to retrieve the user's notes.
     const fetchUserNote = async () => {
-        const requestURL = `https://meetandyou.me:8001/api/Rating/GetUserNote?itineraryID=${encodeURIComponent(isValidItineraryID && itineraryID)}`
+        const requestURL = `https://localhost:9000/api/Rating/GetUserNote?itineraryID=${encodeURIComponent(isValidItineraryID && itineraryID)}`
 
         var noteRequestOptions = {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Credentials': true
+                'Access-Control-Allow-Credentials': true,
+                'userID': userID,
+                'token': token,
+                'roles': roles
             },
             mode: 'cors'
         };
@@ -70,14 +75,17 @@ function NoteComponent({ itineraryID }) {
 
     // Makes an HTTP Post request to post the user's inputted note.
     const postUserNote = async () => {
-        const requestURL = 'https://meetandyou.me:8001/api/Rating/PostNoteCreaton'
+        const requestURL = 'https://localhost:9000/api/Rating/PostNoteCreaton'
 
         var postNoteRequestOptions = {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Credentials': true
+                'Access-Control-Allow-Credentials': true,
+                'userID': userID,
+                'token': token,
+                'roles': roles
             },
             body: JSON.stringify({
                 itineraryID: isValidItineraryID && itineraryID,
@@ -105,7 +113,10 @@ function NoteComponent({ itineraryID }) {
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Credentials': true
+                'Access-Control-Allow-Credentials': true,
+                'userID': userID,
+                'token': token,
+                'roles': roles
             },
             body: JSON.stringify({
                 itineraryID: isValidItineraryID && itineraryID,
@@ -144,7 +155,7 @@ function NoteComponent({ itineraryID }) {
                     <p>{getCurrentNoteContent}</p>
                 </div>
                 <div>
-                    <textarea ref={noteInputBox} name="paragraph_text" cols="50" rows="10" maxLength="300" />
+                    <textarea ref={noteInputBox} name="paragraph_text" cols="50" rows="10" maxLength="300" placeholder="There is a 300 character maximum limit on your note." />
                 </div>
                 <div>
                     <button onClick={e => handleClick(e)}>Submit Note</button>

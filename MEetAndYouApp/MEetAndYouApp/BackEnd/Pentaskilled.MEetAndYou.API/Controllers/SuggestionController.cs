@@ -20,164 +20,180 @@ namespace Pentaskiled.MEetAndYou.API.Controllers
         private readonly MEetAndYouDBContext _dbcontext;
         private readonly ISuggestionDAO _suggestionDAO;
         private readonly IAPIService _eventAPIService;
+        private readonly IAuthorizationManager _authzManager;
 
-        public SuggestionController(ISuggestionManager suggestionManager, MEetAndYouDBContext dbContext, ISuggestionDAO suggestionDAO, IAPIService eventAPIService)
+        public SuggestionController(ISuggestionManager suggestionManager, MEetAndYouDBContext dbContext, ISuggestionDAO suggestionDAO, IAPIService eventAPIService, IAuthorizationManager authorizationManager)
         {
             _suggestionManager = suggestionManager;
             //_authorizationManager = authorizationManager;
             _dbcontext = dbContext;
             _eventAPIService = eventAPIService;
             _suggestionDAO = suggestionDAO;
+            _authzManager = authorizationManager;
         }
 
         [HttpGet]
         [Route("/GetEvent")]
         public async Task<ActionResult<SuggestionResponse>> GetEvent(string category, string location, DateTime date)
         {
-            //if (token == null)
-            //{
-            //    return BadRequest("Invalid Token");
-            //}
-            //bool isAuthroized = _authzManager.IsAuthorized();
-            //if (isAuthroized == false)
-            //{
-            //    return BadRequest("Not authorized");
-            //    throw new HttpResponseException();
-            //}
-            //else
-            //{
-            //    // Call the manager to execute the feature. 
-            //}
-            SuggestionResponse result = await _suggestionManager.GetEvents(category, location, date);
-            return result;
+            try
+            {
+                var userIDString = Request.Headers["userID"];
+                int userID = int.Parse(userIDString);
+                var userToken = Request.Headers["token"];
+                var role = Request.Headers["roles"];
+
+                bool response = _authzManager.IsAuthorized(userID, userToken, role);
+                if (response)
+                {
+                    SuggestionResponse result = await _suggestionManager.GetEvents(category, location, date);
+                    return result;
+                }
+                return BadRequest("You are not authorized to use this feature.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Verification met a problem! " + ex.Message);
+            }
+                //if (token == null)
+                //{
+                //    return BadRequest("Invalid Token");
+                //}
+                //bool isAuthroized = _authzManager.IsAuthorized();
+                //if (isAuthroized == false)
+                //{
+                //    return BadRequest("Not authorized");
+                //    throw new HttpResponseException();
+                //}
+                //else
+                //{
+                //    // Call the manager to execute the feature. 
+                //}
         }
 
         [HttpPost]
         [Route("/SaveEvent")]
-        public async Task<ActionResult<BaseResponse>> SaveEvent(List<Event> events, int itinID, int userID)
+        public async Task<ActionResult<BaseResponse>> SaveEvent(List<Event> events, int itinID)
         {
-            //string? token;
-            //int userID;
-            //string userToken;
-            //string role;
+            try
+            {
+                var userIDString = Request.Headers["userID"];
+                int userID = int.Parse(userIDString);
+                var userToken = Request.Headers["token"];
+                var role = Request.Headers["roles"];
 
-            //token = Request.Headers["Token"];
-            //if (token == null)
-            //{
-            //    return BadRequest("Null token");
-            //}
-            ////Splits the token into userID, userToken, and role for Authorization method 
-            //userID = (int)token.Split(",").Select(Int32.Parse).ElementAt(0);
-            //userToken = token.Split(",")[1];
-            //role = token.Split(",")[2];
-            ////Checks if the user is authorized before continuing 
-            //if (!_authorizationManager.IsAuthorized(userID, userToken, role))
-            //{
-            //    return BadRequest("User is not authorized to use this service");
-            //}
-
-            BaseResponse response = await _suggestionManager.SaveEventAsync(events, itinID, userID);
-            return response;
+                bool response = _authzManager.IsAuthorized(userID, userToken, role);
+                if (response)
+                {
+                    BaseResponse sResponse = await _suggestionManager.SaveEventAsync(events, itinID, userID);
+                    return sResponse;
+                }
+                return BadRequest("You are not authorized to use this feature.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Verification met a problem! " + ex.Message);
+            }
         }
 
         [HttpGet]
         [Route("/GetRandomEvent")]
         public async Task<ActionResult<SuggestionResponse>> GetRandomEvent()
         {
-            //if (token == null)
-            //{
-            //    return BadRequest("Invalid Token");
-            //}
-            //bool isAuthroized = _authzManager.IsAuthorized();
-            //if (isAuthroized == false)
-            //{
-            //    return BadRequest("Not authorized");
-            //    throw new HttpResponseException();
-            //}
-            //else
-            //{
-            //    // Call the manager to execute the feature. 
-            //}
-            SuggestionResponse result = await _suggestionManager.GetRandomEventsAsync();
-            return result;
+            try
+            {
+                var userIDString = Request.Headers["userID"];
+                int userID = int.Parse(userIDString);
+                var userToken = Request.Headers["token"];
+                var role = Request.Headers["roles"];
+
+                bool response = _authzManager.IsAuthorized(userID, userToken, role);
+                if (response)
+                {
+                    SuggestionResponse result = await _suggestionManager.GetRandomEventsAsync();
+                    return result;
+                }
+                return BadRequest("You are not authorized to use this feature.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Verification met a problem! " + ex.Message);
+            }
         }
 
         [HttpDelete]
         [Route("/DeleteEvent")]
-        public async Task<ActionResult<BaseResponse>> DeleteEvent(int itinID, int eventID, int userID)
+        public async Task<ActionResult<BaseResponse>> DeleteEvent(int itinID, int eventID)
         {
-            //string? token;
-            //int userID;
-            //string userToken;
-            //string role;
+            try
+            {
+                var userIDString = Request.Headers["userID"];
+                int userID = int.Parse(userIDString);
+                var userToken = Request.Headers["token"];
+                var role = Request.Headers["roles"];
 
-            //token = Request.Headers["Token"];
-            //if (token == null)
-            //{
-            //    return BadRequest("Null token");
-            //}
-            ////Splits the token into userID, userToken, and role for Authorization method 
-            //userID = (int)token.Split(",").Select(Int32.Parse).ElementAt(0);
-            //userToken = token.Split(",")[1];
-            //role = token.Split(",")[2];
-            ////Checks if the user is authorized before continuing 
-            //if (!_authorizationManager.IsAuthorized(userID, userToken, role))
-            //{
-            //    return BadRequest("User is not authorized to use this service");
-            //}
-
-            BaseResponse response = await _suggestionManager.DeleteEventAsync(itinID, eventID, userID);
-            return response;
+                bool response = _authzManager.IsAuthorized(userID, userToken, role);
+                if (response)
+                {
+                    BaseResponse sResponse = await _suggestionManager.DeleteEventAsync(itinID, eventID, userID);
+                    return sResponse;
+                }
+                return BadRequest("You are not authorized to use this feature.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Verification met a problem! " + ex.Message);
+            }
         }
 
         [HttpPost]
         [Route("/AddItinerary")]
         public async Task<ActionResult<BaseResponse>> AddItinerary(List<Itinerary> itineraries)
         {
-            //string? token;
-            //int userID;
-            //string userToken;
-            //string role;
+            try
+            {
+                var userIDString = Request.Headers["userID"];
+                int userID = int.Parse(userIDString);
+                var userToken = Request.Headers["token"];
+                var role = Request.Headers["roles"];
 
-            //token = Request.Headers["Token"];
-            //if (token == null)
-            //{
-            //    return BadRequest("Null token");
-            //}
-            ////Splits the token into userID, userToken, and role for Authorization method 
-            //userID = (int)token.Split(",").Select(Int32.Parse).ElementAt(0);
-            //userToken = token.Split(",")[1];
-            //role = token.Split(",")[2];
-            ////Checks if the user is authorized before continuing 
-            //if (!_authorizationManager.IsAuthorized(userID, userToken, role))
-            //{
-            //    return BadRequest("User is not authorized to use this service");
-            //}
-
-            BaseResponse response = await _suggestionManager.AddItineraryAsync(itineraries);
-            return response;
+                bool response = _authzManager.IsAuthorized(userID, userToken, role);
+                if (response)
+                {
+                    BaseResponse sResponse = await _suggestionManager.AddItineraryAsync(itineraries);
+                    return sResponse;
+                }
+                return BadRequest("You are not authorized to use this feature.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Verification met a problem! " + ex.Message);
+            }
         }
 
         [HttpGet]
         [Route("/GetUserItineraries")]
-        public async Task<ActionResult<ItineraryResponse>> GetUserItineraries(int userID)
+        public async Task<ActionResult<ItineraryResponse>> GetUserItineraries()
         {
-            //if (token == null)
-            //{
-            //    return BadRequest("Invalid Token");
-            //}
-            //bool isAuthroized = _authzManager.IsAuthorized();
-            //if (isAuthroized == false)
-            //{
-            //    return BadRequest("Not authorized");
-            //    throw new HttpResponseException();
-            //}
-            //else
-            //{
-            //    // Call the manager to execute the feature. 
-            //}
-            ItineraryResponse result = await _suggestionManager.GetUserItineraries(userID);
-            return result;
+            try
+            {
+                var userIDString = Request.Headers["userID"];
+                int userID = int.Parse(userIDString);
+                var userToken = Request.Headers["token"];
+                var role = Request.Headers["roles"];
+
+                bool response = _authzManager.IsAuthorized(userID, userToken, role);
+                if (response)
+                {
+                    ItineraryResponse result = await _suggestionManager.GetUserItineraries(userID);
+                    return result;
+                }
+                return BadRequest("You are not authorized to use this feature.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Verification met a problem! " + ex.Message);
+            }
         }
     }
 }

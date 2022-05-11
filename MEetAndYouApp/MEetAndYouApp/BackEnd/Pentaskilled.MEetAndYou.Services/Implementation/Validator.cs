@@ -12,7 +12,7 @@ namespace Pentaskilled.MEetAndYou.Services.Implementation
     public static class Validator
     {
         // A number is valid if it can be parsed and is greater than 0.
-        public static bool IsValidNumericality(int number)
+        public static bool IsValidNumber(int number)
         {
             bool isNumber;
 

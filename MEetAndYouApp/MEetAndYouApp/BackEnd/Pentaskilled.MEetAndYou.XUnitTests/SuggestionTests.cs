@@ -370,5 +370,40 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             // Assert
             Assert.True(response.IsSuccessful);
         }
+
+        [Theory]
+        [InlineData("Concert", "Long Beach", "May 5")]
+        public async void SaveEventsInBulk(string category, string location, string date)
+        {
+            //Arrange
+            SuggestionDAO suggestionDAO = new SuggestionDAO(_dbContext);
+
+            Console.WriteLine("Parsing the date: ");
+            EventAPIService eventAPI = new EventAPIService(_eventsAPIkey);
+            DateTime dateTime = suggestionDAO.DateConversion(date);
+            Console.WriteLine(date.ToString());
+            int limit = 10;
+
+            JObject results = eventAPI.GetEventByCategory(category, location, dateTime);
+
+            bool actual = false;
+
+
+
+            //Act
+            _output.WriteLine("Parse JSON ...");
+            List<Event> eventList = new List<Event>();
+            if (results != null)
+            {
+                eventList = (List<Event>)suggestionDAO.ParseJSON(results, limit);
+                actual = true;
+            }
+            _output.WriteLine("Saving Events....");
+            BaseResponse response = await suggestionDAO.SaveEventsListAsync(eventList);
+            _output.WriteLine(response.Message);
+
+            // Assert
+            Assert.True(response.IsSuccessful);
+        }
     }
 }

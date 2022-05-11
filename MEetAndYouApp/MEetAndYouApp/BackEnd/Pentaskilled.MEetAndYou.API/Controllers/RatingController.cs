@@ -10,13 +10,13 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
     [ApiController]
     public class RatingController : ControllerBase
     {
-        //private readonly AuthorizationManager _authorizationManager;
+        private readonly IAuthorizationManager _authzManager;
         private readonly IRatingManager _ratingManager;
         private readonly MEetAndYouDBContext _dbcontext;
 
-        public RatingController(IRatingManager _ratingManager, MEetAndYouDBContext dbcontext)
+        public RatingController(IAuthorizationManager authzManager, IRatingManager _ratingManager, MEetAndYouDBContext dbcontext)
         {
-            //_authorizationManager = authzManager;
+            this._authzManager = authzManager;
             this._ratingManager = _ratingManager;
             _dbcontext = dbcontext;
         }
@@ -24,35 +24,34 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
         // Web API controller to fetch the specified itinerary provided the user's ID and the itinerary's ID.
         [HttpGet]
         [Route("GetUserItinerary")]
-        public async Task<ActionResult<ItineraryResponse>> GetUserItinerary(int userID, int itineraryID)
+        public async Task<ActionResult<ItineraryResponse>> GetUserItinerary(int itineraryID)
         {
-            // Input validation for the ID's
-            if (userID > 0 && itineraryID > 0)
+            bool response;
+            try
             {
-                //string? token;
-                //int userID;
-                //string userToken;
-                //string role;
+                var userIDString = Request.Headers["userID"];
+                int userID = int.Parse(userIDString);
+                var userToken = Request.Headers["token"];
+                var role = Request.Headers["roles"];
 
-                //token = Request.Headers["Token"];
-                //if (token == null)
-                //{
-                //    return BadRequest("Null token");
-                //}
-                ////Splits the token into userID, userToken, and role for Authorization method 
-                //userID = (int)token.Split(",").Select(Int32.Parse).ElementAt(0);
-                //userToken = token.Split(",")[1];
-                //role = token.Split(",")[2];
-                ////Checks if the user is authorized before continuing 
-                //if (!_authorizationManager.IsAuthorized(userID, userToken, role))
-                //{
-                //    return BadRequest("User is not authorized to use this service");
-                //}
+                response = _authzManager.IsAuthorized(userID, userToken, role);
 
-                ItineraryResponse getItineraryResult = await _ratingManager.RetrieveUserItinerary(userID, itineraryID);
-                return getItineraryResult;
+                if (response)
+                {
+                    // Input validation for the ID's
+                    if (userID > 0 && itineraryID > 0)
+                    {
+                        ItineraryResponse getItineraryResult = await _ratingManager.RetrieveUserItinerary(userID, itineraryID);
+                        return getItineraryResult;
+                    }
+                    return new ItineraryResponse("The itineraries could not be fetched successfully because the given user ID or itinerary ID were invalid.", false, null);
+                }
+                return BadRequest("You are not authorized to use this feature.");
             }
-            return new ItineraryResponse("The itineraries could not be fetched successfully because the given user ID or itinerary ID were invalid.", false, null);
+            catch (Exception ex)
+            {
+                return BadRequest("Verification met a problem! " + ex.Message);
+            }
         }
 
         // Web API controller to fetch the specified user ratings provided the itinerary's ID.

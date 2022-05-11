@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import LocationPin from "../LocationPin";
 import DisplayLocationPin from "../LocationPin/DisplayLocationPin"
+import useSessionData from "../hooks/useSessionData";
 
 function EventCard({ event, itineraryID }) {
     const [userRating, setUserRating] = useState(null);
@@ -8,6 +9,7 @@ function EventCard({ event, itineraryID }) {
     const [fetchedEventRatings, setFetchedEventRatings] = useState(null);
     const [currentEventID] = useState(event.eventId);
     const [currentItineraryID] = useState(itineraryID);
+    const { userID, token, roles } = useSessionData();
 
     // Validates the event ID.
     const isValidEventID = () => {
@@ -41,14 +43,17 @@ function EventCard({ event, itineraryID }) {
 
     // Makes an HTTP Get request to retrieve the user's event ratings.
     const fetchUserEventRating = async () => {
-        var ratingRequestURL = `https://meetandyou.me:8001/api/Rating/GetUserEventRatings?itineraryID=${encodeURIComponent(isValidItineraryID && currentItineraryID)}`
+        var ratingRequestURL = `https://localhost:9000/api/Rating/GetUserEventRatings?itineraryID=${encodeURIComponent(isValidItineraryID && currentItineraryID)}`
 
         var ratingRequestOptions = {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Credentials': true
+                'Access-Control-Allow-Credentials': true,
+                'userID': userID,
+                'token': token,
+                'roles': roles
             },
             mode: 'cors'
         };
@@ -75,14 +80,17 @@ function EventCard({ event, itineraryID }) {
 
     // Makes an HTTP Post request to post the user's rating for an event.
     const createUserEventRating = async () => {
-        var requestURL = 'https://meetandyou.me:8001/api/Rating/PostRatingCreation'
+        var requestURL = 'https://localhost:9000/api/Rating/PostRatingCreation'
 
         var requestOptions = {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Credentials': true
+                'Access-Control-Allow-Credentials': true,
+                'userID': userID,
+                'token': token,
+                'roles': roles
             },
             body: JSON.stringify({
                 eventID: isValidEventID && currentEventID,
@@ -105,14 +113,17 @@ function EventCard({ event, itineraryID }) {
 
     // Makes an HTTP Put request to update the user's rating for an event.
     const modifyUserEventRating = async () => {
-        var requestURL = 'https://meetandyou.me:8001/api/Rating/PutRatingModification'
+        var requestURL = 'https://localhost:9000/api/Rating/PutRatingModification'
 
         var requestOptions = {
             method: "PUT",
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Credentials': true
+                'Access-Control-Allow-Credentials': true,
+                'userID': userID,
+                'token': token,
+                'roles': roles
             },
             body: JSON.stringify({
                 eventID: isValidEventID && currentEventID,
