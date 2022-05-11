@@ -1,6 +1,7 @@
 import React, { useState, Component, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import '../apicall/site.js';
+import useSessionData from "../Components/hooks/useSessionData"
 
 function Events() {
     const city = sessionStorage.getItem("city");
@@ -11,13 +12,14 @@ function Events() {
     const [data, setData] = useState([]);
     const [eventID, seteventID] = useState(0);
     const [itinID, setitintID] = useState(5);
-    const [userID, setuserID] = useState("");
+    //const [userID, setuserID] = useState("");
     const [postRes, setpostRes] = useState();
     const [postMsg, setpostMsg] = useState();
+    const { userID, token, roles } = useSessionData();
 
     const saveEvent = async (request, itinID, userID) => {
         try {
-            const res = await fetch('https://meetandyou.me:8001/SaveEvent?itinID=' + itinID + '&userID=' + userID, request)
+            const res = await fetch('https://localhost:9000/SaveEvent?itinID=' + itinID + '&userID=' + userID, request)
             const saveEventRes = await res.json();
             setpostRes(saveEventRes)
             console.log(saveEventRes)
@@ -39,18 +41,50 @@ function Events() {
     //     }
     // }
 
-    const getData = async () => {
-        try {
-            console.log("Category: ", location.state.categories.label)
-            const res = await fetch("https://meetandyou.me:8001/GetEvent?category=" + location.state.categories.label + "&location=" + city + " " + state + "&date= " + date);
-            const suggestionResponse = await res.json();
-            setData(suggestionResponse.data);
-            console.log(suggestionResponse);
+    // const getData = async () => {
+    //     try {
+    //         console.log("Category: ", location.state.categories.label)
+    //         const res = await fetch("https://meetandyou.me:8001/GetEvent?category=" + location.state.categories.label + "&location=" + city + " " + state + "&date= " + date);
+    //         const suggestionResponse = await res.json();
+    //         setData(suggestionResponse.data);
+    //         console.log(suggestionResponse);
+    //     }
+    //     catch (error) {
+    //         console.log('error when getting suggestion', error.message);
+    //     }
+    // }
+
+        // Makes an HTTP Get request to retrieve the user's itineraries.
+        const getData = async () => {
+            const requestURL = "https://localhost:9000/GetEvent?category=" + location.state.categories.label + "&location=" + city + " " + state + "&date= " + date
+    
+            var eventSugOptions = {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Credentials': true,
+                    'userID': userID,
+                    'token': token,
+                    'roles': roles
+                },
+                mode: 'cors'
+            };
+    
+            try {
+                const res = await fetch(requestURL, eventSugOptions);
+                const suggestionResponse = await res.json();
+                setData(suggestionResponse.data);
+                console.log(suggestionResponse);
+    
+                // Input validation for the data's length
+                // isValidDataLength(itineraryResponse.data.length)
+                // setUserItinerary(itineraryResponse.data);
+            }
+            catch (error) {
+                console.log('Fetch user suggestion failed');
+            }
         }
-        catch (error) {
-            console.log('error when getting suggestion', error.message);
-        }
-    }
 
     useEffect(() => {
         getData();
@@ -140,7 +174,14 @@ function Events() {
 
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': true,
+                'userID': userID,
+                'token': token,
+                'roles': roles
+            },
             body: JSON.stringify(eventToSend)
         }
 
@@ -186,11 +227,11 @@ function Events() {
                 <input type="text" placeholder="ex: 2" maxLength="10" onChange={e => setitintID(e.target.value)} />
                 {console.log("The value of itinID", itinID)}
             </label>
-            <label>
+            {/* <label>
                 <p>Enter an your userID </p>
                 <input type="text" placeholder="ex: 2" maxLength="10" onChange={e => setuserID(e.target.value)} />
                 {console.log("The value of itinID", userID)}
-            </label>
+            </label> */}
             <button type="button" id="SaveEvent" onClick={AddEvent}> Save Event</button>
 
             <p>Saving event response: </p>
