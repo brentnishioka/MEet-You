@@ -84,7 +84,7 @@ return (
             {console.log("The value of itinName", itineraryName)}
         </label>
         <label>
-            <p>Enter the rating for he itinerary</p>
+            <p>Enter the rating for the itinerary</p>
             <input type="text" placeholder="ex: 2" maxlength="10" onChange={e => setRating(e.target.value)} />
             {console.log("The value of rating", rating)}
         </label>
