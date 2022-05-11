@@ -9,10 +9,12 @@ namespace Pentaskilled.MEetAndYou.Managers.Contracts
 {
     public interface IRatingManager
     {
-        ItineraryResponse RetrieveUserItinerary(int userID, int itineraryID);
-        BaseResponse CreateRating(int eventID, int itineraryID, int userRating);
-        BaseResponse ModifyRating(int eventID, int itineraryID, int userRating);
-        BaseResponse CreateItineraryNote(int itineraryID, string noteContent);
-        BaseResponse ModifyItineraryNote(int itineraryID, string noteContent);
+        Task<ItineraryResponse> RetrieveUserItinerary(int userID, int itineraryID);
+        Task<RatingResponse> RetrieveUserRatings(int itineraryID);
+        Task<NoteResponse> RetrieveUserNote(int itineraryID);
+        Task<BaseResponse> CreateRating(int eventID, int itineraryID, int userRating);
+        Task<BaseResponse> ModifyRating(int eventID, int itineraryID, int userRating);
+        Task<BaseResponse> CreateItineraryNote(int itineraryID, string noteContent);
+        Task<BaseResponse> ModifyItineraryNote(int itineraryID, string noteContent);
     }
 }

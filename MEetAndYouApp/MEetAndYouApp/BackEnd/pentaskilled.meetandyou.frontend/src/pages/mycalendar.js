@@ -2,7 +2,7 @@ import React, { useState, Component, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import ICalendarLink from "react-icalendar-link";
-import './calendarStyling.css'
+import '../images/calendarStyling.css'
 import Select from 'react-select';
 
 //import Button from 'react-bootstrap/Button';
@@ -121,10 +121,10 @@ function MyCalendar() {
         return (
             <div>
             <table
-                style={{ "borderCollapse": "collapse", "padding": "5px", "width": "50%", "border": "1px solid black" }}
+                style={{ "borderCollapse": "collapse", "padding": "5px", "width": "60%", "border": "1px solid black" }}
                 className="table-hover">
-                <thead style={{ "borderCollapse": "collapse", "padding": "5px", "width": "50%", "border": "1px solid black" }}>
-                    <tr style={{ "borderCollapse": "collapse", "padding": "5px", "width": "50%", "border": "1px solid black" }}>
+                <thead style={{ "borderCollapse": "collapse", "padding": "5px", "width": "60%", "border": "1px solid black" }}>
+                    <tr style={{ "borderCollapse": "collapse", "padding": "5px", "width": "60%", "border": "1px solid black" }}>
                     
                             <th> Event</th>
                             <th> Address </th>

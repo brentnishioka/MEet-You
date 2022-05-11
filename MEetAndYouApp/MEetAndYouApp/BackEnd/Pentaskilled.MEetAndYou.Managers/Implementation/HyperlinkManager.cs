@@ -27,6 +27,20 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
             _dbContext = dbContext;
         }
 
+        /// <summary>
+        /// Adds a user to an itinerary with the following procedure:
+        ///    1. Validate input of the arguments
+        ///    2. Check to see if the User is the owner of the itinerary
+        ///    3. Pull UserAccountRecord using an email
+        ///    4. Add the user to the associated itinerary
+        /// </summary>
+        /// <param name="userID"> the ID of the itinerary's owner </param>
+        /// <param name="itineraryID"> the ID of the itinerary to add a user </param>
+        /// <param name="email"> the email of the added user </param>
+        /// <param name="permission"> the permission of the added user </param>
+        /// <returns>  
+        ///     A HyperlinkResponse object containting a message, operation status, and list of UserItinerary & Emails
+        /// </returns>
         public async Task<HyperlinkResponse> AddUserToItineraryAsync(int userID, int itineraryID, string email, string permission)
         {
             HyperlinkResponse hyperResponse;
@@ -34,17 +48,17 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
             try
             {
                 // Validate inputs
-                bool isValidUserID = Validator.IsValidNumericality(userID);
-                if (!isValidUserID) { return new HyperlinkResponse("Invalid user id", false, null); }
+                bool isValidUserID = Validator.IsValidNumber(userID);
+                if (!isValidUserID) { return new HyperlinkResponse("Invalid user id: must be greater than 0", false, new List<UserItinerary>(), new List<string>()); }
 
-                bool isValidItineraryID = Validator.IsValidNumericality(itineraryID);
-                if (!isValidItineraryID) { return new HyperlinkResponse("Invalid itinerary id", false, null); }
+                bool isValidItineraryID = Validator.IsValidNumber(itineraryID);
+                if (!isValidItineraryID) { return new HyperlinkResponse("Invalid itinerary id: must be greater than 0", false, new List<UserItinerary>(), new List<string>()); }
 
                 bool isValidEmail = Validator.IsValidEmail(email);
-                if (!isValidEmail) { return new HyperlinkResponse("Invalid email", false, null); }
+                if (!isValidEmail) { return new HyperlinkResponse("Invalid email: use proper format", false, new List<UserItinerary>(), new List<string>()); }
 
                 bool isValidPermission = Validator.IsValidString(permission);
-                if (!isValidPermission) { return new HyperlinkResponse("Invalid permission", false, null); }
+                if (!isValidPermission) { return new HyperlinkResponse("Invalid permission", false, new List<UserItinerary>(), new List<string>()); }
 
                 // Check to see if the user own the itinerary
                 hyperResponse = await _hyperlinkDAO.isUserOwnerAsync(userID, itineraryID);
@@ -57,7 +71,7 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
                 UserAccountRecordResponse userResponse = await _hyperlinkDAO.GetUserAccountRecordAsync(email);
                 if (userResponse.IsSuccessful == false)
                 {
-                    return new HyperlinkResponse(userResponse.Message, false, null);
+                    return new HyperlinkResponse(userResponse.Message, false, new List<UserItinerary>(), new List<string>());
                 }
 
                 // Add the user to the associated itinerary
@@ -65,12 +79,26 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
             }
             catch (Exception ex)
             {
-                return new HyperlinkResponse("Add user in Manager failed: \n" + ex.Message, false, null);
+                return new HyperlinkResponse("Add user in Manager failed: \n" + ex.Message, false, new List<UserItinerary>(), new List<string>());
             }
 
             return hyperResponse;
         }
 
+        /// <summary>
+        /// Removes a user from an itinerary with the following procedure:
+        ///    1. Validate input of the arguments
+        ///    2. Check to see if the User is the owner of the itinerary
+        ///    3. Pull UserAccountRecord using an email
+        ///    4. Add the user to the associated itinerary
+        /// </summary>
+        /// <param name="userID"> the ID of the itinerary's owner </param>
+        /// <param name="itineraryID"> the ID of the itinerary to remove a user </param>
+        /// <param name="email"> the email of the removed user </param>
+        /// <param name="permission"> the permission of the removed user </param>
+        /// <returns>  
+        ///     A HyperlinkResponse object containting a message, operation status, and list of UserItinerary & Emails
+        /// </returns>
         public async Task<HyperlinkResponse> RemoveUserFromItineraryAsync(int userID, int itineraryID, string email, string permission)
         {
             HyperlinkResponse hyperResponse;
@@ -78,17 +106,17 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
             try
             {
                 // Validate inputs
-                bool isValidUserID = Validator.IsValidNumericality(userID);
-                if (!isValidUserID) { return new HyperlinkResponse("Invalid user id", false, null); }
+                bool isValidUserID = Validator.IsValidNumber(userID);
+                if (!isValidUserID) { return new HyperlinkResponse("Invalid user id: must be greater than 0", false, new List<UserItinerary>(), new List<string>()); }
 
-                bool isValidItineraryID = Validator.IsValidNumericality(itineraryID);
-                if (!isValidItineraryID) { return new HyperlinkResponse("Invalid itinerary id", false, null); }
+                bool isValidItineraryID = Validator.IsValidNumber(itineraryID);
+                if (!isValidItineraryID) { return new HyperlinkResponse("Invalid itinerary id: must be greater than 0", false, new List<UserItinerary>(), new List<string>()); }
 
                 bool isValidEmail = Validator.IsValidEmail(email);
-                if (!isValidEmail) { return new HyperlinkResponse("Invalid email", false, null); }
+                if (!isValidEmail) { return new HyperlinkResponse("Invalid email: use proper format", false, new List<UserItinerary>(), new List<string>()); }
 
                 bool isValidPermission = Validator.IsValidString(permission);
-                if (!isValidPermission) { return new HyperlinkResponse("Invalid permission", false, null); }
+                if (!isValidPermission) { return new HyperlinkResponse("Invalid permission", false, new List<UserItinerary>(), new List<string>()); }
 
                 // Check to see if the user own the itinerary
                 hyperResponse = await _hyperlinkDAO.isUserOwnerAsync(userID, itineraryID);
@@ -101,7 +129,7 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
                 UserAccountRecordResponse userResponse = await _hyperlinkDAO.GetUserAccountRecordAsync(email);
                 if (userResponse.IsSuccessful == false)
                 {
-                    return new HyperlinkResponse(userResponse.Message, false, null);
+                    return new HyperlinkResponse(userResponse.Message, false, new List<UserItinerary>(), new List<string>());
                 }
 
                 // Remove the user to the associated itinerary
@@ -110,7 +138,7 @@ namespace Pentaskilled.MEetAndYou.Managers.Implementation
 
             catch (Exception ex)
             {
-                return new HyperlinkResponse("Remove user in Manager failed: \n" + ex.Message, false, null);
+                return new HyperlinkResponse("Remove user in Manager failed: \n" + ex.Message, false, new List<UserItinerary>(), new List<string>());
             }
 
             return hyperResponse;

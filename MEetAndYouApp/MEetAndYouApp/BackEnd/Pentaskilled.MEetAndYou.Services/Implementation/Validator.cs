@@ -12,7 +12,7 @@ namespace Pentaskilled.MEetAndYou.Services.Implementation
     public static class Validator
     {
         // A number is valid if it can be parsed and is greater than 0.
-        public static bool IsValidNumericality(int number)
+        public static bool IsValidNumber(int number)
         {
             bool isNumber;
 
@@ -28,6 +28,17 @@ namespace Pentaskilled.MEetAndYou.Services.Implementation
             return isNumber;
         }
 
+        // A number is valid if it falls in between the range of num1 & num2.
+        public static bool IsValidRange(int value, int num1, int num2)
+        {
+            return (value >= num1 && value <= num2) || (value <= num2 && value >= num1);
+        }
+
+        public static bool IsValueNull(Object obj)
+        {
+            return obj.Equals(null);
+        }
+
         // Uses regex to check for a valid email address
         public static bool IsValidEmail(string email)
         {
@@ -37,19 +48,19 @@ namespace Pentaskilled.MEetAndYou.Services.Implementation
         // A string is valid if it contains only letters
         public static bool IsValidString(string s)
         {
-            return Regex.IsMatch(s, @"^[a-zA-Z]+$");
+            return Regex.IsMatch(s, @"^[a-zA-Z]+$") && (s.ToLower().Contains("view") || s.ToLower().Contains("edit"));
         }
 
         // An extensions is valid if it contains only these letters
 
         public static bool IsValidExtension(string s)
         {
-            if (s.Contains("jpg") ){
+            if (s.Equals("jpg") ){
                 return true;
             }
-            if (s.Contains("png"))
+            if (s.Equals("png"))
                 return true;
-            if (s.Contains("jpg"))
+            if (s.Equals("jpg"))
                 return true;
 
 

@@ -19,66 +19,74 @@ namespace Pentaskiled.MEetAndYou.API.Controllers
     public class HyperlinkController : ControllerBase
     {
         private readonly IHyperlinkManager _hyperlinkManager;
-        //private readonly AuthorizationManager _authorizationManager;
+        private readonly IAuthorizationManager _authorizationManager;
         private readonly MEetAndYouDBContext _dbcontext;
         private readonly IHyperlinkDAO _hyperlinkDAO;
 
-        public HyperlinkController(IHyperlinkManager hyperlinkManager, MEetAndYouDBContext dbContext, IHyperlinkDAO hyperlinkDAO)
+        public HyperlinkController(IAuthorizationManager authorizationManager, IHyperlinkManager hyperlinkManager, MEetAndYouDBContext dbContext, IHyperlinkDAO hyperlinkDAO)
         {
             _hyperlinkManager = hyperlinkManager;
-            //_authorizationManager = authorizationManager;
+            _authorizationManager = authorizationManager;
             _dbcontext = dbContext;
             _hyperlinkDAO = hyperlinkDAO;
         }
 
         [HttpPost]
         [Route("/AddUser")]
-        public async Task<ActionResult<HyperlinkResponse>> AddUser(int userID, int itineraryID, string email, string permission)
+        public async Task<ActionResult<HyperlinkResponse>> AddUser(int itineraryID, string email, string permission)
         {
-            //TODO: Implement authorization
-            //if (token == null)
-            //{
-            //    return BadRequest("Invalid Token");
-            //}
-            //bool isAuthroized = _authzManager.IsAuthorized();
-            //if (isAuthroized == false)
-            //{
-            //    return BadRequest("Not authorized");
-            //    throw new HttpResponseException();
-            //}
-            //else
-            //{
-            //    // Call the manager to execute the feature. 
-            //}
+            bool isAuthorized;
 
-            HyperlinkResponse response = await _hyperlinkManager.AddUserToItineraryAsync(userID, itineraryID, email, permission);
-          
-            return response;
+            try
+            {
+                var userIDString = Request.Headers["userID"];
+                int userID = int.Parse(userIDString);
+                var userToken = Request.Headers["token"];
+                var role = Request.Headers["roles"];
+
+                isAuthorized = _authorizationManager.IsAuthorized(userID, userToken, role);
+
+                if (isAuthorized)
+                {
+                    HyperlinkResponse hyResponse = await _hyperlinkManager.AddUserToItineraryAsync(userID, itineraryID, email, permission);
+                    return hyResponse;
+                }
+
+                return BadRequest("You are not authorized to use this feature.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Verification met a problem! " + ex.Message);
+            }
         }
 
         [HttpDelete]
         [Route("/RemoveUser")]
-        public async Task<ActionResult<HyperlinkResponse>> RemoveUser(int userID, int itineraryID, string email, string permission)
+        public async Task<ActionResult<HyperlinkResponse>> RemoveUser(int itineraryID, string email, string permission)
         {
-            //TODO: Implement authorization
-            //if (token == null)
-            //{
-            //    return BadRequest("Invalid Token");
-            //}
-            //bool isAuthroized = _authzManager.IsAuthorized();
-            //if (isAuthroized == false)
-            //{
-            //    return BadRequest("Not authorized");
-            //    throw new HttpResponseException();
-            //}
-            //else
-            //{
-            //    // Call the manager to execute the feature. 
-            //}
+            bool isAuthorized;
 
-            HyperlinkResponse response = await _hyperlinkManager.RemoveUserFromItineraryAsync(userID, itineraryID, email, permission);
+            try
+            {
+                var userIDString = Request.Headers["userID"];
+                int userID = int.Parse(userIDString);
+                var userToken = Request.Headers["token"];
+                var role = Request.Headers["roles"];
 
-            return response;
+                isAuthorized = _authorizationManager.IsAuthorized(userID, userToken, role);
+
+                // If authorized is true, allow feature access
+                if (isAuthorized)
+                {
+                    HyperlinkResponse hyResponse = await _hyperlinkManager.RemoveUserFromItineraryAsync(userID, itineraryID, email, permission);
+                    return hyResponse;
+                }
+                return BadRequest("You are not authorized to use this feature.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Verification met a problem! " + ex.Message);
+            }
         }
     }
 }

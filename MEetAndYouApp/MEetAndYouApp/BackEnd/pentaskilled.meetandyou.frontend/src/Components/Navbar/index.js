@@ -1,5 +1,5 @@
-import React from 'react';
-import MemoryAlbumList from '../../pages/memoryalbumlist';
+import React, { useEffect } from 'react';
+import useAuthStatus from '../hooks/useAuthStatus';
 
 import {
     Nav,
@@ -11,8 +11,9 @@ import {
     NavBtnLink,
 } from "./NavbarElements";
 
-
 const Navbar = () => {
+    const { isLoggedIn, loggedInButtonState, loggedOutButtonState } = useAuthStatus();
+
     return (
         <>
             <Nav>
@@ -37,15 +38,15 @@ const Navbar = () => {
                         User Profile Dashboard
                     </NavLink>
 
+                    <NavLink to='/share' activeStyle>
+                        Share
+                    </NavLink>
                     <NavLink to='/memoryalbumlist' activeStyle>
                         Memory Album
-                    </NavLink>
-
-                    {/* Second Nav */}
-                    {/* <NavBtnLink to='/sign-in'>Sign In</NavBtnLink> */}
+                    </NavLink>                  
                 </NavMenu>
                 <NavBtn>
-                    <NavBtnLink to='/login'>Login</NavBtnLink>
+                    {isLoggedIn ? loggedOutButtonState() : loggedInButtonState()}
                 </NavBtn>
             </Nav>
         </>

@@ -93,6 +93,8 @@ builder.Services.AddSingleton<ISuggestionDAO, SuggestionDAO>();
 builder.Services.AddSingleton<IAPIService, EventAPIService>();
 builder.Services.AddSingleton<IMemoryAlbumDAO, MemoryAlbumDAO >();
 builder.Services.AddSingleton<IMemoryAlbumManager, MemoryAlbumManager>();
+builder.Services.AddSingleton<IHyperlinkDAO, HyperlinkDAO>();
+builder.Services.AddSingleton<IHyperlinkManager, HyperlinkManager>();
 builder.Services.AddSingleton<AccountCreationManager>();
 builder.Services.AddSingleton<IAccountCreation,AccountCreationDAO>();
 
@@ -146,11 +148,11 @@ if (app.Environment.IsProduction())
 
 
 // Add global Cors policies
-app.UseCors(x => x
-    .AllowAnyMethod()
-    .AllowAnyHeader()
-    .SetIsOriginAllowed(origin => true)
-    .AllowCredentials());
+//app.UseCors(x => x
+//    .AllowAnyMethod()
+//    .AllowAnyHeader()
+//    .SetIsOriginAllowed(origin => true)
+//    .AllowCredentials());
 
 app.MapGet("/", () => eventsApiKey);
 

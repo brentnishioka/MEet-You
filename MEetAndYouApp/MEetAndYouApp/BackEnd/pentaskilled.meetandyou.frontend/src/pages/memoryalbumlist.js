@@ -7,7 +7,7 @@ function MemoryAlbumList() {
     const [memoryAlbumList, setmemoryAlbumList] = useState([])
     const [recordForEdit, setRecordForEdit] = useState(null)
 
-
+    
     const [imageName, setImageName] = useState("");
     const [imageExtension, setExtension] = useState("");
     const [imagePath, setPath] = useState("");
@@ -19,8 +19,7 @@ function MemoryAlbumList() {
     }, [])
 
 
-
-    const AddImages = async (request) => {
+    const AddImages = async(request) => {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
@@ -38,7 +37,7 @@ function MemoryAlbumList() {
             setmemoryAlbumList(AddedImage.data)
             setResponse(AddedImage.response)
             console.log(AddedImage)
-
+      
         }
         catch (error) {
             console.log('error');
@@ -75,11 +74,11 @@ function MemoryAlbumList() {
             headers: { 'Content-Type': 'application/json' }
         }
 
-
+       
         console.log("Itinerary ID:", itineraryID)
 
         try {
-            const res = await fetch('https://localhost:9000/MemoryAlbum/GetImage?/' + itineraryID, requestOptions);
+            const res = await fetch('https://localhost:9000/MemoryAlbum/GetImage?/' + itineraryID , requestOptions);
             const RequestedImage = await res.json();
 
             setmemoryAlbumList(RequestedImage.data)
@@ -91,8 +90,16 @@ function MemoryAlbumList() {
             console.log('error');
         }
     }
+   
 
-
+    // function displayPostResponse() {
+    //     if (postRes.isSuccessful === false) {
+    //         setpostMsg(<p>Save image failed, please try again</p>)
+    //     }
+    //     else {
+    //         setpostMsg(<p>Save image was successful</p>)
+    //     }
+    // }
     function refreshmemoryAlbumList() {
         GetImage()
             .then(res => {
@@ -109,7 +116,13 @@ function MemoryAlbumList() {
                     refreshmemoryAlbumList();
                 })
                 .catch(err => console.log(err))
-
+        // else
+        //     imagesAPI().update(formData.get('imageID'), formData)
+        //         .then(res => {
+        //             onSuccess();
+        //             refreshmemoryAlbumList();
+        //         })
+        //         .catch(err => console.log(err))
 
     }
 
@@ -117,16 +130,16 @@ function MemoryAlbumList() {
         setRecordForEdit(data)
     }
 
-    const onDelete = (e, id) => {
-        e.stopPropagation();
-        if (window.confirm('Are you sure to delete this record?'))
-            RemoveImage()
-                .then(res => refreshmemoryAlbumList())
-                .catch(err => console.log(err))
-    }
+    // const onDelete = (e, id) => {
+    //     e.stopPropagation();
+    //     if (window.confirm('Are you sure to delete this record?'))
+    //         imagesAPI().delete(id)
+    //             .then(res => refreshmemoryAlbumList())
+    //             .catch(err => console.log(err))
+    // }
 
-
-
+ 
+   
 
     const imageCard = data => (
         <div className="card" onClick={() => { showRecordDetails(data) }}>
@@ -134,14 +147,14 @@ function MemoryAlbumList() {
             <div className="card-body">
                 <h5>{data.ImageName}</h5>
                 <span>{data.imageSrc}</span> <br />
-                <button className="btn btn-light delete-button" onClick={e => onDelete(e, parseInt(data.imageID))}>
-                    <i className="far fa-trash-alt"></i>
-                </button>
+                {/* <button className="btn btn-light delete-button" onClick={e => onDelete(e, parseInt(data.imageID))}> */}
+                <i className="far fa-trash-alt"></i>
+                {/* </button> */}
             </div>
         </div>
     )
 
- 
+
     return (
         <div className="row">
             <div className="col-md-12">
