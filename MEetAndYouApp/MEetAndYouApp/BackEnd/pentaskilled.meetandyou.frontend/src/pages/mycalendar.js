@@ -4,6 +4,7 @@ import 'react-calendar/dist/Calendar.css';
 import ICalendarLink from "react-icalendar-link";
 import '../images/calendarStyling.css'
 import Select from 'react-select';
+import useSessionData from "../Components/hooks/useSessionData"
 
 //import Button from 'react-bootstrap/Button';
 //import 'bootstrap/dist/css/bootstrap.min.css';
@@ -15,6 +16,7 @@ function MyCalendar() {
     const [test, setTest] = useState();
     const [event, setEvent] = useState();
     const [eventCal, setEventCal] = useState()
+    const { userID, token, roles } = useSessionData();
 
     const fetchItinerary = async () => {
         console.log("MONTH", date.getMonth());
@@ -26,17 +28,24 @@ function MyCalendar() {
         //var id = sessionStorage.getItem("userID")
         var requestOptions = {
             method: "POST",
-            headerss: {
+            headers: {
                 'Content-type': 'application/json',
-                'Accept': 'application/json, text/plain, */*'
+                'Accept': 'application/json, text/plain, */*',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': true,
+                'userID': userID,
+                'token': token,
+                'roles': roles
             },
             mode: 'cors'
         };
         console.log(date);
-        await fetch(`https://localhost:9000/Calendar?userID=` + id + "&date=" + dateString, requestOptions)
+        await fetch(`https://localhost:9000/Calendar?`+ "&date=" + dateString, requestOptions)
             .then(response => response.json())
             .then(response => setItinerary(response.data))
     }
+
+    //fetch(`https://localhost:9000/Calendar?userID=` + id + "&date=" + dateString, requestOptions)
 
     const handleChange = (e) => {
         setEvent(e);

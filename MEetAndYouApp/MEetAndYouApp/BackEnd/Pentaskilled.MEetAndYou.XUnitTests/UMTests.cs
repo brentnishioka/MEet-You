@@ -16,7 +16,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             int expectedTime = 5;
             UMManager _UMManager = new UMManager();
             string email = "viviand2465@gmail.com";
-            string password = "joshiscool!";
+            string password = "joshiscool";
             string phoneNumber = "4084802185";
             string registerDate = DateTime.UtcNow.ToString();
             string active = "1";
@@ -38,7 +38,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
             int expectedTime = 5;
             UMManager _UMManager = new UMManager();
             string id = "1";
-            string newEmail = "gidjoshviv@gmail.com";
+            string newEmail = "gidjoshv@gmail.com";
 
             stopWatch.Start();
             bool isAdmin = _UMManager.IsAdminVerified("rupak@gmail.com", "198@2f.aw!fj");

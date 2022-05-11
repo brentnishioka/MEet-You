@@ -201,6 +201,13 @@ SELECT * from MEetAndYou.UserAccountRecords;
 	('Kindaichi Adventure', 4, 7),
 	('Lunastra Treat', 2, 8);
 
+	INSERT INTO MEetAndYou.Itinerary (itineraryName, rating, itineraryOwner) values 
+	('Atlantic Exploration', 2, 9),
+	('Hiking Day Itinerary', 3, 9),
+	('Valentine Collections Itinerary', 2, 9),
+	('Diving Collections', 4, 9),
+	('Tourist Collections', 5, 9);
+
 	-- Dumyy data for UserItinerary table
 	INSERT INTO MEetAndYou.UserItinerary (itineraryID, userID) values 
 	(5, 3),
@@ -231,4 +238,17 @@ SELECT * from MEetAndYou.UserAccountRecords;
 	(9, 17), 
 	(9, 18), 
 	(6, 17)
+
+	INSERT INTO MEetAndYou.ItineraryEvent(itineraryID, eventID) values 
+	(16, 22),
+	(16, 25),
+	(17, 25),
+	(18, 23),
+	(18, 33),
+	(18, 40),
+	(18, 31),
+	(19, 34),
+	(19, 38),
+	(20, 36);
+
 

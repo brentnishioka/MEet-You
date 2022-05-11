@@ -1,6 +1,7 @@
 import React, { useState, Component, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import '../apicall/site.js';
+import useSessionData from "../Components/hooks/useSessionData"
 
 function CreateItinerary(){
     const [itineraryOwner, setItineraryOwner] = useState();
@@ -8,11 +9,12 @@ function CreateItinerary(){
     const [rating, setRating] = useState();
     const [postMsg, setpostMsg] = useState();
     const [postRes, setpostRes] = useState();
+    const { userID, token, roles } = useSessionData();
 
     // Post method to save the itinerary
     const saveItinerary = async (request) => {
         try {
-            const res = await fetch('https://meetandyou.me:8001/AddItinerary', request)
+            const res = await fetch('https://localhost:9000/AddItinerary', request)
             const saveItinRes = await res.json();
             setpostRes(saveItinRes)
             console.log(saveItinRes)
@@ -24,10 +26,10 @@ function CreateItinerary(){
 
     function displayPostResponse() {
         if (postRes.isSuccessful === false){
-            setpostMsg( <p>Save selected event failed, please try again</p>)
+            setpostMsg( <p>Save selected itinerary failed, please try again</p>)
         }
         else {
-            setpostMsg( <p>Save selected event was successful</p>)
+            setpostMsg( <p>Save selected itinerary was successful</p>)
         }
     }
 
@@ -40,7 +42,7 @@ function CreateItinerary(){
             {
                 itineraryName: itineraryName,
                 rating: rating,
-                itineraryOwner: itineraryOwner,
+                itineraryOwner: userID,
             }
         ]
         // Send an array of json to the back end
@@ -49,7 +51,14 @@ function CreateItinerary(){
 
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': true,
+                'userID': userID,
+                'token': token,
+                'roles': roles
+        },
             body: JSON.stringify(selectedItinerary)
         }
 
@@ -64,11 +73,11 @@ function CreateItinerary(){
 return (
     <div>
         <h1>Create your Itinerary</h1>
-        <label>
+        {/* <label>
             <p>Enter your ID create Itinerary </p>
             <input type="text" placeholder="ex: 5" maxlength="10" onChange={e => setItineraryOwner(e.target.value)} />
             {console.log("The value of ownerID", itineraryOwner)}
-        </label>
+        </label> */}
         <label>
             <p>Enter an itinerary name </p>
             <input type="text" placeholder="ex: 2" maxlength="35" onChange={e => setItineraryName(e.target.value)} />

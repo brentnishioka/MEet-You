@@ -384,5 +384,40 @@ namespace Pentaskilled.MEetAndYou.DataAccess.Implementation
             }
             return new ItineraryResponse(sucessMessage, true, itineraries);
         }
+
+        public async Task<BaseResponse> SaveEventsListAsync(List<Event> events)
+        {
+            string message = "Saving Event failed.";
+            bool isSuccessful = false;
+            try
+            {
+                // Save to Event table
+                foreach (Event item in events)
+                {
+                    _dbContext.Entry(item).State = EntityState.Added;
+                }
+
+                int result = await _dbContext.SaveChangesAsync();
+
+                //Check to see if all events are added successfully
+                if (result == (events.Count))
+                {
+                    message = "Saving Events was successful.";
+                    isSuccessful = true;
+                }
+
+            }
+            catch (SqlException ex)
+            {
+                // Remove Rolling back changes
+                return new BaseResponse
+                    ("Saving event failed due to database error \n" + ex.Message, false);
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse("Saving event failed. \n" + ex.Message, false);
+            }
+            return new BaseResponse(message, isSuccessful);
+        }
     }
 }

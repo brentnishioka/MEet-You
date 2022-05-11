@@ -147,9 +147,9 @@
 }
 
 .line {
-    height: 330px;
+    height: 410px;
     border-left: 1px solid black;
-    margin-left: 20px;
+    margin-left: 30px;
 }
 
 .sign-up {
@@ -170,7 +170,7 @@ label, input {
     display: flex;  
     align-items: center;
     width: 1000px;
-    height: 330px;
+    height: 410px;
     background: #FFFFFF;
     border: 1px solid #000000;
     border-radius: 20px;

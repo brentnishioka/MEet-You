@@ -12,56 +12,38 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
     public class CalendarController : ControllerBase
     {
         private readonly ICalendarManager _calendarManager;
-        private readonly IAuthorizationManager _authorizationManager; 
         private readonly MEetAndYouDBContext _dbcontext;
+        private readonly IAuthorizationManager _authzManager;
 
         public CalendarController(ICalendarManager calendarManager, MEetAndYouDBContext dbcontext, IAuthorizationManager authorizationManager) //IAuthorizationManager authorizationManager
         {
             _calendarManager = calendarManager;
-            _authorizationManager = authorizationManager; 
+            _authzManager= authorizationManager; 
             _dbcontext = dbcontext;
         }
 
 
         [HttpPost(Name = "GetItineraries")]
         //[Route("GetItineraries/{userID}")]
-        public async Task<ActionResult<ItineraryResponse>> GetItineraries(int userID, string date)
+        public async Task<ActionResult<ItineraryResponse>> GetItineraries(string date)
         {
-           
-            /*string? token;
-            string? userIDToken;
-            string? role; */
-
             try
             {
-                /*token = Request.Headers["token"]; //Takes in the userID from the browser session storage
-                userIDToken = Request.Headers["userID"];
-                role = Request.Headers["roles"];
-                //userToken = Request.Headers[];
+                var userIDString = Request.Headers["userID"];
+                int userID = int.Parse(userIDString);
+                var userToken = Request.Headers["token"];
+                var role = Request.Headers["roles"];
 
-
-                if (token == null)  //Checks if token is null  
+                bool response = _authzManager.IsAuthorized(userID, userToken, role);
+                if (response)
                 {
-                    return BadRequest("Null token");
+                    return await _calendarManager.LoadUserItineraries(userID, date);
                 }
-
-                //Splits the token into userID, userToken, and role for Authorization method 
-                //userID = (int)token.Split(",").Select(Int32.Parse).ElementAt(0);
-                //userToken = token.Split(",")[1];
-                //role = token.Split(",")[2];
-
-                //Checks if the user is authorized before continuing 
-                if (!_authorizationManager.IsAuthorized(userID, userIDToken, role))
-                {
-                    return BadRequest("User is not authorized to view this page.");
-                }*/
-
-                return await _calendarManager.LoadUserItineraries(userID, date);
+                return BadRequest("You are not authorized to use this feature.");
             }
-
-            catch(Exception e)
+            catch (Exception ex)
             {
-                return BadRequest(e.Message); 
+                return BadRequest("Verification met a problem! " + ex.Message);
             }
         }
     }

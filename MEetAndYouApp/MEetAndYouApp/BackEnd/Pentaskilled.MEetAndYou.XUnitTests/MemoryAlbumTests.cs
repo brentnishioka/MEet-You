@@ -53,7 +53,7 @@ namespace Pentaskilled.MEetAndYou.XUnitTests
 
 
             _output.WriteLine("Pulling image form image record");
-            response = await albumDAO.GetImageRecordAsync(11);
+            response = await albumDAO.GetImageRecordAsync(itineraryID);
             _output.WriteLine(response.Message);
 
             Assert.False(response.IsSuccessful);
