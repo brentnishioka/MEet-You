@@ -37,7 +37,7 @@ function NoteComponent({ itineraryID }) {
 
     // Makes an HTTP Get request to retrieve the user's notes.
     const fetchUserNote = async () => {
-        const requestURL = `https://meetandyou.me:8001/api/Rating/GetUserNote?itineraryID=${encodeURIComponent(isValidItineraryID && itineraryID)}`
+        const requestURL = `https://localhost:9000/api/Rating/GetUserNote?itineraryID=${encodeURIComponent(isValidItineraryID && itineraryID)}`
 
         var noteRequestOptions = {
             method: "GET",
@@ -70,7 +70,7 @@ function NoteComponent({ itineraryID }) {
 
     // Makes an HTTP Post request to post the user's inputted note.
     const postUserNote = async () => {
-        const requestURL = 'https://meetandyou.me:8001/api/Rating/PostNoteCreaton'
+        const requestURL = 'https://localhost:9000/api/Rating/PostNoteCreaton'
 
         var postNoteRequestOptions = {
             method: "POST",
@@ -144,7 +144,7 @@ function NoteComponent({ itineraryID }) {
                     <p>{getCurrentNoteContent}</p>
                 </div>
                 <div>
-                    <textarea ref={noteInputBox} name="paragraph_text" cols="50" rows="10" maxLength="300" />
+                    <textarea ref={noteInputBox} name="paragraph_text" cols="50" rows="10" maxLength="300" placeholder="There is a 300 character maximum limit on your note." />
                 </div>
                 <div>
                     <button onClick={e => handleClick(e)}>Submit Note</button>

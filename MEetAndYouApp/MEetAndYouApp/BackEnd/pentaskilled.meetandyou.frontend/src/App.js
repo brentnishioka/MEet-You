@@ -16,6 +16,7 @@ import Hyperlink from './pages/hyperlink';
 import MemoryAlbumList from './pages/memoryalbumlist';
 import Layout from "./Layout";
 import RequireAuth from "./Components/RequireAuth";
+import Unauthorized from "./pages/unauthorized"
 
 function App() {
     return (
@@ -27,6 +28,7 @@ function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<SignUp />} />
+                    <Route path="/unauthorized" element={<Unauthorized />} />
 
                     {/* Protected Views */}
                     <Route element={<RequireAuth />}>

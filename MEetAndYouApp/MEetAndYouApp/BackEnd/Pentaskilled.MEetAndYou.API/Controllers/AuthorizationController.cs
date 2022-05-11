@@ -17,18 +17,23 @@ namespace Pentaskilled.MEetAndYou.API.Controllers
 
         [HttpGet]
         [Route("ValidateUserCredentials")]
-        public ActionResult<bool> ValidateUserCredentials(int userID, string userToken, string role)
+        public ActionResult<bool> ValidateUserCredentials()
         {
+            var userIDString = Request.Headers["userID"];
+            int userID = int.Parse(userIDString);
+            var userToken = Request.Headers["token"];
+            var role = Request.Headers["roles"];
+
             bool response;
             try
             {
                 response = _authzManager.IsAuthorized(userID, userToken, role);
+                return response;
             }
             catch (Exception ex)
             {
                 return BadRequest("Verification met a problem!");
             }
-            return response;
         }
     }
 }
