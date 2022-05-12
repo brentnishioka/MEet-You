@@ -40,12 +40,12 @@ function MyCalendar() {
             mode: 'cors'
         };
         console.log(date);
-        await fetch(`https://localhost:9000/Calendar?`+ "&date=" + dateString, requestOptions)
+        await fetch(`https://meetandyou.me:8001/Calendar?`+ "&date=" + dateString, requestOptions)
             .then(response => response.json())
             .then(response => setItinerary(response.data))
     }
 
-    //fetch(`https://localhost:9000/Calendar?userID=` + id + "&date=" + dateString, requestOptions)
+    //fetch(`https://meetandyou.me:8001/Calendar?userID=` + id + "&date=" + dateString, requestOptions)
 
     const handleChange = (e) => {
         setEvent(e);

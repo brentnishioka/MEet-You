@@ -45,7 +45,7 @@ function EventCard({ event, itineraryID }) {
 
     // Makes an HTTP Get request to retrieve the user's event ratings.
     const fetchUserEventRating = async () => {
-        var ratingRequestURL = `https://localhost:9000/api/Rating/GetUserEventRatings?itineraryID=${encodeURIComponent(isValidItineraryID && currentItineraryID)}`
+        var ratingRequestURL = `https://meetandyou.me:8001/api/Rating/GetUserEventRatings?itineraryID=${encodeURIComponent(isValidItineraryID && currentItineraryID)}`
 
         var ratingRequestOptions = {
             method: "GET",
@@ -81,7 +81,7 @@ function EventCard({ event, itineraryID }) {
 
     // Makes an HTTP Post request to post the user's rating for an event.
     const createUserEventRating = async () => {
-        var requestURL = 'https://localhost:9000/api/Rating/PostRatingCreation'
+        var requestURL = 'https://meetandyou.me:8001/api/Rating/PostRatingCreation'
 
         var requestOptions = {
             method: "POST",
@@ -115,7 +115,7 @@ function EventCard({ event, itineraryID }) {
 
     // Makes an HTTP Put request to update the user's rating for an event.
     const modifyUserEventRating = async () => {
-        var requestURL = 'https://localhost:9000/api/Rating/PutRatingModification'
+        var requestURL = 'https://meetandyou.me:8001/api/Rating/PutRatingModification'
 
         var requestOptions = {
             method: "PUT",

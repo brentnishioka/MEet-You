@@ -32,7 +32,7 @@ function MemoryAlbumList() {
         console.log("Itinerary ID:", itineraryID)
 
         try {
-            const res = await fetch('https://localhost:9000/MemoryAlbum/PostImages?ImageName=' + imageName + '&ImageExtension=' + imageExtension + '&ImagePath=' + imagePath + '&itineraryID=' + itineraryID, requestOptions);
+            const res = await fetch('https://meetandyou.me:8001/MemoryAlbum/PostImages?ImageName=' + imageName + '&ImageExtension=' + imageExtension + '&ImagePath=' + imagePath + '&itineraryID=' + itineraryID, requestOptions);
             const AddedImage = await res.json();
 
             setmemoryAlbumList(AddedImage.data)
@@ -56,7 +56,7 @@ function MemoryAlbumList() {
         console.log("Itinerary ID:", itineraryID)
 
         try {
-            const res = await fetch('https://localhost:9000/MemoryAlbum/DeleteImage?/' + itineraryID + '?ImageName=' + imageName, requestOptions);
+            const res = await fetch('https://meetandyou.me:8001/MemoryAlbum/DeleteImage?/' + itineraryID + '?ImageName=' + imageName, requestOptions);
             const DeletedImage = await res.json();
 
             setmemoryAlbumList(DeletedImage.data)
@@ -79,7 +79,7 @@ function MemoryAlbumList() {
         console.log("Itinerary ID:", itineraryID)
 
         try {
-            const res = await fetch('https://localhost:9000/MemoryAlbum/GetImage?/' + itineraryID, requestOptions);
+            const res = await fetch('https://meetandyou.me:8001/MemoryAlbum/GetImage?/' + itineraryID, requestOptions);
             const RequestedImage = await res.json();
 
             setmemoryAlbumList(RequestedImage.data)

@@ -19,7 +19,7 @@ function Events() {
 
     const saveEvent = async (request, itinID, userID) => {
         try {
-            const res = await fetch('https://localhost:9000/SaveEvent?itinID=' + itinID + '&userID=' + userID, request)
+            const res = await fetch('https://meetandyou.me:8001/SaveEvent?itinID=' + itinID + '&userID=' + userID, request)
             const saveEventRes = await res.json();
             setpostRes(saveEventRes)
             console.log(saveEventRes)
@@ -31,7 +31,7 @@ function Events() {
 
     // const getData = async () => {
     //     try {
-    //         const res = await fetch('https://localhost:9000/GetRandomEvent');
+    //         const res = await fetch('https://meetandyou.me:8001/GetRandomEvent');
     //         const suggestionResponse = await res.json();
     //         setData(suggestionResponse.data);
     //         console.log(suggestionResponse);
@@ -56,7 +56,7 @@ function Events() {
 
         // Makes an HTTP Get request to retrieve the user's itineraries.
         const getData = async () => {
-            const requestURL = "https://localhost:9000/GetEvent?category=" + location.state.categories.label + "&location=" + city + " " + state + "&date= " + date
+            const requestURL = "https://meetandyou.me:8001/GetEvent?category=" + location.state.categories.label + "&location=" + city + " " + state + "&date= " + date
     
             var eventSugOptions = {
                 method: "GET",

@@ -23,7 +23,7 @@ function UserInfo() {
         };
 
         try{
-            const res = await fetch("https://localhost:9000/GetUPDData?id=5", itinRequestOptions);
+            const res = await fetch("https://meetandyou.me:8001/GetUPDData?id=5", itinRequestOptions);
             const apiRes = await res.json();
             setResponse(apiRes._userAccount);
             setEmail(apiRes._userAccount.data.userEmail)

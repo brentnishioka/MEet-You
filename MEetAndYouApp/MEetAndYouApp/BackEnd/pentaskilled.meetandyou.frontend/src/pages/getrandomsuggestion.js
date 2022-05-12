@@ -20,7 +20,7 @@ function Getrandomsuggestion(){
 
     // Makes an HTTP Get request to retrieve the random suggestions.
     const getData = async () => {
-        const requestURL = `https://localhost:9000/GetRandomEvent`
+        const requestURL = `https://meetandyou.me:8001/GetRandomEvent`
 
         var eventSugOptions = {
             method: "GET",

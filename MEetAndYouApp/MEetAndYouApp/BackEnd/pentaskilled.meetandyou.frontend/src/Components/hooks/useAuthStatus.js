@@ -18,7 +18,7 @@ function useAuthStatus() {
             mode: 'cors'
         };
 
-        var res = await fetch('https://localhost:9000/Login/SignOut?userID=' + currentUserID, requestOptions);
+        var res = await fetch('https://meetandyou.me:8001/Login/SignOut?userID=' + currentUserID, requestOptions);
         var logoutResponse = await res.json()
 
         sessionStorage.clear()

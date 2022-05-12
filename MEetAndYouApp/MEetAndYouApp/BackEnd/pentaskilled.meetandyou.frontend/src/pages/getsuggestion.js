@@ -12,14 +12,14 @@ export default function GetSuggestion()
 
     // const suggestion = () => {
     //     //console.log("it's working")
-    //     fetch("https://localhost:9000/GetEvent?category=food%20and%20drink&location=Long%20Beach&date=May%204")
+    //     fetch("https://meetandyou.me:8001/GetEvent?category=food%20and%20drink&location=Long%20Beach&date=May%204")
     //     .then(response => console.log(response.json()))
     //     .catch(error => console.error('Unable to get items.', error));
     //     console.log(result)
     // }
 
     useEffect( () => {
-        fetch("https://localhost:9000/GetEvent?category=food%20and%20drink&location=Long%20Beach&date=May%204")
+        fetch("https://meetandyou.me:8001/GetEvent?category=food%20and%20drink&location=Long%20Beach&date=May%204")
         .then(response => setResult(response.json()))
         .catch(error => console.error('Unable to get items.', error));
         console.log("THE RESULTS ARE", result)
@@ -27,7 +27,7 @@ export default function GetSuggestion()
 
     function getSuggestion(){
         const responseData =
-        fetch("https://localhost:9000/GetEvent?category=food%20and%20drink&location=Long%20Beach&date=May%204")
+        fetch("https://meetandyou.me:8001/GetEvent?category=food%20and%20drink&location=Long%20Beach&date=May%204")
         .then(response => response.json())
         .catch(error => console.error('Unable to get items.', error));
 

@@ -36,7 +36,7 @@ export default function Login() {
             },
             mode: 'cors'
         };
-        var res = await fetch("https://localhost:9000/Login/SignIn?userEmail=" + email + "&userPassword=" + password, requestOptions)
+        var res = await fetch("https://meetandyou.me:8001/Login/SignIn?userEmail=" + email + "&userPassword=" + password, requestOptions)
         var loginResponse = await res.json();
         setUserID(loginResponse && loginResponse.userID);
         setToken(loginResponse && loginResponse.token);
@@ -104,7 +104,7 @@ export default function Login() {
                 },
                 mode: 'cors'
             };
-            var res = await fetch("https://localhost:9000/PostAccount?email=" + signUpEmail + "&password=" + signUpPassword + "&phoneNumber=" + signUpNumber, requestOptions)
+            var res = await fetch("https://meetandyou.me:8001/PostAccount?email=" + signUpEmail + "&password=" + signUpPassword + "&phoneNumber=" + signUpNumber, requestOptions)
             var signUpResponse = await res.json();
 
             if (signUpResponse.message.includes("Invalid parameter(s):")) {

@@ -24,7 +24,7 @@ function Hyperlink() {
 
         try {
             const encodedEmail = encodeURIComponent(email);
-            const res = await fetch('https://localhost:9000/AddUser?&itineraryID=' + itinID + '&email=' + encodedEmail + '&permission=' + permission, requestOptions);
+            const res = await fetch('https://meetandyou.me:8001/AddUser?&itineraryID=' + itinID + '&email=' + encodedEmail + '&permission=' + permission, requestOptions);
             const AddUserRes = await res.json();
             setData(AddUserRes.data)
             setEmailData(AddUserRes.emails)
@@ -48,7 +48,7 @@ function Hyperlink() {
 
         try {
             const encodedEmail = encodeURIComponent(email);
-            const res = await fetch('https://localhost:9000/RemoveUser?userID=' + userID + '&itineraryID=' + itinID + '&email=' + encodedEmail + '&permission=' + permission, requestOptions);
+            const res = await fetch('https://meetandyou.me:8001/RemoveUser?userID=' + userID + '&itineraryID=' + itinID + '&email=' + encodedEmail + '&permission=' + permission, requestOptions);
             const DeleteUserRes = await res.json();
             setData(DeleteUserRes.data)
             setEmailData(DeleteUserRes.emails)

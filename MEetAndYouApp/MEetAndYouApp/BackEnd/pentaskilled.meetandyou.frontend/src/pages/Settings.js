@@ -25,7 +25,7 @@ export default function Settings() {
         };
 
         try {
-            const res = await fetch("https://localhost:9000/GetUPDData?id=5", itinRequestOptions);
+            const res = await fetch("https://meetandyou.me:8001/GetUPDData?id=5", itinRequestOptions);
             const apiRes = await res.json();
             setResponse(apiRes._userAccount);
             setEmail(apiRes._userAccount.data.userEmail)
@@ -85,7 +85,7 @@ export default function Settings() {
     };
 
     const enableUserAccount = async () => {
-        var requesURL = "https://localhost:9000/EnableUserAccount?userId=5";
+        var requesURL = "https://meetandyou.me:8001/EnableUserAccount?userId=5";
         
         var requestOptions = {
             method: "POST",
@@ -106,7 +106,7 @@ export default function Settings() {
     }
 
     const disableUserAccount = async () => {
-        var requesURL = "https://localhost:9000/DisableUserAccount?userId=5";
+        var requesURL = "https://meetandyou.me:8001/DisableUserAccount?userId=5";
 
         var requestOptions = {
             method: "POST",
@@ -127,7 +127,7 @@ export default function Settings() {
     }
 
     const deleteUserAccount = async () => {
-        var requesURL = "https://localhost:9000/DeleteUserAccount?userId=5";
+        var requesURL = "https://meetandyou.me:8001/DeleteUserAccount?userId=5";
 
         var requestOptions = {
             method: "POST",
@@ -148,7 +148,7 @@ export default function Settings() {
     }
 
     const updateUserPassword = async (pass) => {
-        var requesURL = "https://localhost:9000/UpdateUserPassword?userId=5&password=" + pass;
+        var requesURL = "https://meetandyou.me:8001/UpdateUserPassword?userId=5&password=" + pass;
 
         var requestOptions = {
             method: "POST",
@@ -171,7 +171,7 @@ export default function Settings() {
     }
 
     const updateUserEmail = async (email) => {
-        var requesURL = "https://localhost:9000/UpdateUserEmail?userId=5&email=" + email;
+        var requesURL = "https://meetandyou.me:8001/UpdateUserEmail?userId=5&email=" + email;
 
         var requestOptions = {
             method: "POST",
@@ -193,7 +193,7 @@ export default function Settings() {
     }
 
     const updateUserPhone = async (phone) => {
-        var requesURL = "https://localhost:9000/UpdateUserPhone?userId=5&phone=" + phone;
+        var requesURL = "https://meetandyou.me:8001/UpdateUserPhone?userId=5&phone=" + phone;
 
         var requestOptions = {
             method: "POST",

@@ -18,7 +18,7 @@ function Itinerary({id}) {
 
 
         try {
-            const res = await fetch("https://localhost:9000/GetUPDData?id=" + id, itinRequestOptions);
+            const res = await fetch("https://meetandyou.me:8001/GetUPDData?id=" + id, itinRequestOptions);
             const apiRes = await res.json();
 
             var itin = apiRes.itineraries[0]

@@ -28,7 +28,7 @@ const RequireAuth = () => {
         }
         else {
             // Fetch auth credentials for user
-            var requestURL = 'https://localhost:9000/api/Authorization/ValidateUserCredentials'
+            var requestURL = 'https://meetandyou.me:8001/api/Authorization/ValidateUserCredentials'
 
             try {
                 var requestOptions = {
